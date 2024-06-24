@@ -1,3 +1,0 @@
-# DSFR
-
-Implémente le DSFR

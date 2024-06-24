@@ -37,7 +37,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/InseeFr/stromae-dsfr/tree/main/docs',
+          editUrl: 'https://github.com/InseeFr/stromae-dsfr/tree/main/website',
         },
         blog: false,
         theme: {
@@ -59,7 +59,7 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'docSidebar',
+          sidebarId: 'docs',
           position: 'left',
           label: 'Documentation',
         },

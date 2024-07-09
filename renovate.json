@@ -4,12 +4,22 @@
   "packageRules": [
     {
       "matchPaths": ["package.json"],
+      "excludePaths": ["website/**"],
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all minor and patch updates",
       "groupSlug": "minor-patch",
       "labels": ["dependencies"]
     },
+    {
+      "matchPaths": ["package.json", "website/**"],
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all minor and patch updates",
+      "groupSlug": "minor-patch",
+      "labels": ["dependencies", "website"]
+    },
+
     {
       "matchPaths": [".github/workflows/**", "ci/**"],
       "labels": ["CI"]

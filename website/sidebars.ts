@@ -1,4 +1,4 @@
-import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs'
 
 /**
  * Creating a sidebar enables you to:
@@ -94,37 +94,12 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
-      type: "category",
-      label: "Fonctionnalités transverses",
-      link: {
-        description: "Fonctionnalités transversales de l'application",
-        type: "generated-index",
-      },
-      collapsed: true,
-      items: [
-        "transversal/authentification",
-        "transversal/routing",
-        "transversal/deposit-proof",
-        "transversal/paradata",
-        {
-              type: "category",
-              label: "La personnalisation",
-              link: {
-                description:
-                  "Personnalisation de l'orchestrateur. Le fichier metadata décrit au format json, permet de renseigner tous les éléments paramétrables de l'orchestrateur, c'est à dire l'entête / Header, le pied de page / Footer, page d'accueil et page de fin/remerciement",
-                type: "generated-index",
-              },
-              collapsed: true,
-              items: [
-                "transversal/personalization/header",
-                "transversal/personalization/welcome",
-                "transversal/personalization/postSubmit",
-                "transversal/personalization/footer",
-              ],
-            },
-      ],
+      type: 'category',
+      label: 'Tutorial',
+      items: ['tutorial-basics/create-a-document'],
     },
   ],
+   */
 };
 
-export default sidebars;
+export default sidebars

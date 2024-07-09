@@ -7,7 +7,7 @@ import {
 } from 'api/06-survey-units'
 import type { StateData } from 'model/StateData'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
-import type { LunaticGetReferentiel } from 'shared/components/Orchestrator/utils/lunaticType'
+import type { LunaticGetReferentiel, Nomenclature } from 'shared/components/Orchestrator/utils/lunaticType'
 import { showToast } from 'shared/toast/Toast'
 import { collectRoute } from './route'
 
@@ -22,7 +22,7 @@ export function CollectPage() {
   const getReferentiel: LunaticGetReferentiel = (name: string) =>
     queryClient
       .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
-      .then((result) => result)
+      .then((result) => result as Nomenclature) //We should remove this cast when type fixed in api
 
   const mutationUpdateDataStateData = useUpdateSurveyUnitDataStateDataById()
 
@@ -64,7 +64,7 @@ export function CollectPage() {
       .ensureQueryData(getGenerateDepositProofQueryOptions(surveyUnitId))
       .then((response) => {
         const fileName =
-          (response.headers['Content-Disposition'].match(
+          (response.headers['content-disposition']?.match(
             /filename="(.+?)"/
           )[1] as string) ?? 'document.pdf' //content-disposition is present in OpenAPI spec but not well inferred by type
 

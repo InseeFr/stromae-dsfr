@@ -13,10 +13,10 @@ const logosSchema = z.object({
 })
 
 export const metadataSchema = z.object({
-  context: z.enum(['household', 'business']).optional(),
-  label: z.string().optional(),
+  context: z.enum(['household', 'business']),
+  label: z.string(),
   logos: logosSchema.optional(),
-  objectives: z.string().optional(),
+  objectives: z.string(),
   personalization: z
     .array(
       z.object({

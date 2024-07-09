@@ -4,13 +4,8 @@ import type { Translations } from 'i18n/types'
 export const translations: Translations<'sq'> = {
   Footer: {
     'footer operator logo alt': 'Insee, mat për të kuptuar',
-    'footer content description': `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-    eu fugiat nulla pariatur.
-    `,
+    'footer content description':
+      'Matni për të kuptuar: përgjigjuni për një të ardhme të informuar.',
     license: (
       <>
         Ky sajt përdor aplikacionet e Insee 'Stromae' dhe 'Lunatic', të cilat
@@ -110,7 +105,14 @@ export const translations: Translations<'sq'> = {
           return 'Dërgo përgjigjet e mia'
       }
     },
-    'button continue title': 'Kalo në hapin tjetër',
+    'button continue title': ({ currentPage }) => {
+      switch (currentPage) {
+        case 'endPage':
+          return 'Shkarkoni konfirmimin e pranimit'
+        default:
+          return 'Kaloni në hapin tjetër'
+      }
+    },
     'button download': 'Shkarko të dhënat',
     'button expand': 'Zgjero pamjen',
     'button previous title': 'Kthehu në hapin e mëparshëm',

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 4.3.10-SNAPSHOT
  */
 
-export type SetCommentBody = { [key: string]: unknown }
+export type SchemaVariableTypeAnyOfItem = string | number | boolean | null

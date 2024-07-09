@@ -99,7 +99,7 @@ export function SurveyContainer(
             {children}
             <Button
               priority="primary"
-              title={t('button continue title')}
+              title={t('button continue title', { currentPage })}
               id="continue-button"
               onClick={
                 currentPage === 'endPage'
@@ -110,7 +110,7 @@ export function SurveyContainer(
               {t('button continue label', { currentPage })}
             </Button>
             {bottomContent}
-            {['visualize', 'review'].includes(mode) && (
+            {mode === 'visualize' && (
               <div style={{ justifyContent: 'flex-end', textAlign: 'right' }}>
                 <Button
                   iconId="ri-download-2-line"
@@ -133,7 +133,11 @@ const { i18n } = declareComponentKeys<
   | 'button previous title'
   | 'button previous label'
   | 'button expand'
-  | 'button continue title'
+  | {
+      K: 'button continue title'
+      P: { currentPage: InternalPageType }
+      R: string
+    }
   | {
       K: 'button continue label'
       P: { currentPage: InternalPageType }

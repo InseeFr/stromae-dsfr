@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -27,9 +30,9 @@ jobs:
       from_version: ${{ steps.step1.outputs.from_version }}
       to_version: ${{ steps.step1.outputs.to_version }}
       is_upgraded_version: ${{ steps.step1.outputs.is_upgraded_version }}
-      is_release_beta: ${{ steps.step1.outputs.is_release_beta }}
+      is_release_beta: ${{ steps.step1.outputs.is_pre_release }}
     steps:
-      - uses: garronej/ts-ci@v2.1.2
+      - uses: garronej/ts-ci@v2.1.5
         id: step1
         with:
           action_name: is_package_json_version_upgraded
@@ -85,7 +88,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
-      - uses: softprops/action-gh-release@v2.0.5
+      - uses: softprops/action-gh-release@v2.0.6
         with:
           name: Release v${{ needs.check_if_version_upgraded.outputs.to_version }}
           tag_name: v${{ needs.check_if_version_upgraded.outputs.to_version }}

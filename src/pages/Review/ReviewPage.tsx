@@ -1,7 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { getGetNomenclatureByIdQueryOptions } from 'api/04-nomenclatures'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
-import type { LunaticGetReferentiel } from 'shared/components/Orchestrator/utils/lunaticType'
+import type {
+  LunaticGetReferentiel,
+  Nomenclature,
+} from 'shared/components/Orchestrator/utils/lunaticType'
 import { reviewRoute } from './route'
 
 export function ReviewPage() {
@@ -14,7 +17,7 @@ export function ReviewPage() {
   const getReferentiel: LunaticGetReferentiel = (name: string) =>
     queryClient
       .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
-      .then((result) => result)
+      .then((result) => result as Nomenclature) //We should remove this cast when type fixed in api
 
   return (
     <Orchestrator

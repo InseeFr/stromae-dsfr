@@ -13,16 +13,14 @@ https://inseefr.github.io/Bowie/pogues/Le%20guide/
 
 ![image](https://github.com/InseeFr/Stromae/assets/71011059/ce116620-812c-446b-a964-5ffe6e18e41d)
 
-
 ![image](https://github.com/InseeFr/Stromae/assets/71011059/c904318e-dd4b-4af3-9f5b-f8b353f3f2b2)
 
-
 ### Visuels DSFR
+
 Texte jusqu'à 249 caractères :
 https://inseefr.github.io/Lunatic-DSFR/storybook/?path=/docs/components-input--documentation
 
 https://inseefr.github.io/Lunatic-DSFR/storybook/?path=/story/components-input--question
 
-Texte au delà de 250 : 
+Texte au delà de 250 :
 https://inseefr.github.io/Lunatic-DSFR/storybook/?path=/docs/components-textarea--documentation
-

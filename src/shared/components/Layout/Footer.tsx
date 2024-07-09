@@ -5,6 +5,7 @@ import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationA
 import { SecurityPage } from 'pages/Security/SecurityPage'
 import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
 import { Header } from './Header'
+
 export function Footer() {
   const { t } = useTranslation({
     Footer,

@@ -3,7 +3,7 @@
   "info": {
     "title": "queen-api",
     "description": "API for Queen/Stromae",
-    "version": "4.3.8-SNAPSHOT"
+    "version": "4.3.10-SNAPSHOT"
   },
   "servers": [
     {
@@ -643,7 +643,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CampaignCreation"
+                "$ref": "#/components/schemas/CampaignCreationV2"
               }
             }
           },
@@ -1452,6 +1452,28 @@
         },
         "required": ["value"]
       },
+      "CampaignCreationV2": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "questionnaireIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "metadata": {
+            "type": "object",
+            "$ref": "schema.metadata.json"
+          }
+        },
+        "required": ["label", "questionnaireIds"]
+      },
       "SurveyUnitCreation": {
         "properties": {
           "id": {
@@ -1552,7 +1574,7 @@
             "type": "string"
           }
         },
-        "required": ["url", "label"]
+        "required": ["label", "url"]
       },
       "Logos": {
         "properties": {
@@ -1575,7 +1597,7 @@
           },
           "value": {}
         },
-        "required": ["name"]
+        "required": ["name", "value"]
       },
       "SurveyUnitMetadata": {
         "properties": {
@@ -1601,7 +1623,8 @@
           "logos": {
             "$ref": "#/components/schemas/Logos"
           }
-        }
+        },
+        "required": ["context", "label", "objectives"]
       },
       "QuestionnaireModelValue": {
         "properties": {

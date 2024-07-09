@@ -1,6 +1,7 @@
 # Pagination
 
 Deux paginations sont proposées :
+
 - l'affichage d'une seule question par page
 - l'affichage de plusieurs questions (d'une séquence au sens Pogues) par page
 

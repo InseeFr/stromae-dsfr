@@ -28,7 +28,6 @@ export const surveyUnitDataQueryOptions = (
     queryFn: () => axiosGet<SurveyUnitData>(surveyUnitDataUrl, options),
   })
 
-//TODO Type metadata
 export const metadataQueryOptions = (
   metadataUrl: string,
   options?: AxiosRequestConfig

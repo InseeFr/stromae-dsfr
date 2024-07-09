@@ -1,6 +1,6 @@
 # Les déclarations
 
-La déclaration ou aide est un texte qui aidera l'enquêté à comprendre la question et comment y répondre. 
+La déclaration ou aide est un texte qui aidera l'enquêté à comprendre la question et comment y répondre.
 Elle peut être mise en forme (gras, italique, passage à la ligne) et il est possible d'afficher une déclaration avant et une après la question.
 
 ### Comment faire dans Pogues ?

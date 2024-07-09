@@ -20,5 +20,3 @@ Au chargement du questionnaire, une page d'erreur explicite s'affiche dans les c
 ## Persistance
 
 La persistance des données s'effectue à chaque changement de page du questionnaire, quel que soit le moyen de navigation.
-
-

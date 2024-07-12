@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Visualisation de questionnaire
 
 La page de visualisation de questionnaire permet de visualiser n'importe quel questionnaire fourni par l'utilisateur, sans communication avec l'api.

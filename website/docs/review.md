@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Relecture de questionnaire (en cours)
 
 Permet la visualisation d'un questionnaire par un gestionnaire d'enquête ou par un gestionnaire en charge de l'assistance.

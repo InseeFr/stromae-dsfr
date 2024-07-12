@@ -4,11 +4,12 @@ import { themes as prismThemes } from 'prism-react-renderer'
 
 const config: Config = {
   title: 'Stromae',
+  staticDirectories: ['public', 'static'],
   tagline: `Orchestrateur web de la filière d'enquête de l'Insee`,
-  favicon: 'img/favicon.ico',
+  favicon: 'assets/img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://inseefr.github.io/',
+  url: 'https://inseefr.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/stromae-dsfr',
@@ -53,8 +54,8 @@ const config: Config = {
     navbar: {
       title: 'Stromae',
       logo: {
-        alt: 'My Site Logo',
-        src: 'assets/logo/logo-insee.png',
+        alt: 'Insee Logo',
+        src: '/assets/logo/logo-insee.png',
       },
       items: [
         {

@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Mode de collecte (en cours)
 
 Utilisé pour les collectes web des enquêtes auprès des ménages et des entreprises

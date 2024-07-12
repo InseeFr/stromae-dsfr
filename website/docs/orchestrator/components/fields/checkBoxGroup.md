@@ -14,11 +14,9 @@ https://inseefr.github.io/Bowie/pogues/Le%20guide/
 
 ![image](https://github.com/InseeFr/Stromae/assets/71011059/4f7b848a-2a48-4e2b-8f2e-8d476be9159f)
 
-
-__Avec complément textuel__
+**Avec complément textuel**
 
 ![image](https://github.com/InseeFr/Stromae/assets/71011059/1fc4ac73-1a09-4b46-8580-1ad266bd0a1e)
-
 
 ### Visuels DSFR
 

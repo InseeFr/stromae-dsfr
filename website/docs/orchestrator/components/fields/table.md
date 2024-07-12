@@ -15,7 +15,6 @@ https://inseefr.github.io/Bowie/pogues/Le%20guide/
 
 ![image](https://github.com/InseeFr/Stromae/assets/71011059/0551741d-05d6-4254-b866-48eacccf6034)
 
-
 ### Visuels DSFR
 
 https://inseefr.github.io/Lunatic-DSFR/storybook/?path=/docs/components-table--documentation

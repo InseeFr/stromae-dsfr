@@ -1,8 +1,6 @@
-
 # Page d'accueil
 
 Première page, avant de répondre au questionnaire.
-
 
 Pour rappel, `personalization` est array qui liste les variables de personnalisation de l'orchestrateur pour une UE donnée.
 
@@ -10,8 +8,8 @@ Exemple de valeur
 
 ```tsx
 const personalization = [
-    {name: "QuiRepond1", value : "Mme Dupond" },
-    {name: "QuiRepond2", value : "et son mari" }
+  { name: 'QuiRepond1', value: 'Mme Dupond' },
+  { name: 'QuiRepond2', value: 'et son mari' },
 ]
 ```
 

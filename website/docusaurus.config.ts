@@ -3,10 +3,15 @@ import type { Config } from '@docusaurus/types'
 import { themes as prismThemes } from 'prism-react-renderer'
 
 const config: Config = {
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   title: 'Stromae',
   staticDirectories: ['public', 'static'],
   tagline: `Orchestrateur web de la filière d'enquête de l'Insee`,
-  favicon: 'assets/img/favicon.ico',
+  favicon: '/img/favicon.ico',
 
   // Set the production url of your site here
   url: 'https://inseefr.github.io',
@@ -55,7 +60,7 @@ const config: Config = {
       title: 'Stromae',
       logo: {
         alt: 'Insee Logo',
-        src: '/assets/logo/logo-insee.png',
+        src: '/logo/logo-insee.png',
       },
       items: [
         {
@@ -73,7 +78,7 @@ const config: Config = {
     },
     footer: {
       logo: {
-        src: 'assets/logo/Logo_Insee.svg',
+        src: '/logo/Logo_Insee.svg',
       },
       links: [
         {
@@ -90,6 +95,9 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    mermaid: {
+      theme: { light: 'default', dark: 'dark' },
     },
   } satisfies Preset.ThemeConfig,
 }

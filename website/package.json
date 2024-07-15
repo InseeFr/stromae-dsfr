@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "copy-dsfr-to-public",
+    "predev": "only-include-used-icons",
+    "prebuild": "only-include-used-icons",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -15,6 +18,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@codegouvfr/react-dsfr": "^1.9.28",
     "@docusaurus/core": "3.4.0",
     "@docusaurus/preset-classic": "3.4.0",
     "@gouvfr/dsfr": "^1.11.2",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.4.0",
+    "@docusaurus/theme-mermaid": "^3.4.0",
     "@docusaurus/tsconfig": "3.4.0",
     "@docusaurus/types": "3.4.0",
     "docusaurus-plugin-sass": "^0.2.5",

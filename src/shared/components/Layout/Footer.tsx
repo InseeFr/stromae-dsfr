@@ -1,10 +1,16 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
 import { declareComponentKeys, useTranslation } from 'i18n'
+import type { Logo } from 'model/api'
 import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from 'pages/Security/SecurityPage'
 import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
 import { Header } from './Header'
+
+const transformLogo = (logo: Logo) => ({
+  alt: logo.label,
+  imgUrl: logo.url,
+})
 
 export function Footer() {
   const { t } = useTranslation({
@@ -19,7 +25,14 @@ export function Footer() {
     SecurityPage,
   })
 
-  const { mainLogo } = useMetadataStore()
+  const { mainLogo, secondariesLogo } = useMetadataStore()
+
+  const partnersLogos = secondariesLogo
+    ? {
+        main: transformLogo(secondariesLogo[0]),
+        sub: secondariesLogo.slice(1).map(transformLogo),
+      }
+    : undefined
 
   return (
     <DSFRFooter
@@ -44,6 +57,7 @@ export function Footer() {
         imgUrl: mainLogo.url,
         orientation: 'vertical',
       }}
+      partnersLogos={partnersLogos}
       bottomItems={[
         {
           text: t_SecurityPage('security title'),

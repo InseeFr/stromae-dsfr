@@ -387,17 +387,17 @@ export const translations: Translations<'fr'> = {
     'resourceNotFound.subtitle':
       'La ressource que vous cherchez est introuvable sur le serveur.',
     'resourceNotFound.paragraph':
-      'Veuillez vérifier l’URL que vous avez saisie ou contactez l’administrateur du site pour obtenir de l’aide.',
+      'Veuillez vérifier l’URL que vous avez saisie ou contactez l’assistance pour obtenir de l’aide.',
     'unauthorized.title': 'Non autorisé',
     'unauthorized.subtitle':
       'Vous n’avez pas l’autorisation d’accéder à cette ressource.',
     'unauthorized.paragraph':
-      'Veuillez vous connecter avec les informations appropriées ou contacter l’administrateur du site pour obtenir de l’aide.',
+      'Veuillez vous connecter avec les informations appropriées ou contacter l’assistance pour obtenir de l’aide.',
     'forbidden.title': 'Accès refusé',
     'forbidden.subtitle':
       'Vous n’êtes pas autorisé à accéder à cette ressource.',
     'forbidden.paragraph':
-      'Veuillez contacter l’administrateur du site pour obtenir de l’aide.',
+      'Veuillez contacter l’assistance pour obtenir de l’aide.',
     'badRequest.title': 'Requête incorrecte',
     'badRequest.subtitle':
       'La requête que vous avez envoyée est incorrecte ou malformée.',
@@ -407,7 +407,7 @@ export const translations: Translations<'fr'> = {
     'serverError.subtitle':
       'Une erreur est survenue du côté du serveur. Veuillez réessayer ultérieurement.',
     'serverError.paragraph':
-      'Si le problème persiste, veuillez contacter l’administrateur du site pour obtenir de l’aide.',
+      'Si le problème persiste, veuillez contacter l’assistance pour obtenir de l’aide.',
     'unhandledError.title': 'Erreur non gérée',
     'unhandledError.subtitle': "Une erreur s'est produite lors de la requête.",
     'unhandledError.paragraph':

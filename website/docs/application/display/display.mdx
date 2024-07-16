@@ -1,0 +1,39 @@
+---
+sidebar_position: 2
+---
+
+# L'affichage
+
+## La structure de l'affichage
+
+L'affichage au sein de l'application peut être découpé de la manière suivante : une entête, du contenu et un pied de page.
+
+### Entête
+
+L'[entête](https://www.systeme-de-design.gouv.fr/composants-et-modeles/composants/en-tete/) est celle imposée par le design système de l'État.
+
+![Entête](/img/header.png)
+
+Il est possible de personnaliser le logo et le texte principal ("Filière d'enquête") via les métadonnées.
+
+A l'avenir on souhaite egallement personnaliser le texte "Application de collecte internet".
+
+### Pied de page
+
+Le [pied de page](https://www.systeme-de-design.gouv.fr/composants-et-modeles/composants/pied-de-page) est celui imposé par le système de design de l'État.
+
+![Pied de page](/img/footer.png)
+
+Il est possible de personnaliser le logo de l'Insee et d'ajouter des logos de partenaires.
+
+### Contenu
+
+Le contenu varie en fonction de la page consultée. Il s'agit essentiellement de l'affichage du questionnaire ou d'un message d'erreur.
+
+#### Erreurs
+
+En cas de problème, des messages d'erreur sont affichés pour guider l'utilisateur.
+
+![Erreur](/img/error.png)
+
+Quand l'erreur se produit dans un [contexte de collecte](../../usecases/collect.md), la redirection proposée est vers le portail. Pour la [visualisation](../../usecases/visualize.md), c'est vers le formulaire de visualisation, et vers la page d'accueil dans les autres cas.

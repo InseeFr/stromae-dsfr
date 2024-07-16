@@ -6,8 +6,6 @@ sidebar_position: 2
 
 La navigation des pages est linéaire, a l'intérieur du questionnaire il existe toutefois un cas particulier le rond-point.
 
-Pour avancer, il faut cliquer sur le bouton Suivant et pour reculer le bouton Précédent.
-
 Ce diagramme explique la navigation entre les différentes pages de l'orchestrateur :
 
 ```mermaid

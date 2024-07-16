@@ -1,3 +1,0 @@
-# Les Fonctionnalités
-
-## Test

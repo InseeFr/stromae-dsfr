@@ -1,11 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { memo } from 'react'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
 import type { LunaticGetReferentiel } from 'shared/components/Orchestrator/utils/lunaticType'
 import { nomenclatureQueryOptions } from 'shared/query/visualizeQueryOptions'
 import { VisualizeForm } from './Form/VisualizeForm'
 import { visualizeRoute } from './route'
 
-export function VisualizePage() {
+export const VisualizePage = memo(() => {
   const loaderResults = visualizeRoute.useLoaderData()
   const queryClient = useQueryClient()
 
@@ -38,4 +39,4 @@ export function VisualizePage() {
       getReferentiel={getReferentiel}
     />
   )
-}
+})

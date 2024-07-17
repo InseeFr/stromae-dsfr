@@ -19,6 +19,7 @@ import { useUpdateEffect } from 'utils/useUpdateEffect'
 import { EndPage } from './CustomPages/EndPage'
 import { ValidationModal } from './CustomPages/ValidationModal'
 import { ValidationPage } from './CustomPages/ValidationPage'
+import { WelcomeModal } from './CustomPages/WelcomeModal'
 import { WelcomePage } from './CustomPages/WelcomePage'
 import { SurveyContainer } from './SurveyContainer'
 import { slotComponents } from './slotComponents'
@@ -207,6 +208,25 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   }, [currentPage, pageTag])
 
+  // Persist data when component unmount (ie when navigate etc...)
+  useEffect(() => {
+    return () => {
+      if (mode !== 'collect') return
+
+      const { updateDataAndStateData } = props
+      const data = getChangedData()
+
+      if (!isObjectEmpty(data.COLLECTED ?? {})) {
+        updateDataAndStateData({
+          stateData: getCurrentStateData(),
+          data: data.COLLECTED,
+          onSuccess: resetChangedData,
+        })
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const navigate = useNavigate()
 
   const handleDepositProofClick = async () => {
@@ -251,61 +271,66 @@ export function Orchestrator(props: OrchestratorProps) {
     { components: [], bottomComponents: [] }
   )
 
+  const shouldWelcome = Boolean(
+    currentPage &&
+      initialCurrentPage !== 'welcomePage' &&
+      initialCurrentPage !== undefined
+  )
+
+  if (shouldWelcome) {
+    initialCurrentPage
+  }
   return (
-    <div className={fr.cx('fr-container--fluid')}>
-      <LunaticProvider>
-        <div>
-          <SurveyContainer
-            handleNextClick={goNext}
-            handlePreviousClick={goPrevious}
-            handleDownloadData={downloadAsJsonRef.current}
-            currentPage={currentPage}
-            mode={mode}
-            handleDepositProofClick={handleDepositProofClick}
-            pagination={pagination}
-            overview={overview}
-            isSequencePage={isSequencePage(components)}
-            bottomContent={
-              <div className={fr.cx('fr-my-10v')}>
-                {currentPage === 'lunaticPage' && (
-                  <LunaticComponents
-                    components={bottomComponents}
-                    slots={slotComponents}
-                    componentProps={() => ({
-                      errors: activeErrors,
-                    })}
-                  />
-                )}
-              </div>
+    <LunaticProvider>
+      <SurveyContainer
+        handleNextClick={goNext}
+        handlePreviousClick={goPrevious}
+        handleDownloadData={downloadAsJsonRef.current}
+        currentPage={currentPage}
+        mode={mode}
+        handleDepositProofClick={handleDepositProofClick}
+        pagination={pagination}
+        overview={overview}
+        isSequencePage={isSequencePage(components)}
+        bottomContent={
+          <div className={fr.cx('fr-my-10v')}>
+            {currentPage === 'lunaticPage' && (
+              <LunaticComponents
+                components={bottomComponents}
+                slots={slotComponents}
+                componentProps={() => ({
+                  errors: activeErrors,
+                })}
+              />
+            )}
+          </div>
+        }
+      >
+        <div className={fr.cx('fr-mb-4v')}>
+          {currentPage === 'welcomePage' && <WelcomePage metadata={metadata} />}
+          {currentPage === 'lunaticPage' && (
+            <LunaticComponents
+              autoFocusKey={pageTag}
+              components={components}
+              slots={slotComponents}
+              componentProps={() => ({
+                errors: activeErrors,
+              })}
+            />
+          )}
+          {currentPage === 'validationPage' && <ValidationPage />}
+          {currentPage === 'endPage' && (
+            <EndPage date={surveyUnitData?.stateData?.date} />
+          )}
+          <WelcomeModal
+            goBack={() =>
+              initialCurrentPage ? goToPage({ page: initialCurrentPage }) : null
             }
-          >
-            <div className={fr.cx('fr-mb-4v')}>
-              {currentPage === 'welcomePage' && (
-                <WelcomePage
-                  initialCurrentPage={initialCurrentPage}
-                  goToPage={goToPage}
-                  metadata={metadata}
-                />
-              )}
-              {currentPage === 'lunaticPage' && (
-                <LunaticComponents
-                  autoFocusKey={pageTag}
-                  components={components}
-                  slots={slotComponents}
-                  componentProps={() => ({
-                    errors: activeErrors,
-                  })}
-                />
-              )}
-              {currentPage === 'validationPage' && <ValidationPage />}
-              {currentPage === 'endPage' && (
-                <EndPage date={surveyUnitData?.stateData?.date} />
-              )}
-              <ValidationModal actionsRef={validationModalActionsRef} />
-            </div>
-          </SurveyContainer>
+            open={shouldWelcome}
+          />
+          <ValidationModal actionsRef={validationModalActionsRef} />
         </div>
-      </LunaticProvider>
-    </div>
+      </SurveyContainer>
+    </LunaticProvider>
   )
 }

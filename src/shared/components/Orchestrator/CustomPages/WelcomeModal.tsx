@@ -1,17 +1,36 @@
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
 import { declareComponentKeys, useTranslation } from 'i18n'
-import { useId, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
-export function WelcomeModal(props: { goBack: () => void }) {
-  const { goBack } = props
-  const id = useId()
+const modal = createModal({
+  id: `welcomeModal`,
+  isOpenedByDefault: false,
+})
+
+type Props = {
+  // Resume navigation to the previous initial page
+  goBack: () => void
+  // Toggle opening the modal (will have no effect if the modal was already opened once)
+  open: boolean
+}
+
+/**
+ * Modal displayed at the start of the form (showed once per navigation)
+ */
+export function WelcomeModal({ goBack, open }: Props) {
   const { t } = useTranslation({ WelcomeModal })
-  const [modal] = useState(() =>
-    createModal({
-      id: `welcomeModal-${id}`,
-      isOpenedByDefault: true,
-    })
-  )
+  const wasDisplayed = useRef(false)
+
+  useEffect(() => {
+    // Since dsfr uses MutationObserver we need to wait a bit to ensure the element is correctly picked up by window.dsfr
+    setTimeout(() => {
+      if (!wasDisplayed.current && open) {
+        modal.open()
+        wasDisplayed.current = true
+      }
+    }, 10)
+  }, [open])
+
   return (
     <modal.Component
       title={t('title')}

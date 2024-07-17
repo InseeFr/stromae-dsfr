@@ -8,6 +8,7 @@ import { reviewRoute } from 'pages/Review/route'
 import { securityRoute } from 'pages/Security/route'
 import { siteMapRoute } from 'pages/SiteMap/route'
 import { visualizeRoute } from 'pages/Visualize/route'
+import { memo } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
 import { AutoLogoutCountdown } from 'shared/components/Layout/AutoLogoutCountdown'
@@ -18,7 +19,7 @@ import { NotFoundError } from 'shared/error/notFoundError'
 export const rootRoute = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
-  component: RootComponent,
+  component: memo(RootComponent),
   notFoundComponent: () => (
     <ErrorComponent error={new NotFoundError()} redirectTo="home" />
   ),

@@ -7,6 +7,7 @@ import {
 } from 'api/06-survey-units'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
 import { rootRoute } from 'router/router'
+import { ContentSkeleton } from 'shared/components/ContentSkeleton'
 import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
 import { protectedRouteLoader } from 'shared/loader/protectedLoader'
 import { metadataStore } from 'shared/metadataStore/metadataStore'
@@ -77,4 +78,5 @@ export const collectRoute = createRoute({
   errorComponent: ({ error }) => {
     return <ErrorComponent error={error} redirectTo="portal" />
   },
+  pendingComponent: ContentSkeleton,
 })

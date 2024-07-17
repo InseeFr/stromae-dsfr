@@ -1,19 +1,15 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { declareComponentKeys, useTranslation } from 'i18n'
 import type { Metadata } from 'model/Metadata'
-import type { PageType } from 'model/Page'
 import { useEffect } from 'react'
 import { useDocumentTitle } from 'shared/hooks/useDocumentTitle'
-import type { useStromaeNavigation } from '../useStromaeNavigation'
-import { WelcomeModal } from './WelcomeModal'
+import { useWhyRender } from 'utils/useWhyRender'
 
-export function WelcomePage(props: {
-  initialCurrentPage: PageType | undefined
-  goToPage: ReturnType<typeof useStromaeNavigation>['goToPage']
-  metadata?: Metadata
-}) {
+export function WelcomePage(props: { metadata?: Metadata }) {
+  useWhyRender(props, 'WelcomePage')
+
   const { t } = useTranslation({ WelcomePage })
-  const { initialCurrentPage, goToPage, metadata } = props
+  const { metadata } = props
 
   useEffect(() => {
     // Reset the scroll on component unmount
@@ -32,9 +28,6 @@ export function WelcomePage(props: {
           {metadata?.objectives ?? t('paragraph')}
         </p>
       </div>
-      {initialCurrentPage && (
-        <WelcomeModal goBack={() => goToPage({ page: initialCurrentPage })} />
-      )}
     </>
   )
 }

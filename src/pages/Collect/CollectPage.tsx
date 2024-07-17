@@ -3,9 +3,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { getGetNomenclatureByIdQueryOptions } from 'api/04-nomenclatures'
 import {
   getGenerateDepositProofQueryOptions,
-  useUpdateSurveyUnitDataStateDataById,
+  updateSurveyUnitDataStateDataById,
 } from 'api/06-survey-units'
 import type { StateData } from 'model/StateData'
+import { memo, useCallback } from 'react'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
@@ -14,53 +15,50 @@ import type {
 import { showToast } from 'shared/toast/Toast'
 import { collectRoute } from './route'
 
-export function CollectPage() {
+export const CollectPage = memo(function CollectPage() {
   const { surveyUnitId } = collectRoute.useParams()
+
   const queryClient = useQueryClient()
 
   const loaderResults = collectRoute.useLoaderData()
 
   const { source, surveyUnitData, metadata } = loaderResults
 
-  const getReferentiel: LunaticGetReferentiel = (name: string) =>
-    queryClient
-      .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
-      .then((result) => result as Nomenclature) //We should remove this cast when type fixed in api
-
-  const mutationUpdateDataStateData = useUpdateSurveyUnitDataStateDataById()
+  const getReferentiel: LunaticGetReferentiel = useCallback(
+    (name: string) =>
+      queryClient
+        .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
+        .then((result) => result as Nomenclature),
+    [queryClient]
+  )
 
   const updateDataAndStateData = (params: {
     stateData: StateData
     data: LunaticData['COLLECTED']
     onSuccess?: () => void
   }) =>
-    mutationUpdateDataStateData.mutateAsync(
-      {
-        id: surveyUnitId,
-        data: { data: params.data, stateData: params.stateData }, //Waiting for API to accept request with undefined data
-      },
-      {
-        onSuccess: () => {
-          params.onSuccess?.()
-          params.data &&
-            showToast({
-              severity: 'success',
-              description:
-                'Vos modifications ont été enregistrées et sauvegardées.',
-              title: 'Données sauvegardées avec succès !',
-            })
-        },
-
-        onError: () => {
+    updateSurveyUnitDataStateDataById(surveyUnitId, {
+      data: params.data,
+      stateData: params.stateData,
+    })
+      .then(() => {
+        params.onSuccess?.()
+        params.data &&
           showToast({
-            severity: 'error',
-            title: 'Erreur de sauvegarde',
+            severity: 'success',
             description:
-              "Une erreur est survenue lors de l'enregistrement de vos modifications. ",
+              'Vos modifications ont été enregistrées et sauvegardées.',
+            title: 'Données sauvegardées avec succès !',
           })
-        },
-      }
-    )
+      })
+      .catch(() => {
+        showToast({
+          severity: 'error',
+          title: 'Erreur de sauvegarde',
+          description:
+            "Une erreur est survenue lors de l'enregistrement de vos modifications. ",
+        })
+      })
 
   const getDepositProof = () =>
     queryClient
@@ -95,4 +93,4 @@ export function CollectPage() {
       getDepositProof={getDepositProof}
     />
   )
-}
+})

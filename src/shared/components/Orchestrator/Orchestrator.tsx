@@ -277,9 +277,6 @@ export function Orchestrator(props: OrchestratorProps) {
       initialCurrentPage !== undefined
   )
 
-  if (shouldWelcome) {
-    initialCurrentPage
-  }
   return (
     <LunaticProvider>
       <SurveyContainer

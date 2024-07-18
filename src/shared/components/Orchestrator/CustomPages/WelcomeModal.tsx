@@ -3,7 +3,7 @@ import { declareComponentKeys, useTranslation } from 'i18n'
 import { useEffect, useRef } from 'react'
 
 const modal = createModal({
-  id: `welcomeModal`,
+  id: 'welcomeModal',
   isOpenedByDefault: false,
 })
 
@@ -22,7 +22,7 @@ export function WelcomeModal({ goBack, open }: Props) {
   const wasDisplayed = useRef(false)
 
   useEffect(() => {
-    // Since dsfr uses MutationObserver we need to wait a bit to ensure the element is correctly picked up by window.dsfr
+    // Since dsfr uses MutationObserver we need to wait a bit to ensure the element is correctly picked up by window.dsfr (cf https://github.com/GouvernementFR/dsfr/issues/979)
     setTimeout(() => {
       if (!wasDisplayed.current && open) {
         modal.open()
@@ -36,7 +36,7 @@ export function WelcomeModal({ goBack, open }: Props) {
       title={t('title')}
       buttons={[
         {
-          doClosesModal: true, //Default true, clicking a button close the modal.
+          doClosesModal: true,
           children: t('button first page'),
         },
         {

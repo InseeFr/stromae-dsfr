@@ -1,5 +1,6 @@
 import { createRoute } from '@tanstack/react-router'
 import { rootRoute } from 'router/router'
+import { ContentSkeleton } from 'shared/components/ContentSkeleton'
 import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
 import { metadataStore } from 'shared/metadataStore/metadataStore'
 import {
@@ -83,4 +84,5 @@ export const visualizeRoute = createRoute({
   errorComponent: ({ error, reset }) => (
     <ErrorComponent error={error} reset={reset} redirectTo="visualizeForm" />
   ),
+  pendingComponent: ContentSkeleton,
 })

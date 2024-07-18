@@ -79,8 +79,8 @@ export function Orchestrator(props: OrchestratorProps) {
   const { source, surveyUnitData, getReferentiel, mode, metadata } = props
 
   const initialCurrentPage = surveyUnitData?.stateData?.currentPage
-
   const pagination = source.pagination ?? 'question'
+  const containerRef = useRef<HTMLAnchorElement>(null)
 
   const {
     getComponents,
@@ -194,8 +194,14 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  // Persist data and stateData when page change in "collect" mode
   useUpdateEffect(() => {
+    //Reset scroll and focus when page change
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView()
+      // containerRef.current.focus()
+      // containerRef.current.blur()
+    }
+    // Persist data and stateData when page change in "collect" mode
     if (mode !== 'collect') return
     const { updateDataAndStateData } = props
 
@@ -304,6 +310,9 @@ export function Orchestrator(props: OrchestratorProps) {
         }
       >
         <div className={fr.cx('fr-mb-4v')}>
+          <a tabIndex={0} ref={containerRef}>
+            Test
+          </a>
           {currentPage === 'welcomePage' && <WelcomePage metadata={metadata} />}
           {currentPage === 'lunaticPage' && (
             <LunaticComponents

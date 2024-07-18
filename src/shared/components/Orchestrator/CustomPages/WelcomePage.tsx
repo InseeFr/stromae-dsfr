@@ -1,22 +1,11 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { declareComponentKeys, useTranslation } from 'i18n'
 import type { Metadata } from 'model/Metadata'
-import { useEffect } from 'react'
 import { useDocumentTitle } from 'shared/hooks/useDocumentTitle'
-import { useWhyRender } from 'utils/useWhyRender'
 
 export function WelcomePage(props: { metadata?: Metadata }) {
-  useWhyRender(props, 'WelcomePage')
-
   const { t } = useTranslation({ WelcomePage })
   const { metadata } = props
-
-  useEffect(() => {
-    // Reset the scroll on component unmount
-    return () => {
-      window.scrollTo(0, 0)
-    }
-  }, [])
 
   useDocumentTitle(t('document title'))
 

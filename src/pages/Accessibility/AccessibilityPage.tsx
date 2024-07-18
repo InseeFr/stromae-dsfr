@@ -1,8 +1,9 @@
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
 import { declareComponentKeys, useTranslation } from 'i18n'
+import { memo } from 'react'
 import { Grid } from 'shared/components/Grid'
 
-export function AccessibilityPage() {
+export const AccessibilityPage = memo(function AccessibilityPage() {
   const { t } = useTranslation({ AccessibilityPage })
 
   return (
@@ -59,7 +60,7 @@ export function AccessibilityPage() {
       </section>
     </Grid>
   )
-}
+})
 
 const { i18n } = declareComponentKeys<
   | 'accessibility title'

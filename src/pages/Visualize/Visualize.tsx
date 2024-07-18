@@ -6,7 +6,7 @@ import { nomenclatureQueryOptions } from 'shared/query/visualizeQueryOptions'
 import { VisualizeForm } from './Form/VisualizeForm'
 import { visualizeRoute } from './route'
 
-export const VisualizePage = memo(() => {
+export const VisualizePage = memo(function VisualizePage() {
   const loaderResults = visualizeRoute.useLoaderData()
   const queryClient = useQueryClient()
 

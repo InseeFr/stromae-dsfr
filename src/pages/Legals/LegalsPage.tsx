@@ -1,9 +1,9 @@
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
 import { declareComponentKeys, useTranslation } from 'i18n'
-import type { ReactNode } from 'react'
+import { memo, type ReactNode } from 'react'
 import { Grid } from 'shared/components/Grid'
 
-export function LegalsPage() {
+export const LegalsPage = memo(function LegalsPage() {
   const { t } = useTranslation({ LegalsPage })
   return (
     <Grid>
@@ -40,7 +40,7 @@ export function LegalsPage() {
       </section>
     </Grid>
   )
-}
+})
 
 const { i18n } = declareComponentKeys<
   | 'legals title'

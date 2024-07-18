@@ -5,9 +5,10 @@ import { AccessibilityPage } from 'pages/Accessibility/AccessibilityPage'
 import { LegalsPage } from 'pages/Legals/LegalsPage'
 import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from 'pages/Security/SecurityPage'
+import { memo } from 'react'
 import { Grid } from 'shared/components/Grid'
 
-export function SiteMapPage() {
+export const SiteMapPage = memo(function SiteMapPage() {
   const { t } = useTranslation({
     SiteMapPage,
   })
@@ -53,7 +54,7 @@ export function SiteMapPage() {
       </ul>
     </Grid>
   )
-}
+})
 
 const { i18n } = declareComponentKeys<'sitemap title'>()({ SiteMapPage })
 

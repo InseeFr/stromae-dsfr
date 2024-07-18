@@ -1,8 +1,9 @@
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb'
 import { declareComponentKeys, useTranslation } from 'i18n'
+import { memo } from 'react'
 import { Grid } from 'shared/components/Grid'
 
-export function SecurityPage() {
+export const SecurityPage = memo(function SecurityPage() {
   const { t } = useTranslation({ SecurityPage })
   return (
     <Grid>
@@ -14,7 +15,7 @@ export function SecurityPage() {
       <h2>{t('security title')}</h2>
     </Grid>
   )
-}
+})
 
 const { i18n } = declareComponentKeys<'security title'>()('SecurityPage')
 

@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { getGetNomenclatureByIdQueryOptions } from 'api/04-nomenclatures'
+import { memo } from 'react'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
@@ -7,7 +8,7 @@ import type {
 } from 'shared/components/Orchestrator/utils/lunaticType'
 import { reviewRoute } from './route'
 
-export function ReviewPage() {
+export const ReviewPage = memo(function ReviewPage() {
   const queryClient = useQueryClient()
 
   const loaderResults = reviewRoute.useLoaderData()
@@ -28,4 +29,4 @@ export function ReviewPage() {
       getReferentiel={getReferentiel}
     />
   )
-}
+})

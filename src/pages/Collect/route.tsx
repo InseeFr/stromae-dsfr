@@ -65,6 +65,7 @@ export const collectRoute = createRoute({
 
         return metadata
       })
+      .catch(() => ({}))
 
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
       ([source, surveyUnitData, metadata]) => ({

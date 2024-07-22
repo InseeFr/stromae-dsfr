@@ -2,6 +2,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { memo } from 'react'
 import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
 import type { LunaticGetReferentiel } from 'shared/components/Orchestrator/utils/lunaticType'
+import { lunaticLogger } from 'shared/lunaticLogger/lunaticLogger'
+import { VtlDevTools } from 'shared/lunaticLogger/VtlDevtools/VtlDevtools'
 import { nomenclatureQueryOptions } from 'shared/query/visualizeQueryOptions'
 import { VisualizeForm } from './Form/VisualizeForm'
 import { visualizeRoute } from './route'
@@ -31,12 +33,16 @@ export const VisualizePage = memo(function VisualizePage() {
   }
 
   return (
-    <Orchestrator
-      mode="visualize"
-      metadata={metadata}
-      source={source}
-      surveyUnitData={surveyUnitData}
-      getReferentiel={getReferentiel}
-    />
+    <>
+      <Orchestrator
+        logger={lunaticLogger}
+        mode="visualize"
+        metadata={metadata}
+        source={source}
+        surveyUnitData={surveyUnitData}
+        getReferentiel={getReferentiel}
+      />
+      <VtlDevTools />
+    </>
   )
 })

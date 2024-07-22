@@ -28,6 +28,7 @@ import { isBlockingError, isSameErrors } from './utils/controls'
 import type {
   LunaticComponentsProps,
   LunaticGetReferentiel,
+  LunaticLogger,
 } from './utils/lunaticType'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
@@ -58,10 +59,12 @@ export namespace OrchestratorProps {
 
   export type Visualize = {
     mode: 'visualize'
+    logger: LunaticLogger
   }
 
   export type Review = {
     mode: 'review'
+    logger?: undefined
   }
 
   export type Collect = {
@@ -72,11 +75,19 @@ export namespace OrchestratorProps {
       onSuccess?: () => void
     }) => Promise<void>
     getDepositProof: () => Promise<void>
+    logger?: undefined
   }
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, surveyUnitData, getReferentiel, mode, metadata } = props
+  const {
+    source,
+    surveyUnitData,
+    getReferentiel,
+    mode,
+    metadata,
+    logger = undefined,
+  } = props
 
   const initialCurrentPage = surveyUnitData?.stateData?.currentPage
   const pagination = source.pagination ?? 'question'
@@ -99,6 +110,7 @@ export function Orchestrator(props: OrchestratorProps) {
     resetChangedData,
     overview,
   } = useLunatic(source, surveyUnitData?.data, {
+    logger,
     activeControls: true,
     getReferentiel,
     autoSuggesterLoading: true,

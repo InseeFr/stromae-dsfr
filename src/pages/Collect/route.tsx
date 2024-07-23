@@ -5,7 +5,6 @@ import {
   getGetSurveyUnitMetadataByIdQueryOptions,
   getSurveyUnitById,
 } from 'api/06-survey-units'
-import type { Metadata } from 'model/Metadata'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
 import { rootRoute } from 'router/router'
 import { ContentSkeleton } from 'shared/components/ContentSkeleton'
@@ -66,7 +65,6 @@ export const collectRoute = createRoute({
 
         return metadata
       })
-      .catch(() => ({}) as Metadata)
 
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
       ([source, surveyUnitData, metadata]) => ({

@@ -84,8 +84,6 @@ export function Orchestrator(props: OrchestratorProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  console.log({ initialCurrentPage })
-  console.log(surveyUnitData?.data)
   const {
     getComponents,
     Provider: LunaticProvider,

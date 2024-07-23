@@ -28,6 +28,7 @@ export function SurveyContainer(
     handleDownloadData,
     handleDepositProofClick,
     children,
+    mode,
     pagination,
     overview,
     isSequencePage,
@@ -125,7 +126,7 @@ export function SurveyContainer(
               {t('button continue label', { currentPage })}
             </Button>
             {bottomContent}
-            {true && (
+            {mode === 'visualize' && (
               <div style={{ justifyContent: 'flex-end', textAlign: 'right' }}>
                 <Button
                   iconId="ri-download-2-line"

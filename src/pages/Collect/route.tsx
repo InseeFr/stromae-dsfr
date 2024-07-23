@@ -76,6 +76,10 @@ export const collectRoute = createRoute({
       })
     )
   },
+  // Do not cache this route's data after it's unloaded
+  gcTime: 0,
+  //Show pendingComponent directly
+  pendingMs: 0,
   errorComponent: ({ error }) => {
     return <ErrorComponent error={error} redirectTo="portal" />
   },

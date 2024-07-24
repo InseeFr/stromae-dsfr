@@ -22,8 +22,8 @@ import { ValidationPage } from './CustomPages/ValidationPage'
 import { WelcomeModal } from './CustomPages/WelcomeModal'
 import { WelcomePage } from './CustomPages/WelcomePage'
 import { SurveyContainer } from './SurveyContainer'
-import { VtlDevTools } from './VtlDevTools/VtlDevtools'
-import { createLunaticLogger } from './VtlDevTools/VtlErrorStore'
+import { VTLDevTools } from './VTLDevTools/VTLDevtools'
+import { createLunaticLogger } from './VTLDevTools/VTLErrorStore'
 import { slotComponents } from './slotComponents'
 import { useStromaeNavigation } from './useStromaeNavigation'
 import { isBlockingError, isSameErrors } from './utils/controls'
@@ -366,7 +366,7 @@ export function Orchestrator(props: OrchestratorProps) {
               open={shouldWelcome}
             />
             <ValidationModal actionsRef={validationModalActionsRef} />
-            {mode === 'visualize' && <VtlDevTools />}
+            {mode === 'visualize' && <VTLDevTools />}
           </div>
         </SurveyContainer>
       </LunaticProvider>

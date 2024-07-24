@@ -53,7 +53,7 @@ const createErrorStore = () => {
   }
 }
 
-//errorStore is used only in visualize mode, we assume this store is a global variable, which may not been refreshed when changing survey without page reload
+// errorStore is only used in visualize mode. We assume it is stored as a global variable, which may not be refreshed when changing the survey without reloading the page.
 const errorStore = createErrorStore()
 
 export const useLoggerErrors = () => {

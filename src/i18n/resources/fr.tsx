@@ -124,7 +124,7 @@ export const translations: Translations<'fr'> = {
     'button previous title': "Revenir à l'étape précédente",
     'button previous label': 'Précédent',
   },
-  VtlDevTools: {
+  VTLDevTools: {
     'fab button': 'Console VTL',
     'clean error': 'Vider les erreurs',
     'table title': "Liste des erreurs d'exécution VTL",

@@ -124,7 +124,7 @@ export const translations: Translations<'sq'> = {
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',
   },
-  VtlDevTools: {
+  VTLDevTools: {
     'fab button': 'Konsola VTL',
     'clean error': 'Pastro Gabimet',
     'table title': 'Lista e Gabimeve të Ekzekutimit VTL',

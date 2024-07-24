@@ -6,10 +6,10 @@ import Fab from '@mui/material/Fab'
 import { useTranslation } from 'i18n'
 import { declareComponentKeys } from 'i18nifty'
 import { useState } from 'react'
-import { useLoggerErrors } from './VtlErrorStore'
+import { useLoggerErrors } from './VTLErrorStore'
 
-export const VtlDevTools = () => {
-  const { t } = useTranslation({ VtlDevTools })
+export const VTLDevTools = () => {
+  const { t } = useTranslation({ VTLDevTools })
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -126,7 +126,7 @@ const { i18n } = declareComponentKeys<
   | 'table header message'
   | 'table header page'
   | 'table header expression'
->()({ VtlDevTools })
+>()({ VTLDevTools })
 
 export type I18n = typeof i18n
 

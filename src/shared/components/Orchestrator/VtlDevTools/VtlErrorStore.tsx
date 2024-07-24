@@ -6,15 +6,15 @@ import type {
   LunaticPageTag,
 } from 'shared/components/Orchestrator/utils/lunaticType'
 
-let errors: (ErrorMessage & { id: string })[] = []
-const listeners = new Set<() => void>()
-const errorIds = new Set<string>() // Track error IDs
-
 function getErrorId(error: ErrorMessage) {
   return error.error.expression
 }
-export const errorStore = {
-  addError(error: ErrorMessage) {
+const createErrorStore = () => {
+  let errors: (ErrorMessage & { id: string })[] = []
+  const listeners = new Set<() => void>()
+  const errorIds = new Set<string>()
+
+  function addError(error: ErrorMessage) {
     const errorId = getErrorId(error)
     if (errorIds.has(errorId)) {
       return // Skip duplicate errors
@@ -22,38 +22,45 @@ export const errorStore = {
     errors = [...errors, { ...error, id: errorId }]
     errorIds.add(errorId)
     emitChange()
-  },
+  }
 
-  clearErrors() {
+  function clearErrors() {
     errors = []
     errorIds.clear()
     emitChange()
-  },
+  }
 
-  getErrors() {
+  function getErrors() {
     return errors
-  },
+  }
 
-  subscribe(listener: () => void) {
+  function subscribe(listener: () => void) {
     listeners.add(listener)
     return () => listeners.delete(listener)
-  },
-}
+  }
 
-function emitChange() {
-  for (const listener of listeners) {
-    listener()
+  function emitChange() {
+    for (const listener of listeners) {
+      listener()
+    }
+  }
+
+  return {
+    addError,
+    clearErrors,
+    getErrors,
+    subscribe,
   }
 }
+
+//errorStore is used only in visualize mode, we assume this store is a global variable, which may not been refreshed when changing survey without page reload
+const errorStore = createErrorStore()
 
 export const useLoggerErrors = () => {
-  const subscribe = (callback: () => void) => {
-    return errorStore.subscribe(callback)
-  }
-
-  const getSnapshot = () => errorStore.getErrors()
-
-  const errors = useSyncExternalStore(subscribe, getSnapshot)
+  const errors = useSyncExternalStore(
+    errorStore.subscribe,
+    errorStore.getErrors
+  )
 
   const resetErrors = () => {
     errorStore.clearErrors()

@@ -124,6 +124,15 @@ export const translations: Translations<'sq'> = {
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',
   },
+  VtlDevTools: {
+    'fab button': 'Konsola VTL',
+    'clean error': 'Pastro Gabimet',
+    'table title': 'Lista e Gabimeve të Ekzekutimit VTL',
+    'table header expression': 'Shprehje',
+    'table header bindings': 'Lidhjet',
+    'table header message': 'Mesazhi i Gabimit',
+    'table header page': 'Faqe',
+  },
   AccessibilityPage: {
     'accessibility title': 'Aksesueshmëria',
     'declaration content': ({ fullUrl }) => (

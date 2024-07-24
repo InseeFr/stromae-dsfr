@@ -124,6 +124,15 @@ export const translations: Translations<'fr'> = {
     'button previous title': "Revenir à l'étape précédente",
     'button previous label': 'Précédent',
   },
+  VtlDevTools: {
+    'fab button': 'Console VTL',
+    'clean error': 'Vider les erreurs',
+    'table title': "Liste des erreurs d'exécution VTL",
+    'table header expression': 'Expression',
+    'table header bindings': 'Bindings',
+    'table header message': "Message d'erreur",
+    'table header page': 'Page',
+  },
   AccessibilityPage: {
     'accessibility title': 'Accessibilité',
     'declaration content': ({ fullUrl }) => (

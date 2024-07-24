@@ -1,13 +1,16 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
+import { VTLExpressionError, VTLInterpretationError } from '@inseefr/lunatic'
 import Badge from '@mui/material/Badge'
 import Fab from '@mui/material/Fab'
-
-import { VTLExpressionError, VTLInterpretationError } from '@inseefr/lunatic'
+import { useTranslation } from 'i18n'
+import { declareComponentKeys } from 'i18nifty'
 import { useState } from 'react'
-import { useLoggerErrors } from '../errorStore'
+import { useLoggerErrors } from './VtlErrorStore'
 
 export const VtlDevTools = () => {
+  const { t } = useTranslation({ VtlDevTools })
+
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const { errors, resetErrors } = useLoggerErrors()
@@ -23,7 +26,7 @@ export const VtlDevTools = () => {
       >
         <Badge badgeContent={errors.length} color="error">
           <Fab variant="extended" onClick={togglePanel}>
-            Console VTL
+            {t('fab button')}
           </Fab>
         </Badge>
       </div>
@@ -66,7 +69,7 @@ export const VtlDevTools = () => {
             )}
           >
             <div className={fr.cx('fr-table__header')}>
-              <h3>Liste des erreurs d'exécution VTL</h3>
+              <h3>{t('table title')}</h3>
 
               <Button
                 iconId="fr-icon-delete-line"
@@ -74,20 +77,20 @@ export const VtlDevTools = () => {
                 priority="primary"
                 title="Vider les erreurs"
               >
-                Vider les erreurs
+                {t('clean error')}
               </Button>
             </div>
             <div className={fr.cx('fr-table__wrapper')}>
               <div className={fr.cx('fr-table__container')}>
                 <div className={fr.cx('fr-table__content')}>
                   <table className={fr.cx('fr-cell--multiline')}>
-                    <caption>Liste des erreurs VTL</caption>
+                    <caption>{t('table title')}</caption>
                     <thead>
                       <tr>
-                        <th scope="col">Expression</th>
-                        <th scope="col">Bindings</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Page</th>
+                        <th scope="col">{t('table header expression')}</th>
+                        <th scope="col">{t('table header bindings')}</th>
+                        <th scope="col">{t('table header message')}</th>
+                        <th scope="col">{t('table header page')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -114,6 +117,18 @@ export const VtlDevTools = () => {
     </>
   )
 }
+
+const { i18n } = declareComponentKeys<
+  | 'table title'
+  | 'fab button'
+  | 'clean error'
+  | 'table header bindings'
+  | 'table header message'
+  | 'table header page'
+  | 'table header expression'
+>()({ VtlDevTools })
+
+export type I18n = typeof i18n
 
 const hasBindings = (
   error: VTLExpressionError

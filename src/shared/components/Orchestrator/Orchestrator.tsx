@@ -10,7 +10,7 @@ import { useNavigate } from '@tanstack/react-router'
 import type { Metadata } from 'model/Metadata'
 import type { StateData } from 'model/StateData'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAddPreLogoutAction } from 'shared/hooks/prelogout'
 import { downloadAsJson } from 'utils/downloadAsJson'
 import { isObjectEmpty } from 'utils/isObjectEmpty'
@@ -22,13 +22,14 @@ import { ValidationPage } from './CustomPages/ValidationPage'
 import { WelcomeModal } from './CustomPages/WelcomeModal'
 import { WelcomePage } from './CustomPages/WelcomePage'
 import { SurveyContainer } from './SurveyContainer'
+import { createLunaticLogger } from './lunaticLogger/errorStore'
 import { slotComponents } from './slotComponents'
 import { useStromaeNavigation } from './useStromaeNavigation'
 import { isBlockingError, isSameErrors } from './utils/controls'
 import type {
   LunaticComponentsProps,
   LunaticGetReferentiel,
-  LunaticLogger,
+  LunaticPageTag,
 } from './utils/lunaticType'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
@@ -59,12 +60,10 @@ export namespace OrchestratorProps {
 
   export type Visualize = {
     mode: 'visualize'
-    logger: LunaticLogger
   }
 
   export type Review = {
     mode: 'review'
-    logger?: undefined
   }
 
   export type Collect = {
@@ -75,26 +74,23 @@ export namespace OrchestratorProps {
       onSuccess?: () => void
     }) => Promise<void>
     getDepositProof: () => Promise<void>
-    logger?: undefined
   }
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const {
-    source,
-    surveyUnitData,
-    getReferentiel,
-    mode,
-    metadata,
-    logger = undefined,
-  } = props
+  const { source, surveyUnitData, getReferentiel, mode, metadata } = props
 
   const initialCurrentPage = surveyUnitData?.stateData?.currentPage
   const pagination = source.pagination ?? 'question'
 
   const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const pageTagRef = useRef<LunaticPageTag>('1')
 
+  const lunaticLogger = useMemo(
+    () => createLunaticLogger({ pageTag: pageTagRef }),
+    []
+  )
   const {
     getComponents,
     Provider: LunaticProvider,
@@ -110,13 +106,15 @@ export function Orchestrator(props: OrchestratorProps) {
     resetChangedData,
     overview,
   } = useLunatic(source, surveyUnitData?.data, {
-    logger,
+    logger: lunaticLogger,
     activeControls: true,
     getReferentiel,
     autoSuggesterLoading: true,
     trackChanges: mode === 'collect',
     withOverview: true,
   })
+
+  pageTagRef.current = pageTag
 
   const [activeErrors, setActiveErrors] = useState<
     Record<string, LunaticError[]> | undefined

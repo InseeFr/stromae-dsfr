@@ -42,8 +42,11 @@ jobs:
     needs:
       - check_if_version_upgraded
     if: |
-      github.event_name == 'push'  && 
-      needs.check_if_version_upgraded.outputs.is_upgraded_version == 'true'
+      needs.check_if_version_upgraded.outputs.is_upgraded_version == 'true' &&
+      (
+        github.event_name == 'push' ||
+        needs.check_if_version_upgraded.outputs.is_release_beta == 'true'
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

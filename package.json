@@ -52,7 +52,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.9",
     "husky": "^9.1.4",
-    "orval": "^6.31.0",
+    "orval": "^7.0.0",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
     "typescript": "^5.5.4",

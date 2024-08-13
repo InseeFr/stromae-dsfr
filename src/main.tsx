@@ -11,6 +11,7 @@ import { OidcProvider } from 'oidc'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { routeTree } from 'router/router'
+import { setupTelemetry } from 'telemetry'
 
 startReactDsfr({
   defaultColorScheme: 'system',
@@ -59,3 +60,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </MuiDsfrThemeProvider>
   </React.StrictMode>
 )
+
+setupTelemetry('console')

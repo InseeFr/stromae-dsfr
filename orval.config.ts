@@ -2,7 +2,6 @@ import { defineConfig } from 'orval'
 
 export default defineConfig({
   openapi: {
-    input: './openapi/api-docs.json',
     output: {
       mode: 'tags',
       target: 'src/api/',

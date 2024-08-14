@@ -15,7 +15,6 @@
     "format:check": "npm run _format -- --list-different",
     "predev": "react-dsfr update-icons",
     "prebuild": "react-dsfr update-icons",
-    "openapi": "orval --config ./orval.config.ts",
     "generate-api-client": "tsx scripts/generate-api-client.ts"
   },
   "dependencies": {

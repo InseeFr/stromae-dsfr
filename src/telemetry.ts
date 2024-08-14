@@ -1,5 +1,4 @@
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web'
-import { ZoneContextManager } from '@opentelemetry/context-zone'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 import { registerInstrumentations } from '@opentelemetry/instrumentation'
 import { Resource } from '@opentelemetry/resources'
@@ -14,28 +13,27 @@ export const setupTelemetry = async (exporter: 'console' | 'otpl') => {
   const provider = new WebTracerProvider({
     resource: new Resource({ 'service.name': 'Stromae-dsfr' }),
   })
+  console.log('setuptTelemetry')
 
-  // we will use ConsoleSpanExporter to check the generated spans in dev console
-  //provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()))
-  exporter === 'otpl' &&
-    provider.addSpanProcessor(
-      new BatchSpanProcessor(
-        new OTLPTraceExporter({
-          url: 'https://collector.demo.insee.io/v1/traces',
-        })
+  switch (exporter) {
+    case 'console':
+      provider.addSpanProcessor(
+        new SimpleSpanProcessor(new ConsoleSpanExporter())
       )
-    )
-  exporter === 'console' &&
-    provider.addSpanProcessor(
-      new SimpleSpanProcessor(new ConsoleSpanExporter())
-    )
-
-  provider.register({
-    // Changing default contextManager to use ZoneContextManager - supports asynchronous operations - optional
-    contextManager: new ZoneContextManager(),
-  })
+      break
+    case 'otpl':
+      provider.addSpanProcessor(
+        new BatchSpanProcessor(
+          new OTLPTraceExporter({
+            url: 'https://collector.demo.insee.io/v1/traces',
+          })
+        )
+      )
+      break
+  }
 
   registerInstrumentations({
+    tracerProvider: provider,
     instrumentations: [
       // getWebAutoInstrumentations initializes all the package.
       // it's possible to configure each instrumentation if needed.

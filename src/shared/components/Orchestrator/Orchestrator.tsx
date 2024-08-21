@@ -3,7 +3,6 @@ import {
   LunaticComponents,
   useLunatic,
   type LunaticData,
-  type LunaticError,
   type LunaticSource,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
@@ -12,6 +11,7 @@ import type { StateData } from 'model/StateData'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAddPreLogoutAction } from 'shared/hooks/prelogout'
+import { notifyTelemetry } from 'shared/telemetry/telemetryStore'
 import { downloadAsJson } from 'utils/downloadAsJson'
 import { isObjectEmpty } from 'utils/isObjectEmpty'
 import { useRefSync } from 'utils/useRefSync'
@@ -29,6 +29,7 @@ import { useStromaeNavigation } from './useStromaeNavigation'
 import { isBlockingError, isSameErrors } from './utils/controls'
 import type {
   LunaticComponentsProps,
+  LunaticControls,
   LunaticGetReferentiel,
   LunaticPageTag,
 } from './utils/lunaticType'
@@ -121,9 +122,12 @@ export function Orchestrator(props: OrchestratorProps) {
 
   pageTagRef.current = pageTag
 
-  const [activeErrors, setActiveErrors] = useState<
-    Record<string, LunaticError[]> | undefined
-  >(undefined)
+  const [activeErrors, setActiveErrors] = useState<LunaticControls>(undefined)
+
+  notifyTelemetry({
+    pageTag,
+    controls: activeErrors,
+  })
 
   useEffect(() => {
     if (activeErrors) {

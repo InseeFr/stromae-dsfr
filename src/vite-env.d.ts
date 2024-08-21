@@ -11,6 +11,8 @@ type ImportMetaEnv = {
   VITE_VISUALIZE_DISABLED: string
   VITE_BASE_PATH: string
   VITE_REVIEW_IDENTITY_PROVIDER: string
+  VITE_OLTP_ENABLE: string
+  VITE_OLTP_ENDPOINT_URL: string
   BASE_URL: string
   MODE: string
   DEV: boolean

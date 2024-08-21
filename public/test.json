@@ -1,0 +1,111 @@
+{
+  "id": "lyrbufuo",
+  "label": { "type": "VTL|MD", "value": "TMA" },
+  "modele": "TMA",
+  "maxPage": "2",
+  "resizing": {},
+  "variables": [
+    {
+      "name": "NOMBREDEJO",
+      "values": {
+        "EDITED": null,
+        "FORCED": null,
+        "INPUTTED": null,
+        "PREVIOUS": null,
+        "COLLECTED": null
+      },
+      "dimension": 0,
+      "variableType": "COLLECTED"
+    },
+    {
+      "name": "FILTER_RESULT_NOMBREDEJO",
+      "expression": { "type": "VTL", "value": "true" },
+      "variableType": "CALCULATED"
+    }
+  ],
+  "components": [
+    {
+      "id": "lyyf2zih",
+      "page": "1",
+      "label": { "type": "VTL|MD", "value": "\"I - \" || \"Seq1\"" },
+      "componentType": "Sequence",
+      "conditionFilter": { "type": "VTL", "value": "true" }
+    },
+    {
+      "id": "question-lyyfcwb4",
+      "page": "2",
+      "label": {
+        "type": "VTL|MD",
+        "value": "\"1\\. \" || \"Nombre de jours\""
+      },
+      "components": [
+        {
+          "id": "lyyfcwb4",
+          "max": 100.0,
+          "min": 10.0,
+          "page": "2",
+          "unit": "jours",
+          "controls": [
+            {
+              "id": "lyyfcwb4-format-borne-inf-sup",
+              "type": "SIMPLE",
+              "control": {
+                "type": "VTL",
+                "value": "not(not(isnull(NOMBREDEJO)) and (10>NOMBREDEJO or 100<NOMBREDEJO))"
+              },
+              "criticality": "ERROR",
+              "errorMessage": {
+                "type": "VTL|MD",
+                "value": "\" La valeur doit être comprise entre 10 et 100.\""
+              },
+              "typeOfControl": "FORMAT"
+            },
+            {
+              "id": "lyyfcwb4-format-decimal",
+              "type": "SIMPLE",
+              "control": {
+                "type": "VTL",
+                "value": "not(not(isnull(NOMBREDEJO))  and round(NOMBREDEJO,0)<>NOMBREDEJO)"
+              },
+              "criticality": "ERROR",
+              "errorMessage": {
+                "type": "VTL|MD",
+                "value": "\"Le nombre doit comporter au maximum 0 chiffre(s) après la virgule.\""
+              },
+              "typeOfControl": "FORMAT"
+            },
+            {
+              "id": "lyyfcwb4-CI-0",
+              "type": "SIMPLE",
+              "control": {
+                "type": "VTL",
+                "value": "not(nvl(NOMBREDEJO,88)>10)"
+              },
+              "criticality": "WARN",
+              "errorMessage": {
+                "type": "VTL|MD",
+                "value": "\"Inferieur au minimum\""
+              },
+              "typeOfControl": "CONSISTENCY"
+            }
+          ],
+          "decimals": 0,
+          "response": { "name": "NOMBREDEJO" },
+          "mandatory": false,
+          "description": {
+            "type": "VTL|MD",
+            "value": "Format attendu : un nombre en jours entre 10 et 100"
+          },
+          "componentType": "InputNumber"
+        }
+      ],
+      "componentType": "Question",
+      "conditionFilter": { "type": "VTL", "value": "true" }
+    }
+  ],
+  "pagination": "question",
+  "componentType": "Questionnaire",
+  "enoCoreVersion": "3.24.2",
+  "generatingDate": "20-08-2024 14:37:20",
+  "lunaticModelVersion": "3.12.0"
+}

@@ -11,7 +11,8 @@ import { OidcProvider } from 'oidc'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { routeTree } from 'router/router'
-import { setupTelemetry } from 'telemetry'
+import { setupRouterTelemetry } from 'shared/telemetry/subscribeToRouterEvt'
+import { setupTelemetry } from 'shared/telemetry/telemetry'
 
 startReactDsfr({
   defaultColorScheme: 'system',
@@ -40,6 +41,11 @@ const router = createRouter({
   defaultPreloadStaleTime: 0,
 })
 
+if (import.meta.env.VITE_OLTP_ENABLE === 'true') {
+  setupTelemetry('console')
+  setupRouterTelemetry(router)
+}
+
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
@@ -60,5 +66,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </MuiDsfrThemeProvider>
   </React.StrictMode>
 )
-
-setupTelemetry('console')

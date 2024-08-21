@@ -1,4 +1,6 @@
 import type { LunaticSource } from '@inseefr/lunatic'
+import { type Span } from '@opentelemetry/api'
+
 import { createRoute } from '@tanstack/react-router'
 import { getGetQuestionnaireDataQueryOptions } from 'api/03-questionnaires'
 import {
@@ -11,6 +13,7 @@ import { ContentSkeleton } from 'shared/components/ContentSkeleton'
 import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
 import { protectedRouteLoader } from 'shared/loader/protectedLoader'
 import { metadataStore } from 'shared/metadataStore/metadataStore'
+import { tracer } from 'shared/telemetry/telemetry'
 import { convertOldPersonalization } from 'utils/convertOldPersonalization'
 import { z } from 'zod'
 import { CollectPage } from './CollectPage'
@@ -33,21 +36,22 @@ export const collectRoute = createRoute({
     params: { questionnaireId, surveyUnitId },
     context: { queryClient },
     abortController,
-  }) => {
-    const sourcePr = queryClient
-      .ensureQueryData(
-        getGetQuestionnaireDataQueryOptions(questionnaireId, {
-          request: { signal: abortController.signal },
-        })
-      )
-      .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
+  }) =>
+    tracer.startActiveSpan('Loading collect data', (span: Span) => {
+      const sourcePr = queryClient
+        .ensureQueryData(
+          getGetQuestionnaireDataQueryOptions(questionnaireId, {
+            request: { signal: abortController.signal },
+          })
+        )
+        .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
-    //We don't need the cache from react-query for data that changed too often and need to be fresh
-    const surveyUnitDataPr = getSurveyUnitById(
-      surveyUnitId,
-      undefined,
-      abortController.signal
-    ).then((suData) => suData as SurveyUnitData) // data are heavy too
+      //We don't need the cache from react-query for data that changed too often and need to be fresh
+      const surveyUnitDataPr = getSurveyUnitById(
+        surveyUnitId,
+        undefined,
+        abortController.signal
+      ).then((suData) => suData as SurveyUnitData) // data are heavy too
 
     const metadataPr = queryClient
       .ensureQueryData(

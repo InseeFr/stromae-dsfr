@@ -1,10 +1,7 @@
-import Badge from '@codegouvfr/react-dsfr/Badge'
 import type { Translations } from 'i18n/types'
 
 export const translations: Translations<'sq'> = {
   Footer: {
-    'footer operator logo alt': 'Insee, mat për të kuptuar',
-
     license: (
       <>
         Ky sajt përdor aplikacionet e Insee 'Stromae' dhe 'Lunatic', të cilat
@@ -33,15 +30,6 @@ export const translations: Translations<'sq'> = {
       'Faqja kryesore - Emri i entitetit (ministria, sekretariati i shtetit, qeveria)',
     'quick access support': 'Kontakto asistencën',
     'quick access logout': 'Dil',
-    'service title': (
-      <>
-        Sektori i anketës{' '}
-        <Badge as="span" noIcon severity="success">
-          Beta
-        </Badge>
-      </>
-    ),
-    'operator logo alt': 'Insee, mat për të kuptuar',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'A jeni ende aty?',

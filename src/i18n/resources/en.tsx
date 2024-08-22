@@ -1,10 +1,7 @@
-import Badge from '@codegouvfr/react-dsfr/Badge'
 import type { Translations } from 'i18n/types'
 
 export const translations: Translations<'en'> = {
   Footer: {
-    'footer operator logo alt': 'Insee, measure to understand',
-
     license: (
       <>
         This site uses Insee's 'Stromae' and 'Lunatic' applications, which are
@@ -33,15 +30,6 @@ export const translations: Translations<'en'> = {
       'Home - Name of the entity (ministry, state secretariat, government)',
     'quick access support': 'Contact support',
     'quick access logout': 'Log out',
-    'service title': (
-      <>
-        Survey sector{' '}
-        <Badge as="span" noIcon severity="success">
-          Beta
-        </Badge>
-      </>
-    ),
-    'operator logo alt': 'Insee, measure to understand',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'Are you still there?',

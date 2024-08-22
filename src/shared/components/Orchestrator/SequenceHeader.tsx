@@ -37,7 +37,7 @@ export function SequenceHeader(props: SequenceHeaderProps) {
     )
 
   return (
-    <div className={fr.cx('fr-stepper', 'fr-mb-0')}>
+    <div className={fr.cx('fr-stepper', 'fr-mb-2v')}>
       <h2 className={fr.cx('fr-stepper__title', 'fr-mb-0')}>
         {currentSequence.label}
         <span className={fr.cx('fr-stepper__state')}>

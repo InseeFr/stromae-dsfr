@@ -1,9 +1,7 @@
-import Badge from '@codegouvfr/react-dsfr/Badge'
 import type { Translations } from 'i18n/types'
 
 export const translations: Translations<'fr'> = {
   Footer: {
-    'footer operator logo alt': 'Insee, mesurer pour comprendre',
     license: (
       <>
         Ce site utilise les applications Insee 'Stromae' et 'Lunatic', qui sont
@@ -31,15 +29,6 @@ export const translations: Translations<'fr'> = {
     'home link title': 'Application de collecte internet',
     'quick access support': "Contacter l'assistance",
     'quick access logout': 'Se déconnecter',
-    'service title': (
-      <>
-        Filière d'enquête{' '}
-        <Badge as="span" noIcon severity="success">
-          Beta
-        </Badge>
-      </>
-    ),
-    'operator logo alt': 'Insee, mesurer pour comprendre',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'Êtes-vous toujours là?',

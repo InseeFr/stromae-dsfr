@@ -421,10 +421,4 @@ export const translations: Translations<'sq'> = {
     'unknownError.paragraph':
       'Ju lutem provoni më vonë ose kontaktoni administratorin e faqes për ndihmë.',
   },
-  metadataDefaultState: {
-    label: 'Linja e Anketës',
-    surveyUnitIdentifier: 'Aplikacioni për Mbledhjen e të Dhënave në Internet',
-    mainLogo: 'Logoja e INSEE',
-    objectives: 'Objektivi i shkurtër i anketës tuaj',
-  },
 }

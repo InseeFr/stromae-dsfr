@@ -7,7 +7,7 @@ export function convertContent(
   personalization: SurveyUnitMetadata['personalization']
 ): Content | undefined {
   const textItems = personalization
-    ?.filter((item) => keysToExtract.includes(item.name))
+    ?.filter((item) => keysToExtract.includes(item.name) && item.value !== '')
     .map((item) => item.value)
 
   if (textItems === undefined) return undefined

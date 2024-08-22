@@ -1,12 +1,53 @@
 import { fr } from '@codegouvfr/react-dsfr'
-import { declareComponentKeys, useTranslation } from 'i18n'
-import type { Metadata } from 'model/Metadata'
+import {
+  declareComponentKeys,
+  useResolveLocalizedString,
+  useTranslation,
+} from 'i18n'
+import type { Contents, Metadata } from 'model/Metadata'
+import { Fragment } from 'react'
 import { useDocumentTitle } from 'shared/hooks/useDocumentTitle'
 
-export function WelcomePage(props: { metadata?: Metadata }) {
+function renderMetadataContents(contents: Contents[] | undefined) {
+  if (contents === undefined) return null
+  return (
+    <>
+      {contents.map((content, contentIndex) => (
+        <section key={contentIndex}>
+          {content.title && <h2>{content.title}</h2>}
+          {content.contentBlocks.map((block, blockIndex) => (
+            <Fragment key={blockIndex}>
+              {(() => {
+                switch (block.type) {
+                  case 'list':
+                    return (
+                      <ul className={fr.cx('fr-mb-6v')}>
+                        {block.textItems.map((item, itemIndex) => (
+                          <li key={itemIndex}>{item}</li>
+                        ))}
+                      </ul>
+                    )
+                  case 'paragraph':
+                  default:
+                    return block.textItems.map((text, textIndex) => (
+                      <p key={textIndex}>{text}</p>
+                    ))
+                }
+              })()}
+            </Fragment>
+          ))}
+        </section>
+      ))}
+    </>
+  )
+}
+
+export function WelcomePage(props: { metadata: Metadata }) {
   const { t } = useTranslation({ WelcomePage })
   const { metadata } = props
-
+  const { resolveLocalizedString } = useResolveLocalizedString({
+    labelWhenMismatchingLanguage: true,
+  })
   console.log(metadata)
   useDocumentTitle(t('document title'))
 
@@ -15,8 +56,10 @@ export function WelcomePage(props: { metadata?: Metadata }) {
       <div className={fr.cx('fr-my-4w')}>
         <h1>{t('title')}</h1>
         <p className={fr.cx('fr-text--lead')}>
-          {metadata?.objectives ?? t('paragraph')}
+          {resolveLocalizedString(metadata.objectives)}
         </p>
+        {renderMetadataContents(metadata.campaignInfo)}
+        {renderMetadataContents(metadata.surveyUnitInfo)}
       </div>
     </>
   )

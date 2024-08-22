@@ -56,7 +56,7 @@ export namespace OrchestratorProps {
     source: LunaticSource
     surveyUnitData: SurveyUnitData | undefined
     getReferentiel: LunaticGetReferentiel
-    metadata: Metadata | undefined
+    metadata: Metadata
   }
 
   export type Visualize = {

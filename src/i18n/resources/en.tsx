@@ -413,10 +413,4 @@ export const translations: Translations<'en'> = {
     'unknownError.paragraph':
       'Please try again later or contact the site administrator for assistance.',
   },
-  metadataDefaultState: {
-    label: 'Survey Line',
-    surveyUnitIdentifier: 'Internet Collection Application',
-    mainLogo: 'INSEE Logo',
-    objectives: 'Short objective of your survey',
-  },
 }

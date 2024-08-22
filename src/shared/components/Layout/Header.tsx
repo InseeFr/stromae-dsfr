@@ -1,7 +1,11 @@
 import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
 import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
 import { useMatchRoute, useSearch } from '@tanstack/react-router'
-import { declareComponentKeys, useTranslation } from 'i18n'
+import {
+  declareComponentKeys,
+  useResolveLocalizedString,
+  useTranslation,
+} from 'i18n'
 import { useOidc } from 'oidc'
 import { collectPath } from 'pages/Collect/route'
 import { executePreLogoutActions } from 'shared/hooks/prelogout'
@@ -10,6 +14,10 @@ import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
 export function Header() {
   const { t } = useTranslation({ Header })
   const { isUserLoggedIn, logout } = useOidc()
+  const { resolveLocalizedString, resolveLocalizedStringDetailed } =
+    useResolveLocalizedString({
+      labelWhenMismatchingLanguage: true,
+    })
 
   const {
     label: serviceTitle,
@@ -68,10 +76,10 @@ export function Header() {
               } as const,
             ]),
       ]}
-      serviceTagline={surveyUnitIdentifier}
-      serviceTitle={serviceTitle}
+      serviceTagline={resolveLocalizedString(surveyUnitIdentifier)}
+      serviceTitle={resolveLocalizedString(serviceTitle)}
       operatorLogo={{
-        alt: mainLogo.label,
+        alt: resolveLocalizedStringDetailed(mainLogo.label).str,
         imgUrl: mainLogo.url,
         orientation: 'vertical',
       }}

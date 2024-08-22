@@ -1,20 +1,32 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
-import { declareComponentKeys, useTranslation } from 'i18n'
-import type { Logo } from 'model/api'
+import {
+  declareComponentKeys,
+  useResolveLocalizedString,
+  useTranslation,
+} from 'i18n'
+import type { Logo } from 'model/Metadata'
 import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from 'pages/Security/SecurityPage'
 import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
 import { Header } from './Header'
 
-const transformLogo = (logo: Logo) => ({
-  alt: logo.label,
+const transformLogo = (
+  logo: Logo,
+  resolveLocalizedString: ReturnType<
+    typeof useResolveLocalizedString
+  >['resolveLocalizedStringDetailed']
+) => ({
+  alt: resolveLocalizedString(logo.label).str,
   imgUrl: logo.url,
 })
 
 export function Footer() {
   const { t } = useTranslation({
     Footer,
+  })
+  const { resolveLocalizedStringDetailed } = useResolveLocalizedString({
+    labelWhenMismatchingLanguage: true,
   })
   const { t: t_Header } = useTranslation({ Header })
   const { t: t_NavigationAssistancePage } = useTranslation({
@@ -29,8 +41,10 @@ export function Footer() {
 
   const partnersLogos = secondariesLogo
     ? {
-        main: transformLogo(secondariesLogo[0]),
-        sub: secondariesLogo.slice(1).map(transformLogo),
+        main: transformLogo(secondariesLogo[0], resolveLocalizedStringDetailed),
+        sub: secondariesLogo
+          .slice(1)
+          .map((logo) => transformLogo(logo, resolveLocalizedStringDetailed)),
       }
     : undefined
 
@@ -52,7 +66,7 @@ export function Footer() {
         to: '/mentions-legales',
       }}
       operatorLogo={{
-        alt: mainLogo.label,
+        alt: resolveLocalizedStringDetailed(mainLogo.label).str,
         imgUrl: mainLogo.url,
         orientation: 'vertical',
       }}

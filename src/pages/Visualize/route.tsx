@@ -68,7 +68,7 @@ export const visualizeRoute = createRoute({
             if (metadata.label) {
               document.title = metadata.label
             }
-            const t = metadataStore.updateMetadata({
+            return metadataStore.updateMetadata({
               label: metadata.label,
               mainLogo: metadata.logos?.main,
               secondariesLogo: metadata.logos?.secondaries,
@@ -76,10 +76,8 @@ export const visualizeRoute = createRoute({
                 metadata.personalization
               ),
             })
-            console.log('t', t)
-            return t
           })
-      : Promise.resolve(undefined)
+      : Promise.resolve(metadataStore.getSnapshot())
 
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
       ([source, surveyUnitData, metadata]) => {

@@ -1,5 +1,7 @@
-type Logo = {
-  label: string
+import type { LocalizedString } from 'i18n'
+
+export type Logo = {
+  label: LocalizedString
   url: string
 }
 
@@ -7,12 +9,14 @@ export type Content = {
   type: 'paragraph' | 'list'
   textItems: string[]
 }
+
+export type Contents = { title?: string; contentBlocks: Content[] }
 export type Metadata = {
-  label: string
-  objectives: string
+  label: LocalizedString
+  objectives: LocalizedString
   mainLogo: Logo
   secondariesLogo?: Logo[]
-  campaignInfo?: { title?: string; contentBlocks: Content[] }[]
-  surveyUnitInfo?: { title?: string; contentBlocks: Content[] }[]
-  surveyUnitIdentifier: string
+  campaignInfo?: Contents[]
+  surveyUnitInfo?: Contents[]
+  surveyUnitIdentifier: LocalizedString
 }

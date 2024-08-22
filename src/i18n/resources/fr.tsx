@@ -430,10 +430,4 @@ export const translations: Translations<'fr'> = {
     'unknownError.paragraph':
       "Veuillez réessayer ultérieurement ou contacter l'administrateur du site pour obtenir de l'aide.",
   },
-  metadataDefaultState: {
-    label: "Filière d'enquête",
-    surveyUnitIdentifier: 'Application de collecte internet',
-    mainLogo: "Logo de l'insee",
-    objectives: 'Objectif court de votre enquête',
-  },
 }

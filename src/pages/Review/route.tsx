@@ -11,6 +11,7 @@ import { ContentSkeleton } from 'shared/components/ContentSkeleton'
 import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
 import { protectedRouteLoader } from 'shared/loader/protectedLoader'
 import { metadataStore } from 'shared/metadataStore/metadataStore'
+import { convertOldPersonalization } from 'utils/convertOldPersonalization'
 import { ReviewPage } from './ReviewPage'
 
 export const reviewPath =
@@ -56,9 +57,10 @@ export const reviewRoute = createRoute({
           metadata.label ?? "Relecture questionnaire | Filière d'Enquête"
 
         return metadataStore.updateMetadata({
-          label: metadata.label,
+          ...metadata,
           mainLogo: metadata.logos?.main,
           secondariesLogo: metadata.logos?.secondaries,
+          surveyUnitInfo: convertOldPersonalization(metadata.personalization),
         })
       })
 

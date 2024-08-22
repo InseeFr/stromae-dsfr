@@ -25,6 +25,9 @@ const defaultState: Metadata = {
     },
     url: logoInsee,
   },
+  campaignInfo: undefined,
+  secondariesLogo: undefined,
+  surveyUnitInfo: undefined,
 }
 
 let state: Metadata = defaultState
@@ -37,7 +40,7 @@ export const metadataStore = {
   updateMetadata(newState: Partial<Metadata>) {
     const updatedState = Object.keys(newState).reduce(
       (acc, key) => {
-        if (newState[key as keyof Metadata] !== undefined) {
+        if (key in state && newState[key as keyof Metadata] !== undefined) {
           return { ...acc, [key]: newState[key as keyof Metadata] }
         }
         return acc

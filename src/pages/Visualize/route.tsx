@@ -69,7 +69,7 @@ export const visualizeRoute = createRoute({
               document.title = metadata.label
             }
             return metadataStore.updateMetadata({
-              label: metadata.label,
+              ...metadata,
               mainLogo: metadata.logos?.main,
               secondariesLogo: metadata.logos?.secondaries,
               surveyUnitInfo: convertOldPersonalization(

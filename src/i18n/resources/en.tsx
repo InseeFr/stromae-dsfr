@@ -33,7 +33,6 @@ export const translations: Translations<'en'> = {
       'Home - Name of the entity (ministry, state secretariat, government)',
     'quick access support': 'Contact support',
     'quick access logout': 'Log out',
-    'service tag line': 'Internet collection application',
     'service title': (
       <>
         Survey sector{' '}
@@ -413,5 +412,11 @@ export const translations: Translations<'en'> = {
     'unknownError.subtitle': 'An unexpected error occurred.',
     'unknownError.paragraph':
       'Please try again later or contact the site administrator for assistance.',
+  },
+  metadataDefaultState: {
+    label: 'Survey Line',
+    surveyUnitIdentifier: 'Internet Collection Application',
+    mainLogo: 'INSEE Logo',
+    objectives: 'Short objective of your survey',
   },
 }

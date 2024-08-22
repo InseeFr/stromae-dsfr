@@ -33,7 +33,6 @@ export const translations: Translations<'sq'> = {
       'Faqja kryesore - Emri i entitetit (ministria, sekretariati i shtetit, qeveria)',
     'quick access support': 'Kontakto asistencën',
     'quick access logout': 'Dil',
-    'service tag line': 'Aplikacioni i mbledhjes në internet',
     'service title': (
       <>
         Sektori i anketës{' '}
@@ -421,5 +420,11 @@ export const translations: Translations<'sq'> = {
     'unknownError.subtitle': 'Ndodhi një gabim i papritur.',
     'unknownError.paragraph':
       'Ju lutem provoni më vonë ose kontaktoni administratorin e faqes për ndihmë.',
+  },
+  metadataDefaultState: {
+    label: 'Linja e Anketës',
+    surveyUnitIdentifier: 'Aplikacioni për Mbledhjen e të Dhënave në Internet',
+    mainLogo: 'Logoja e INSEE',
+    objectives: 'Objektivi i shkurtër i anketës tuaj',
   },
 }

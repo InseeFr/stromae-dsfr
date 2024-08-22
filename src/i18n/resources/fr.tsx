@@ -31,7 +31,6 @@ export const translations: Translations<'fr'> = {
     'home link title': 'Application de collecte internet',
     'quick access support': "Contacter l'assistance",
     'quick access logout': 'Se déconnecter',
-    'service tag line': 'Application de collecte internet',
     'service title': (
       <>
         Filière d'enquête{' '}
@@ -430,5 +429,11 @@ export const translations: Translations<'fr'> = {
     'unknownError.subtitle': "Une erreur inattendue s'est produite.",
     'unknownError.paragraph':
       "Veuillez réessayer ultérieurement ou contacter l'administrateur du site pour obtenir de l'aide.",
+  },
+  metadataDefaultState: {
+    label: "Filière d'enquête",
+    surveyUnitIdentifier: 'Application de collecte internet',
+    mainLogo: "Logo de l'insee",
+    objectives: 'Objectif court de votre enquête',
   },
 }

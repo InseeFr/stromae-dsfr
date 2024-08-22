@@ -4,7 +4,7 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import type { Metadata } from 'model/Metadata'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
 import type { Nomenclature } from 'shared/components/Orchestrator/utils/lunaticType'
-import { metadataSchema } from 'shared/parser/metadata'
+import { surveyUnitMetadataSchema } from 'shared/parser/metadata'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
   return axios.get<T>(url, options).then(({ data }) => data)
@@ -36,7 +36,7 @@ export const metadataQueryOptions = (
     queryKey: [metadataUrl],
     queryFn: () =>
       axiosGet<Metadata>(metadataUrl, options).then((metadata) =>
-        metadataSchema.parse(metadata)
+        surveyUnitMetadataSchema.parse(metadata)
       ),
   })
 

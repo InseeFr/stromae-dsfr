@@ -55,15 +55,13 @@ export const collectRoute = createRoute({
         })
       )
       .then((metadata) => {
-        metadataStore.updateMetadata({
+        document.title = metadata.label ?? "Questionnaire | Filière d'Enquête"
+
+        return metadataStore.updateMetadata({
           label: metadata.label,
           mainLogo: metadata.logos?.main,
           secondariesLogo: metadata.logos?.secondaries,
         })
-
-        document.title = metadata.label ?? "Questionnaire | Filière d'Enquête"
-
-        return metadata
       })
 
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(

@@ -11,7 +11,11 @@ export function Header() {
   const { t } = useTranslation({ Header })
   const { isUserLoggedIn, logout } = useOidc()
 
-  const { label: serviceTitle, mainLogo } = useMetadataStore()
+  const {
+    label: serviceTitle,
+    mainLogo,
+    surveyUnitIdentifier,
+  } = useMetadataStore()
 
   /**
    * There is an issue with this part of the code: the search type is not well narrowed with isCollectRoute. I'm waiting for a better solution.
@@ -64,7 +68,7 @@ export function Header() {
               } as const,
             ]),
       ]}
-      serviceTagline={t('service tag line')}
+      serviceTagline={surveyUnitIdentifier}
       serviceTitle={serviceTitle}
       operatorLogo={{
         alt: mainLogo.label,
@@ -80,7 +84,6 @@ const { i18n } = declareComponentKeys<
   | 'home link title'
   | 'quick access support'
   | 'quick access logout'
-  | 'service tag line'
   | { K: 'service title'; R: JSX.Element }
   | 'operator logo alt'
 >()({ Header })

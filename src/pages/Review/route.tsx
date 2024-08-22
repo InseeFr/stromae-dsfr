@@ -52,15 +52,14 @@ export const reviewRoute = createRoute({
         })
       )
       .then((metadata) => {
-        metadataStore.updateMetadata({
+        document.title =
+          metadata.label ?? "Relecture questionnaire | Filière d'Enquête"
+
+        return metadataStore.updateMetadata({
           label: metadata.label,
           mainLogo: metadata.logos?.main,
           secondariesLogo: metadata.logos?.secondaries,
         })
-        document.title =
-          metadata.label ?? "Relecture questionnaire | Filière d'Enquête"
-
-        return metadata
       })
 
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(

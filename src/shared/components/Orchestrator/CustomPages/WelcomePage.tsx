@@ -7,6 +7,7 @@ export function WelcomePage(props: { metadata?: Metadata }) {
   const { t } = useTranslation({ WelcomePage })
   const { metadata } = props
 
+  console.log(metadata)
   useDocumentTitle(t('document title'))
 
   return (

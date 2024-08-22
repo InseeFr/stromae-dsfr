@@ -48,7 +48,7 @@ export function WelcomePage(props: { metadata: Metadata }) {
   const { resolveLocalizedString } = useResolveLocalizedString({
     labelWhenMismatchingLanguage: true,
   })
-  console.log(metadata)
+
   useDocumentTitle(t('document title'))
 
   return (

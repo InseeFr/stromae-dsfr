@@ -11,7 +11,10 @@ import type { StateData } from 'model/StateData'
 import type { SurveyUnitData } from 'model/SurveyUnitData'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAddPreLogoutAction } from 'shared/hooks/prelogout'
-import { notifyTelemetry } from 'shared/telemetry/telemetryStore'
+import {
+  notifyTelemetry,
+  onChangeTracker,
+} from 'shared/telemetry/trackers/LunaticTracker'
 import { downloadAsJson } from 'utils/downloadAsJson'
 import { isObjectEmpty } from 'utils/isObjectEmpty'
 import { useRefSync } from 'utils/useRefSync'
@@ -111,7 +114,9 @@ export function Orchestrator(props: OrchestratorProps) {
     getChangedData,
     resetChangedData,
     overview,
+    pager,
   } = useLunatic(source, surveyUnitData?.data, {
+    onChange: onChangeTracker,
     logger: lunaticLogger,
     activeControls: true,
     getReferentiel,
@@ -123,11 +128,6 @@ export function Orchestrator(props: OrchestratorProps) {
   pageTagRef.current = pageTag
 
   const [activeErrors, setActiveErrors] = useState<LunaticControls>(undefined)
-
-  notifyTelemetry({
-    pageTag,
-    controls: activeErrors,
-  })
 
   useEffect(() => {
     if (activeErrors) {
@@ -175,6 +175,18 @@ export function Orchestrator(props: OrchestratorProps) {
     initialCurrentPage,
     openValidationModal: () => validationModalActionsRef.current.open(),
   })
+
+  useEffect(() => {
+    if (currentPage === 'lunaticPage') {
+      notifyTelemetry({ pageTag, pager, controls: activeErrors })
+      return
+    }
+    notifyTelemetry({
+      pageTag: currentPage,
+      controls: undefined,
+      pager: undefined,
+    })
+  }, [activeErrors, pageTag, pager, currentPage])
 
   const getCurrentStateData = useRefSync((): StateData => {
     switch (currentPage) {

@@ -11,7 +11,6 @@ import { OidcProvider } from 'oidc'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { routeTree } from 'router/router'
-import { setupRouterTelemetry } from 'shared/telemetry/subscribeToRouterEvt'
 import { setupTelemetry } from 'shared/telemetry/telemetry'
 
 startReactDsfr({
@@ -42,8 +41,7 @@ const router = createRouter({
 })
 
 if (import.meta.env.VITE_OLTP_ENABLE === 'true') {
-  setupTelemetry('console')
-  setupRouterTelemetry(router)
+  setupTelemetry({ exporter: 'otpl', router: router })
 }
 
 declare module '@tanstack/react-router' {

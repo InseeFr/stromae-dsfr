@@ -19,7 +19,7 @@ const DsfrComponentWrapper = dsfrSlotsComponents['ComponentWrapper']
 
 const ComponentWrapper: LunaticSlotComponents['ComponentWrapper'] = (props) => {
   const ref = useRef<HTMLDivElement & { __component__: ComponentObject }>(null)
-  console.log(props)
+
   assert(DsfrComponentWrapper !== undefined)
 
   useEffect(() => {

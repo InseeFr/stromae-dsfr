@@ -1,6 +1,5 @@
 import type { LunaticSource } from '@inseefr/lunatic'
 import { type Span } from '@opentelemetry/api'
-
 import { createRoute } from '@tanstack/react-router'
 import { getGetQuestionnaireDataQueryOptions } from 'api/03-questionnaires'
 import {
@@ -53,31 +52,31 @@ export const collectRoute = createRoute({
         abortController.signal
       ).then((suData) => suData as SurveyUnitData) // data are heavy too
 
-    const metadataPr = queryClient
-      .ensureQueryData(
-        getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
-          request: { signal: abortController.signal },
-        })
-      )
-      .then((metadata) => {
-        document.title = metadata.label ?? "Questionnaire | Filière d'Enquête"
+      const metadataPr = queryClient
+        .ensureQueryData(
+          getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
+            request: { signal: abortController.signal },
+          })
+        )
+        .then((metadata) => {
+          document.title = metadata.label ?? "Questionnaire | Filière d'Enquête"
 
-        return metadataStore.updateMetadata({
-          ...metadata,
-          mainLogo: metadata.logos?.main,
-          secondariesLogo: metadata.logos?.secondaries,
-          surveyUnitInfo: convertOldPersonalization(metadata.personalization),
+          return metadataStore.updateMetadata({
+            ...metadata,
+            mainLogo: metadata.logos?.main,
+            secondariesLogo: metadata.logos?.secondaries,
+            surveyUnitInfo: convertOldPersonalization(metadata.personalization),
+          })
         })
-      })
 
-    return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
-      ([source, surveyUnitData, metadata]) => ({
-        source,
-        surveyUnitData,
-        metadata,
-      })
-    )
-  },
+      return Promise.all([sourcePr, surveyUnitDataPr, metadataPr])
+        .then(([source, surveyUnitData, metadata]) => ({
+          source,
+          surveyUnitData,
+          metadata,
+        }))
+        .finally(() => span.end())
+    }),
   // Do not cache this route's data after it's unloaded
   gcTime: 0,
   //Show pendingComponent directly

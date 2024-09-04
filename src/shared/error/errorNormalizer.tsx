@@ -1,11 +1,13 @@
+import type { ReactNode } from '@tanstack/react-router'
 import { AxiosError } from 'axios'
 import { declareComponentKeys, getTranslation } from 'i18n'
 import { NotFoundError } from './notFoundError'
+import { ZodErrorWithName, type ZodErrorName } from './ZodErrorWithName'
 
 type ErrorNormalized = {
   title: string
   subtitle: string
-  paragraph: string
+  paragraph: string | ReactNode
   code?: number
 }
 
@@ -75,6 +77,22 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
         }
     }
   }
+
+  if (error instanceof ZodErrorWithName) {
+    return {
+      title: t('validationError.title'),
+      subtitle: t('validationError.subtitle', { name: error.name }),
+      paragraph: (
+        <ul>
+          {error.errors.map((e, index) => (
+            <li key={index}>
+              {e.path.join('.')} : {e.message}
+            </li>
+          ))}
+        </ul>
+      ),
+    }
+  }
   return {
     title: t('unknownError.title'),
     subtitle: t('unknownError.subtitle'),
@@ -84,6 +102,10 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
 
 type GenerateKeys<BaseKey extends string> =
   `${BaseKey}.${Exclude<keyof ErrorNormalized, 'code'>}`
+
+type ValidationError =
+  | 'validationError.title'
+  | { K: 'validationError.subtitle'; P: { name: ZodErrorName }; R: string }
 
 type AllErrorKeys =
   | GenerateKeys<'notFound'>
@@ -95,6 +117,7 @@ type AllErrorKeys =
   | GenerateKeys<'serverError'>
   | GenerateKeys<'unhandledError'>
   | GenerateKeys<'unknownError'>
+  | ValidationError
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { i18n } = declareComponentKeys<AllErrorKeys>()('errorNormalizer')

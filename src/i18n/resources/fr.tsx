@@ -418,5 +418,8 @@ export const translations: Translations<'fr'> = {
     'unknownError.subtitle': "Une erreur inattendue s'est produite.",
     'unknownError.paragraph':
       "Veuillez réessayer ultérieurement ou contacter l'administrateur du site pour obtenir de l'aide.",
+    'validationError.title': 'Erreur de validation',
+    'validationError.subtitle': ({ name }) =>
+      `Le fichier de ${name} n'est pas valide.`,
   },
 }

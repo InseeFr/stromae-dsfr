@@ -408,5 +408,8 @@ export const translations: Translations<'sq'> = {
     'unknownError.subtitle': 'Ndodhi një gabim i papritur.',
     'unknownError.paragraph':
       'Ju lutem provoni më vonë ose kontaktoni administratorin e faqes për ndihmë.',
+    'validationError.title': 'Gabim i vlefshmërisë',
+    'validationError.subtitle': ({ name }) =>
+      `Skedari i ${name} nuk është i vlefshëm.`,
   },
 }

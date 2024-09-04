@@ -400,5 +400,7 @@ export const translations: Translations<'en'> = {
     'unknownError.subtitle': 'An unexpected error occurred.',
     'unknownError.paragraph':
       'Please try again later or contact the site administrator for assistance.',
+    'validationError.title': 'Validation Error',
+    'validationError.subtitle': ({ name }) => `${name}'s file is not valid.`,
   },
 }

@@ -1,5 +1,6 @@
 import type { SurveyUnitMetadata } from 'model/api'
-import { assert, type Equals } from 'tsafe/assert'
+import { assert } from 'tsafe/assert'
+import type { Extends } from 'tsafe/Extends'
 import { z } from 'zod'
 
 const logoSchema = z.object({
@@ -10,6 +11,18 @@ const logoSchema = z.object({
 const logosSchema = z.object({
   main: logoSchema,
   secondaries: z.array(logoSchema).optional(),
+})
+
+// Schema for Content
+const contentSchema = z.object({
+  type: z.enum(['paragraph', 'list']),
+  textItems: z.array(z.string()),
+})
+
+// Schema for Contents
+const contentsSchema = z.object({
+  title: z.string().optional(),
+  contentBlocks: z.array(contentSchema),
 })
 
 export const surveyUnitMetadataSchema = z.object({
@@ -25,17 +38,10 @@ export const surveyUnitMetadataSchema = z.object({
       })
     )
     .optional(),
-  variables: z
-    .array(
-      z
-        .object({
-          name: z.string(),
-          value: z.unknown(),
-        })
-        .transform(({ name, value }) => ({ name, value })) //To solve zod issue cf https://github.com/colinhacks/zod/issues/2966#issuecomment-2000436630
-    )
-    .optional(),
+  surveyUnitIdentifier: z.string().optional(),
+  surveyUnitInfo: contentsSchema.array().optional(),
+  campaignInfo: contentsSchema.array().optional(),
 })
 
 type InferredMetadata = z.infer<typeof surveyUnitMetadataSchema>
-assert<Equals<InferredMetadata, SurveyUnitMetadata>>()
+assert<Extends<InferredMetadata, SurveyUnitMetadata>>() //When SurveyUnitMetadata will change according to the new modelisation, replace Extends by Equals

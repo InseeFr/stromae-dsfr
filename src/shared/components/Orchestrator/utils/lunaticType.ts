@@ -28,3 +28,7 @@ export type ErrorMessage = {
   error: VTLExpressionError
   pageTag: LunaticPageTag
 }
+
+export type LunaticControls = ReturnType<
+  LunaticState['compileControls']
+>['currentErrors']

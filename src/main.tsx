@@ -11,6 +11,7 @@ import { OidcProvider } from 'oidc'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { routeTree } from 'router/router'
+import { setupTelemetry } from 'shared/telemetry/telemetry'
 
 startReactDsfr({
   defaultColorScheme: 'system',
@@ -38,6 +39,10 @@ const router = createRouter({
   },
   defaultPreloadStaleTime: 0,
 })
+
+if (import.meta.env.VITE_OLTP_ENABLE === 'true') {
+  setupTelemetry({ exporter: 'otpl', router: router })
+}
 
 declare module '@tanstack/react-router' {
   interface Register {

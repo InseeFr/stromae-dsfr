@@ -70,6 +70,10 @@ const config: Config = {
           label: 'Documentation',
         },
         {
+          to: 'changelog',
+          label: 'Changelog',
+        },
+        {
           href: 'https://github.com/Inseefr/stromae-dsfr',
           label: 'Github',
           position: 'right',

@@ -14,7 +14,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAddPreLogoutAction } from 'shared/hooks/prelogout'
 import { downloadAsJson } from 'utils/downloadAsJson'
 import { isObjectEmpty } from 'utils/isObjectEmpty'
-import { shouldDisplayWelcomeModal } from 'utils/orchestrator'
+import { hasBeenSent, shouldDisplayWelcomeModal } from 'utils/orchestrator'
 import { useRefSync } from 'utils/useRefSync'
 import { useUpdateEffect } from 'utils/useUpdateEffect'
 import { EndPage } from './CustomPages/EndPage'
@@ -201,17 +201,17 @@ export function Orchestrator(props: OrchestratorProps) {
   })
 
   useAddPreLogoutAction(async () => {
-    if (mode !== 'collect') return
+    if (mode === 'collect' && !hasBeenSent(initialState)) {
+      const { updateDataAndStateData } = props
 
-    const { updateDataAndStateData } = props
+      const data = getChangedData()
 
-    const data = getChangedData()
-
-    return updateDataAndStateData({
-      stateData: getCurrentStateData.current(),
-      data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
-      onSuccess: resetChangedData,
-    })
+      return updateDataAndStateData({
+        stateData: getCurrentStateData.current(),
+        data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
+        onSuccess: resetChangedData,
+      })
+    }
   })
 
   //When page change
@@ -232,33 +232,34 @@ export function Orchestrator(props: OrchestratorProps) {
       contentRef.current.removeAttribute('tabindex')
     }
     // Persist data and stateData when page change in "collect" mode
-    if (mode !== 'collect') return
-    const { updateDataAndStateData } = props
+    if (mode === 'collect' && !hasBeenSent(initialState)) {
+      const { updateDataAndStateData } = props
 
-    const data = getChangedData()
+      const data = getChangedData()
 
-    updateDataAndStateData({
-      stateData: getCurrentStateData.current(),
-      data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
-      onSuccess: resetChangedData,
-    })
+      updateDataAndStateData({
+        stateData: getCurrentStateData.current(),
+        data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
+        onSuccess: resetChangedData,
+      })
+    }
   }, [currentPage, pageTag])
 
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
     return () => {
-      if (mode !== 'collect') return
+      if (mode === 'collect' && !hasBeenSent(initialState)) {
+        const { updateDataAndStateData } = props
+        const data = getChangedData()
 
-      const { updateDataAndStateData } = props
-      const data = getChangedData()
-
-      if (!isObjectEmpty(data.COLLECTED ?? {})) {
-        updateDataAndStateData({
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-          stateData: getCurrentStateData.current(),
-          data: data.COLLECTED,
-          onSuccess: resetChangedData,
-        })
+        if (!isObjectEmpty(data.COLLECTED ?? {})) {
+          updateDataAndStateData({
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            stateData: getCurrentStateData.current(),
+            data: data.COLLECTED,
+            onSuccess: resetChangedData,
+          })
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

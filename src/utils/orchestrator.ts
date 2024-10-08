@@ -2,7 +2,7 @@ import type { PageType } from 'model/Page'
 import type { StateData } from 'model/StateData'
 
 // Whether or not the form has been sent and cannot be updated anymore
-function hasBeenSent(state?: StateData['state']): boolean {
+export function hasBeenSent(state?: StateData['state']): boolean {
   return state !== undefined && state !== 'INIT'
 }
 

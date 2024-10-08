@@ -14,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAddPreLogoutAction } from 'shared/hooks/prelogout'
 import { downloadAsJson } from 'utils/downloadAsJson'
 import { isObjectEmpty } from 'utils/isObjectEmpty'
+import { shouldDisplayWelcomeModal } from 'utils/orchestrator'
 import { useRefSync } from 'utils/useRefSync'
 import { useUpdateEffect } from 'utils/useUpdateEffect'
 import { EndPage } from './CustomPages/EndPage'
@@ -82,6 +83,7 @@ export function Orchestrator(props: OrchestratorProps) {
   const { source, surveyUnitData, getReferentiel, mode, metadata } = props
 
   const initialCurrentPage = surveyUnitData?.stateData?.currentPage
+  const initialState = surveyUnitData?.stateData?.state
   const pagination = source.pagination ?? 'question'
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -306,10 +308,10 @@ export function Orchestrator(props: OrchestratorProps) {
     { components: [], bottomComponents: [] }
   )
 
-  const shouldWelcome = Boolean(
-    currentPage &&
-      initialCurrentPage !== 'welcomePage' &&
-      initialCurrentPage !== undefined
+  // Displays the welcome modal which allows to come back to current page
+  const shouldWelcome = shouldDisplayWelcomeModal(
+    initialState,
+    initialCurrentPage
   )
 
   return (

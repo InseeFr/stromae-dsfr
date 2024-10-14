@@ -1,6 +1,6 @@
+import { declareComponentKeys, useTranslation } from '@/i18n'
+import { useSequenceTitle } from '@/shared/hooks/useDocumentTitle'
 import { fr } from '@codegouvfr/react-dsfr'
-import { declareComponentKeys, useTranslation } from 'i18n'
-import { useSequenceTitle } from 'shared/hooks/useDocumentTitle'
 import type { LunaticOverview } from './utils/lunaticType'
 
 type SequenceHeaderProps = {

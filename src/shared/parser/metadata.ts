@@ -1,4 +1,4 @@
-import type { SurveyUnitMetadata } from 'model/api'
+import type { SurveyUnitMetadata } from '@/model/api'
 import { assert } from 'tsafe/assert'
 import type { Extends } from 'tsafe/Extends'
 import { z } from 'zod'

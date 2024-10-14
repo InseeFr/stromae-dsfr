@@ -1,12 +1,12 @@
+import { declareComponentKeys, useTranslation } from '@/i18n'
+import { AccessibilityPage } from '@/pages/Accessibility/AccessibilityPage'
+import { LegalsPage } from '@/pages/Legals/LegalsPage'
+import { NavigationAssistancePage } from '@/pages/NavigationAssistance/NavigationAssistancePage'
+import { SecurityPage } from '@/pages/Security/SecurityPage'
+import { Grid } from '@/shared/components/Grid'
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
 import { Link } from '@tanstack/react-router'
-import { declareComponentKeys, useTranslation } from 'i18n'
-import { AccessibilityPage } from 'pages/Accessibility/AccessibilityPage'
-import { LegalsPage } from 'pages/Legals/LegalsPage'
-import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationAssistancePage'
-import { SecurityPage } from 'pages/Security/SecurityPage'
 import { memo } from 'react'
-import { Grid } from 'shared/components/Grid'
 
 export const SiteMapPage = memo(function SiteMapPage() {
   const { t } = useTranslation({

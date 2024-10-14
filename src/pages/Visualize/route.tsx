@@ -1,15 +1,15 @@
-import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from 'router/router'
-import { ContentSkeleton } from 'shared/components/ContentSkeleton'
-import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
-import { metadataStore } from 'shared/metadataStore/metadataStore'
+import { rootRoute } from '@/router/router'
+import { ContentSkeleton } from '@/shared/components/ContentSkeleton'
+import { ErrorComponent } from '@/shared/components/Error/ErrorComponent'
+import { metadataStore } from '@/shared/metadataStore/metadataStore'
 import {
   metadataQueryOptions,
   sourceQueryOptions,
   surveyUnitDataQueryOptions,
-} from 'shared/query/visualizeQueryOptions'
+} from '@/shared/query/visualizeQueryOptions'
+import { createRoute } from '@tanstack/react-router'
 
-import { convertOldPersonalization } from 'utils/convertOldPersonalization'
+import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
 import { z } from 'zod'
 import { VisualizePage } from './Visualize'
 

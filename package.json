@@ -16,7 +16,8 @@
     "predev": "react-dsfr update-icons",
     "prebuild": "react-dsfr update-icons",
     "generate-api-client": "tsx scripts/generate-api-client.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.13.6",
@@ -42,17 +43,23 @@
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.7.0",
     "@eslint/js": "^9.9.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@types/he": "^1.2.3",
     "@types/node": "^22.7.3",
     "@types/react": "^18.3.9",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.1.2",
     "dotenv-flow": "^4.1.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc-d48603a5-20240813",
     "eslint-plugin-react-refresh": "^0.4.12",
+    "global-jsdom": "^25.0.0",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
+    "jsdom": "^25.0.1",
     "orval": "^7.0.1",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",

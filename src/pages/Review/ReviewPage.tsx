@@ -1,11 +1,11 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { getGetNomenclatureByIdQueryOptions } from 'api/04-nomenclatures'
-import { memo } from 'react'
-import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
+import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
+import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
   Nomenclature,
-} from 'shared/components/Orchestrator/utils/lunaticType'
+} from '@/shared/components/Orchestrator/utils/lunaticType'
+import { useQueryClient } from '@tanstack/react-query'
+import { memo } from 'react'
 import { reviewRoute } from './route'
 
 export const ReviewPage = memo(function ReviewPage() {

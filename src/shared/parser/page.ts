@@ -1,4 +1,4 @@
-import type { InternalPageType, PageType, StromaePage } from 'model/Page'
+import type { InternalPageType, PageType, StromaePage } from '@/model/Page'
 import { assert, type Equals } from 'tsafe/assert'
 import z from 'zod'
 

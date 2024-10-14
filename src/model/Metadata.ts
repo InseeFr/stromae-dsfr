@@ -1,4 +1,4 @@
-import type { LocalizedString } from 'i18n'
+import type { LocalizedString } from '@/i18n'
 
 export type Logo = {
   label: LocalizedString

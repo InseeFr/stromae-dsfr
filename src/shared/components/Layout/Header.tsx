@@ -1,15 +1,15 @@
-import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
-import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
-import { useMatchRoute, useSearch } from '@tanstack/react-router'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
   useTranslation,
-} from 'i18n'
-import { useOidc } from 'oidc'
-import { collectPath } from 'pages/Collect/route'
-import { executePreLogoutActions } from 'shared/hooks/prelogout'
-import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
+} from '@/i18n'
+import { useOidc } from '@/oidc'
+import { collectPath } from '@/pages/Collect/route'
+import { executePreLogoutActions } from '@/shared/hooks/prelogout'
+import { useMetadataStore } from '@/shared/metadataStore/useMetadataStore'
+import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
+import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
+import { useMatchRoute, useSearch } from '@tanstack/react-router'
 
 export function Header() {
   const { t } = useTranslation({ Header })

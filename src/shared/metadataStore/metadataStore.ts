@@ -1,5 +1,5 @@
-import logoInsee from 'assets/logo-insee.png'
-import type { Metadata } from 'model/Metadata'
+import logoInsee from '@/assets/logo-insee.png'
+import type { Metadata } from '@/model/Metadata'
 
 const defaultState: Metadata = {
   label: {

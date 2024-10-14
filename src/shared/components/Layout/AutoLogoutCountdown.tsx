@@ -1,6 +1,6 @@
-import { useTranslation } from 'i18n'
+import { useTranslation } from '@/i18n'
+import { useOidc } from '@/oidc'
 import { declareComponentKeys } from 'i18nifty'
-import { useOidc } from 'oidc'
 import { useEffect, useState } from 'react'
 
 export function AutoLogoutCountdown() {

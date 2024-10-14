@@ -1,7 +1,7 @@
+import { declareComponentKeys, useTranslation } from '@/i18n'
+import { Grid } from '@/shared/components/Grid'
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb'
-import { declareComponentKeys, useTranslation } from 'i18n'
 import { memo, type ReactNode } from 'react'
-import { Grid } from 'shared/components/Grid'
 
 export const NavigationAssistancePage = memo(
   function NavigationAssistancePage() {

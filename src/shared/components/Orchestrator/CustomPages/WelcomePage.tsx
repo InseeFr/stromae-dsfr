@@ -1,12 +1,12 @@
-import { fr } from '@codegouvfr/react-dsfr'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
   useTranslation,
-} from 'i18n'
-import type { Contents, Metadata } from 'model/Metadata'
+} from '@/i18n'
+import type { Contents, Metadata } from '@/model/Metadata'
+import { useDocumentTitle } from '@/shared/hooks/useDocumentTitle'
+import { fr } from '@codegouvfr/react-dsfr'
 import { Fragment } from 'react'
-import { useDocumentTitle } from 'shared/hooks/useDocumentTitle'
 
 function renderMetadataContents(contents: Contents[] | undefined) {
   if (contents === undefined) return null

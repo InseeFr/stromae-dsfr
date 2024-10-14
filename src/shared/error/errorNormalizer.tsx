@@ -1,6 +1,6 @@
+import { declareComponentKeys, getTranslation } from '@/i18n'
 import type { ReactNode } from '@tanstack/react-router'
 import { AxiosError } from 'axios'
-import { declareComponentKeys, getTranslation } from 'i18n'
 import { NotFoundError } from './notFoundError'
 import { ZodErrorWithName, type ZodErrorName } from './ZodErrorWithName'
 

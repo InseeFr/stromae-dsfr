@@ -1,7 +1,7 @@
+import { declareComponentKeys, useTranslation } from '@/i18n'
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
 import Input from '@codegouvfr/react-dsfr/Input'
-import { declareComponentKeys, useTranslation } from 'i18n'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import type { FormInputs } from './VisualizeForm'
 

@@ -1,10 +1,10 @@
-import { VTLExpressionError } from '@inseefr/lunatic'
-import { useSyncExternalStore } from 'react'
 import type {
   ErrorMessage,
   LoggerMessage,
   LunaticPageTag,
-} from 'shared/components/Orchestrator/utils/lunaticType'
+} from '@/shared/components/Orchestrator/utils/lunaticType'
+import { VTLExpressionError } from '@inseefr/lunatic'
+import { useSyncExternalStore } from 'react'
 
 function getErrorId(error: ErrorMessage) {
   return error.error.expression

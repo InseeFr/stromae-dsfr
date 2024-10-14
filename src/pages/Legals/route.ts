@@ -1,5 +1,5 @@
+import { rootRoute } from '@/router/router'
 import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from 'router/router'
 import { LegalsPage } from './LegalsPage'
 
 export const legalsPath = '/mentions-legales'

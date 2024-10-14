@@ -1,5 +1,5 @@
+import { rootRoute } from '@/router/router'
 import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from 'router/router'
 import { SiteMapPage } from './SiteMapPage'
 
 export const siteMapPath = '/plan-du-site'

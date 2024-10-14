@@ -1,5 +1,5 @@
+import { areArraysEqual } from '@/utils/compareArray'
 import type { LunaticError } from '@inseefr/lunatic'
-import { areArraysEqual } from 'utils/compareArray'
 
 export function isBlockingError(errors: Record<string, LunaticError[]>) {
   return Object.values(errors).some((errorArray) =>

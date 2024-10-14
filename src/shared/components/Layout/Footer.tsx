@@ -1,14 +1,14 @@
-import { fr } from '@codegouvfr/react-dsfr'
-import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
   useTranslation,
-} from 'i18n'
-import type { Logo } from 'model/Metadata'
-import { NavigationAssistancePage } from 'pages/NavigationAssistance/NavigationAssistancePage'
-import { SecurityPage } from 'pages/Security/SecurityPage'
-import { useMetadataStore } from 'shared/metadataStore/useMetadataStore'
+} from '@/i18n'
+import type { Logo } from '@/model/Metadata'
+import { NavigationAssistancePage } from '@/pages/NavigationAssistance/NavigationAssistancePage'
+import { SecurityPage } from '@/pages/Security/SecurityPage'
+import { useMetadataStore } from '@/shared/metadataStore/useMetadataStore'
+import { fr } from '@codegouvfr/react-dsfr'
+import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
 import { Header } from './Header'
 
 const transformLogo = (

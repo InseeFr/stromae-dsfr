@@ -1,5 +1,5 @@
+import { declareComponentKeys, useTranslation } from '@/i18n'
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-import { declareComponentKeys, useTranslation } from 'i18n'
 import { useEffect, useId, useState, type MutableRefObject } from 'react'
 import { assert } from 'tsafe/assert'
 

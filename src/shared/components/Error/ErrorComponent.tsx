@@ -3,12 +3,12 @@ import Button from '@codegouvfr/react-dsfr/Button'
 import ArtWorkBackground from '@codegouvfr/react-dsfr/dsfr/artwork/background/ovoid.svg'
 import ArtWork from '@codegouvfr/react-dsfr/dsfr/artwork/system.svg'
 
+import { declareComponentKeys, useTranslation } from '@/i18n'
+import { Container } from '@/shared/components/Container'
+import { errorNormalizer } from '@/shared/error/errorNormalizer'
+import { useDocumentTitle } from '@/shared/hooks/useDocumentTitle'
 import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
 import { useNavigate, useSearch } from '@tanstack/react-router'
-import { declareComponentKeys, useTranslation } from 'i18n'
-import { Container } from 'shared/components/Container'
-import { errorNormalizer } from 'shared/error/errorNormalizer'
-import { useDocumentTitle } from 'shared/hooks/useDocumentTitle'
 
 type Props = {
   error: unknown

@@ -1,5 +1,5 @@
-import type { PageType } from 'model/Page'
-import type { StateData } from 'model/StateData'
+import type { PageType } from '@/model/Page'
+import type { StateData } from '@/model/StateData'
 
 // Whether or not the form has been sent and cannot be updated anymore
 export function hasBeenSent(state?: StateData['state']): boolean {

@@ -1,17 +1,17 @@
-import type { LunaticSource } from '@inseefr/lunatic'
-import { createRoute } from '@tanstack/react-router'
-import { getGetQuestionnaireDataQueryOptions } from 'api/03-questionnaires'
+import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
   getGetSurveyUnitByIdQueryOptions,
   getGetSurveyUnitMetadataByIdQueryOptions,
-} from 'api/06-survey-units'
-import type { SurveyUnitData } from 'model/SurveyUnitData'
-import { rootRoute } from 'router/router'
-import { ContentSkeleton } from 'shared/components/ContentSkeleton'
-import { ErrorComponent } from 'shared/components/Error/ErrorComponent'
-import { protectedRouteLoader } from 'shared/loader/protectedLoader'
-import { metadataStore } from 'shared/metadataStore/metadataStore'
-import { convertOldPersonalization } from 'utils/convertOldPersonalization'
+} from '@/api/06-survey-units'
+import type { SurveyUnitData } from '@/model/SurveyUnitData'
+import { rootRoute } from '@/router/router'
+import { ContentSkeleton } from '@/shared/components/ContentSkeleton'
+import { ErrorComponent } from '@/shared/components/Error/ErrorComponent'
+import { protectedRouteLoader } from '@/shared/loader/protectedLoader'
+import { metadataStore } from '@/shared/metadataStore/metadataStore'
+import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
+import type { LunaticSource } from '@inseefr/lunatic'
+import { createRoute } from '@tanstack/react-router'
 import { ReviewPage } from './ReviewPage'
 
 export const reviewPath =

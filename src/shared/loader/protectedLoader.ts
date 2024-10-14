@@ -1,4 +1,4 @@
-import { getOidc } from 'oidc'
+import { getOidc } from '@/oidc'
 
 export async function protectedRouteLoader(
   extraQueryParams?: Record<string, string>

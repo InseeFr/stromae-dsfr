@@ -1,11 +1,11 @@
+import type { Metadata } from '@/model/Metadata'
+import type { SurveyUnitData } from '@/model/SurveyUnitData'
+import type { Nomenclature } from '@/shared/components/Orchestrator/utils/lunaticType'
+import { ZodErrorWithName } from '@/shared/error/ZodErrorWithName'
+import { surveyUnitMetadataSchema } from '@/shared/parser/metadata'
 import type { LunaticSource } from '@inseefr/lunatic'
 import { queryOptions } from '@tanstack/react-query'
 import axios, { type AxiosRequestConfig } from 'axios'
-import type { Metadata } from 'model/Metadata'
-import type { SurveyUnitData } from 'model/SurveyUnitData'
-import type { Nomenclature } from 'shared/components/Orchestrator/utils/lunaticType'
-import { ZodErrorWithName } from 'shared/error/ZodErrorWithName'
-import { surveyUnitMetadataSchema } from 'shared/parser/metadata'
 import { ZodError } from 'zod'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {

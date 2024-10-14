@@ -1,19 +1,19 @@
-import type { LunaticData } from '@inseefr/lunatic'
-import { useQueryClient } from '@tanstack/react-query'
-import { getGetNomenclatureByIdQueryOptions } from 'api/04-nomenclatures'
+import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import {
   getGenerateDepositProofQueryOptions,
   getGetSurveyUnitByIdQueryKey,
   updateSurveyUnitDataStateDataById,
-} from 'api/06-survey-units'
-import type { StateData } from 'model/StateData'
-import { memo, useCallback } from 'react'
-import { Orchestrator } from 'shared/components/Orchestrator/Orchestrator'
+} from '@/api/06-survey-units'
+import type { StateData } from '@/model/StateData'
+import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
   Nomenclature,
-} from 'shared/components/Orchestrator/utils/lunaticType'
-import { showToast } from 'shared/toast/Toast'
+} from '@/shared/components/Orchestrator/utils/lunaticType'
+import { showToast } from '@/shared/toast/Toast'
+import type { LunaticData } from '@inseefr/lunatic'
+import { useQueryClient } from '@tanstack/react-query'
+import { memo, useCallback } from 'react'
 import { collectRoute } from './route'
 
 export const CollectPage = memo(function CollectPage() {

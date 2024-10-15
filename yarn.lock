@@ -3313,11 +3313,6 @@ glob@^10.4.1:
     package-json-from-dist "^1.0.0"
     path-scurry "^1.11.1"
 
-global-jsdom@^25.0.0:
-  version "25.0.0"
-  resolved "https://registry.yarnpkg.com/global-jsdom/-/global-jsdom-25.0.0.tgz#3e3c439dfe3691855d9bc8f6d0b75f06a0940e27"
-  integrity sha512-Y8dUX6R5Aw5/cutvBY8ofSs2TJyHC3WVGAQGIhCeWlIpKjYcydh3APbxQaeKSfrawVO/YUQ0MAFJfjQDOPVY8Q==
-
 globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.npmjs.org/globals/-/globals-11.12.0.tgz"

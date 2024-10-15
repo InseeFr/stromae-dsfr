@@ -7,8 +7,8 @@ describe('WelcomePage', () => {
     const objectives = 'Vérifier que les composants React fonctionnent'
     const infoTitle = "Titre de l'information"
     const infoText = 'Une information'
-    const surveyInfoTitle = 'Qui doit répondre ?'
-    const surveyInfoText = 'Guybrush Threepwood'
+    const surveyUnitInfoTitle = 'Qui doit répondre ?'
+    const surveyUnitInfoText = 'Guybrush Threepwood'
     const { getByText } = render(
       <WelcomePage
         metadata={{
@@ -27,11 +27,11 @@ describe('WelcomePage', () => {
           ],
           surveyUnitInfo: [
             {
-              title: surveyInfoTitle,
+              title: surveyUnitInfoTitle,
               contentBlocks: [
                 {
                   type: 'list',
-                  textItems: [surveyInfoText],
+                  textItems: [surveyUnitInfoText],
                 },
               ],
             },
@@ -45,7 +45,7 @@ describe('WelcomePage', () => {
     expect(getByText(objectives)).toBeInTheDocument()
     expect(getByText(infoTitle)).toBeInTheDocument()
     expect(getByText(infoText)).toBeInTheDocument()
-    expect(getByText(surveyInfoTitle)).toBeInTheDocument()
-    expect(getByText(surveyInfoText)).toBeInTheDocument()
+    expect(getByText(surveyUnitInfoTitle)).toBeInTheDocument()
+    expect(getByText(surveyUnitInfoText)).toBeInTheDocument()
   })
 })

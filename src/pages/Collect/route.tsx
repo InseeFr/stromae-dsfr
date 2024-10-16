@@ -29,7 +29,7 @@ export const collectRoute = createRoute({
   component: CollectPage,
   beforeLoad: async () => protectedRouteLoader(),
   validateSearch: collectSearchParams,
-  loader: ({
+  loader: async ({
     params: { questionnaireId, surveyUnitId },
     context: { queryClient },
     abortController,

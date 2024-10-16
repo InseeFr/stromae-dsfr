@@ -1,7 +1,11 @@
+import { PAGE_TYPE } from '@/constants/page'
 import type { LunaticState } from '@inseefr/lunatic'
 
-export type StromaePage = 'welcomePage' | 'validationPage' | 'endPage'
+export type StromaePage =
+  | PAGE_TYPE.WELCOME
+  | PAGE_TYPE.VALIDATION
+  | PAGE_TYPE.END
 
 export type PageType = StromaePage | LunaticState['pageTag']
 
-export type InternalPageType = StromaePage | 'lunaticPage'
+export type InternalPageType = StromaePage | PAGE_TYPE.LUNATIC

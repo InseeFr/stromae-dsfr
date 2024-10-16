@@ -28,7 +28,7 @@ export function WelcomeModal({ goBack, open }: Props) {
         modal.open()
         wasDisplayed.current = true
       }
-    }, 10)
+    }, 50)
   }, [open])
 
   return (

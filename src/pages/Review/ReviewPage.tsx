@@ -1,4 +1,5 @@
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
+import { MODE_TYPE } from '@/constants/mode'
 import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
@@ -22,7 +23,7 @@ export const ReviewPage = memo(function ReviewPage() {
 
   return (
     <Orchestrator
-      mode="review"
+      mode={MODE_TYPE.REVIEW}
       metadata={metadata}
       source={source}
       surveyUnitData={surveyUnitData}

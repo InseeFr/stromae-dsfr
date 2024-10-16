@@ -1,3 +1,5 @@
+import { useTelemetry } from '@/contexts/TelemetryContext'
+import { useOidc } from '@/oidc'
 import { accessibilityRoute } from '@/pages/Accessibility/route'
 import { collectRoute } from '@/pages/Collect/route'
 import { legalsRoute } from '@/pages/Legals/route'
@@ -17,11 +19,28 @@ import {
   Outlet,
   ScrollRestoration,
 } from '@tanstack/react-router'
-import { memo } from 'react'
+import { decodeJwt } from 'oidc-spa/tools/decodeJwt'
+import { memo, useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RootComponent = memo(() => {
+  const { oidcTokens } = useOidc()
+  const { isTelemetryDisabled, setDefaultValues } = useTelemetry()
+  const [sid, setSID] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    setSID(oidcTokens ? decodeJwt(oidcTokens?.idToken)?.sid : undefined)
+  }, [oidcTokens])
+
+  useEffect(() => {
+    if (!isTelemetryDisabled && sid) {
+      // Retrieve the OIDC's session id (different for each session of the user
+      // agent used by the end-user which allows to identify distinct sessions)
+      setDefaultValues({ sid })
+    }
+  }, [isTelemetryDisabled, sid, setDefaultValues])
+
   return (
     <div
       style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}

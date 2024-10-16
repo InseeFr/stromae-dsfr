@@ -1,3 +1,6 @@
+import { MODE_TYPE } from '@/constants/mode'
+import { TELEMETRY_EVENT_EXIT_SOURCE } from '@/constants/telemetry'
+import { useTelemetry } from '@/contexts/TelemetryContext'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
@@ -6,10 +9,12 @@ import {
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/Collect/route'
 import { executePreLogoutActions } from '@/shared/hooks/prelogout'
+import { useMode } from '@/shared/hooks/useMode'
 import { useMetadataStore } from '@/shared/metadataStore/useMetadataStore'
+import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
 import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
 import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
-import { useMatchRoute, useSearch } from '@tanstack/react-router'
+import { useSearch } from '@tanstack/react-router'
 
 export function Header() {
   const { t } = useTranslation({ Header })
@@ -18,18 +23,20 @@ export function Header() {
     useResolveLocalizedString({
       labelWhenMismatchingLanguage: true,
     })
+  const mode = useMode()
 
   const {
     label: serviceTitle,
     mainLogo,
     surveyUnitIdentifier,
   } = useMetadataStore()
+  const { isTelemetryDisabled, pushEvent, triggerBatchTelemetryCallback } =
+    useTelemetry()
 
   /**
    * There is an issue with this part of the code: the search type is not well narrowed with isCollectRoute. I'm waiting for a better solution.
    */
-  const matchRoute = useMatchRoute()
-  const isCollectRoute = !!matchRoute({ to: collectPath })
+  const isCollectRoute = mode === MODE_TYPE.COLLECT
   const search = useSearch({ strict: false })
 
   return (
@@ -54,6 +61,12 @@ export function Header() {
               ? `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathAssistance'] ?? ''}`
               : '',
             disabled: isCollectRoute,
+            onClick:
+              isCollectRoute && !isTelemetryDisabled
+                ? () => {
+                    pushEvent(computeContactSupportEvent())
+                  }
+                : undefined,
           },
           text: t('quick access support'),
         },
@@ -65,6 +78,16 @@ export function Header() {
                 buttonProps: {
                   onClick: async () => {
                     await executePreLogoutActions()
+                    if (!isTelemetryDisabled) {
+                      pushEvent(
+                        computeExitEvent({
+                          source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
+                        })
+                      )
+                      if (triggerBatchTelemetryCallback) {
+                        await triggerBatchTelemetryCallback()
+                      }
+                    }
                     logout({
                       redirectTo: 'specific url',
                       url: `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathLogout'] ?? ''}`,

@@ -1,3 +1,14 @@
+### 1.3.0
+
+#### Nouvelles fonctionnalités
+
+- ajout du tracking des paradonnées de connexion, saisie d'un input, changement de page dans le questionnaire, contact au support
+
+#### Montée de version Lunatic
+
+Montée de version Lunatic 3.4.6
+Montée de version Lunatic-DSFR 2.4.2
+
 ### 1.2.4
 
 #### Correction de bugs

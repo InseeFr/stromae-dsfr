@@ -1,3 +1,4 @@
+import { PAGE_TYPE } from '@/constants/page'
 import type { Translations } from '@/i18n/types'
 
 export const translations: Translations<'sq'> = {
@@ -90,23 +91,20 @@ export const translations: Translations<'sq'> = {
   SurveyContainer: {
     'button continue label': ({ currentPage }) => {
       switch (currentPage) {
-        case 'welcomePage':
+        case PAGE_TYPE.WELCOME:
           return 'Fillo'
-        case 'lunaticPage':
+        case PAGE_TYPE.LUNATIC:
           return 'Vazhdo'
-        case 'endPage':
+        case PAGE_TYPE.END:
           return 'Shkarko njoftimin për pranimin'
-        case 'validationPage':
+        case PAGE_TYPE.VALIDATION:
           return 'Dërgo përgjigjet e mia'
       }
     },
     'button continue title': ({ currentPage }) => {
-      switch (currentPage) {
-        case 'endPage':
-          return 'Shkarkoni konfirmimin e pranimit'
-        default:
-          return 'Kaloni në hapin tjetër'
-      }
+      if (currentPage === PAGE_TYPE.END)
+        return 'Shkarkoni konfirmimin e pranimit'
+      return 'Kaloni në hapin tjetër'
     },
     'button download': 'Shkarko të dhënat',
     'button expand': 'Zgjero pamjen',

@@ -1,3 +1,4 @@
+import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/model/Page'
 import { useState } from 'react'
 import { assert, type Equals } from 'tsafe/assert'
@@ -21,7 +22,7 @@ type Params = {
 export function useStromaeNavigation({
   isFirstPage,
   isLastPage,
-  initialCurrentPage = 'welcomePage',
+  initialCurrentPage = PAGE_TYPE.WELCOME,
   goNextWithControls,
   goNextLunatic,
   goPrevLunatic,
@@ -29,40 +30,40 @@ export function useStromaeNavigation({
   openValidationModal,
 }: Params) {
   const [currentPage, setCurrentPage] = useState<InternalPageType>(() =>
-    initialCurrentPage === 'endPage' ? 'endPage' : 'welcomePage'
+    initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME
   )
 
   const goNextFromLunaticPage = (isLastPage: boolean) => {
     const goNext = isLastPage
-      ? () => setCurrentPage('validationPage')
+      ? () => setCurrentPage(PAGE_TYPE.VALIDATION)
       : goNextLunatic
     return goNextWithControls(goNext)
   }
 
   const goNext = () => {
     switch (currentPage) {
-      case 'validationPage':
+      case PAGE_TYPE.VALIDATION:
         openValidationModal().then(() => {
-          setCurrentPage('endPage')
+          setCurrentPage(PAGE_TYPE.END)
         })
         return
-      case 'welcomePage':
-        return setCurrentPage('lunaticPage')
-      case 'lunaticPage':
+      case PAGE_TYPE.WELCOME:
+        return setCurrentPage(PAGE_TYPE.LUNATIC)
+      case PAGE_TYPE.LUNATIC:
         return goNextFromLunaticPage(isLastPage)
-      case 'endPage':
+      case PAGE_TYPE.END:
         return
     }
     assert<Equals<typeof currentPage, never>>(false)
   }
   const goPrevious = () => {
     switch (currentPage) {
-      case 'validationPage':
-        return setCurrentPage('lunaticPage')
-      case 'lunaticPage':
-        return isFirstPage ? setCurrentPage('welcomePage') : goPrevLunatic()
-      case 'endPage':
-      case 'welcomePage':
+      case PAGE_TYPE.VALIDATION:
+        return setCurrentPage(PAGE_TYPE.LUNATIC)
+      case PAGE_TYPE.LUNATIC:
+        return isFirstPage ? setCurrentPage(PAGE_TYPE.WELCOME) : goPrevLunatic()
+      case PAGE_TYPE.END:
+      case PAGE_TYPE.WELCOME:
         return
     }
     assert<Equals<typeof currentPage, never>>(false)
@@ -76,14 +77,14 @@ export function useStromaeNavigation({
       | Parameters<LunaticGoToPage>[0]
   ) => {
     switch (params.page) {
-      case 'validationPage':
-      case 'endPage':
-      case 'welcomePage':
+      case PAGE_TYPE.VALIDATION:
+      case PAGE_TYPE.END:
+      case PAGE_TYPE.WELCOME:
         setCurrentPage(params.page)
         return
       default:
         // Lunatic page
-        setCurrentPage('lunaticPage')
+        setCurrentPage(PAGE_TYPE.LUNATIC)
         goToLunaticPage(params)
     }
   }

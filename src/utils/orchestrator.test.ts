@@ -1,3 +1,4 @@
+import { PAGE_TYPE } from '@/constants/page'
 import { hasBeenSent, shouldDisplayWelcomeModal } from './orchestrator'
 
 test('has been sent', () => {
@@ -11,18 +12,18 @@ test('has been sent', () => {
 
 test('should display welcome modal', () => {
   // never accessed next page
-  expect(shouldDisplayWelcomeModal(undefined, 'welcomePage')).toBeFalsy()
-  expect(shouldDisplayWelcomeModal('INIT', 'welcomePage')).toBeFalsy()
+  expect(shouldDisplayWelcomeModal(undefined, PAGE_TYPE.WELCOME)).toBeFalsy()
+  expect(shouldDisplayWelcomeModal('INIT', PAGE_TYPE.WELCOME)).toBeFalsy()
   expect(shouldDisplayWelcomeModal('INIT')).toBeFalsy()
 
   // currently answering
   expect(shouldDisplayWelcomeModal('INIT', '2')).toBeTruthy()
   expect(shouldDisplayWelcomeModal('INIT', '1.3#2')).toBeTruthy()
-  expect(shouldDisplayWelcomeModal('INIT', 'validationPage')).toBeTruthy()
+  expect(shouldDisplayWelcomeModal('INIT', PAGE_TYPE.VALIDATION)).toBeTruthy()
 
   // form sent
-  expect(shouldDisplayWelcomeModal('COMPLETED', 'endPage')).toBeFalsy()
-  expect(shouldDisplayWelcomeModal('VALIDATED', 'endPage')).toBeFalsy()
-  expect(shouldDisplayWelcomeModal('TOEXTRACT', 'endPage')).toBeFalsy()
-  expect(shouldDisplayWelcomeModal('EXTRACTED', 'endPage')).toBeFalsy()
+  expect(shouldDisplayWelcomeModal('COMPLETED', PAGE_TYPE.END)).toBeFalsy()
+  expect(shouldDisplayWelcomeModal('VALIDATED', PAGE_TYPE.END)).toBeFalsy()
+  expect(shouldDisplayWelcomeModal('TOEXTRACT', PAGE_TYPE.END)).toBeFalsy()
+  expect(shouldDisplayWelcomeModal('EXTRACTED', PAGE_TYPE.END)).toBeFalsy()
 })

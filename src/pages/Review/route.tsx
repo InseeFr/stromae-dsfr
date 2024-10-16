@@ -15,7 +15,7 @@ import { createRoute } from '@tanstack/react-router'
 import { ReviewPage } from './ReviewPage'
 
 export const reviewPath =
-  'review/questionnaire/$questionnaireId/unite-enquetee/$surveyUnitId'
+  '/review/questionnaire/$questionnaireId/unite-enquetee/$surveyUnitId'
 
 export const reviewRoute = createRoute({
   getParentRoute: () => rootRoute,

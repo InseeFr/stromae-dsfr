@@ -1,3 +1,4 @@
+import { MODE_TYPE } from '@/constants/mode'
 import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
 import type { LunaticGetReferentiel } from '@/shared/components/Orchestrator/utils/lunaticType'
 import { nomenclatureQueryOptions } from '@/shared/query/visualizeQueryOptions'
@@ -32,7 +33,7 @@ export const VisualizePage = memo(function VisualizePage() {
 
   return (
     <Orchestrator
-      mode="visualize"
+      mode={MODE_TYPE.VISUALIZE}
       metadata={metadata}
       source={source}
       surveyUnitData={surveyUnitData}

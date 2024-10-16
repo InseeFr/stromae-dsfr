@@ -1,3 +1,6 @@
+import { MODE_TYPE } from '@/consts/mode'
+import { PAGE_TYPE } from '@/consts/page'
+import { useTelemetry } from '@/contexts/TelemetryContext'
 import type { Metadata } from '@/model/Metadata'
 import type { StateData } from '@/model/StateData'
 import type { SurveyUnitData } from '@/model/SurveyUnitData'
@@ -5,6 +8,11 @@ import { useAddPreLogoutAction } from '@/shared/hooks/prelogout'
 import { downloadAsJson } from '@/utils/downloadAsJson'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import { hasBeenSent, shouldDisplayWelcomeModal } from '@/utils/orchestrator'
+import {
+  computeClickEvent,
+  computeInitEvent,
+  computeNewPageEvent,
+} from '@/utils/telemetry'
 import { useRefSync } from '@/utils/useRefSync'
 import { useUpdateEffect } from '@/utils/useUpdateEffect'
 import { fr } from '@codegouvfr/react-dsfr'
@@ -61,15 +69,15 @@ export namespace OrchestratorProps {
   }
 
   export type Visualize = {
-    mode: 'visualize'
+    mode: MODE_TYPE.VISUALIZE
   }
 
   export type Review = {
-    mode: 'review'
+    mode: MODE_TYPE.REVIEW
   }
 
   export type Collect = {
-    mode: 'collect'
+    mode: MODE_TYPE.COLLECT
     updateDataAndStateData: (params: {
       stateData: StateData
       data: LunaticData['COLLECTED']
@@ -81,18 +89,28 @@ export namespace OrchestratorProps {
 
 export function Orchestrator(props: OrchestratorProps) {
   const { source, surveyUnitData, getReferentiel, mode, metadata } = props
+  const { pushEvent } = useTelemetry()
 
   const initialCurrentPage = surveyUnitData?.stateData?.currentPage
   const initialState = surveyUnitData?.stateData?.state
   const pagination = source.pagination ?? 'question'
 
+  // Displays the welcome modal which allows to come back to current page
+  const shouldWelcome = shouldDisplayWelcomeModal(
+    initialState,
+    initialCurrentPage
+  )
+
   const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const pageTagRef = useRef<LunaticPageTag>('1')
+  const validationModalActionsRef = useRef({
+    open: () => Promise.resolve(),
+  })
 
   const lunaticLogger = useMemo(
     () =>
-      mode === 'visualize'
+      mode === MODE_TYPE.VISUALIZE
         ? createLunaticLogger({ pageTag: pageTagRef })
         : undefined,
     [mode]
@@ -117,7 +135,7 @@ export function Orchestrator(props: OrchestratorProps) {
     activeControls: true,
     getReferentiel,
     autoSuggesterLoading: true,
-    trackChanges: mode === 'collect',
+    trackChanges: mode === MODE_TYPE.COLLECT,
     withOverview: true,
   })
 
@@ -126,16 +144,6 @@ export function Orchestrator(props: OrchestratorProps) {
   const [activeErrors, setActiveErrors] = useState<
     Record<string, LunaticError[]> | undefined
   >(undefined)
-
-  useEffect(() => {
-    if (activeErrors) {
-      scrollAndFocusToFirstError()
-    }
-  }, [activeErrors])
-
-  const validationModalActionsRef = useRef({
-    open: () => Promise.resolve(),
-  })
 
   // Decorates goNext function with controls behavior
   const goNextWithControls = (goNext: () => void) => {
@@ -177,17 +185,18 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const getCurrentStateData = useRefSync((): StateData => {
     switch (currentPage) {
-      case 'endPage':
+      case PAGE_TYPE.END:
         return { date: Date.now(), currentPage, state: 'VALIDATED' }
-      case 'lunaticPage':
+      case PAGE_TYPE.LUNATIC:
         return { date: Date.now(), currentPage: pageTag, state: 'INIT' }
-      case 'validationPage':
-      case 'welcomePage':
+      case PAGE_TYPE.VALIDATION:
+      case PAGE_TYPE.WELCOME:
       default:
         return { date: Date.now(), currentPage, state: 'INIT' }
     }
   })
 
+  // Allow to download data for visualize
   const downloadAsJsonRef = useRefSync(() => {
     downloadAsJson<SurveyUnitData>({
       dataToDownload: {
@@ -200,8 +209,19 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
+  /* initialization */
+  useEffect(() => {
+    pushEvent(computeInitEvent({ idSU: surveyUnitData?.id ?? '' }))
+  }, [pushEvent, surveyUnitData])
+
+  useEffect(() => {
+    if (activeErrors) {
+      scrollAndFocusToFirstError()
+    }
+  }, [activeErrors])
+
   useAddPreLogoutAction(async () => {
-    if (mode === 'collect' && !hasBeenSent(initialState)) {
+    if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       const { updateDataAndStateData } = props
 
       const data = getChangedData()
@@ -216,6 +236,14 @@ export function Orchestrator(props: OrchestratorProps) {
 
   //When page change
   useUpdateEffect(() => {
+    pushEvent(
+      computeNewPageEvent({
+        idSU: surveyUnitData?.id ?? '',
+        page: currentPage,
+        pageTag,
+      })
+    )
+
     //Reset scroll to the container when the top is not visible
     if (
       containerRef.current &&
@@ -232,7 +260,7 @@ export function Orchestrator(props: OrchestratorProps) {
       contentRef.current.removeAttribute('tabindex')
     }
     // Persist data and stateData when page change in "collect" mode
-    if (mode === 'collect' && !hasBeenSent(initialState)) {
+    if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       const { updateDataAndStateData } = props
 
       const data = getChangedData()
@@ -248,7 +276,7 @@ export function Orchestrator(props: OrchestratorProps) {
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
     return () => {
-      if (mode === 'collect' && !hasBeenSent(initialState)) {
+      if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
         const { updateDataAndStateData } = props
         const data = getChangedData()
 
@@ -269,15 +297,15 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const handleDepositProofClick = async () => {
     switch (mode) {
-      case 'visualize': {
+      case MODE_TYPE.VISUALIZE: {
         downloadAsJsonRef.current()
         navigate({ to: '/visualize', params: {} })
         break
       }
-      case 'collect': {
+      case MODE_TYPE.COLLECT: {
         return props.getDepositProof()
       }
-      case 'review':
+      case MODE_TYPE.REVIEW:
       default:
         break
     }
@@ -309,19 +337,41 @@ export function Orchestrator(props: OrchestratorProps) {
     { components: [], bottomComponents: [] }
   )
 
-  // Displays the welcome modal which allows to come back to current page
-  const shouldWelcome = shouldDisplayWelcomeModal(
-    initialState,
-    initialCurrentPage
-  )
+  const handleNextClick = (
+    goNext: () => void,
+    surveyUnitData: SurveyUnitData | undefined
+  ) => {
+    pushEvent(
+      computeClickEvent({
+        idSU: surveyUnitData?.id ?? '',
+        element: 'next',
+      })
+    )
+    goNext()
+  }
+
+  const handlePreviousClick = (
+    goPrevious: () => void,
+    surveyUnitData: SurveyUnitData | undefined
+  ) => {
+    pushEvent(
+      computeClickEvent({
+        idSU: surveyUnitData?.id ?? '',
+        element: 'previous',
+      })
+    )
+    goPrevious()
+  }
 
   return (
     <div ref={containerRef}>
       <LunaticProvider>
         <SurveyContainer
-          handleNextClick={goNext}
-          handlePreviousClick={goPrevious}
-          handleDownloadData={downloadAsJsonRef.current}
+          handleNextClick={() => handleNextClick(goNext, surveyUnitData)}
+          handlePreviousClick={() =>
+            handlePreviousClick(goPrevious, surveyUnitData)
+          }
+          handleDownloadData={downloadAsJsonRef.current} // Visualize
           currentPage={currentPage}
           mode={mode}
           handleDepositProofClick={handleDepositProofClick}
@@ -331,7 +381,7 @@ export function Orchestrator(props: OrchestratorProps) {
           bottomContent={
             bottomComponents.length > 0 && (
               <div className={fr.cx('fr-my-10v')}>
-                {currentPage === 'lunaticPage' && (
+                {currentPage === PAGE_TYPE.LUNATIC && (
                   <LunaticComponents
                     components={bottomComponents}
                     slots={slotComponents}
@@ -345,10 +395,10 @@ export function Orchestrator(props: OrchestratorProps) {
           }
         >
           <div ref={contentRef} className={fr.cx('fr-mb-4v')}>
-            {currentPage === 'welcomePage' && (
+            {currentPage === PAGE_TYPE.WELCOME && (
               <WelcomePage metadata={metadata} />
             )}
-            {currentPage === 'lunaticPage' && (
+            {currentPage === PAGE_TYPE.LUNATIC && (
               <LunaticComponents
                 components={components}
                 slots={slotComponents}
@@ -357,8 +407,8 @@ export function Orchestrator(props: OrchestratorProps) {
                 })}
               />
             )}
-            {currentPage === 'validationPage' && <ValidationPage />}
-            {currentPage === 'endPage' && (
+            {currentPage === PAGE_TYPE.VALIDATION && <ValidationPage />}
+            {currentPage === PAGE_TYPE.END && (
               <EndPage date={surveyUnitData?.stateData?.date} />
             )}
             <WelcomeModal
@@ -370,7 +420,7 @@ export function Orchestrator(props: OrchestratorProps) {
               open={shouldWelcome}
             />
             <ValidationModal actionsRef={validationModalActionsRef} />
-            {mode === 'visualize' && <VTLDevTools />}
+            {mode === MODE_TYPE.VISUALIZE && <VTLDevTools />}
           </div>
         </SurveyContainer>
       </LunaticProvider>

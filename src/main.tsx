@@ -1,3 +1,4 @@
+import { TelemetryContext } from '@/contexts/TelemetryContext'
 import { OidcProvider } from '@/oidc'
 import { routeTree } from '@/router/router'
 import { MuiDsfrThemeProvider } from '@codegouvfr/react-dsfr/mui'
@@ -50,10 +51,16 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <MuiDsfrThemeProvider>
       <QueryClientProvider client={queryClient}>
         <OidcProvider>
-          <RouterProvider
-            router={router}
-            basepath={import.meta.env.VITE_BASE_PATH}
-          />
+          <TelemetryContext.Provider
+            value={{
+              pushEvent: (e) => console.log(e),
+            }}
+          >
+            <RouterProvider
+              router={router}
+              basepath={import.meta.env.VITE_BASE_PATH}
+            />
+          </TelemetryContext.Provider>
         </OidcProvider>
       </QueryClientProvider>
     </MuiDsfrThemeProvider>

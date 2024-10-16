@@ -1,3 +1,4 @@
+import { PAGE_TYPE } from '@/consts/page'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { InternalPageType } from '@/model/Page'
 import { fr } from '@codegouvfr/react-dsfr'
@@ -37,7 +38,7 @@ export function SurveyContainer(
 
   const { t } = useTranslation({ SurveyContainer })
 
-  const isPreviousButtonDisplayed = ['welcomePage', 'endPage'].includes(
+  const isPreviousButtonDisplayed = [PAGE_TYPE.WELCOME, PAGE_TYPE.END].includes(
     currentPage
   )
 

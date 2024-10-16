@@ -4,7 +4,7 @@ import { assert } from 'tsafe/assert'
 import type { StateData } from './StateData'
 import type { SurveyUnit } from './api'
 
-export type SurveyUnitData = {
+export type SurveyUnitData = SurveyUnit & {
   stateData?: StateData
   data?: LunaticData
   personalization?: Array<{ name: string; value: string }>

@@ -1,7 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import type { TelemetryEvent } from '@/types/telemetry'
 import { createContext, useContext } from 'react'
 
-// eslint-disable-next-line react-refresh/only-export-components
 type TelemetryContextType = {
   pushEvent: (e: TelemetryEvent) => void
 }

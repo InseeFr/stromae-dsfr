@@ -5,9 +5,10 @@ import type { StateData } from './StateData'
 import type { SurveyUnit } from './api'
 
 export type SurveyUnitData = {
-  stateData?: StateData
   data?: LunaticData
+  id?: string
   personalization?: Array<{ name: string; value: string }>
+  stateData?: StateData
 }
 
 assert<Extends<SurveyUnitData, SurveyUnit>>()

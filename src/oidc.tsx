@@ -10,6 +10,7 @@ export const { OidcProvider, useOidc, getOidc } =
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
         publicUrl: import.meta.env.BASE_URL,
         decodedIdTokenSchema: z.object({
+          sid: z.string(),
           sub: z.string(),
           preferred_username: z.string(),
         }),

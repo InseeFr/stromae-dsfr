@@ -1,11 +1,12 @@
+import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/model/Page'
 import { assert, type Equals } from 'tsafe/assert'
 import z from 'zod'
 
 export const stromaePageSchema = z.enum([
-  'welcomePage',
-  'validationPage',
-  'endPage',
+  PAGE_TYPE.WELCOME,
+  PAGE_TYPE.VALIDATION,
+  PAGE_TYPE.END,
 ])
 
 assert<Equals<z.infer<typeof stromaePageSchema>, StromaePage>>()
@@ -22,7 +23,7 @@ assert<Equals<z.infer<typeof pageTypeSchema>, PageType>>()
 
 export const internalPageTypeSchema = z.union([
   stromaePageSchema,
-  z.literal('lunaticPage'),
+  z.literal(PAGE_TYPE.LUNATIC),
 ])
 
 assert<Equals<z.infer<typeof internalPageTypeSchema>, InternalPageType>>()

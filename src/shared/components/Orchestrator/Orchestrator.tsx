@@ -1,23 +1,35 @@
+import { MODE_TYPE } from '@/constants/mode'
+import { PAGE_TYPE } from '@/constants/page'
+import { useTelemetry } from '@/contexts/TelemetryContext'
 import type { Metadata } from '@/model/Metadata'
 import type { StateData } from '@/model/StateData'
 import type { SurveyUnitData } from '@/model/SurveyUnitData'
+import { usePushEventAfterInactivity } from '@/shared/components/Orchestrator/usePushEventAfterInactivity'
 import { useAddPreLogoutAction } from '@/shared/hooks/prelogout'
 import { usePrevious } from '@/shared/hooks/usePrevious'
 import { downloadAsJson } from '@/utils/downloadAsJson'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import { hasBeenSent, shouldDisplayWelcomeModal } from '@/utils/orchestrator'
+import {
+  computeControlEvent,
+  computeControlSkipEvent,
+  computeInitEvent,
+  computeInputEvent,
+  computeNewPageEvent,
+} from '@/utils/telemetry'
 import { useRefSync } from '@/utils/useRefSync'
 import { useUpdateEffect } from '@/utils/useUpdateEffect'
 import { fr } from '@codegouvfr/react-dsfr'
 import {
   LunaticComponents,
   useLunatic,
+  type LunaticChangesHandler,
   type LunaticData,
   type LunaticError,
   type LunaticSource,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { EndPage } from './CustomPages/EndPage'
 import { ValidationModal } from './CustomPages/ValidationModal'
 import { ValidationPage } from './CustomPages/ValidationPage'
@@ -28,13 +40,10 @@ import { VTLDevTools } from './VTLDevTools/VTLDevtools'
 import { createLunaticLogger } from './VTLDevTools/VTLErrorStore'
 import { slotComponents } from './slotComponents'
 import { useStromaeNavigation } from './useStromaeNavigation'
+import { computeLunaticComponents } from './utils/components'
 import { isBlockingError, isSameErrors } from './utils/controls'
 import { trimCollectedData } from './utils/data'
-import type {
-  LunaticComponentsProps,
-  LunaticGetReferentiel,
-  LunaticPageTag,
-} from './utils/lunaticType'
+import type { LunaticGetReferentiel, LunaticPageTag } from './utils/lunaticType'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
 
@@ -56,27 +65,33 @@ export type OrchestratorProps = OrchestratorProps.Common &
 
 export namespace OrchestratorProps {
   export type Common = {
+    /** Questionnaire data consumed by Lunatic to make its components */
     source: LunaticSource
+    /** Initial survey unit data when we initialize the orchestrator */
     surveyUnitData: SurveyUnitData | undefined
+    /** Allows to fetch nomenclature by id */
     getReferentiel: LunaticGetReferentiel
+    /** Survey unit metadata */
     metadata: Metadata
   }
 
   export type Visualize = {
-    mode: 'visualize'
+    mode: MODE_TYPE.VISUALIZE
   }
 
   export type Review = {
-    mode: 'review'
+    mode: MODE_TYPE.REVIEW
   }
 
   export type Collect = {
-    mode: 'collect'
+    mode: MODE_TYPE.COLLECT
+    /** Updates data with the modified data and survey state */
     updateDataAndStateData: (params: {
       stateData: StateData
       data: LunaticData['COLLECTED']
       onSuccess?: () => void
     }) => Promise<void>
+    /** Allows user to download a deposit proof PDF */
     getDepositProof: () => Promise<void>
   }
 }
@@ -84,20 +99,73 @@ export namespace OrchestratorProps {
 export function Orchestrator(props: OrchestratorProps) {
   const { source, surveyUnitData, getReferentiel, mode, metadata } = props
 
-  const initialCurrentPage = surveyUnitData?.stateData?.currentPage
-  const initialState = surveyUnitData?.stateData?.state
-  const pagination = source.pagination ?? 'question'
+  // Allow to send telemetry events once survey unit id has been set
+  const [isTelemetryActivated, setIsTelemetryActivated] =
+    useState<boolean>(false)
+
+  const navigate = useNavigate()
+  const {
+    isTelemetryDisabled,
+    pushEvent,
+    setDefaultValues,
+    triggerBatchTelemetryCallback,
+  } = useTelemetry()
+  const { setEventToPushAfterInactivity, triggerInactivityTimeoutEvent } =
+    usePushEventAfterInactivity(pushEvent)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const pageTagRef = useRef<LunaticPageTag>('1')
+  const validationModalActionsRef = useRef({
+    open: () => Promise.resolve(),
+  })
+
+  const initialCurrentPage = surveyUnitData?.stateData?.currentPage
+  const initialState = surveyUnitData?.stateData?.state
+  const pagination = source.pagination ?? 'question'
+
+  /** Displays the welcome modal which allows to come back to current page */
+  const shouldWelcome = shouldDisplayWelcomeModal(
+    initialState,
+    initialCurrentPage
+  )
 
   const lunaticLogger = useMemo(
     () =>
-      mode === 'visualize'
+      mode === MODE_TYPE.VISUALIZE
         ? createLunaticLogger({ pageTag: pageTagRef })
         : undefined,
     [mode]
+  )
+
+  /** Triggers telemetry input event on Lunatic change */
+  const handleLunaticChange: LunaticChangesHandler = useCallback(
+    (changes) => {
+      if (changes.length === 1) {
+        // could be a text input, we only send the event once user has stopped
+        // actively typing since Lunatic triggers its onChange on every input
+        const { name, value, iteration } = changes[0]
+        setEventToPushAfterInactivity(
+          computeInputEvent({
+            value: value,
+            name: name,
+            iteration: iteration,
+          })
+        )
+      } else {
+        for (const { name, value, iteration } of changes) {
+          // weird inputs, probably not text input, push everything
+          pushEvent(
+            computeInputEvent({
+              value: value,
+              name: name,
+              iteration: iteration,
+            })
+          )
+        }
+      }
+    },
+    [pushEvent, setEventToPushAfterInactivity]
   )
 
   const {
@@ -119,8 +187,9 @@ export function Orchestrator(props: OrchestratorProps) {
     activeControls: true,
     getReferentiel,
     autoSuggesterLoading: true,
-    trackChanges: mode === 'collect',
+    trackChanges: mode === MODE_TYPE.COLLECT,
     withOverview: true,
+    onChange: isTelemetryActivated ? handleLunaticChange : undefined,
   })
 
   pageTagRef.current = pageTag
@@ -133,16 +202,6 @@ export function Orchestrator(props: OrchestratorProps) {
     Record<string, LunaticError[]> | undefined
   >(undefined)
 
-  useEffect(() => {
-    if (activeErrors) {
-      scrollAndFocusToFirstError()
-    }
-  }, [activeErrors])
-
-  const validationModalActionsRef = useRef({
-    open: () => Promise.resolve(),
-  })
-
   // Decorates goNext function with controls behavior
   const goNextWithControls = (goNext: () => void) => {
     const { currentErrors } = compileControls()
@@ -154,18 +213,30 @@ export function Orchestrator(props: OrchestratorProps) {
       return
     }
 
-    // An error is blocking, we stay on the page
-    if (isBlockingError(currentErrors)) {
-      //compileControls returns isCritical but I prefer define my own rules of blocking error in the orchestrator
-      setActiveErrors(currentErrors)
-      return
-    }
-
     // activeErrors and currentErrors are the same and no blocking error, we go next
-    if (isSameErrors(currentErrors, activeErrors)) {
+    if (
+      !isBlockingError(currentErrors) &&
+      isSameErrors(currentErrors, activeErrors)
+    ) {
+      if (isTelemetryActivated) {
+        pushEvent(
+          computeControlSkipEvent({
+            controlIds: Object.keys(currentErrors),
+          })
+        )
+      }
       setActiveErrors(undefined)
       goNext()
       return
+    }
+
+    // display the errors to the user
+    if (isTelemetryActivated) {
+      pushEvent(
+        computeControlEvent({
+          controlIds: Object.keys(currentErrors),
+        })
+      )
     }
     setActiveErrors(currentErrors)
   }
@@ -185,17 +256,18 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const getCurrentStateData = useRefSync((): StateData => {
     switch (currentPage) {
-      case 'endPage':
+      case PAGE_TYPE.END:
         return { date: Date.now(), currentPage, state: 'VALIDATED' }
-      case 'lunaticPage':
+      case PAGE_TYPE.LUNATIC:
         return { date: Date.now(), currentPage: pageTag, state: 'INIT' }
-      case 'validationPage':
-      case 'welcomePage':
+      case PAGE_TYPE.VALIDATION:
+      case PAGE_TYPE.WELCOME:
       default:
         return { date: Date.now(), currentPage, state: 'INIT' }
     }
   })
 
+  /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
     downloadAsJson<SurveyUnitData>({
       dataToDownload: {
@@ -209,7 +281,7 @@ export function Orchestrator(props: OrchestratorProps) {
   })
 
   const triggerDataAndStateUpdate = () => {
-    if (mode === 'collect' && !hasBeenSent(initialState)) {
+    if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       const stateData = getCurrentStateData.current()
       const data = getChangedData()
 
@@ -217,8 +289,8 @@ export function Orchestrator(props: OrchestratorProps) {
       const isCollectedDataEmpty = isObjectEmpty(data.COLLECTED ?? {})
       if (
         isCollectedDataEmpty &&
-        (currentPage === 'lunaticPage'
-          ? previousPage === 'lunaticPage' && previousPageTag === pageTag
+        (currentPage === PAGE_TYPE.LUNATIC
+          ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
           : stateData.currentPage === previousPage)
       ) {
         // no change, no need to push anything
@@ -239,12 +311,46 @@ export function Orchestrator(props: OrchestratorProps) {
     }
   }
 
+  // Telemetry initialization
+  useEffect(() => {
+    if (!isTelemetryDisabled && mode === MODE_TYPE.COLLECT) {
+      setDefaultValues({ idSU: surveyUnitData?.id })
+      setIsTelemetryActivated(true)
+    }
+  }, [isTelemetryDisabled, mode, setDefaultValues, surveyUnitData?.id])
+
+  // Initialization
+  useEffect(() => {
+    if (isTelemetryActivated) {
+      pushEvent(computeInitEvent())
+    }
+  }, [isTelemetryActivated, pushEvent])
+
+  useEffect(() => {
+    if (activeErrors) {
+      scrollAndFocusToFirstError()
+    }
+  }, [activeErrors])
+
   useAddPreLogoutAction(async () => {
+    if (isTelemetryActivated) {
+      triggerInactivityTimeoutEvent()
+    }
     triggerDataAndStateUpdate()
   })
 
-  //When page change
+  // On page change
   useUpdateEffect(() => {
+    if (isTelemetryActivated) {
+      triggerInactivityTimeoutEvent()
+      pushEvent(
+        computeNewPageEvent({
+          page: currentPage,
+          pageTag,
+        })
+      )
+    }
+
     //Reset scroll to the container when the top is not visible
     if (
       containerRef.current &&
@@ -267,60 +373,39 @@ export function Orchestrator(props: OrchestratorProps) {
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
     return () => {
+      if (isTelemetryActivated) {
+        triggerInactivityTimeoutEvent()
+        if (triggerBatchTelemetryCallback) {
+          ;(async () => {
+            await triggerBatchTelemetryCallback()
+          })()
+        }
+      }
       triggerDataAndStateUpdate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const navigate = useNavigate()
+  const { components, bottomComponents } = computeLunaticComponents(
+    getComponents(),
+    pagination
+  )
 
   const handleDepositProofClick = async () => {
     switch (mode) {
-      case 'visualize': {
+      case MODE_TYPE.VISUALIZE: {
         downloadAsJsonRef.current()
         navigate({ to: '/visualize', params: {} })
         break
       }
-      case 'collect': {
+      case MODE_TYPE.COLLECT: {
         return props.getDepositProof()
       }
-      case 'review':
+      case MODE_TYPE.REVIEW:
       default:
         break
     }
   }
-
-  const { components, bottomComponents } = getComponents().reduce<{
-    components: LunaticComponentsProps
-    bottomComponents: LunaticComponentsProps
-  }>(
-    (acc, c) => {
-      // In sequence pagination we do not want to display Sequence components
-      if (pagination === 'sequence' && c.componentType === 'Sequence') {
-        return acc // Skip this component
-      }
-
-      // We want to be able to display at the bottom components with position "bottom"
-      if (c.position === 'bottom') {
-        return {
-          components: acc.components,
-          bottomComponents: [...acc.bottomComponents, c],
-        }
-      }
-
-      return {
-        components: [...acc.components, c],
-        bottomComponents: acc.bottomComponents,
-      }
-    },
-    { components: [], bottomComponents: [] }
-  )
-
-  // Displays the welcome modal which allows to come back to current page
-  const shouldWelcome = shouldDisplayWelcomeModal(
-    initialState,
-    initialCurrentPage
-  )
 
   return (
     <div ref={containerRef}>
@@ -328,7 +413,7 @@ export function Orchestrator(props: OrchestratorProps) {
         <SurveyContainer
           handleNextClick={goNext}
           handlePreviousClick={goPrevious}
-          handleDownloadData={downloadAsJsonRef.current}
+          handleDownloadData={downloadAsJsonRef.current} // Visualize
           currentPage={currentPage}
           mode={mode}
           handleDepositProofClick={handleDepositProofClick}
@@ -338,7 +423,7 @@ export function Orchestrator(props: OrchestratorProps) {
           bottomContent={
             bottomComponents.length > 0 && (
               <div className={fr.cx('fr-my-10v')}>
-                {currentPage === 'lunaticPage' && (
+                {currentPage === PAGE_TYPE.LUNATIC && (
                   <LunaticComponents
                     components={bottomComponents}
                     slots={slotComponents}
@@ -352,10 +437,10 @@ export function Orchestrator(props: OrchestratorProps) {
           }
         >
           <div ref={contentRef} className={fr.cx('fr-mb-4v')}>
-            {currentPage === 'welcomePage' && (
+            {currentPage === PAGE_TYPE.WELCOME && (
               <WelcomePage metadata={metadata} />
             )}
-            {currentPage === 'lunaticPage' && (
+            {currentPage === PAGE_TYPE.LUNATIC && (
               <LunaticComponents
                 components={components}
                 slots={slotComponents}
@@ -364,10 +449,10 @@ export function Orchestrator(props: OrchestratorProps) {
                 })}
               />
             )}
-            {currentPage === 'validationPage' && <ValidationPage />}
-            {currentPage === 'endPage' ? (
+            {currentPage === PAGE_TYPE.VALIDATION && <ValidationPage />}
+            {currentPage === PAGE_TYPE.END && (
               <EndPage state={initialState} date={lastUpdateDate} />
-            ) : null}
+            )}
             <WelcomeModal
               goBack={() =>
                 initialCurrentPage
@@ -377,7 +462,7 @@ export function Orchestrator(props: OrchestratorProps) {
               open={shouldWelcome}
             />
             <ValidationModal actionsRef={validationModalActionsRef} />
-            {mode === 'visualize' && <VTLDevTools />}
+            {mode === MODE_TYPE.VISUALIZE && <VTLDevTools />}
           </div>
         </SurveyContainer>
       </LunaticProvider>

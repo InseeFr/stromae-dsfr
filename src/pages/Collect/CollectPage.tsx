@@ -4,6 +4,7 @@ import {
   getGetSurveyUnitByIdQueryKey,
   updateSurveyUnitDataStateDataById,
 } from '@/api/06-survey-units'
+import { MODE_TYPE } from '@/constants/mode'
 import type { StateData } from '@/model/StateData'
 import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
 import type {
@@ -94,7 +95,7 @@ export const CollectPage = memo(function CollectPage() {
   return (
     <Orchestrator
       metadata={metadata}
-      mode="collect"
+      mode={MODE_TYPE.COLLECT}
       source={source}
       surveyUnitData={surveyUnitData}
       getReferentiel={getReferentiel}

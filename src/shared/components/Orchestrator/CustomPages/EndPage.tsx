@@ -1,4 +1,5 @@
 import { declareComponentKeys, useTranslation } from '@/i18n'
+import type { StateData } from '@/model/StateData'
 import { useDocumentTitle } from '@/shared/hooks/useDocumentTitle'
 import { fr } from '@codegouvfr/react-dsfr'
 
@@ -12,7 +13,7 @@ export function EndPage({
   state,
 }: Readonly<{
   date?: number
-  state?: 'INIT' | 'COMPLETED' | 'VALIDATED' | 'TOEXTRACT' | 'EXTRACTED'
+  state?: StateData['state']
 }>) {
   const { t } = useTranslation({ EndPage })
   const formattedDate = date ? new Date(date).toLocaleString() : undefined

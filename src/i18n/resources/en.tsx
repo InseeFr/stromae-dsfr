@@ -1,3 +1,4 @@
+import { PAGE_TYPE } from '@/constants/page'
 import type { Translations } from '@/i18n/types'
 
 export const translations: Translations<'en'> = {
@@ -90,23 +91,20 @@ export const translations: Translations<'en'> = {
   SurveyContainer: {
     'button continue label': ({ currentPage }) => {
       switch (currentPage) {
-        case 'welcomePage':
+        case PAGE_TYPE.WELCOME:
           return 'Start'
-        case 'lunaticPage':
+        case PAGE_TYPE.LUNATIC:
           return 'Continue'
-        case 'endPage':
+        case PAGE_TYPE.END:
           return 'Download the receipt'
-        case 'validationPage':
+        case PAGE_TYPE.VALIDATION:
           return 'Submit my responses'
       }
     },
     'button continue title': ({ currentPage }) => {
-      switch (currentPage) {
-        case 'endPage':
-          return 'Download the acknowledgment of receipt'
-        default:
-          return 'Proceed to the next step'
-      }
+      if (currentPage === PAGE_TYPE.END)
+        return 'Download the acknowledgment of receipt'
+      return 'Proceed to the next step'
     },
     'button download': 'Download data',
     'button expand': 'Expand view',

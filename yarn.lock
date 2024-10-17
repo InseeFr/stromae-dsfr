@@ -254,9 +254,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@codegouvfr/react-dsfr@^1.13.6":
-  version "1.13.6"
-  resolved "https://registry.npmjs.org/@codegouvfr/react-dsfr/-/react-dsfr-1.13.6.tgz"
-  integrity sha512-/ERzY5MhgZ8X8uz40qfBAx6wNjsqHk2BqjPbcrLNtsj5o3DIGYL6HBF7hRA3fRGq+l8CrFfLgE9xOIQRtTVfvA==
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.14.1.tgz#0983346795fdfd1e1bdf14dedc9412acf782d1e8"
+  integrity sha512-ncoVbN6PSQVXbyu/KgkRSOfKiHxOLEEfJW9Z8rdVBBDnQuYpYCE91NVlRC27YdrXy1Kklf0MTYWEoO7hgpE7VQ==
   dependencies:
     tsafe "^1.7.2"
     yargs-parser "^21.1.1"
@@ -1500,36 +1500,36 @@
     "@stoplight/yaml-ast-parser" "0.0.50"
     tslib "^2.2.0"
 
-"@tanstack/history@1.49.0":
-  version "1.49.0"
-  resolved "https://registry.npmjs.org/@tanstack/history/-/history-1.49.0.tgz"
-  integrity sha512-Lo3kNzpAMq6CPwkRIQ+bA72QiQGdIrHgghPlS/KoUwMxdp2Znk8S9FQToTswQ53FqGvvIxR5stk+UBlVM2d61Q==
+"@tanstack/history@1.61.1":
+  version "1.61.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.61.1.tgz#ab284ebad15bdcf639a6ffbf4fb6e436b4315989"
+  integrity sha512-2CqERleeqO3hkhJmyJm37tiL3LYgeOpmo8szqdjgtnnG0z7ZpvzkZz6HkfOr9Ca/ha7mhAiouSvLYuLkM37AMg==
 
-"@tanstack/query-core@5.52.0":
-  version "5.52.0"
-  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.52.0.tgz"
-  integrity sha512-U1DOEgltjUwalN6uWYTewSnA14b+tE7lSylOiASKCAO61ENJeCq9VVD/TXHA6O5u9+6v5+UgGYBSccTKDoyMqw==
+"@tanstack/query-core@5.59.13":
+  version "5.59.13"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.59.13.tgz#8c962980af174bbd446b7e9b9999f7432897df80"
+  integrity sha512-Oou0bBu/P8+oYjXsJQ11j+gcpLAMpqW42UlokQYEz4dE7+hOtVO9rVuolJKgEccqzvyFzqX4/zZWY+R/v1wVsQ==
 
 "@tanstack/react-query@^5.52.0":
-  version "5.52.0"
-  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.52.0.tgz"
-  integrity sha512-T8tLZdPEopSD3A1EBZ/sq7WkI76pKLKKiT82F486K8wf26EPgYCdeiSnJfuayssdQjWwLQMQVl/ROUBNmlWgCQ==
+  version "5.59.15"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.59.15.tgz#fa1c5b4d96e6a148ec761f214304bbf5ac1906be"
+  integrity sha512-QbVlAkTI78wB4Mqgf2RDmgC0AOiJqer2c5k9STOOSXGv1S6ZkY37r/6UpE8DbQ2Du0ohsdoXgFNEyv+4eDoPEw==
   dependencies:
-    "@tanstack/query-core" "5.52.0"
+    "@tanstack/query-core" "5.59.13"
 
 "@tanstack/react-router@^1.49.2":
-  version "1.49.2"
-  resolved "https://registry.npmjs.org/@tanstack/react-router/-/react-router-1.49.2.tgz"
-  integrity sha512-slyyrDfhSIMsl1anEWg/L7lcBas8PWobJYFJni/PfFh4bGQNF8HDGOIeyY4W4xnYQkUcEV0XVo3f8woIbWqsrA==
+  version "1.70.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.70.1.tgz#8dcb75d80a7130bfa981d2f72d4e1db99e50b14c"
+  integrity sha512-TojCLM6GgfhWb0VJHNoju9Stg8fHxnGRZegFGQsRm4XtcYTU/u/Hic34ZH7QimaSnvm3fMWmVFp6kb+T37MZqw==
   dependencies:
-    "@tanstack/history" "1.49.0"
+    "@tanstack/history" "1.61.1"
     "@tanstack/react-store" "^0.5.5"
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
 
 "@tanstack/react-store@^0.5.5":
   version "0.5.5"
-  resolved "https://registry.npmjs.org/@tanstack/react-store/-/react-store-0.5.5.tgz"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-store/-/react-store-0.5.5.tgz#152e7b95de326886f7650f3a56d578369c061bd5"
   integrity sha512-1orYXGatBqXCYKuroFwV8Ll/6aDa5E3pU6RR4h7RvRk7TmxF1+zLCsWALZaeijXkySNMGmvawSbUXRypivg2XA==
   dependencies:
     "@tanstack/store" "0.5.5"
@@ -1537,7 +1537,7 @@
 
 "@tanstack/store@0.5.5":
   version "0.5.5"
-  resolved "https://registry.npmjs.org/@tanstack/store/-/store-0.5.5.tgz"
+  resolved "https://registry.yarnpkg.com/@tanstack/store/-/store-0.5.5.tgz#84d78568c4a71c885cb15754bf51eca42a776efe"
   integrity sha512-EOSrgdDAJExbvRZEQ/Xhh9iZchXpMN+ga1Bnk8Nmygzs8TfiE6hbzThF+Pr2G19uHL6+DTDTHhJ8VQiOd7l4tA==
 
 "@testing-library/dom@^10.4.0":
@@ -4706,9 +4706,9 @@ object.assign@^4.1.5:
     object-keys "^1.1.1"
 
 oidc-spa@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/oidc-spa/-/oidc-spa-5.3.0.tgz"
-  integrity sha512-ZIBDDtqft3DVNUHTp9OctefuFYtSuRFYMj3dngdvvUpKdvp6bH8FAjEKEzmIpsLbEjD96DGcL3Uj3Rwt6D6DWQ==
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-5.4.4.tgz#0595dfd4f6b2d5cfea65d051065e34d072988efb"
+  integrity sha512-Ijz6nIY9VE9PhL6CTxyKe7FreQQSYZdYzbVHJyF6BXYLFvqwMHTPfsRDjYSndWQGLNgv/QHCifWIK+USxVA1vA==
 
 onetime@^5.1.2:
   version "5.1.2"
@@ -5659,12 +5659,12 @@ timers-ext@^0.1.7:
 
 tiny-invariant@^1.3.3:
   version "1.3.3"
-  resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.3.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
   integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
 
 tiny-warning@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 tinybench@^2.9.0:
@@ -5751,9 +5751,9 @@ ts-api-utils@^1.3.0:
   integrity sha512-UQMIo7pb8WRomKR1/+MFVLTroIvDVtMX3K6OUir8ynLyzB8Jeriont2bTAtmNPa1ekAgN7YPDyf6V+ygrdU+eQ==
 
 tsafe@^1.6.6, tsafe@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.npmjs.org/tsafe/-/tsafe-1.7.2.tgz"
-  integrity sha512-dAPfQLhCfCRre5qs+Z5Q2a7s2CV7RxffZUmvj7puGaePYjECzWREJFd3w4XSFe/T5tbxgowfItA/JSSZ6Ma3dA==
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/tsafe/-/tsafe-1.7.5.tgz#0d3a31202b5ef87c7ba997e66e03fd80801278ef"
+  integrity sha512-tbNyyBSbwfbilFfiuXkSOj82a6++ovgANwcoqBAcO9/REPoZMEQoE8kWPeO0dy5A2D/2Lajr8Ohue5T0ifIvLQ==
 
 tsconfck@^2.0.1:
   version "2.1.2"
@@ -5987,7 +5987,7 @@ url-join@^4.0.1:
 
 use-sync-external-store@^1.2.2:
   version "1.2.2"
-  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.2.tgz"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.2.tgz#c3b6390f3a30eba13200d2302dcdf1e7b57b2ef9"
   integrity sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==
 
 utility-types@^3.10.0:
@@ -6242,7 +6242,7 @@ yaml@^2.3.4, yaml@^2.4.5:
 
 yargs-parser@^21.1.1:
   version "21.1.1"
-  resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
 
 yargs@^17.0.1:

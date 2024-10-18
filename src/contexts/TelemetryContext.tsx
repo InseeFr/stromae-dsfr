@@ -8,7 +8,7 @@ type TelemetryContextType = {
 export const TelemetryContext: React.Context<TelemetryContextType> =
   createContext({
     pushEvent: (e: TelemetryEvent) => {
-      console.log(e.type)
+      console.log(e)
     },
   })
 

@@ -2,7 +2,7 @@ export type TelemetryEvent = {
   type: string
   date: string // ISO 8601
   idSU: string
-  userAgent: string // Navigator.userAgent
+  userAgent: string
 }
 
 export type PageParadata = {
@@ -10,6 +10,15 @@ export type PageParadata = {
   pageTag: string
 }
 
-export type ClickParadata = {
-  element: string
+export type InputParadata = {
+  inputs: Input[]
+}
+export type Input = {
+  value: any
+  name: string
+  iteration?: number[]
+}
+
+export type ControlParadata = {
+  controlId: string
 }

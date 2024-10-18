@@ -9,8 +9,10 @@ import { downloadAsJson } from '@/utils/downloadAsJson'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import { hasBeenSent, shouldDisplayWelcomeModal } from '@/utils/orchestrator'
 import {
-  computeClickEvent,
+  computeControlEvent,
+  computeControlSkipEvent,
   computeInitEvent,
+  computeInputEvent,
   computeNewPageEvent,
 } from '@/utils/telemetry'
 import { useRefSync } from '@/utils/useRefSync'
@@ -19,12 +21,13 @@ import { fr } from '@codegouvfr/react-dsfr'
 import {
   LunaticComponents,
   useLunatic,
+  type LunaticChangesHandler,
   type LunaticData,
   type LunaticError,
   type LunaticSource,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { EndPage } from './CustomPages/EndPage'
 import { ValidationModal } from './CustomPages/ValidationModal'
 import { ValidationPage } from './CustomPages/ValidationPage'
@@ -116,6 +119,26 @@ export function Orchestrator(props: OrchestratorProps) {
     [mode]
   )
 
+  const handleLunaticChange: LunaticChangesHandler = useCallback(
+    (e) => {
+      const inputs = []
+      for (let i = 0; i < e.length; i++) {
+        inputs.push({
+          value: e[i].value,
+          name: e[i].name,
+          iteration: e[i].iteration,
+        })
+      }
+      pushEvent(
+        computeInputEvent({
+          idSU: surveyUnitData?.id ?? '',
+          inputs,
+        })
+      )
+    },
+    [pushEvent, surveyUnitData?.id]
+  )
+
   const {
     getComponents,
     Provider: LunaticProvider,
@@ -137,6 +160,7 @@ export function Orchestrator(props: OrchestratorProps) {
     autoSuggesterLoading: true,
     trackChanges: mode === MODE_TYPE.COLLECT,
     withOverview: true,
+    onChange: handleLunaticChange,
   })
 
   pageTagRef.current = pageTag
@@ -146,31 +170,47 @@ export function Orchestrator(props: OrchestratorProps) {
   >(undefined)
 
   // Decorates goNext function with controls behavior
-  const goNextWithControls = (goNext: () => void) => {
-    const { currentErrors } = compileControls()
+  const goNextWithControls = useCallback(
+    (goNext: () => void) => {
+      const { currentErrors } = compileControls()
 
-    // No errors, continue
-    if (!currentErrors) {
-      setActiveErrors(undefined)
-      goNext()
-      return
-    }
+      // No errors, continue
+      if (!currentErrors) {
+        setActiveErrors(undefined)
+        goNext()
+        return
+      }
 
-    // An error is blocking, we stay on the page
-    if (isBlockingError(currentErrors)) {
-      //compileControls returns isCritical but I prefer define my own rules of blocking error in the orchestrator
+      // activeErrors and currentErrors are the same and no blocking error, we go next
+      if (
+        !isBlockingError(currentErrors) &&
+        isSameErrors(currentErrors, activeErrors)
+      ) {
+        for (const errorId in currentErrors) {
+          pushEvent(
+            computeControlSkipEvent({
+              idSU: surveyUnitData?.id ?? '',
+              controlId: errorId,
+            })
+          )
+        }
+        setActiveErrors(undefined)
+        goNext()
+        return
+      }
+
+      for (const errorId in currentErrors) {
+        pushEvent(
+          computeControlEvent({
+            idSU: surveyUnitData?.id ?? '',
+            controlId: errorId,
+          })
+        )
+      }
       setActiveErrors(currentErrors)
-      return
-    }
-
-    // activeErrors and currentErrors are the same and no blocking error, we go next
-    if (isSameErrors(currentErrors, activeErrors)) {
-      setActiveErrors(undefined)
-      goNext()
-      return
-    }
-    setActiveErrors(currentErrors)
-  }
+    },
+    [activeErrors, compileControls, pushEvent, surveyUnitData]
+  )
 
   const { currentPage, goNext, goToPage, goPrevious } = useStromaeNavigation({
     goNextWithControls,
@@ -295,22 +335,6 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const navigate = useNavigate()
 
-  const handleDepositProofClick = async () => {
-    switch (mode) {
-      case MODE_TYPE.VISUALIZE: {
-        downloadAsJsonRef.current()
-        navigate({ to: '/visualize', params: {} })
-        break
-      }
-      case MODE_TYPE.COLLECT: {
-        return props.getDepositProof()
-      }
-      case MODE_TYPE.REVIEW:
-      default:
-        break
-    }
-  }
-
   const { components, bottomComponents } = getComponents().reduce<{
     components: LunaticComponentsProps
     bottomComponents: LunaticComponentsProps
@@ -337,40 +361,28 @@ export function Orchestrator(props: OrchestratorProps) {
     { components: [], bottomComponents: [] }
   )
 
-  const handleNextClick = (
-    goNext: () => void,
-    surveyUnitData: SurveyUnitData | undefined
-  ) => {
-    pushEvent(
-      computeClickEvent({
-        idSU: surveyUnitData?.id ?? '',
-        element: 'next',
-      })
-    )
-    goNext()
-  }
-
-  const handlePreviousClick = (
-    goPrevious: () => void,
-    surveyUnitData: SurveyUnitData | undefined
-  ) => {
-    pushEvent(
-      computeClickEvent({
-        idSU: surveyUnitData?.id ?? '',
-        element: 'previous',
-      })
-    )
-    goPrevious()
+  const handleDepositProofClick = async () => {
+    switch (mode) {
+      case MODE_TYPE.VISUALIZE: {
+        downloadAsJsonRef.current()
+        navigate({ to: '/visualize', params: {} })
+        break
+      }
+      case MODE_TYPE.COLLECT: {
+        return props.getDepositProof()
+      }
+      case MODE_TYPE.REVIEW:
+      default:
+        break
+    }
   }
 
   return (
     <div ref={containerRef}>
       <LunaticProvider>
         <SurveyContainer
-          handleNextClick={() => handleNextClick(goNext, surveyUnitData)}
-          handlePreviousClick={() =>
-            handlePreviousClick(goPrevious, surveyUnitData)
-          }
+          handleNextClick={goNext}
+          handlePreviousClick={goPrevious}
           handleDownloadData={downloadAsJsonRef.current} // Visualize
           currentPage={currentPage}
           mode={mode}

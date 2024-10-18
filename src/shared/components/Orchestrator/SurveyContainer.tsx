@@ -119,7 +119,7 @@ export function SurveyContainer(
               title={t('button continue title', { currentPage })}
               id="continue-button"
               onClick={
-                currentPage === 'endPage'
+                currentPage === PAGE_TYPE.END
                   ? handleDepositProofClick
                   : handleNextClick
               }

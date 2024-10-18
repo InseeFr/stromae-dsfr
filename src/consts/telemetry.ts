@@ -1,7 +1,9 @@
 export enum TELEMETRY_EVENT_TYPE {
-  CLICK = 'click',
   INIT = 'init',
   NEW_PAGE = 'new-page',
+  INPUT = 'input',
+  CONTROL = 'control',
+  CONTROL_SKIP = 'control-skip',
 }
 
 // Paradata

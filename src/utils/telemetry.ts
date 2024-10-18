@@ -1,6 +1,7 @@
 import { TELEMETRY_EVENT_TYPE } from '@/consts/telemetry'
 import type {
-  ClickParadata,
+  ControlParadata,
+  InputParadata,
   PageParadata,
   TelemetryEvent,
 } from '@/types/telemetry'
@@ -42,17 +43,57 @@ export function computeNewPageEvent({
   }
 }
 
-export function computeClickEvent({
+// computeInputEvent creates an event to be used by telemetry context when the
+// user inputs something in lunatic components
+export function computeInputEvent({
   idSU,
-  element,
+  inputs,
 }: {
   idSU: string
-  element: string
-}): TelemetryEvent & ClickParadata {
+  inputs: {
+    name: any
+    value: string
+    iteration?: number[]
+  }[]
+}): TelemetryEvent & InputParadata {
   return {
     ...getDefaultData(),
     idSU,
-    element,
-    type: TELEMETRY_EVENT_TYPE.CLICK,
+    inputs,
+    type: TELEMETRY_EVENT_TYPE.INPUT,
+  }
+}
+
+// computeControlEvent creates an event to be used by telemetry context when
+// lunatic shows a control to the user
+export function computeControlEvent({
+  controlId,
+  idSU,
+}: {
+  controlId: string
+  idSU: string
+}): TelemetryEvent & ControlParadata {
+  return {
+    ...getDefaultData(),
+    idSU,
+    controlId,
+    type: TELEMETRY_EVENT_TYPE.CONTROL,
+  }
+}
+
+// computeControlSkipEvent creates an event to be used by telemetry context when
+// the user ignores the control shown by lunatic
+export function computeControlSkipEvent({
+  controlId,
+  idSU,
+}: {
+  controlId: string
+  idSU: string
+}): TelemetryEvent & ControlParadata {
+  return {
+    ...getDefaultData(),
+    idSU,
+    controlId,
+    type: TELEMETRY_EVENT_TYPE.CONTROL_SKIP,
   }
 }

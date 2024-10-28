@@ -358,9 +358,12 @@ export function Orchestrator(props: OrchestratorProps) {
               />
             )}
             {currentPage === 'validationPage' && <ValidationPage />}
-            {currentPage === 'endPage' && (
-              <EndPage date={surveyUnitData?.stateData?.date} />
-            )}
+            {currentPage === 'endPage' ? (
+              <EndPage
+                state={initialState}
+                date={surveyUnitData?.stateData?.date}
+              />
+            ) : null}
             <WelcomeModal
               goBack={() =>
                 initialCurrentPage

@@ -64,8 +64,10 @@ export const translations: Translations<'sq'> = {
   },
   EndPage: {
     title: 'Ju falënderojmë për bashkëpunimin tuaj në këtë anketë.',
-    paragraph: ({ formatedDate }) =>
-      `Përgjigjet tuaja janë dërguar më ${formatedDate}.`,
+    paragraph: ({ formattedDate }) =>
+      formattedDate
+        ? `Përgjigjet tuaja janë dërguar më ${formattedDate}.`
+        : 'Përgjigjet tuaja janë dërguar.',
     'document title': 'Fundi i pyetësorit',
   },
   ValidationPage: {

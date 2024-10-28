@@ -64,8 +64,10 @@ export const translations: Translations<'en'> = {
   },
   EndPage: {
     title: 'Thank you for your participation in this survey.',
-    paragraph: ({ formatedDate }) =>
-      `Your responses were sent on ${formatedDate}.`,
+    paragraph: ({ formattedDate }) =>
+      formattedDate
+        ? `Your responses were sent on ${formattedDate}.`
+        : 'Your responses were sent.',
     'document title': 'End of questionnaire',
   },
   ValidationPage: {

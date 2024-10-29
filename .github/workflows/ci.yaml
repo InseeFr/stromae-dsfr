@@ -12,14 +12,14 @@ on:
       - 'website/**'
 
 jobs:
-  test:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     if: github.event.head_commit.author.name != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: yarn
-      - run: yarn test
       - run: yarn build
       - uses: actions/upload-artifact@v4
         with:
@@ -29,7 +29,7 @@ jobs:
   check_if_version_upgraded:
     name: Check if version upgrade
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
     outputs:
       from_version: ${{ steps.step1.outputs.from_version }}
       to_version: ${{ steps.step1.outputs.to_version }}

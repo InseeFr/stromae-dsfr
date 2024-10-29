@@ -17,7 +17,7 @@
     "prebuild": "react-dsfr update-icons",
     "generate-api-client": "tsx scripts/generate-api-client.ts",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.13.6",

@@ -123,6 +123,10 @@ export function Orchestrator(props: OrchestratorProps) {
 
   pageTagRef.current = pageTag
 
+  // current date to show in end page on validation
+  const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
+    surveyUnitData?.stateData?.date
+  )
   const [activeErrors, setActiveErrors] = useState<
     Record<string, LunaticError[]> | undefined
   >(undefined)
@@ -237,11 +241,14 @@ export function Orchestrator(props: OrchestratorProps) {
 
       const data = getChangedData()
 
+      const stateData = getCurrentStateData.current()
       updateDataAndStateData({
-        stateData: getCurrentStateData.current(),
+        stateData,
         data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
         onSuccess: resetChangedData,
       })
+      // update date to show on end page message
+      setLastUpdateDate(stateData.date)
     }
   }, [currentPage, pageTag])
 
@@ -359,10 +366,7 @@ export function Orchestrator(props: OrchestratorProps) {
             )}
             {currentPage === 'validationPage' && <ValidationPage />}
             {currentPage === 'endPage' ? (
-              <EndPage
-                state={initialState}
-                date={surveyUnitData?.stateData?.date}
-              />
+              <EndPage state={initialState} date={lastUpdateDate} />
             ) : null}
             <WelcomeModal
               goBack={() =>

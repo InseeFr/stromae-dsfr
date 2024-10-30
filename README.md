@@ -1,3 +1,8 @@
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=InseeFr_stromae-dsfr&metric=alert_status)](https://sonarcloud.io/dashboard?id=InseeFr_stromae-dsfr)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=InseeFr_stromae-dsfr&metric=security_rating)](https://sonarcloud.io/dashboard?id=InseeFr_stromae-dsfr)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=InseeFr_stromae-dsfr&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=InseeFr_stromae-dsfr)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=InseeFr_stromae-dsfr&metric=coverage)](https://sonarcloud.io/dashboard?id=InseeFr_stromae-dsfr)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

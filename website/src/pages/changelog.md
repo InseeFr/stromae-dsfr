@@ -1,3 +1,9 @@
+### 1.2.4
+
+#### Correction de bugs
+
+- réduction de la taille du payload envoyé à l'API en enlevant des variables vides
+
 ### 1.2.3
 
 #### Correction de bugs

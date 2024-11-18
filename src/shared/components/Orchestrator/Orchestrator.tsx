@@ -2,6 +2,7 @@ import type { Metadata } from '@/model/Metadata'
 import type { StateData } from '@/model/StateData'
 import type { SurveyUnitData } from '@/model/SurveyUnitData'
 import { useAddPreLogoutAction } from '@/shared/hooks/prelogout'
+import { usePrevious } from '@/shared/hooks/usePrevious'
 import { downloadAsJson } from '@/utils/downloadAsJson'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import { hasBeenSent, shouldDisplayWelcomeModal } from '@/utils/orchestrator'
@@ -28,6 +29,7 @@ import { createLunaticLogger } from './VTLDevTools/VTLErrorStore'
 import { slotComponents } from './slotComponents'
 import { useStromaeNavigation } from './useStromaeNavigation'
 import { isBlockingError, isSameErrors } from './utils/controls'
+import { trimCollectedData } from './utils/data'
 import type {
   LunaticComponentsProps,
   LunaticGetReferentiel,
@@ -178,6 +180,8 @@ export function Orchestrator(props: OrchestratorProps) {
     initialCurrentPage,
     openValidationModal: () => validationModalActionsRef.current.open(),
   })
+  const previousPage = usePrevious(currentPage) || initialCurrentPage
+  const previousPageTag = usePrevious(pageTag) || initialCurrentPage
 
   const getCurrentStateData = useRefSync((): StateData => {
     switch (currentPage) {
@@ -204,18 +208,39 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  useAddPreLogoutAction(async () => {
+  const triggerDataAndStateUpdate = () => {
     if (mode === 'collect' && !hasBeenSent(initialState)) {
-      const { updateDataAndStateData } = props
-
+      const stateData = getCurrentStateData.current()
       const data = getChangedData()
 
-      return updateDataAndStateData({
-        stateData: getCurrentStateData.current(),
-        data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
+      // check if any data has been updated
+      const isCollectedDataEmpty = isObjectEmpty(data.COLLECTED ?? {})
+      if (
+        isCollectedDataEmpty &&
+        (currentPage === 'lunaticPage'
+          ? previousPage === 'lunaticPage' && previousPageTag === pageTag
+          : stateData.currentPage === previousPage)
+      ) {
+        // no change, no need to push anything
+        return
+      }
+
+      const collectedData = isCollectedDataEmpty
+        ? undefined
+        : trimCollectedData(data.COLLECTED)
+
+      props.updateDataAndStateData({
+        stateData,
+        data: collectedData,
         onSuccess: resetChangedData,
       })
+      // update date to show on end page message
+      setLastUpdateDate(stateData.date)
     }
+  }
+
+  useAddPreLogoutAction(async () => {
+    triggerDataAndStateUpdate()
   })
 
   //When page change
@@ -236,38 +261,13 @@ export function Orchestrator(props: OrchestratorProps) {
       contentRef.current.removeAttribute('tabindex')
     }
     // Persist data and stateData when page change in "collect" mode
-    if (mode === 'collect' && !hasBeenSent(initialState)) {
-      const { updateDataAndStateData } = props
-
-      const data = getChangedData()
-
-      const stateData = getCurrentStateData.current()
-      updateDataAndStateData({
-        stateData,
-        data: isObjectEmpty(data.COLLECTED ?? {}) ? undefined : data.COLLECTED,
-        onSuccess: resetChangedData,
-      })
-      // update date to show on end page message
-      setLastUpdateDate(stateData.date)
-    }
+    triggerDataAndStateUpdate()
   }, [currentPage, pageTag])
 
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
     return () => {
-      if (mode === 'collect' && !hasBeenSent(initialState)) {
-        const { updateDataAndStateData } = props
-        const data = getChangedData()
-
-        if (!isObjectEmpty(data.COLLECTED ?? {})) {
-          updateDataAndStateData({
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            stateData: getCurrentStateData.current(),
-            data: data.COLLECTED,
-            onSuccess: resetChangedData,
-          })
-        }
-      }
+      triggerDataAndStateUpdate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

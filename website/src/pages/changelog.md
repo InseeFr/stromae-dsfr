@@ -2,7 +2,7 @@
 
 #### Correction de bugs
 
-- réduction de la taille du payload envoyé à l'API en enlevant des variables vides
+- réduction de la taille du payload envoyé à l'API en enlevant des variables inutilisées
 
 ### 1.2.3
 

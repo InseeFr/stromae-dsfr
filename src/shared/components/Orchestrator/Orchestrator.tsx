@@ -28,7 +28,7 @@ import { VTLDevTools } from './VTLDevTools/VTLDevtools'
 import { createLunaticLogger } from './VTLDevTools/VTLErrorStore'
 import { slotComponents } from './slotComponents'
 import { useStromaeNavigation } from './useStromaeNavigation'
-import { isBlockingError, isSameErrors } from './utils/controls'
+import { isBlockingError } from './utils/controls'
 import { trimCollectedData } from './utils/data'
 import type {
   LunaticComponentsProps,
@@ -119,6 +119,8 @@ export function Orchestrator(props: OrchestratorProps) {
     activeControls: true,
     getReferentiel,
     autoSuggesterLoading: true,
+    // once the user has changed its input, we need to retrigger the controls
+    onChange: () => setIsControlsAcknowledged(false),
     trackChanges: mode === 'collect',
     withOverview: true,
   })
@@ -129,6 +131,9 @@ export function Orchestrator(props: OrchestratorProps) {
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
     surveyUnitData?.stateData?.date
   )
+  // whether or not the user has seen the errors and did not change anything
+  const [isControlsAcknowledged, setIsControlsAcknowledged] =
+    useState<boolean>(false)
   const [activeErrors, setActiveErrors] = useState<
     Record<string, LunaticError[]> | undefined
   >(undefined)
@@ -158,15 +163,20 @@ export function Orchestrator(props: OrchestratorProps) {
     if (isBlockingError(currentErrors)) {
       //compileControls returns isCritical but I prefer define my own rules of blocking error in the orchestrator
       setActiveErrors(currentErrors)
+      setIsControlsAcknowledged(true)
       return
     }
 
-    // activeErrors and currentErrors are the same and no blocking error, we go next
-    if (isSameErrors(currentErrors, activeErrors)) {
+    // we've already seen the errors and changed nothing since, we go next
+    if (isControlsAcknowledged) {
       setActiveErrors(undefined)
       goNext()
       return
     }
+
+    // we've never seen the errors or we've seen them but changed something,
+    // we display the errors and set them as acknowledged
+    setIsControlsAcknowledged(true)
     setActiveErrors(currentErrors)
   }
 
@@ -260,6 +270,7 @@ export function Orchestrator(props: OrchestratorProps) {
       })
       contentRef.current.removeAttribute('tabindex')
     }
+    setIsControlsAcknowledged(false)
     // Persist data and stateData when page change in "collect" mode
     triggerDataAndStateUpdate()
   }, [currentPage, pageTag])

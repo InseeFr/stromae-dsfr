@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: ''
 labels: 'Type: Bug'
 assignees: ''
-
 ---
 
 ## Describe the bug
@@ -40,7 +39,7 @@ Specify the version number where the bug first appeared.
 - [ ] Firefox
 - [ ] Safari
 - [ ] Edge
-- [ ] Other (please specify): ******\_\_\_******
+- [ ] Other (please specify): **\*\***\_\_\_**\*\***
 
 ## Additional context
 

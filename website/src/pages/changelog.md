@@ -3,6 +3,7 @@
 #### Correction de bugs
 
 - réduction de la taille du payload envoyé à l'API en enlevant des variables inutilisées
+- on déclenche à nouveau les contrôles si une valeur a changé
 
 ### 1.2.3
 

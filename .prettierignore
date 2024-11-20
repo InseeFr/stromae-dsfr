@@ -1,4 +1,3 @@
-node_modules/
 /.yarn_home/
-/dist/
+/src/vite-env.d.ts
 website/

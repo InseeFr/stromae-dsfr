@@ -1,1 +1,1 @@
-yarn test && yarn lint && yarn format:check
+yarn test && yarn lint-staged

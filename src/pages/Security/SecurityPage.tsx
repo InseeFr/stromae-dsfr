@@ -1,7 +1,9 @@
-import { declareComponentKeys, useTranslation } from '@/i18n'
-import { Grid } from '@/shared/components/Grid'
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb'
 import { memo } from 'react'
+
+import { default as Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+
+import { Grid } from '@/components/Grid'
+import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export const SecurityPage = memo(function SecurityPage() {
   const { t } = useTranslation({ SecurityPage })

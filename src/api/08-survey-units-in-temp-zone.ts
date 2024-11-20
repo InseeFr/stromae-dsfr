@@ -18,8 +18,9 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import type { SurveyUnitTempZone } from '../model/api'
-import type { SchemaSurveyUnitTempZone } from '../model/api/schema.survey-unit-temp-zone'
+
+import type { SurveyUnitTempZone } from '../models/api'
+import type { SchemaSurveyUnitTempZone } from '../models/api/schema.survey-unit-temp-zone'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
@@ -31,7 +32,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 export const postSurveyUnitByIdInTempZone = (
   id: string,
   schemaSurveyUnitTempZone: SchemaSurveyUnitTempZone,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -40,7 +41,7 @@ export const postSurveyUnitByIdInTempZone = (
       headers: { 'Content-Type': 'application/json' },
       data: schemaSurveyUnitTempZone,
     },
-    options
+    options,
   )
 }
 
@@ -112,11 +113,11 @@ export const usePostSurveyUnitByIdInTempZone = <
  */
 export const getSurveyUnitsInTempZone = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnitTempZone[]>(
     { url: `/api/survey-units/temp-zone`, method: 'GET', signal },
-    options
+    options,
   )
 }
 

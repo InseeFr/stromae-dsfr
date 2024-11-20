@@ -1,4 +1,5 @@
 import { PAGE_TYPE } from '@/constants/page'
+
 import { hasBeenSent, shouldDisplayWelcomeModal } from './orchestrator'
 
 test('has been sent', () => {

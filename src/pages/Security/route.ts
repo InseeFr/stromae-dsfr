@@ -1,5 +1,7 @@
-import { rootRoute } from '@/router/router'
 import { createRoute } from '@tanstack/react-router'
+
+import { rootRoute } from '@/router/router'
+
 import { SecurityPage } from './SecurityPage'
 
 export const securitePath = '/securite'

@@ -1,17 +1,19 @@
+import type { LunaticSource } from '@inseefr/lunatic'
+import { createRoute } from '@tanstack/react-router'
+
 import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
   getGetSurveyUnitByIdQueryOptions,
   getGetSurveyUnitMetadataByIdQueryOptions,
 } from '@/api/06-survey-units'
-import type { SurveyUnitData } from '@/model/SurveyUnitData'
+import { ContentSkeleton } from '@/components/ContentSkeleton'
+import { ErrorComponent } from '@/components/error/ErrorComponent'
+import type { SurveyUnitData } from '@/models/surveyUnitData'
+import { protectedRouteLoader } from '@/pages/protectedLoader'
 import { rootRoute } from '@/router/router'
-import { ContentSkeleton } from '@/shared/components/ContentSkeleton'
-import { ErrorComponent } from '@/shared/components/Error/ErrorComponent'
-import { protectedRouteLoader } from '@/shared/loader/protectedLoader'
-import { metadataStore } from '@/shared/metadataStore/metadataStore'
+import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
-import type { LunaticSource } from '@inseefr/lunatic'
-import { createRoute } from '@tanstack/react-router'
+
 import { ReviewPage } from './ReviewPage'
 
 export const reviewPath =
@@ -34,7 +36,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetQuestionnaireDataQueryOptions(questionnaireId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
@@ -42,7 +44,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetSurveyUnitByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((suData) => suData as SurveyUnitData) // data are heavy too
 
@@ -50,7 +52,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((metadata) => {
         document.title =
@@ -69,7 +71,7 @@ export const reviewRoute = createRoute({
         source,
         surveyUnitData,
         metadata,
-      })
+      }),
     )
   },
   errorComponent: ({ error }) => {

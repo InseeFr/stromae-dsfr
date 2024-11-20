@@ -18,12 +18,13 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query'
 import { useMutation, useQuery } from '@tanstack/react-query'
+
 import type {
   CampaignCreation,
   CampaignCreationV2,
   CampaignSummary,
   DeleteCampaignByIdParams,
-} from '../model/api'
+} from '../models/api'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
@@ -34,11 +35,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const getInterviewerCampaignList = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<CampaignSummary[]>(
     { url: `/api/campaigns`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -170,7 +171,7 @@ export function useGetInterviewerCampaignList<
  */
 export const createCampaign = (
   campaignCreation: CampaignCreation,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -179,7 +180,7 @@ export const createCampaign = (
       headers: { 'Content-Type': 'application/json' },
       data: campaignCreation,
     },
-    options
+    options,
   )
 }
 
@@ -251,7 +252,7 @@ export const useCreateCampaign = <
  */
 export const createCampaignV2 = (
   campaignCreationV2: CampaignCreationV2,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -260,7 +261,7 @@ export const createCampaignV2 = (
       headers: { 'Content-Type': 'application/json' },
       data: campaignCreationV2,
     },
-    options
+    options,
   )
 }
 
@@ -331,11 +332,11 @@ export const useCreateCampaignV2 = <
  */
 export const getListCampaign = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<CampaignSummary[]>(
     { url: `/api/admin/campaigns`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -446,11 +447,11 @@ export function useGetListCampaign<
 export const deleteCampaignById = (
   id: string,
   params: DeleteCampaignByIdParams,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     { url: `/api/campaign/${id}`, method: 'DELETE', params },
-    options
+    options,
   )
 }
 

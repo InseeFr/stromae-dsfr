@@ -1,7 +1,9 @@
+import { type ReactNode, memo } from 'react'
+
+import { default as Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+
+import { Grid } from '@/components/Grid'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-import { Grid } from '@/shared/components/Grid'
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb'
-import { memo, type ReactNode } from 'react'
 
 export const NavigationAssistancePage = memo(
   function NavigationAssistancePage() {
@@ -19,7 +21,7 @@ export const NavigationAssistancePage = memo(
         {t('navigation assistance content')}
       </Grid>
     )
-  }
+  },
 )
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

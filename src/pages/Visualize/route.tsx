@@ -1,16 +1,17 @@
-import { rootRoute } from '@/router/router'
-import { ContentSkeleton } from '@/shared/components/ContentSkeleton'
-import { ErrorComponent } from '@/shared/components/Error/ErrorComponent'
-import { metadataStore } from '@/shared/metadataStore/metadataStore'
+import { createRoute } from '@tanstack/react-router'
+import { z } from 'zod'
+
 import {
   metadataQueryOptions,
   sourceQueryOptions,
   surveyUnitDataQueryOptions,
-} from '@/shared/query/visualizeQueryOptions'
-import { createRoute } from '@tanstack/react-router'
-
+} from '@/api/visualizeQueryOptions'
+import { ContentSkeleton } from '@/components/ContentSkeleton'
+import { ErrorComponent } from '@/components/error/ErrorComponent'
+import { rootRoute } from '@/router/router'
+import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
-import { z } from 'zod'
+
 import { VisualizePage } from './Visualize'
 
 const visualizeSearchSchema = z
@@ -46,14 +47,14 @@ export const visualizeRoute = createRoute({
     }
 
     const sourcePr = queryClient.ensureQueryData(
-      sourceQueryOptions(sourceUrl, { signal: abortController.signal })
+      sourceQueryOptions(sourceUrl, { signal: abortController.signal }),
     )
 
     const surveyUnitDataPr = surveyUnitDataUrl
       ? queryClient.ensureQueryData(
           surveyUnitDataQueryOptions(surveyUnitDataUrl, {
             signal: abortController.signal,
-          })
+          }),
         )
       : Promise.resolve(undefined)
 
@@ -62,7 +63,7 @@ export const visualizeRoute = createRoute({
           .ensureQueryData(
             metadataQueryOptions(metadataUrl, {
               signal: abortController.signal,
-            })
+            }),
           )
           .then((metadata) => {
             if (metadata.label) {
@@ -73,7 +74,7 @@ export const visualizeRoute = createRoute({
               mainLogo: metadata.logos?.main,
               secondariesLogo: metadata.logos?.secondaries,
               surveyUnitInfo: convertOldPersonalization(
-                metadata.personalization
+                metadata.personalization,
               ),
             })
           })
@@ -82,7 +83,7 @@ export const visualizeRoute = createRoute({
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
       ([source, surveyUnitData, metadata]) => {
         return { source, surveyUnitData, metadata, nomenclature }
-      }
+      },
     )
   },
   errorComponent: ({ error, reset }) => (

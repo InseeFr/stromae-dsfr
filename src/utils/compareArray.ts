@@ -3,7 +3,7 @@ type PrimitiveArray = (string | number | boolean | null | undefined | bigint)[]
 
 export const areArraysEqual = (
   arrayA: PrimitiveArray,
-  arrayB: PrimitiveArray
+  arrayB: PrimitiveArray,
 ) => {
   return (
     arrayA.length === arrayB.length &&

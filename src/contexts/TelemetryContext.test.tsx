@@ -1,6 +1,8 @@
-import { computeInitEvent } from '@/utils/telemetry'
 import '@testing-library/jest-dom'
 import { renderHook } from '@testing-library/react'
+
+import { computeInitEvent } from '@/utils/telemetry'
+
 import { TelemetryContext, useTelemetry } from './TelemetryContext'
 
 describe('Telemetry context', () => {

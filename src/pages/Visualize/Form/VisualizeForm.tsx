@@ -1,10 +1,12 @@
-import { declareComponentKeys, useTranslation } from '@/i18n'
-import { Container } from '@/shared/components/Container'
-import { Grid } from '@/shared/components/Grid'
 import { Button } from '@codegouvfr/react-dsfr/Button'
 import { Input } from '@codegouvfr/react-dsfr/Input'
 import { useNavigate } from '@tanstack/react-router'
 import { FormProvider, useForm } from 'react-hook-form'
+
+import { Container } from '@/components/Container'
+import { Grid } from '@/components/Grid'
+import { declareComponentKeys, useTranslation } from '@/i18n'
+
 import { SelectNomenclatures } from './SelectNomenclatures'
 
 export type FormInputs = {
@@ -39,7 +41,7 @@ export function VisualizeForm() {
         metadata,
         nomenclature: nomenclature.reduce(
           (acc, { name, uri }) => ({ ...acc, [name]: uri }),
-          {}
+          {},
         ),
       },
     })

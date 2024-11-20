@@ -1,7 +1,9 @@
-import { declareComponentKeys, useTranslation } from '@/i18n'
-import { Grid } from '@/shared/components/Grid'
+import { type ReactNode, memo } from 'react'
+
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
-import { memo, type ReactNode } from 'react'
+
+import { Grid } from '@/components/Grid'
+import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export const LegalsPage = memo(function LegalsPage() {
   const { t } = useTranslation({ LegalsPage })

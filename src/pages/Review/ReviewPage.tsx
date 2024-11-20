@@ -1,12 +1,15 @@
+import { memo } from 'react'
+
+import { useQueryClient } from '@tanstack/react-query'
+
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
-import { MODE_TYPE } from '@/constants/mode'
-import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
+import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
   Nomenclature,
-} from '@/shared/components/Orchestrator/utils/lunaticType'
-import { useQueryClient } from '@tanstack/react-query'
-import { memo } from 'react'
+} from '@/components/orchestrator/utils/lunaticType'
+import { MODE_TYPE } from '@/constants/mode'
+
 import { reviewRoute } from './route'
 
 export const ReviewPage = memo(function ReviewPage() {

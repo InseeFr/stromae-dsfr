@@ -1,20 +1,23 @@
+import { memo, useCallback } from 'react'
+
+import type { LunaticData } from '@inseefr/lunatic'
+import { useQueryClient } from '@tanstack/react-query'
+
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import {
   getGenerateDepositProofQueryOptions,
   getGetSurveyUnitByIdQueryKey,
   updateSurveyUnitDataStateDataById,
 } from '@/api/06-survey-units'
-import { MODE_TYPE } from '@/constants/mode'
-import type { StateData } from '@/model/StateData'
-import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
+import { showToast } from '@/components/Toast'
+import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import type {
   LunaticGetReferentiel,
   Nomenclature,
-} from '@/shared/components/Orchestrator/utils/lunaticType'
-import { showToast } from '@/shared/toast/Toast'
-import type { LunaticData } from '@inseefr/lunatic'
-import { useQueryClient } from '@tanstack/react-query'
-import { memo, useCallback } from 'react'
+} from '@/components/orchestrator/utils/lunaticType'
+import { MODE_TYPE } from '@/constants/mode'
+import type { StateData } from '@/models/stateData'
+
 import { collectRoute } from './route'
 
 export const CollectPage = memo(function CollectPage() {
@@ -31,7 +34,7 @@ export const CollectPage = memo(function CollectPage() {
       queryClient
         .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
         .then((result) => result as Nomenclature),
-    [queryClient]
+    [queryClient],
   )
 
   const queryKeyToInvalidate = getGetSurveyUnitByIdQueryKey(surveyUnitId)
@@ -76,7 +79,7 @@ export const CollectPage = memo(function CollectPage() {
       .then((response) => {
         const fileName =
           (response.headers['content-disposition']?.match(
-            /filename="(.+?)"/
+            /filename="(.+?)"/,
           )[1] as string) ?? 'document.pdf' //content-disposition is present in OpenAPI spec but not well inferred by type
 
         const url = URL.createObjectURL(response.data)

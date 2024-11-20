@@ -1,11 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import { addParadata } from '@/api/07-paradata-events'
-import { useBatch } from '@/shared/hooks/useBatch'
-import type {
-  DefaultParadataValues,
-  TelemetryEvent,
-  TelemetryParadata,
-} from '@/types/telemetry'
 import {
   createContext,
   useCallback,
@@ -13,6 +6,14 @@ import {
   useMemo,
   useState,
 } from 'react'
+
+import { addParadata } from '@/api/07-paradata-events'
+import { useBatch } from '@/hooks/useBatch'
+import type {
+  DefaultParadataValues,
+  TelemetryEvent,
+  TelemetryParadata,
+} from '@/models/telemetry'
 
 type TelemetryContextType = {
   isTelemetryDisabled: boolean
@@ -72,7 +73,7 @@ export function TelemetryProvider({
     (event: TelemetryParadata) => {
       addDatum({ ...defaultValues, ...event })
     },
-    [addDatum, defaultValues]
+    [addDatum, defaultValues],
   )
 
   /** Add values that will be appended to every telemetry event (e.g. user id) */
@@ -83,7 +84,7 @@ export function TelemetryProvider({
         ...newDefaultValues,
       }))
     },
-    []
+    [],
   )
 
   const telemetryContextValues = useMemo(
@@ -93,7 +94,7 @@ export function TelemetryProvider({
       setDefaultValues: updateDefaultValues,
       triggerBatchTelemetryCallback: triggerTimeoutEvent,
     }),
-    [isTelemetryDisabled, pushEvent, triggerTimeoutEvent, updateDefaultValues]
+    [isTelemetryDisabled, pushEvent, triggerTimeoutEvent, updateDefaultValues],
   )
 
   return (

@@ -1,10 +1,13 @@
-import { MODE_TYPE } from '@/constants/mode'
-import { Orchestrator } from '@/shared/components/Orchestrator/Orchestrator'
-import type { LunaticGetReferentiel } from '@/shared/components/Orchestrator/utils/lunaticType'
-import { nomenclatureQueryOptions } from '@/shared/query/visualizeQueryOptions'
-import { useQueryClient } from '@tanstack/react-query'
 import { memo } from 'react'
-import { VisualizeForm } from './Form/VisualizeForm'
+
+import { useQueryClient } from '@tanstack/react-query'
+
+import { nomenclatureQueryOptions } from '@/api/visualizeQueryOptions'
+import { Orchestrator } from '@/components/orchestrator/Orchestrator'
+import type { LunaticGetReferentiel } from '@/components/orchestrator/utils/lunaticType'
+import { MODE_TYPE } from '@/constants/mode'
+
+import { VisualizeForm } from './form/VisualizeForm'
 import { visualizeRoute } from './route'
 
 export const VisualizePage = memo(function VisualizePage() {
@@ -23,11 +26,11 @@ export const VisualizePage = memo(function VisualizePage() {
 
     if (!nomenclature[name]) {
       return Promise.reject(
-        new Error(`The nomenclature ${name} is not provided`)
+        new Error(`The nomenclature ${name} is not provided`),
       )
     }
     return queryClient.ensureQueryData(
-      nomenclatureQueryOptions(nomenclature[name])
+      nomenclatureQueryOptions(nomenclature[name]),
     )
   }
 

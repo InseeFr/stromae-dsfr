@@ -11,7 +11,8 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
-import type { AddParadataBody } from '../model/api'
+
+import type { AddParadataBody } from '../models/api'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
@@ -22,7 +23,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const addParadata = (
   addParadataBody: AddParadataBody,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -31,7 +32,7 @@ export const addParadata = (
       headers: { 'Content-Type': 'application/json' },
       data: addParadataBody,
     },
-    options
+    options,
   )
 }
 

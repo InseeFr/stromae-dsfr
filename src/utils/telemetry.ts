@@ -4,7 +4,7 @@ import type {
   ExitParadata,
   InputParadata,
   TelemetryParadata,
-} from '@/types/telemetry'
+} from '@/models/telemetry'
 
 function getCommonData(): CommonParadata {
   return {

@@ -1,5 +1,6 @@
-import { getOidc } from '@/oidc'
 import axios, { type AxiosRequestConfig } from 'axios'
+
+import { getOidc } from '@/oidc'
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -39,7 +40,7 @@ axiosInstance.interceptors.request.use(onRequest)
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const stromaeInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) => {
   return axiosInstance<T>({
     ...config,
@@ -50,7 +51,7 @@ export const stromaeInstance = <T>(
 //We use a customInstance for depositProof because we need response headers to get fileName.
 export const depositProofInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) => {
   return axiosInstance<T>({
     ...config,

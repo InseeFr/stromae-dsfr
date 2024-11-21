@@ -3,6 +3,7 @@ import {
   TELEMETRY_EVENT_TYPE,
 } from '@/constants/telemetry'
 import {
+  areInputParadataIdentical,
   computeContactSupportEvent,
   computeControlEvent,
   computeControlSkipEvent,
@@ -95,4 +96,47 @@ describe('compute telemetry events', () => {
       type: TELEMETRY_EVENT_TYPE.CONTACT_SUPPORT,
     })
   })
+})
+
+test('correctly compares input paradata', async () => {
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({ name: 'name', value: 'value' }),
+      computeInputEvent({ name: 'name', value: 'value' })
+    )
+  ).toBeTruthy()
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({ name: 'name1', value: 'value' }),
+      computeInputEvent({ name: 'name2', value: 'value' })
+    )
+  ).toBeFalsy()
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({ name: 'name', value: 'value', iteration: [1] }),
+      computeInputEvent({ name: 'name', value: 'value', iteration: [1] })
+    )
+  ).toBeTruthy()
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({ name: 'name1', value: 'value', iteration: [1] }),
+      computeInputEvent({ name: 'name2', value: 'value', iteration: [1] })
+    )
+  ).toBeFalsy()
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({ name: 'name', value: 'value', iteration: [1] }),
+      computeInputEvent({ name: 'name', value: 'value', iteration: [2] })
+    )
+  ).toBeFalsy()
+  expect(
+    areInputParadataIdentical(
+      computeInputEvent({
+        name: 'name',
+        value: 'value',
+        iteration: undefined,
+      }),
+      computeInputEvent({ name: 'name', value: 'value', iteration: [1] })
+    )
+  ).toBeFalsy()
 })

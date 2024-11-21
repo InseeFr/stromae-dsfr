@@ -1,4 +1,5 @@
 import type { CommonParadata, InputParadata } from '@/types/telemetry'
+import { areInputParadataIdentical } from '@/utils/telemetry'
 import { useEffect, useRef, useState } from 'react'
 
 const defaultInactivityDelay = 1_000
@@ -35,11 +36,10 @@ export function usePushEventAfterInactivity(
       clearTimeout(timerRef.current)
       if (
         previousEventRef?.current &&
-        event.name !== previousEventRef.current.name
+        !areInputParadataIdentical(event, previousEventRef?.current)
       ) {
         // new and existing in cache -> push event and put new in cache
         pushEventAfterInactivity(previousEventRef.current)
-        previousEventRef.current = event
       }
 
       // new and nothing in cache -> put new in cache

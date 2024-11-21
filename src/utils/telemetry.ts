@@ -101,3 +101,24 @@ export function computeContactSupportEvent(): TelemetryParadata {
     type: TELEMETRY_EVENT_TYPE.CONTACT_SUPPORT,
   }
 }
+
+export function areInputParadataIdentical(
+  event1: InputParadata,
+  event2: InputParadata
+): boolean {
+  return (
+    (event1.name === event2.name &&
+      ((event1.iteration === undefined && event2.iteration === undefined) ||
+        (event1.iteration &&
+          event2.iteration &&
+          areArraysEqual(event1.iteration, event2.iteration)))) ??
+    false
+  )
+}
+
+function areArraysEqual(array1: any[], array2: any[]): boolean {
+  return (
+    array1.length === array2.length &&
+    array1.every((value, index) => value === array2[index])
+  )
+}

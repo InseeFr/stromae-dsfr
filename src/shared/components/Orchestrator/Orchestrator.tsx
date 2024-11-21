@@ -263,8 +263,8 @@ export function Orchestrator(props: OrchestratorProps) {
     initialCurrentPage,
     openValidationModal: () => validationModalActionsRef.current.open(),
   })
-  const previousPage = usePrevious(currentPage) || initialCurrentPage
-  const previousPageTag = usePrevious(pageTag) || initialCurrentPage
+  const previousPage = usePrevious(currentPage) ?? initialCurrentPage
+  const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
 
   const getCurrentStateData = useRefSync((): StateData => {
     switch (currentPage) {
@@ -361,6 +361,11 @@ export function Orchestrator(props: OrchestratorProps) {
           pageTag,
         })
       )
+      if (currentPage === PAGE_TYPE.END) {
+        if (triggerBatchTelemetryCallback) {
+          triggerBatchTelemetryCallback()
+        }
+      }
     }
 
     //Reset scroll to the container when the top is not visible

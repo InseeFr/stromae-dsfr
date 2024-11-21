@@ -32,7 +32,7 @@ describe('Use push event after inactivity', () => {
   test('updates event when within inactive time', async () => {
     const mock = vi.fn()
 
-    const { result } = renderHook(() => usePushEventAfterInactivity(mock, 50))
+    const { result } = renderHook(() => usePushEventAfterInactivity(mock, 30))
 
     expect(mock).not.toHaveBeenCalled()
 
@@ -50,7 +50,7 @@ describe('Use push event after inactivity', () => {
       )
     )
 
-    await new Promise((r) => setTimeout(r, 60))
+    await new Promise((r) => setTimeout(r, 50))
 
     expect(mock).toHaveBeenCalledOnce()
     expect(mock).toHaveBeenCalledWith(

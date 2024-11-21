@@ -30,7 +30,12 @@ const RootComponent = memo(() => {
   const [sid, setSID] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    setSID(oidcTokens ? decodeJwt(oidcTokens?.idToken)?.sid : undefined)
+    if (import.meta.env.VITE_OIDC_ENABLED === 'false') {
+      // mock
+      setSID(oidcTokens?.decodedIdToken.sid)
+    } else {
+      setSID(oidcTokens ? decodeJwt(oidcTokens?.idToken)?.sid : undefined)
+    }
   }, [oidcTokens])
 
   useEffect(() => {

@@ -6,7 +6,7 @@
 
 #### Montée de version Lunatic
 
-Montée de version Lunatic 3.4.6
+Montée de version Lunatic 3.4.7
 Montée de version Lunatic-DSFR 2.4.2
 
 ### 1.2.4

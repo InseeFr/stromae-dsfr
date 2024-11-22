@@ -3,6 +3,7 @@
 #### Nouvelles fonctionnalités
 
 - ajout du tracking des paradonnées de connexion, saisie d'un input, changement de page dans le questionnaire, contact au support
+- en mode collecte, les liens internes de bas-de-page sont ouverts dans un nouvel onglet pour éviter aux utilisateurs de perdre l'état actuel de leur questionnaire
 
 #### Montée de version Lunatic
 

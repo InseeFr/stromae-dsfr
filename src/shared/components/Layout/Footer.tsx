@@ -1,3 +1,4 @@
+import { MODE_TYPE } from '@/constants/mode'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
@@ -6,6 +7,7 @@ import {
 import type { Logo } from '@/model/Metadata'
 import { NavigationAssistancePage } from '@/pages/NavigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from '@/pages/Security/SecurityPage'
+import { useMode } from '@/shared/hooks/useMode'
 import { useMetadataStore } from '@/shared/metadataStore/useMetadataStore'
 import { fr } from '@codegouvfr/react-dsfr'
 import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
@@ -39,6 +41,9 @@ export function Footer() {
 
   const { mainLogo, secondariesLogo } = useMetadataStore()
 
+  const mode = useMode()
+  const isCollect = mode === MODE_TYPE.COLLECT
+
   const partnersLogos = secondariesLogo
     ? {
         main: transformLogo(secondariesLogo[0], resolveLocalizedStringDetailed),
@@ -47,6 +52,11 @@ export function Footer() {
           .map((logo) => transformLogo(logo, resolveLocalizedStringDetailed)),
       }
     : undefined
+
+  function openLinkInNewTab(e: any) {
+    e.preventDefault()
+    window.open(e.nativeEvent.target.href, '_blank')
+  }
 
   return (
     <DSFRFooter
@@ -58,12 +68,15 @@ export function Footer() {
       }}
       websiteMapLinkProps={{
         to: '/plan-du-site',
+        onClick: isCollect ? openLinkInNewTab : undefined,
       }}
       accessibilityLinkProps={{
         to: '/accessibilite',
+        onClick: isCollect ? openLinkInNewTab : undefined,
       }}
       termsLinkProps={{
         to: '/mentions-legales',
+        onClick: isCollect ? openLinkInNewTab : undefined,
       }}
       operatorLogo={{
         alt: resolveLocalizedStringDetailed(mainLogo.label).str,
@@ -82,15 +95,17 @@ export function Footer() {
           text: t_SecurityPage('security title'),
           linkProps: {
             to: '/securite',
+            onClick: isCollect ? openLinkInNewTab : undefined,
           },
         },
         {
           text: t_NavigationAssistancePage('navigation assistance title'),
           linkProps: {
             to: '/aide-a-la-navigation',
+            onClick: isCollect ? openLinkInNewTab : undefined,
           },
         },
-        <span className={fr.cx('fr-footer__bottom-link')}>
+        <span key={'app-versions'} className={fr.cx('fr-footer__bottom-link')}>
           Stromae : {import.meta.env.APP_VERSION} | Lunatic :{' '}
           {import.meta.env.LUNATIC_VERSION.replace('^', '')}
         </span>,

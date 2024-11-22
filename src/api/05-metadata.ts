@@ -27,11 +27,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 export const getMetadataByQuestionnaireId = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SchemaMetadata>(
     { url: `/api/questionnaire/${id}/metadata`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -53,7 +53,7 @@ export const getGetMetadataByQuestionnaireIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -103,7 +103,7 @@ export function useGetMetadataByQuestionnaireId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetMetadataByQuestionnaireId<
   TData = Awaited<ReturnType<typeof getMetadataByQuestionnaireId>>,
@@ -127,7 +127,7 @@ export function useGetMetadataByQuestionnaireId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetMetadataByQuestionnaireId<
   TData = Awaited<ReturnType<typeof getMetadataByQuestionnaireId>>,
@@ -143,7 +143,7 @@ export function useGetMetadataByQuestionnaireId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get metadata for a questionnaire
@@ -163,7 +163,7 @@ export function useGetMetadataByQuestionnaireId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetMetadataByQuestionnaireIdQueryOptions(id, options)
 
@@ -183,11 +183,11 @@ export function useGetMetadataByQuestionnaireId<
 export const getMetadataByCampaignId = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SchemaMetadata>(
     { url: `/api/campaign/${id}/metadata`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -209,7 +209,7 @@ export const getGetMetadataByCampaignIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -259,7 +259,7 @@ export function useGetMetadataByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetMetadataByCampaignId<
   TData = Awaited<ReturnType<typeof getMetadataByCampaignId>>,
@@ -283,7 +283,7 @@ export function useGetMetadataByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetMetadataByCampaignId<
   TData = Awaited<ReturnType<typeof getMetadataByCampaignId>>,
@@ -299,7 +299,7 @@ export function useGetMetadataByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get metadata for a campaign
@@ -319,7 +319,7 @@ export function useGetMetadataByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetMetadataByCampaignIdQueryOptions(id, options)
 

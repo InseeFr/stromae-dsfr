@@ -15,7 +15,7 @@ const transformLogo = (
   logo: Logo,
   resolveLocalizedString: ReturnType<
     typeof useResolveLocalizedString
-  >['resolveLocalizedStringDetailed']
+  >['resolveLocalizedStringDetailed'],
 ) => ({
   alt: resolveLocalizedString(logo.label).str,
   imgUrl: logo.url,

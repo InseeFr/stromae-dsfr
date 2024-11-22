@@ -31,7 +31,7 @@ export const CollectPage = memo(function CollectPage() {
       queryClient
         .ensureQueryData(getGetNomenclatureByIdQueryOptions(name))
         .then((result) => result as Nomenclature),
-    [queryClient]
+    [queryClient],
   )
 
   const queryKeyToInvalidate = getGetSurveyUnitByIdQueryKey(surveyUnitId)
@@ -76,7 +76,7 @@ export const CollectPage = memo(function CollectPage() {
       .then((response) => {
         const fileName =
           (response.headers['content-disposition']?.match(
-            /filename="(.+?)"/
+            /filename="(.+?)"/,
           )[1] as string) ?? 'document.pdf' //content-disposition is present in OpenAPI spec but not well inferred by type
 
         const url = URL.createObjectURL(response.data)

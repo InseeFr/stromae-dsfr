@@ -27,7 +27,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const integrateXmlContext = (
   integrateXmlContextBody: IntegrateXmlContextBody,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   const formData = new FormData()
   formData.append('file', integrateXmlContextBody.file)
@@ -39,7 +39,7 @@ export const integrateXmlContext = (
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
     },
-    options
+    options,
   )
 }
 
@@ -111,7 +111,7 @@ export const useIntegrateXmlContext = <
  */
 export const integrateContext = (
   integrateContextBody: IntegrateContextBody,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   const formData = new FormData()
   formData.append('file', integrateContextBody.file)
@@ -123,7 +123,7 @@ export const integrateContext = (
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
     },
-    options
+    options,
   )
 }
 

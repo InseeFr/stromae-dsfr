@@ -30,7 +30,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const postNomenclature = (
   nomenclatureCreation: NomenclatureCreation,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -39,7 +39,7 @@ export const postNomenclature = (
       headers: { 'Content-Type': 'application/json' },
       data: nomenclatureCreation,
     },
-    options
+    options,
   )
 }
 
@@ -111,7 +111,7 @@ export const usePostNomenclature = <
 export const getListRequiredNomenclatureByQuestionnaireId = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<string[]>(
     {
@@ -119,12 +119,12 @@ export const getListRequiredNomenclatureByQuestionnaireId = (
       method: 'GET',
       signal,
     },
-    options
+    options,
   )
 }
 
 export const getGetListRequiredNomenclatureByQuestionnaireIdQueryKey = (
-  id: string
+  id: string,
 ) => {
   return [`/api/questionnaire/${id}/required-nomenclatures`] as const
 }
@@ -147,7 +147,7 @@ export const getGetListRequiredNomenclatureByQuestionnaireIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -206,7 +206,7 @@ export function useGetListRequiredNomenclatureByQuestionnaireId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListRequiredNomenclatureByQuestionnaireId<
   TData = Awaited<
@@ -236,7 +236,7 @@ export function useGetListRequiredNomenclatureByQuestionnaireId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListRequiredNomenclatureByQuestionnaireId<
   TData = Awaited<
@@ -256,7 +256,7 @@ export function useGetListRequiredNomenclatureByQuestionnaireId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get list of required nomenclature for a questionnaire
@@ -280,7 +280,7 @@ export function useGetListRequiredNomenclatureByQuestionnaireId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions =
     getGetListRequiredNomenclatureByQuestionnaireIdQueryOptions(id, options)
@@ -300,11 +300,11 @@ export function useGetListRequiredNomenclatureByQuestionnaireId<
  */
 export const getNomenclaturesId = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<string[]>(
     { url: `/api/nomenclatures`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -435,11 +435,11 @@ export function useGetNomenclaturesId<
 export const getNomenclatureById = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SchemaNomenclature>(
     { url: `/api/nomenclature/${id}`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -461,7 +461,7 @@ export const getGetNomenclatureByIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -510,7 +510,7 @@ export function useGetNomenclatureById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetNomenclatureById<
   TData = Awaited<ReturnType<typeof getNomenclatureById>>,
@@ -534,7 +534,7 @@ export function useGetNomenclatureById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetNomenclatureById<
   TData = Awaited<ReturnType<typeof getNomenclatureById>>,
@@ -550,7 +550,7 @@ export function useGetNomenclatureById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get Nomenclature
@@ -570,7 +570,7 @@ export function useGetNomenclatureById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetNomenclatureByIdQueryOptions(id, options)
 
@@ -590,7 +590,7 @@ export function useGetNomenclatureById<
 export const getListRequiredNomenclature = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<string[]>(
     {
@@ -598,7 +598,7 @@ export const getListRequiredNomenclature = (
       method: 'GET',
       signal,
     },
-    options
+    options,
   )
 }
 
@@ -620,7 +620,7 @@ export const getGetListRequiredNomenclatureQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -670,7 +670,7 @@ export function useGetListRequiredNomenclature<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListRequiredNomenclature<
   TData = Awaited<ReturnType<typeof getListRequiredNomenclature>>,
@@ -694,7 +694,7 @@ export function useGetListRequiredNomenclature<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListRequiredNomenclature<
   TData = Awaited<ReturnType<typeof getListRequiredNomenclature>>,
@@ -710,7 +710,7 @@ export function useGetListRequiredNomenclature<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get list of required nomenclatures for a campaign
@@ -730,7 +730,7 @@ export function useGetListRequiredNomenclature<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetListRequiredNomenclatureQueryOptions(id, options)
 

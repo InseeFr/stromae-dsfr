@@ -10,8 +10,8 @@ describe('EndPage', () => {
 
     expect(
       getByText(
-        `Your responses were sent on ${new Date(date).toLocaleString()}.`
-      )
+        `Your responses were sent on ${new Date(date).toLocaleString()}.`,
+      ),
     ).toBeInTheDocument()
   })
 
@@ -25,7 +25,7 @@ describe('EndPage', () => {
     const date = 1728289634098
 
     const { getByText, queryByText } = render(
-      <EndPage date={date} state={'TOEXTRACT'} />
+      <EndPage date={date} state={'TOEXTRACT'} />,
     )
 
     expect(getByText('Your responses were sent.')).toBeInTheDocument()
@@ -36,7 +36,7 @@ describe('EndPage', () => {
     const date = 1728289634098
 
     const { getByText, queryByText } = render(
-      <EndPage date={date} state={'EXTRACTED'} />
+      <EndPage date={date} state={'EXTRACTED'} />,
     )
 
     expect(getByText('Your responses were sent.')).toBeInTheDocument()

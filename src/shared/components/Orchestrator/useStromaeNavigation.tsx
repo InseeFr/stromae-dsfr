@@ -30,7 +30,7 @@ export function useStromaeNavigation({
   openValidationModal,
 }: Params) {
   const [currentPage, setCurrentPage] = useState<InternalPageType>(() =>
-    initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME
+    initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME,
   )
 
   const goNextFromLunaticPage = (isLastPage: boolean) => {
@@ -74,7 +74,7 @@ export function useStromaeNavigation({
       | {
           page: StromaePage
         }
-      | Parameters<LunaticGoToPage>[0]
+      | Parameters<LunaticGoToPage>[0],
   ) => {
     switch (params.page) {
       case PAGE_TYPE.VALIDATION:

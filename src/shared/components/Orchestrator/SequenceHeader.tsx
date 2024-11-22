@@ -13,7 +13,7 @@ export function SequenceHeader(props: SequenceHeaderProps) {
 
   const { t } = useTranslation('SequenceHeader')
   const currentSequenceIndex = overview.findIndex(
-    (sequence) => sequence.current
+    (sequence) => sequence.current,
   )
 
   if (currentSequenceIndex === -1) {

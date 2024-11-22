@@ -20,11 +20,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  * @summary Create dataset
  */
 export const createDataSet = (
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     { url: `/api/create-dataset`, method: 'POST' },
-    options
+    options,
   )
 }
 

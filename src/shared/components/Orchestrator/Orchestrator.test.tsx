@@ -78,14 +78,14 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(setDefaultValues).toHaveBeenCalledOnce())
     await waitFor(() =>
       expect(setDefaultValues).toHaveBeenCalledWith({
         idSU: 'my-service-unit-id',
-      })
+      }),
     )
   })
 
@@ -101,7 +101,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).toHaveBeenCalledOnce())
@@ -109,8 +109,8 @@ describe('Orchestrator', () => {
       expect(pushEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           type: TELEMETRY_EVENT_TYPE.INIT,
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -126,7 +126,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -146,7 +146,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.REVIEW} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -166,7 +166,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -186,7 +186,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     act(() => getByText('Start').click())
@@ -195,7 +195,7 @@ describe('Orchestrator', () => {
     expect(pushEvent).toHaveBeenLastCalledWith(
       expect.objectContaining({
         type: TELEMETRY_EVENT_TYPE.NEW_PAGE,
-      })
+      }),
     )
   })
 
@@ -212,7 +212,7 @@ describe('Orchestrator', () => {
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
-      </TelemetryContext.Provider>
+      </TelemetryContext.Provider>,
     )
 
     act(() => getByText('Start').click())
@@ -226,7 +226,7 @@ describe('Orchestrator', () => {
     expect(pushEvent).toHaveBeenLastCalledWith(
       expect.objectContaining({
         type: TELEMETRY_EVENT_TYPE.INPUT,
-      })
+      }),
     )
   })
 })

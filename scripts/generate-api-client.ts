@@ -22,7 +22,7 @@ async function main() {
 
     const updatedConfigContent = createModifiedOrvalConfigContent(
       ORIGINAL_ORVAL_CONFIG_PATH,
-      mainOpenApiFilePath
+      mainOpenApiFilePath,
     )
 
     writeOrvalConfig(cachedOrvalConfigPath, updatedConfigContent)
@@ -61,7 +61,7 @@ async function fetchAndCacheOpenApiSpec(url: string): Promise<string> {
 // Create modified orval.config.ts content
 function createModifiedOrvalConfigContent(
   originalConfigPath: string,
-  openApiFilePath: string
+  openApiFilePath: string,
 ): string {
   console.log('Creating modified orval.config.ts content...')
   const configContent = readFileSync(originalConfigPath, 'utf-8')

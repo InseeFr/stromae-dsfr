@@ -12,8 +12,8 @@ describe('Use push event after inactivity', () => {
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input' })
-      )
+        computeInputEvent({ name: 'my-input' }),
+      ),
     )
 
     expect(mock).not.toHaveBeenCalled()
@@ -24,7 +24,7 @@ describe('Use push event after inactivity', () => {
     expect(mock).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'my-input',
-      })
+      }),
     )
   })
 
@@ -37,16 +37,16 @@ describe('Use push event after inactivity', () => {
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input' })
-      )
+        computeInputEvent({ name: 'my-input' }),
+      ),
     )
 
     expect(mock).not.toHaveBeenCalled()
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input' })
-      )
+        computeInputEvent({ name: 'my-input' }),
+      ),
     )
 
     await new Promise((r) => setTimeout(r, 50))
@@ -55,7 +55,7 @@ describe('Use push event after inactivity', () => {
     expect(mock).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'my-input',
-      })
+      }),
     )
   })
 
@@ -68,23 +68,23 @@ describe('Use push event after inactivity', () => {
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input' })
-      )
+        computeInputEvent({ name: 'my-input' }),
+      ),
     )
 
     expect(mock).not.toHaveBeenCalled()
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input-2' })
-      )
+        computeInputEvent({ name: 'my-input-2' }),
+      ),
     )
 
     expect(mock).toHaveBeenCalledOnce()
     expect(mock).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'my-input',
-      })
+      }),
     )
 
     await new Promise((r) => setTimeout(r, 60))
@@ -93,7 +93,7 @@ describe('Use push event after inactivity', () => {
     expect(mock).toHaveBeenLastCalledWith(
       expect.objectContaining({
         name: 'my-input-2',
-      })
+      }),
     )
   })
 
@@ -106,8 +106,8 @@ describe('Use push event after inactivity', () => {
 
     act(() =>
       result.current.setEventToPushAfterInactivity(
-        computeInputEvent({ name: 'my-input' })
-      )
+        computeInputEvent({ name: 'my-input' }),
+      ),
     )
 
     expect(mock).not.toHaveBeenCalled()
@@ -118,7 +118,7 @@ describe('Use push event after inactivity', () => {
     expect(mock).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'my-input',
-      })
+      }),
     )
   })
 })

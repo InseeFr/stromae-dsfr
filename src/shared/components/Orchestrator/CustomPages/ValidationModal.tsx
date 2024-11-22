@@ -16,7 +16,7 @@ export function ValidationModal({ actionsRef }: Props) {
     createModal({
       id: `validationModal-${id}`,
       isOpenedByDefault: false,
-    })
+    }),
   )
 
   const [openState, setOpenState] = useState<

@@ -26,6 +26,6 @@ export const showToast = (params: Params) => {
     {
       position: isMobileScreen() ? 'bottom-center' : 'top-right',
       duration: 1500,
-    }
+    },
   )
 }

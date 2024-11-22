@@ -11,14 +11,14 @@ const defaultInactivityDelay = 1_000
  */
 export function usePushEventAfterInactivity(
   pushEventAfterInactivity: (e: InputParadata & CommonParadata) => void,
-  inactivityDelay: number = defaultInactivityDelay
+  inactivityDelay: number = defaultInactivityDelay,
 ) {
   const [event, setEvent] = useState<
     (InputParadata & CommonParadata) | undefined
   >(undefined)
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const previousEventRef = useRef<(InputParadata & CommonParadata) | undefined>(
-    undefined
+    undefined,
   )
 
   useEffect(() => {

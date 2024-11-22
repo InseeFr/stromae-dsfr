@@ -1,6 +1,6 @@
 export function scrollAndFocusToFirstError() {
   const errorElement = document.querySelector<HTMLElement>(
-    '[aria-invalid="true"],[role="alert"]'
+    '[aria-invalid="true"],[role="alert"]',
   )
 
   if (errorElement) {

@@ -21,7 +21,7 @@ export function SurveyContainer(
     overview: LunaticOverview
     isSequencePage: boolean
     bottomContent: ReactNode
-  }>
+  }>,
 ) {
   const {
     currentPage,
@@ -40,7 +40,7 @@ export function SurveyContainer(
   const { t } = useTranslation({ SurveyContainer })
 
   const isPreviousButtonDisplayed = [PAGE_TYPE.WELCOME, PAGE_TYPE.END].includes(
-    currentPage
+    currentPage,
   )
 
   const [isLayoutExpanded, setIsLayoutExpanded] = useState<boolean>(false)
@@ -79,7 +79,7 @@ export function SurveyContainer(
                   'fr-hidden',
                   'fr-unhidden-md',
                   'fr-col-offset-8',
-                  'fr-col-offset-md-9'
+                  'fr-col-offset-md-9',
                 )}
               >
                 <Button
@@ -106,7 +106,7 @@ export function SurveyContainer(
               'fr-mb-10v',
               ...(!(isLayoutExpanded && currentPage === PAGE_TYPE.LUNATIC)
                 ? (['fr-col-md-9', 'fr-col-lg-8'] as const)
-                : [])
+                : []),
             )}
           >
             {children}

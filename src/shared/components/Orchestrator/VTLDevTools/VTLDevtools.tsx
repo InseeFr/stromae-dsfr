@@ -65,7 +65,7 @@ export const VTLDevTools = () => {
             className={fr.cx(
               'fr-table',
               'fr-table--lg',
-              'fr-table--no-caption'
+              'fr-table--no-caption',
             )}
           >
             <div className={fr.cx('fr-table__header')}>
@@ -132,7 +132,7 @@ const { i18n } = declareComponentKeys<
 export type I18n = typeof i18n
 
 const hasBindings = (
-  error: VTLExpressionError
+  error: VTLExpressionError,
 ): error is VTLInterpretationError => {
   return error instanceof VTLInterpretationError
 }

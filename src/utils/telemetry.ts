@@ -101,7 +101,7 @@ export function computeContactSupportEvent(): TelemetryParadata {
 
 export function areInputParadataIdentical(
   event1: InputParadata,
-  event2: InputParadata
+  event2: InputParadata,
 ): boolean {
   return (
     (event1.name === event2.name &&

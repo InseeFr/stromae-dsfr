@@ -23,11 +23,11 @@ export const VisualizePage = memo(function VisualizePage() {
 
     if (!nomenclature[name]) {
       return Promise.reject(
-        new Error(`The nomenclature ${name} is not provided`)
+        new Error(`The nomenclature ${name} is not provided`),
       )
     }
     return queryClient.ensureQueryData(
-      nomenclatureQueryOptions(nomenclature[name])
+      nomenclatureQueryOptions(nomenclature[name]),
     )
   }
 

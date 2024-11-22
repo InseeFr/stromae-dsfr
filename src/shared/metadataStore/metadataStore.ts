@@ -45,7 +45,7 @@ export const metadataStore = {
         }
         return acc
       },
-      { ...state }
+      { ...state },
     )
 
     state = updatedState

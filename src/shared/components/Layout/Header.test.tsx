@@ -29,7 +29,7 @@ describe('Header', () => {
         >
           <Header />
         </TelemetryContext.Provider>
-      </OidcProvider>
+      </OidcProvider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -42,8 +42,8 @@ describe('Header', () => {
       expect(pushEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           type: TELEMETRY_EVENT_TYPE.CONTACT_SUPPORT,
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -64,7 +64,7 @@ describe('Header', () => {
         >
           <Header />
         </TelemetryContext.Provider>
-      </OidcProvider>
+      </OidcProvider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -92,7 +92,7 @@ describe('Header', () => {
         >
           <Header />
         </TelemetryContext.Provider>
-      </OidcProvider>
+      </OidcProvider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())

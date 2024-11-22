@@ -31,7 +31,7 @@ export function ErrorComponent(props: Props) {
         className={fr.cx(
           'fr-grid-row',
           'fr-grid-row--center',
-          'fr-grid-row--middle'
+          'fr-grid-row--middle',
         )}
       >
         <div className={fr.cx('fr-col-lg-6', 'fr-col-12')}>
@@ -70,7 +70,7 @@ export function ErrorComponent(props: Props) {
             'fr-col-lg-3',
             'fr-col-offset-lg-1',
             'fr-hidden',
-            'fr-unhidden-lg'
+            'fr-unhidden-lg',
           )}
         >
           <svg

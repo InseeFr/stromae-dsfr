@@ -72,7 +72,7 @@ export function TelemetryProvider({
     (event: TelemetryParadata) => {
       addDatum({ ...defaultValues, ...event })
     },
-    [addDatum, defaultValues]
+    [addDatum, defaultValues],
   )
 
   /** Add values that will be appended to every telemetry event (e.g. user id) */
@@ -83,7 +83,7 @@ export function TelemetryProvider({
         ...newDefaultValues,
       }))
     },
-    []
+    [],
   )
 
   const telemetryContextValues = useMemo(
@@ -93,7 +93,7 @@ export function TelemetryProvider({
       setDefaultValues: updateDefaultValues,
       triggerBatchTelemetryCallback: triggerTimeoutEvent,
     }),
-    [isTelemetryDisabled, pushEvent, triggerTimeoutEvent, updateDefaultValues]
+    [isTelemetryDisabled, pushEvent, triggerTimeoutEvent, updateDefaultValues],
   )
 
   return (

@@ -46,14 +46,14 @@ export const visualizeRoute = createRoute({
     }
 
     const sourcePr = queryClient.ensureQueryData(
-      sourceQueryOptions(sourceUrl, { signal: abortController.signal })
+      sourceQueryOptions(sourceUrl, { signal: abortController.signal }),
     )
 
     const surveyUnitDataPr = surveyUnitDataUrl
       ? queryClient.ensureQueryData(
           surveyUnitDataQueryOptions(surveyUnitDataUrl, {
             signal: abortController.signal,
-          })
+          }),
         )
       : Promise.resolve(undefined)
 
@@ -62,7 +62,7 @@ export const visualizeRoute = createRoute({
           .ensureQueryData(
             metadataQueryOptions(metadataUrl, {
               signal: abortController.signal,
-            })
+            }),
           )
           .then((metadata) => {
             if (metadata.label) {
@@ -73,7 +73,7 @@ export const visualizeRoute = createRoute({
               mainLogo: metadata.logos?.main,
               secondariesLogo: metadata.logos?.secondaries,
               surveyUnitInfo: convertOldPersonalization(
-                metadata.personalization
+                metadata.personalization,
               ),
             })
           })
@@ -82,7 +82,7 @@ export const visualizeRoute = createRoute({
     return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
       ([source, surveyUnitData, metadata]) => {
         return { source, surveyUnitData, metadata, nomenclature }
-      }
+      },
     )
   },
   errorComponent: ({ error, reset }) => (

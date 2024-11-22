@@ -35,7 +35,7 @@ export const surveyUnitMetadataSchema = z.object({
       z.object({
         name: z.string(),
         value: z.string(),
-      })
+      }),
     )
     .optional(),
   surveyUnitIdentifier: z.string().optional(),

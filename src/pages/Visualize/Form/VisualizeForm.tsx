@@ -39,7 +39,7 @@ export function VisualizeForm() {
         metadata,
         nomenclature: nomenclature.reduce(
           (acc, { name, uri }) => ({ ...acc, [name]: uri }),
-          {}
+          {},
         ),
       },
     })

@@ -59,7 +59,7 @@ const errorStore = createErrorStore()
 export const useLoggerErrors = () => {
   const errors = useSyncExternalStore(
     errorStore.subscribe,
-    errorStore.getErrors
+    errorStore.getErrors,
   )
 
   const resetErrors = () => {

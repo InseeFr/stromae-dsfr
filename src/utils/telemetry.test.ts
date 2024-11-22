@@ -32,7 +32,7 @@ describe('compute telemetry events', () => {
 
   test('for exit', () => {
     expect(
-      computeExitEvent({ source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT })
+      computeExitEvent({ source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT }),
     ).toMatchObject({
       date: vi.getMockedSystemTime()?.toISOString(),
       source: 'logout',
@@ -45,7 +45,7 @@ describe('compute telemetry events', () => {
       computeNewPageEvent({
         page: 'my-new-page',
         pageTag: 'my-page-tag',
-      })
+      }),
     ).toMatchObject({
       date: vi.getMockedSystemTime()?.toISOString(),
       page: 'my-new-page',
@@ -59,7 +59,7 @@ describe('compute telemetry events', () => {
       computeInputEvent({
         name: 'my-name',
         iteration: [1],
-      })
+      }),
     ).toMatchObject({
       date: vi.getMockedSystemTime()?.toISOString(),
       iteration: [1],
@@ -70,7 +70,7 @@ describe('compute telemetry events', () => {
 
   test('for control', () => {
     expect(
-      computeControlEvent({ controlIds: ['my-control-1', 'my-control-2'] })
+      computeControlEvent({ controlIds: ['my-control-1', 'my-control-2'] }),
     ).toMatchObject({
       controlIds: ['my-control-1', 'my-control-2'],
       date: vi.getMockedSystemTime()?.toISOString(),
@@ -80,7 +80,7 @@ describe('compute telemetry events', () => {
 
   test('for control skip', () => {
     expect(
-      computeControlSkipEvent({ controlIds: ['my-control-1', 'my-control-2'] })
+      computeControlSkipEvent({ controlIds: ['my-control-1', 'my-control-2'] }),
     ).toMatchObject({
       controlIds: ['my-control-1', 'my-control-2'],
       date: vi.getMockedSystemTime()?.toISOString(),
@@ -100,32 +100,32 @@ test('correctly compares input paradata', async () => {
   expect(
     areInputParadataIdentical(
       computeInputEvent({ name: 'name' }),
-      computeInputEvent({ name: 'name' })
-    )
+      computeInputEvent({ name: 'name' }),
+    ),
   ).toBeTruthy()
   expect(
     areInputParadataIdentical(
       computeInputEvent({ name: 'name1' }),
-      computeInputEvent({ name: 'name2' })
-    )
+      computeInputEvent({ name: 'name2' }),
+    ),
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
       computeInputEvent({ name: 'name', iteration: [1] }),
-      computeInputEvent({ name: 'name', iteration: [1] })
-    )
+      computeInputEvent({ name: 'name', iteration: [1] }),
+    ),
   ).toBeTruthy()
   expect(
     areInputParadataIdentical(
       computeInputEvent({ name: 'name1', iteration: [1] }),
-      computeInputEvent({ name: 'name2', iteration: [1] })
-    )
+      computeInputEvent({ name: 'name2', iteration: [1] }),
+    ),
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
       computeInputEvent({ name: 'name', iteration: [1] }),
-      computeInputEvent({ name: 'name', iteration: [2] })
-    )
+      computeInputEvent({ name: 'name', iteration: [2] }),
+    ),
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
@@ -133,7 +133,7 @@ test('correctly compares input paradata', async () => {
         name: 'name',
         iteration: undefined,
       }),
-      computeInputEvent({ name: 'name', iteration: [1] })
-    )
+      computeInputEvent({ name: 'name', iteration: [1] }),
+    ),
   ).toBeFalsy()
 })

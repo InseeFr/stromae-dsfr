@@ -38,7 +38,7 @@ export const collectRoute = createRoute({
       .ensureQueryData(
         getGetQuestionnaireDataQueryOptions(questionnaireId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
@@ -46,14 +46,14 @@ export const collectRoute = createRoute({
     const surveyUnitDataPr = getSurveyUnitById(
       surveyUnitId,
       undefined,
-      abortController.signal
+      abortController.signal,
     ).then((suData) => suData as SurveyUnitData) // data are heavy too
 
     const metadataPr = queryClient
       .ensureQueryData(
         getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((metadata) => {
         document.title = metadata.label ?? "Questionnaire | Filière d'Enquête"
@@ -71,7 +71,7 @@ export const collectRoute = createRoute({
         source,
         surveyUnitData,
         metadata,
-      })
+      }),
     )
   },
   // Do not cache this route's data after it's unloaded

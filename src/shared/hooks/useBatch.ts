@@ -7,7 +7,7 @@ const defaultInactivityDelay = 60_000
 export function useBatch(
   callback: (data: Array<any>) => Promise<void>,
   dataMaxLength: number = defaultDataMaxLength,
-  inactivityDelay: number = defaultInactivityDelay
+  inactivityDelay: number = defaultInactivityDelay,
 ) {
   const [data, setData] = useState<Array<any>>([])
   const dataRef = useRef<Array<any>>([])
@@ -43,7 +43,7 @@ export function useBatch(
     (e: any) => {
       setData((data) => [...data, e])
     },
-    [setData]
+    [setData],
   )
 
   const triggerTimeoutEvent: () => Promise<void> =

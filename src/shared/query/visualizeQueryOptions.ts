@@ -14,7 +14,7 @@ function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
 
 export const sourceQueryOptions = (
   sourceUrl: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) =>
   queryOptions({
     queryKey: [sourceUrl],
@@ -23,7 +23,7 @@ export const sourceQueryOptions = (
 
 export const surveyUnitDataQueryOptions = (
   surveyUnitDataUrl: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) =>
   queryOptions({
     queryKey: [surveyUnitDataUrl],
@@ -32,7 +32,7 @@ export const surveyUnitDataQueryOptions = (
 
 export const metadataQueryOptions = (
   metadataUrl: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) =>
   queryOptions({
     queryKey: [metadataUrl],
@@ -49,7 +49,7 @@ export const metadataQueryOptions = (
 
 export const nomenclatureQueryOptions = (
   nomenclatureUrl: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) =>
   queryOptions({
     queryKey: [nomenclatureUrl],

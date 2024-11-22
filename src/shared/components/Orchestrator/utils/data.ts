@@ -5,7 +5,7 @@ import type { LunaticData } from '@inseefr/lunatic'
  * (i.e. everything except COLLECTED)
  */
 export function trimCollectedData(
-  data: LunaticData['COLLECTED']
+  data: LunaticData['COLLECTED'],
 ): LunaticData['COLLECTED'] {
   const trimmedData = Object.assign({}, data)
   for (const key in trimmedData) {

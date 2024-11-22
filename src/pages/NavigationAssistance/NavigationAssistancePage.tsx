@@ -19,7 +19,7 @@ export const NavigationAssistancePage = memo(
         {t('navigation assistance content')}
       </Grid>
     )
-  }
+  },
 )
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

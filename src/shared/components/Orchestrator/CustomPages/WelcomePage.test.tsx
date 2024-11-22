@@ -39,7 +39,7 @@ describe('WelcomePage', () => {
           mainLogo: { label: '', url: '' },
           surveyUnitIdentifier: 'Id de la personne qui répond',
         }}
-      />
+      />,
     )
 
     expect(getByText(objectives)).toBeInTheDocument()

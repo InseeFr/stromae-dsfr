@@ -31,7 +31,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 export const postSurveyUnitByIdInTempZone = (
   id: string,
   schemaSurveyUnitTempZone: SchemaSurveyUnitTempZone,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -40,7 +40,7 @@ export const postSurveyUnitByIdInTempZone = (
       headers: { 'Content-Type': 'application/json' },
       data: schemaSurveyUnitTempZone,
     },
-    options
+    options,
   )
 }
 
@@ -112,11 +112,11 @@ export const usePostSurveyUnitByIdInTempZone = <
  */
 export const getSurveyUnitsInTempZone = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnitTempZone[]>(
     { url: `/api/survey-units/temp-zone`, method: 'GET', signal },
-    options
+    options,
   )
 }
 

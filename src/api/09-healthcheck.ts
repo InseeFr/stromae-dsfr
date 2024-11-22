@@ -24,11 +24,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const healthCheck = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<void>(
     { url: `/api/healthcheck`, method: 'GET', signal },
-    options
+    options,
   )
 }
 

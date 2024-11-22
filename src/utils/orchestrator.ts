@@ -11,7 +11,7 @@ export function hasBeenSent(state?: StateData['state']): boolean {
 // and it's not been sent yet
 export function shouldDisplayWelcomeModal(
   state?: StateData['state'],
-  page?: PageType
+  page?: PageType,
 ): boolean {
   return !hasBeenSent(state) && page !== PAGE_TYPE.WELCOME && page !== undefined
 }

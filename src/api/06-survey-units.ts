@@ -44,11 +44,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 export const getSurveyUnitById = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnit>(
     { url: `/api/survey-unit/${id}`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -70,7 +70,7 @@ export const getGetSurveyUnitByIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -119,7 +119,7 @@ export function useGetSurveyUnitById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetSurveyUnitById<
   TData = Awaited<ReturnType<typeof getSurveyUnitById>>,
@@ -143,7 +143,7 @@ export function useGetSurveyUnitById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetSurveyUnitById<
   TData = Awaited<ReturnType<typeof getSurveyUnitById>>,
@@ -159,7 +159,7 @@ export function useGetSurveyUnitById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get survey-unit
@@ -179,7 +179,7 @@ export function useGetSurveyUnitById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetSurveyUnitByIdQueryOptions(id, options)
 
@@ -199,7 +199,7 @@ export function useGetSurveyUnitById<
 export const updateSurveyUnitById = (
   id: string,
   surveyUnitUpdate: SurveyUnitUpdate,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -208,7 +208,7 @@ export const updateSurveyUnitById = (
       headers: { 'Content-Type': 'application/json' },
       data: surveyUnitUpdate,
     },
-    options
+    options,
   )
 }
 
@@ -279,11 +279,11 @@ export const useUpdateSurveyUnitById = <
  */
 export const deleteSurveyUnit = (
   id: string,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     { url: `/api/survey-unit/${id}`, method: 'DELETE' },
-    options
+    options,
   )
 }
 
@@ -355,7 +355,7 @@ export const useDeleteSurveyUnit = <
 export const updateSurveyUnitDataStateDataById = (
   id: string,
   surveyUnitDataStateDataUpdate: SurveyUnitDataStateDataUpdate,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -364,7 +364,7 @@ export const updateSurveyUnitDataStateDataById = (
       headers: { 'Content-Type': 'application/json' },
       data: surveyUnitDataStateDataUpdate,
     },
-    options
+    options,
   )
 }
 
@@ -438,11 +438,11 @@ export const useUpdateSurveyUnitDataStateDataById = <
 export const getStateDataBySurveyUnit = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<StateData>(
     { url: `/api/survey-unit/${id}/state-data`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -464,7 +464,7 @@ export const getGetStateDataBySurveyUnitQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -514,7 +514,7 @@ export function useGetStateDataBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetStateDataBySurveyUnit<
   TData = Awaited<ReturnType<typeof getStateDataBySurveyUnit>>,
@@ -538,7 +538,7 @@ export function useGetStateDataBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetStateDataBySurveyUnit<
   TData = Awaited<ReturnType<typeof getStateDataBySurveyUnit>>,
@@ -554,7 +554,7 @@ export function useGetStateDataBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get state-data for a survey unit
@@ -574,7 +574,7 @@ export function useGetStateDataBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetStateDataBySurveyUnitQueryOptions(id, options)
 
@@ -594,7 +594,7 @@ export function useGetStateDataBySurveyUnit<
 export const setStateData = (
   id: string,
   stateDataUpdate: StateDataUpdate,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -603,7 +603,7 @@ export const setStateData = (
       headers: { 'Content-Type': 'application/json' },
       data: stateDataUpdate,
     },
-    options
+    options,
   )
 }
 
@@ -675,11 +675,11 @@ export const useSetStateData = <
 export const getPersonalizationBySurveyUnit = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SchemaPersonalization>(
     { url: `/api/survey-unit/${id}/personalization`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -701,7 +701,7 @@ export const getGetPersonalizationBySurveyUnitQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -751,7 +751,7 @@ export function useGetPersonalizationBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetPersonalizationBySurveyUnit<
   TData = Awaited<ReturnType<typeof getPersonalizationBySurveyUnit>>,
@@ -775,7 +775,7 @@ export function useGetPersonalizationBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetPersonalizationBySurveyUnit<
   TData = Awaited<ReturnType<typeof getPersonalizationBySurveyUnit>>,
@@ -791,7 +791,7 @@ export function useGetPersonalizationBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get personalization for a survey unit
@@ -811,11 +811,11 @@ export function useGetPersonalizationBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetPersonalizationBySurveyUnitQueryOptions(
     id,
-    options
+    options,
   )
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
@@ -834,7 +834,7 @@ export function useGetPersonalizationBySurveyUnit<
 export const setPersonalization = (
   id: string,
   schemaPersonalization: SchemaPersonalization,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -843,7 +843,7 @@ export const setPersonalization = (
       headers: { 'Content-Type': 'application/json' },
       data: schemaPersonalization,
     },
-    options
+    options,
   )
 }
 
@@ -915,11 +915,11 @@ export const useSetPersonalization = <
 export const getDataBySurveyUnit = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SchemaData>(
     { url: `/api/survey-unit/${id}/data`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -941,7 +941,7 @@ export const getGetDataBySurveyUnitQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -990,7 +990,7 @@ export function useGetDataBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetDataBySurveyUnit<
   TData = Awaited<ReturnType<typeof getDataBySurveyUnit>>,
@@ -1014,7 +1014,7 @@ export function useGetDataBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetDataBySurveyUnit<
   TData = Awaited<ReturnType<typeof getDataBySurveyUnit>>,
@@ -1030,7 +1030,7 @@ export function useGetDataBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get data for a survey unit
@@ -1050,7 +1050,7 @@ export function useGetDataBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetDataBySurveyUnitQueryOptions(id, options)
 
@@ -1070,7 +1070,7 @@ export function useGetDataBySurveyUnit<
 export const updateData = (
   id: string,
   schemaData: SchemaData,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -1079,7 +1079,7 @@ export const updateData = (
       headers: { 'Content-Type': 'application/json' },
       data: schemaData,
     },
-    options
+    options,
   )
 }
 
@@ -1148,11 +1148,11 @@ export const useUpdateData = <TError = unknown, TContext = unknown>(options?: {
 export const getCommentBySurveyUnit = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<GetCommentBySurveyUnit200>(
     { url: `/api/survey-unit/${id}/comment`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -1174,7 +1174,7 @@ export const getGetCommentBySurveyUnitQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -1224,7 +1224,7 @@ export function useGetCommentBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetCommentBySurveyUnit<
   TData = Awaited<ReturnType<typeof getCommentBySurveyUnit>>,
@@ -1248,7 +1248,7 @@ export function useGetCommentBySurveyUnit<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetCommentBySurveyUnit<
   TData = Awaited<ReturnType<typeof getCommentBySurveyUnit>>,
@@ -1264,7 +1264,7 @@ export function useGetCommentBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get comment for a survey unit
@@ -1284,7 +1284,7 @@ export function useGetCommentBySurveyUnit<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetCommentBySurveyUnitQueryOptions(id, options)
 
@@ -1304,7 +1304,7 @@ export function useGetCommentBySurveyUnit<
 export const setComment = (
   id: string,
   setCommentBody: SetCommentBody,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -1313,7 +1313,7 @@ export const setComment = (
       headers: { 'Content-Type': 'application/json' },
       data: setCommentBody,
     },
-    options
+    options,
   )
 }
 
@@ -1381,7 +1381,7 @@ export const useSetComment = <TError = unknown, TContext = unknown>(options?: {
  */
 export const getStateDataBySurveyUnits = (
   getStateDataBySurveyUnitsBody: string[],
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<SurveyUnitsOkNok>(
     {
@@ -1390,7 +1390,7 @@ export const getStateDataBySurveyUnits = (
       headers: { 'Content-Type': 'application/json' },
       data: getStateDataBySurveyUnitsBody,
     },
-    options
+    options,
   )
 }
 
@@ -1462,7 +1462,7 @@ export const useGetStateDataBySurveyUnits = <
 export const createUpdateSurveyUnit = (
   id: string,
   surveyUnitCreation: SurveyUnitCreation,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -1471,7 +1471,7 @@ export const createUpdateSurveyUnit = (
       headers: { 'Content-Type': 'application/json' },
       data: surveyUnitCreation,
     },
-    options
+    options,
   )
 }
 
@@ -1542,11 +1542,11 @@ export const useCreateUpdateSurveyUnit = <
  */
 export const getSurveyUnitIds = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<string[]>(
     { url: `/api/survey-units`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -1656,11 +1656,11 @@ export function useGetSurveyUnitIds<
  */
 export const getInterviewerSurveyUnits = (
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnit[]>(
     { url: `/api/survey-units/interviewer`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -1792,11 +1792,11 @@ export function useGetInterviewerSurveyUnits<
 export const getSurveyUnitMetadataById = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnitMetadata>(
     { url: `/api/survey-unit/${id}/metadata`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -1818,7 +1818,7 @@ export const getGetSurveyUnitMetadataByIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -1868,7 +1868,7 @@ export function useGetSurveyUnitMetadataById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetSurveyUnitMetadataById<
   TData = Awaited<ReturnType<typeof getSurveyUnitMetadataById>>,
@@ -1892,7 +1892,7 @@ export function useGetSurveyUnitMetadataById<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetSurveyUnitMetadataById<
   TData = Awaited<ReturnType<typeof getSurveyUnitMetadataById>>,
@@ -1908,7 +1908,7 @@ export function useGetSurveyUnitMetadataById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get survey-unit metadata
@@ -1928,7 +1928,7 @@ export function useGetSurveyUnitMetadataById<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetSurveyUnitMetadataByIdQueryOptions(id, options)
 
@@ -1948,7 +1948,7 @@ export function useGetSurveyUnitMetadataById<
 export const generateDepositProof = (
   id: string,
   options?: SecondParameter<typeof depositProofInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return depositProofInstance<Blob>(
     {
@@ -1957,7 +1957,7 @@ export const generateDepositProof = (
       responseType: 'blob',
       signal,
     },
-    options
+    options,
   )
 }
 
@@ -1979,7 +1979,7 @@ export const getGenerateDepositProofQueryOptions = <
       >
     >
     request?: SecondParameter<typeof depositProofInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -2028,7 +2028,7 @@ export function useGenerateDepositProof<
         'initialData'
       >
     request?: SecondParameter<typeof depositProofInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGenerateDepositProof<
   TData = Awaited<ReturnType<typeof generateDepositProof>>,
@@ -2052,7 +2052,7 @@ export function useGenerateDepositProof<
         'initialData'
       >
     request?: SecondParameter<typeof depositProofInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGenerateDepositProof<
   TData = Awaited<ReturnType<typeof generateDepositProof>>,
@@ -2068,7 +2068,7 @@ export function useGenerateDepositProof<
       >
     >
     request?: SecondParameter<typeof depositProofInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get deposit proof for a survey unit
@@ -2088,7 +2088,7 @@ export function useGenerateDepositProof<
       >
     >
     request?: SecondParameter<typeof depositProofInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGenerateDepositProofQueryOptions(id, options)
 
@@ -2108,11 +2108,11 @@ export function useGenerateDepositProof<
 export const getListSurveyUnitByCampaign = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<SurveyUnitSummary[]>(
     { url: `/api/campaign/${id}/survey-units`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -2134,7 +2134,7 @@ export const getGetListSurveyUnitByCampaignQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -2184,7 +2184,7 @@ export function useGetListSurveyUnitByCampaign<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListSurveyUnitByCampaign<
   TData = Awaited<ReturnType<typeof getListSurveyUnitByCampaign>>,
@@ -2208,7 +2208,7 @@ export function useGetListSurveyUnitByCampaign<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetListSurveyUnitByCampaign<
   TData = Awaited<ReturnType<typeof getListSurveyUnitByCampaign>>,
@@ -2224,7 +2224,7 @@ export function useGetListSurveyUnitByCampaign<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get list of survey units for a campaign
@@ -2244,7 +2244,7 @@ export function useGetListSurveyUnitByCampaign<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetListSurveyUnitByCampaignQueryOptions(id, options)
 

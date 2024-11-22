@@ -3,7 +3,7 @@ import type { LunaticComponentsProps } from './lunaticType'
 
 export function computeLunaticComponents(
   lunaticComponents: LunaticComponentProps[],
-  pagination: 'sequence' | 'question' | undefined
+  pagination: 'sequence' | 'question' | undefined,
 ): {
   components: LunaticComponentsProps
   bottomComponents: LunaticComponentsProps
@@ -31,6 +31,6 @@ export function computeLunaticComponents(
         bottomComponents: acc.bottomComponents,
       }
     },
-    { components: [], bottomComponents: [] }
+    { components: [], bottomComponents: [] },
   )
 }

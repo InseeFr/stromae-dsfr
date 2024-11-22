@@ -1,7 +1,7 @@
 import { getOidc } from '@/oidc'
 
 export async function protectedRouteLoader(
-  extraQueryParams?: Record<string, string>
+  extraQueryParams?: Record<string, string>,
 ) {
   const oidc = await getOidc()
 

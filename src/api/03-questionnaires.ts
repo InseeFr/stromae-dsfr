@@ -35,7 +35,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
  */
 export const getQuestionnaireModelIdBySurveyUnits = (
   getQuestionnaireModelIdBySurveyUnitsBody: string[],
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<SurveyUnitsOkNok>(
     {
@@ -44,7 +44,7 @@ export const getQuestionnaireModelIdBySurveyUnits = (
       headers: { 'Content-Type': 'application/json' },
       data: getQuestionnaireModelIdBySurveyUnitsBody,
     },
-    options
+    options,
   )
 }
 
@@ -116,7 +116,7 @@ export const useGetQuestionnaireModelIdBySurveyUnits = <
  */
 export const createQuestionnaire = (
   questionnaireModelCreation: QuestionnaireModelCreation,
-  options?: SecondParameter<typeof stromaeInstance>
+  options?: SecondParameter<typeof stromaeInstance>,
 ) => {
   return stromaeInstance<void>(
     {
@@ -125,7 +125,7 @@ export const createQuestionnaire = (
       headers: { 'Content-Type': 'application/json' },
       data: questionnaireModelCreation,
     },
-    options
+    options,
   )
 }
 
@@ -198,11 +198,11 @@ export const useCreateQuestionnaire = <
 export const getQuestionnaireValue = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<QuestionnaireModelValue>(
     { url: `/api/questionnaire/${id}`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -224,7 +224,7 @@ export const getGetQuestionnaireValueQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -274,7 +274,7 @@ export function useGetQuestionnaireValue<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireValue<
   TData = Awaited<ReturnType<typeof getQuestionnaireValue>>,
@@ -298,7 +298,7 @@ export function useGetQuestionnaireValue<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireValue<
   TData = Awaited<ReturnType<typeof getQuestionnaireValue>>,
@@ -314,7 +314,7 @@ export function useGetQuestionnaireValue<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @deprecated
@@ -335,7 +335,7 @@ export function useGetQuestionnaireValue<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetQuestionnaireValueQueryOptions(id, options)
 
@@ -355,11 +355,11 @@ export function useGetQuestionnaireValue<
 export const getQuestionnaireData = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<GetQuestionnaireData200>(
     { url: `/api/questionnaire/${id}/data`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -381,7 +381,7 @@ export const getGetQuestionnaireDataQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -430,7 +430,7 @@ export function useGetQuestionnaireData<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireData<
   TData = Awaited<ReturnType<typeof getQuestionnaireData>>,
@@ -454,7 +454,7 @@ export function useGetQuestionnaireData<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireData<
   TData = Awaited<ReturnType<typeof getQuestionnaireData>>,
@@ -470,7 +470,7 @@ export function useGetQuestionnaireData<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get questionnnaire data
@@ -490,7 +490,7 @@ export function useGetQuestionnaireData<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetQuestionnaireDataQueryOptions(id, options)
 
@@ -510,11 +510,11 @@ export function useGetQuestionnaireData<
 export const getQuestionnaireDatasByCampaignId = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<QuestionnaireModelValue[]>(
     { url: `/api/campaign/${id}/questionnaires`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -536,7 +536,7 @@ export const getGetQuestionnaireDatasByCampaignIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -587,7 +587,7 @@ export function useGetQuestionnaireDatasByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireDatasByCampaignId<
   TData = Awaited<ReturnType<typeof getQuestionnaireDatasByCampaignId>>,
@@ -611,7 +611,7 @@ export function useGetQuestionnaireDatasByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireDatasByCampaignId<
   TData = Awaited<ReturnType<typeof getQuestionnaireDatasByCampaignId>>,
@@ -627,7 +627,7 @@ export function useGetQuestionnaireDatasByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get questionnaire list for a campaign
@@ -647,11 +647,11 @@ export function useGetQuestionnaireDatasByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetQuestionnaireDatasByCampaignIdQueryOptions(
     id,
-    options
+    options,
   )
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
@@ -670,11 +670,11 @@ export function useGetQuestionnaireDatasByCampaignId<
 export const getQuestionnaireIdsByCampaignId = (
   id: string,
   options?: SecondParameter<typeof stromaeInstance>,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
   return stromaeInstance<QuestionnaireModelId[]>(
     { url: `/api/campaign/${id}/questionnaire-id`, method: 'GET', signal },
-    options
+    options,
   )
 }
 
@@ -696,7 +696,7 @@ export const getGetQuestionnaireIdsByCampaignIdQueryOptions = <
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {}
 
@@ -747,7 +747,7 @@ export function useGetQuestionnaireIdsByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireIdsByCampaignId<
   TData = Awaited<ReturnType<typeof getQuestionnaireIdsByCampaignId>>,
@@ -771,7 +771,7 @@ export function useGetQuestionnaireIdsByCampaignId<
         'initialData'
       >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetQuestionnaireIdsByCampaignId<
   TData = Awaited<ReturnType<typeof getQuestionnaireIdsByCampaignId>>,
@@ -787,7 +787,7 @@ export function useGetQuestionnaireIdsByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get list of questionnaire ids for a campaign
@@ -807,11 +807,11 @@ export function useGetQuestionnaireIdsByCampaignId<
       >
     >
     request?: SecondParameter<typeof stromaeInstance>
-  }
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetQuestionnaireIdsByCampaignIdQueryOptions(
     id,
-    options
+    options,
   )
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {

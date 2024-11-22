@@ -14,6 +14,6 @@ export function useEvent<
   return useState(
     () =>
       (...args: Parameters<Exclude<T, undefined | null>>) =>
-        callbackRef.current(...args)
+        callbackRef.current(...args),
   )[0] as T
 }

@@ -127,7 +127,7 @@ export function Orchestrator(props: OrchestratorProps) {
   /** Displays the welcome modal which allows to come back to current page */
   const shouldWelcome = shouldDisplayWelcomeModal(
     initialState,
-    initialCurrentPage
+    initialCurrentPage,
   )
 
   const lunaticLogger = useMemo(
@@ -135,7 +135,7 @@ export function Orchestrator(props: OrchestratorProps) {
       mode === MODE_TYPE.VISUALIZE
         ? createLunaticLogger({ pageTag: pageTagRef })
         : undefined,
-    [mode]
+    [mode],
   )
 
   /** Triggers telemetry input event on Lunatic change */
@@ -149,7 +149,7 @@ export function Orchestrator(props: OrchestratorProps) {
           computeInputEvent({
             name: name,
             iteration: iteration,
-          })
+          }),
         )
       } else {
         for (const { name, iteration } of changes) {
@@ -158,12 +158,12 @@ export function Orchestrator(props: OrchestratorProps) {
             computeInputEvent({
               name: name,
               iteration: iteration,
-            })
+            }),
           )
         }
       }
     },
-    [pushEvent, setEventToPushAfterInactivity]
+    [pushEvent, setEventToPushAfterInactivity],
   )
 
   const {
@@ -198,7 +198,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   // current date to show in end page on validation
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
-    surveyUnitData?.stateData?.date
+    surveyUnitData?.stateData?.date,
   )
   // whether or not the user has seen the errors and did not change anything
   const [isControlsAcknowledged, setIsControlsAcknowledged] =
@@ -227,7 +227,7 @@ export function Orchestrator(props: OrchestratorProps) {
         pushEvent(
           computeControlSkipEvent({
             controlIds: Object.keys(currentErrors),
-          })
+          }),
         )
       }
       setActiveErrors(undefined)
@@ -243,7 +243,7 @@ export function Orchestrator(props: OrchestratorProps) {
       pushEvent(
         computeControlEvent({
           controlIds: Object.keys(currentErrors),
-        })
+        }),
       )
     }
 
@@ -357,7 +357,7 @@ export function Orchestrator(props: OrchestratorProps) {
         computeNewPageEvent({
           page: currentPage,
           pageTag,
-        })
+        }),
       )
       if (currentPage === PAGE_TYPE.END) {
         if (triggerBatchTelemetryCallback) {
@@ -404,7 +404,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const { components, bottomComponents } = computeLunaticComponents(
     getComponents(),
-    pagination
+    pagination,
   )
 
   const handleDepositProofClick = async () => {

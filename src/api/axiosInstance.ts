@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(onRequest)
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const stromaeInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) => {
   return axiosInstance<T>({
     ...config,
@@ -50,7 +50,7 @@ export const stromaeInstance = <T>(
 //We use a customInstance for depositProof because we need response headers to get fileName.
 export const depositProofInstance = <T>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ) => {
   return axiosInstance<T>({
     ...config,

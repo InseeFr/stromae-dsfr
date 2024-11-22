@@ -10,7 +10,7 @@ export async function executePreLogoutActions() {
 }
 
 export function useAddPreLogoutAction(
-  action: () => Promise<void> | void
+  action: () => Promise<void> | void,
 ): void {
   const stableAction = useEvent(action)
   useEffect(() => {

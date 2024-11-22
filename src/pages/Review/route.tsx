@@ -34,7 +34,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetQuestionnaireDataQueryOptions(questionnaireId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
@@ -42,7 +42,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetSurveyUnitByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((suData) => suData as SurveyUnitData) // data are heavy too
 
@@ -50,7 +50,7 @@ export const reviewRoute = createRoute({
       .ensureQueryData(
         getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
-        })
+        }),
       )
       .then((metadata) => {
         document.title =
@@ -69,7 +69,7 @@ export const reviewRoute = createRoute({
         source,
         surveyUnitData,
         metadata,
-      })
+      }),
     )
   },
   errorComponent: ({ error }) => {

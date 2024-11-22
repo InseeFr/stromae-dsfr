@@ -4,7 +4,7 @@ import { metadataStore } from './metadataStore'
 export const useMetadataStore = () => {
   const state = useSyncExternalStore(
     metadataStore.subscribe,
-    metadataStore.getSnapshot
+    metadataStore.getSnapshot,
   )
   return state
 }

@@ -19,8 +19,8 @@ export function AutoLogoutCountdown() {
           setSecondsLeft(
             secondsLeft === undefined || secondsLeft > 60
               ? undefined
-              : secondsLeft
-          )
+              : secondsLeft,
+          ),
         )
 
       return () => {
@@ -32,7 +32,7 @@ export function AutoLogoutCountdown() {
     // Unless you're hot swapping the oidc context isUserLoggedIn
     // and subscribeToAutoLogoutCountdown never change for the
     // lifetime of the app.
-    [isUserLoggedIn, subscribeToAutoLogoutCountdown]
+    [isUserLoggedIn, subscribeToAutoLogoutCountdown],
   )
 
   if (secondsLeft === undefined) {

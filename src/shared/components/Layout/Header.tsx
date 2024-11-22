@@ -82,7 +82,7 @@ export function Header() {
                       pushEvent(
                         computeExitEvent({
                           source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
-                        })
+                        }),
                       )
                       if (triggerBatchTelemetryCallback) {
                         await triggerBatchTelemetryCallback()

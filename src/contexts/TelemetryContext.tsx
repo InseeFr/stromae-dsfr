@@ -39,7 +39,7 @@ export const TelemetryContext: React.Context<TelemetryContextType> =
 /**
  * Returns the current telemetry context value.
  *
- * @version 1.2.4
+ * @version 1.3.0
  * @see https://react.dev/reference/react/useContext
  */
 export function useTelemetry() {

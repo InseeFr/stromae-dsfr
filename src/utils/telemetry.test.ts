@@ -58,7 +58,6 @@ describe('compute telemetry events', () => {
     expect(
       computeInputEvent({
         name: 'my-name',
-        value: 'my-value',
         iteration: [1],
       })
     ).toMatchObject({
@@ -66,7 +65,6 @@ describe('compute telemetry events', () => {
       iteration: [1],
       name: 'my-name',
       type: TELEMETRY_EVENT_TYPE.INPUT,
-      value: 'my-value',
     })
   })
 
@@ -101,42 +99,41 @@ describe('compute telemetry events', () => {
 test('correctly compares input paradata', async () => {
   expect(
     areInputParadataIdentical(
-      computeInputEvent({ name: 'name', value: 'value' }),
-      computeInputEvent({ name: 'name', value: 'value' })
+      computeInputEvent({ name: 'name' }),
+      computeInputEvent({ name: 'name' })
     )
   ).toBeTruthy()
   expect(
     areInputParadataIdentical(
-      computeInputEvent({ name: 'name1', value: 'value' }),
-      computeInputEvent({ name: 'name2', value: 'value' })
+      computeInputEvent({ name: 'name1' }),
+      computeInputEvent({ name: 'name2' })
     )
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
-      computeInputEvent({ name: 'name', value: 'value', iteration: [1] }),
-      computeInputEvent({ name: 'name', value: 'value', iteration: [1] })
+      computeInputEvent({ name: 'name', iteration: [1] }),
+      computeInputEvent({ name: 'name', iteration: [1] })
     )
   ).toBeTruthy()
   expect(
     areInputParadataIdentical(
-      computeInputEvent({ name: 'name1', value: 'value', iteration: [1] }),
-      computeInputEvent({ name: 'name2', value: 'value', iteration: [1] })
+      computeInputEvent({ name: 'name1', iteration: [1] }),
+      computeInputEvent({ name: 'name2', iteration: [1] })
     )
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
-      computeInputEvent({ name: 'name', value: 'value', iteration: [1] }),
-      computeInputEvent({ name: 'name', value: 'value', iteration: [2] })
+      computeInputEvent({ name: 'name', iteration: [1] }),
+      computeInputEvent({ name: 'name', iteration: [2] })
     )
   ).toBeFalsy()
   expect(
     areInputParadataIdentical(
       computeInputEvent({
         name: 'name',
-        value: 'value',
         iteration: undefined,
       }),
-      computeInputEvent({ name: 'name', value: 'value', iteration: [1] })
+      computeInputEvent({ name: 'name', iteration: [1] })
     )
   ).toBeFalsy()
 })

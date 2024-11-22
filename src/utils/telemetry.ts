@@ -52,17 +52,14 @@ export function computeNewPageEvent({
 /** Creates an event to be used by telemetry context when the user inputs something in lunatic components */
 export function computeInputEvent({
   name,
-  value,
   iteration,
 }: {
   name: any
-  value: string
   iteration?: number[]
 }): InputParadata & CommonParadata {
   return {
     ...getCommonData(),
     name,
-    value,
     iteration,
     type: TELEMETRY_EVENT_TYPE.INPUT,
   }

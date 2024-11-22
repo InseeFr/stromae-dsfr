@@ -144,20 +144,18 @@ export function Orchestrator(props: OrchestratorProps) {
       if (changes.length === 1) {
         // could be a text input, we only send the event once user has stopped
         // actively typing since Lunatic triggers its onChange on every input
-        const { name, value, iteration } = changes[0]
+        const { name, iteration } = changes[0]
         setEventToPushAfterInactivity(
           computeInputEvent({
-            value: value,
             name: name,
             iteration: iteration,
           })
         )
       } else {
-        for (const { name, value, iteration } of changes) {
+        for (const { name, iteration } of changes) {
           // weird inputs, probably not text input, push everything
           pushEvent(
             computeInputEvent({
-              value: value,
               name: name,
               iteration: iteration,
             })

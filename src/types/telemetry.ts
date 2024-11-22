@@ -57,7 +57,6 @@ export type InputParadata = {
   iteration?: number[]
   name: string
   type: TELEMETRY_EVENT_TYPE.INPUT
-  value: any
 }
 
 /** Event sent when the user triggers a control or chooses to skip it */

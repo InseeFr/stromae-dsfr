@@ -5,7 +5,15 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['src/model/api/'] },
+  {
+    ignores: [
+      'dist',
+      // generated files
+      'src/api/[0-9][0-9]-*.ts',
+      'src/model/api/',
+      'src/vite-env.d.ts',
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['src/**/*.{ts,tsx}'],
@@ -23,7 +31,10 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       // see https://typescript-eslint.netlify.app/rules/no-unused-vars/
-      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_$" }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_$' },
+      ],
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/no-namespace': ['off'],
       'react-refresh/only-export-components': [
@@ -31,5 +42,5 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
-  }
+  },
 )

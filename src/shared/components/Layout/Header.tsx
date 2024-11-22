@@ -79,7 +79,7 @@ export function Header() {
                   onClick: async () => {
                     await executePreLogoutActions()
                     if (!isTelemetryDisabled) {
-                      pushEvent(
+                      await pushEvent(
                         computeExitEvent({
                           source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
                         })

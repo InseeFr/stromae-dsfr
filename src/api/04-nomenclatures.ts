@@ -18,8 +18,8 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import type { NomenclatureCreation } from '../model/api'
-import type { SchemaNomenclature } from '../model/api/schema.nomenclature'
+import type { NomenclatureCreation } from '../models/api'
+import type { SchemaNomenclature } from '../models/api/schema.nomenclature'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]

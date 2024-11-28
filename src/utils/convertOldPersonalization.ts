@@ -1,5 +1,5 @@
-import type { SurveyUnitMetadata } from '@/model/api'
-import type { Content, Metadata } from '@/model/Metadata'
+import type { SurveyUnitMetadata } from '@/models/api'
+import type { Content, Metadata } from '@/models/Metadata'
 
 const keysToExtract = ['whoAnswers1', 'whoAnswers2', 'whoAnswers3']
 

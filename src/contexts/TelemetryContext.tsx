@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { addParadata } from '@/api/07-paradata-events'
-import { useBatch } from '@/shared/hooks/useBatch'
+import { useBatch } from '@/hooks/useBatch'
 import type {
   DefaultParadataValues,
   TelemetryEvent,
   TelemetryParadata,
-} from '@/types/telemetry'
+} from '@/models/telemetry'
 import {
   createContext,
   useCallback,

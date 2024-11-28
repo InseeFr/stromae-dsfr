@@ -30,9 +30,9 @@ import type {
   SurveyUnitSummary,
   SurveyUnitUpdate,
   SurveyUnitsOkNok,
-} from '../model/api'
-import type { SchemaData } from '../model/api/schema.data'
-import type { SchemaPersonalization } from '../model/api/schema.personalization'
+} from '../models/api'
+import type { SchemaData } from '../models/api/schema.data'
+import type { SchemaPersonalization } from '../models/api/schema.personalization'
 import { depositProofInstance, stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]

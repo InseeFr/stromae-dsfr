@@ -23,7 +23,7 @@ import type {
   CampaignCreationV2,
   CampaignSummary,
   DeleteCampaignByIdParams,
-} from '../model/api'
+} from '../models/api'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]

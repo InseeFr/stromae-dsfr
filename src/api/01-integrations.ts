@@ -15,7 +15,7 @@ import type {
   IntegrateContextBody,
   IntegrateXmlContextBody,
   IntegrationResults,
-} from '../model/api'
+} from '../models/api'
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]

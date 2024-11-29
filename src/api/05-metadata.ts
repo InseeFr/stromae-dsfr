@@ -15,6 +15,7 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
+
 import type { SchemaMetadata } from '../models/api/schema.metadata'
 import { stromaeInstance } from './axiosInstance'
 

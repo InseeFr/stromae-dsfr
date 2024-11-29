@@ -1,7 +1,8 @@
+import { type Equals, assert } from 'tsafe/assert'
+import z from 'zod'
+
 import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
-import { assert, type Equals } from 'tsafe/assert'
-import z from 'zod'
 
 export const stromaePageSchema = z.enum([
   PAGE_TYPE.WELCOME,

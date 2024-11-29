@@ -1,6 +1,8 @@
+import { fr } from '@codegouvfr/react-dsfr'
+
 import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-import { fr } from '@codegouvfr/react-dsfr'
+
 import type { LunaticOverview } from './utils/lunaticType'
 
 type SequenceHeaderProps = {

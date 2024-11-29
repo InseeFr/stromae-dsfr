@@ -1,5 +1,7 @@
-import { computeInputEvent } from '@/utils/telemetry'
 import { act, renderHook } from '@testing-library/react'
+
+import { computeInputEvent } from '@/utils/telemetry'
+
 import { usePushEventAfterInactivity } from './usePushEventAfterInactivity'
 
 describe('Use push event after inactivity', () => {

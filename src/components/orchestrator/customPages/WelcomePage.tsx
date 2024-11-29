@@ -1,3 +1,7 @@
+import { Fragment } from 'react'
+
+import { fr } from '@codegouvfr/react-dsfr'
+
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import {
   declareComponentKeys,
@@ -5,8 +9,6 @@ import {
   useTranslation,
 } from '@/i18n'
 import type { Contents, Metadata } from '@/models/Metadata'
-import { fr } from '@codegouvfr/react-dsfr'
-import { Fragment } from 'react'
 
 function renderMetadataContents(contents: Contents[] | undefined) {
   if (contents === undefined) return null

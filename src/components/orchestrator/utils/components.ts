@@ -1,4 +1,5 @@
 import type { LunaticComponentProps } from '@inseefr/lunatic'
+
 import type { LunaticComponentsProps } from './lunaticType'
 
 export function computeLunaticComponents(

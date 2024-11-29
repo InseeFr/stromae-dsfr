@@ -1,12 +1,14 @@
+import { memo } from 'react'
+
+import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+import { Link } from '@tanstack/react-router'
+
 import { Grid } from '@/components/Grid'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import { AccessibilityPage } from '@/pages/accessibility/AccessibilityPage'
 import { LegalsPage } from '@/pages/legals/LegalsPage'
 import { NavigationAssistancePage } from '@/pages/navigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from '@/pages/security/SecurityPage'
-import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
-import { Link } from '@tanstack/react-router'
-import { memo } from 'react'
 
 export const SiteMapPage = memo(function SiteMapPage() {
   const { t } = useTranslation({

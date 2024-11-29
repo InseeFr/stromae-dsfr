@@ -1,3 +1,7 @@
+import { memo } from 'react'
+
+import { useQueryClient } from '@tanstack/react-query'
+
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import type {
@@ -5,8 +9,7 @@ import type {
   Nomenclature,
 } from '@/components/orchestrator/utils/lunaticType'
 import { MODE_TYPE } from '@/constants/mode'
-import { useQueryClient } from '@tanstack/react-query'
-import { memo } from 'react'
+
 import { reviewRoute } from './route'
 
 export const ReviewPage = memo(function ReviewPage() {

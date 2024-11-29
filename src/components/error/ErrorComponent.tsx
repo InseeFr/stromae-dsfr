@@ -1,14 +1,14 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
 import ArtWorkBackground from '@codegouvfr/react-dsfr/dsfr/artwork/background/ovoid.svg'
+import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
 import ArtWork from '@codegouvfr/react-dsfr/dsfr/artwork/system.svg'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 
 import { Container } from '@/components/Container'
 import { errorNormalizer } from '@/components/error/errorNormalizer'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
-import { useNavigate, useSearch } from '@tanstack/react-router'
 
 type Props = {
   error: unknown

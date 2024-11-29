@@ -1,6 +1,8 @@
+import { type ReactNode, useEffect } from 'react'
+
 import { decode } from 'he'
-import { useEffect, type ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+
 export function useDocumentTitle(title: string) {
   useEffect(() => {
     const prevTitle = document.title

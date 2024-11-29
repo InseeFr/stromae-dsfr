@@ -1,8 +1,10 @@
-import { declareComponentKeys, getTranslation } from '@/i18n'
 import type { ReactNode } from '@tanstack/react-router'
 import { AxiosError } from 'axios'
+
+import { declareComponentKeys, getTranslation } from '@/i18n'
+
+import { type ZodErrorName, ZodErrorWithName } from './ZodErrorWithName'
 import { NotFoundError } from './notFoundError'
-import { ZodErrorWithName, type ZodErrorName } from './ZodErrorWithName'
 
 type ErrorNormalized = {
   title: string

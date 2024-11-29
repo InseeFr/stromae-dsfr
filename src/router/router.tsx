@@ -1,3 +1,13 @@
+import { memo, useEffect } from 'react'
+
+import type { QueryClient } from '@tanstack/react-query'
+import {
+  Outlet,
+  ScrollRestoration,
+  createRootRouteWithContext,
+} from '@tanstack/react-router'
+import { Toaster } from 'react-hot-toast'
+
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { NotFoundError } from '@/components/error/notFoundError'
 import { AutoLogoutCountdown } from '@/components/layout/AutoLogoutCountdown'
@@ -13,14 +23,6 @@ import { reviewRoute } from '@/pages/review/route'
 import { securityRoute } from '@/pages/security/route'
 import { siteMapRoute } from '@/pages/siteMap/route'
 import { visualizeRoute } from '@/pages/visualize/route'
-import type { QueryClient } from '@tanstack/react-query'
-import {
-  createRootRouteWithContext,
-  Outlet,
-  ScrollRestoration,
-} from '@tanstack/react-router'
-import { memo, useEffect } from 'react'
-import { Toaster } from 'react-hot-toast'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RootComponent = memo(() => {

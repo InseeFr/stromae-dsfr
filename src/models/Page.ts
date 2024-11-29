@@ -1,5 +1,6 @@
-import { PAGE_TYPE } from '@/constants/page'
 import type { LunaticState } from '@inseefr/lunatic'
+
+import { PAGE_TYPE } from '@/constants/page'
 
 export type StromaePage =
   | PAGE_TYPE.WELCOME

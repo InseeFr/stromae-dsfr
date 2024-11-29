@@ -1,6 +1,7 @@
+import { fr } from '@codegouvfr/react-dsfr'
+
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-import { fr } from '@codegouvfr/react-dsfr'
 
 export function ValidationPage() {
   const { t } = useTranslation({ ValidationPage })

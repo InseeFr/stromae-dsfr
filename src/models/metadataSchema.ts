@@ -1,7 +1,8 @@
-import type { SurveyUnitMetadata } from '@/models/api'
-import { assert } from 'tsafe/assert'
 import type { Extends } from 'tsafe/Extends'
+import { assert } from 'tsafe/assert'
 import { z } from 'zod'
+
+import type { SurveyUnitMetadata } from '@/models/api'
 
 const logoSchema = z.object({
   label: z.string(),

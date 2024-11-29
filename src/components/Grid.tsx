@@ -1,5 +1,6 @@
-import { fr } from '@codegouvfr/react-dsfr'
 import { type PropsWithChildren } from 'react'
+
+import { fr } from '@codegouvfr/react-dsfr'
 
 export function Grid(props: PropsWithChildren) {
   const { children } = props

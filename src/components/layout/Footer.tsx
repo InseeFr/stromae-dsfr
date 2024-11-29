@@ -1,3 +1,6 @@
+import { fr } from '@codegouvfr/react-dsfr'
+import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { useMode } from '@/hooks/useMode'
 import {
@@ -9,8 +12,7 @@ import type { Logo } from '@/models/Metadata'
 import { NavigationAssistancePage } from '@/pages/navigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from '@/pages/security/SecurityPage'
 import { useMetadataStore } from '@/stores/useMetadataStore'
-import { fr } from '@codegouvfr/react-dsfr'
-import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
+
 import { Header } from './Header'
 
 const transformLogo = (

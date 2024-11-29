@@ -1,11 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import { addParadata } from '@/api/07-paradata-events'
-import { useBatch } from '@/hooks/useBatch'
-import type {
-  DefaultParadataValues,
-  TelemetryEvent,
-  TelemetryParadata,
-} from '@/models/telemetry'
 import {
   createContext,
   useCallback,
@@ -13,6 +6,14 @@ import {
   useMemo,
   useState,
 } from 'react'
+
+import { addParadata } from '@/api/07-paradata-events'
+import { useBatch } from '@/hooks/useBatch'
+import type {
+  DefaultParadataValues,
+  TelemetryEvent,
+  TelemetryParadata,
+} from '@/models/telemetry'
 
 type TelemetryContextType = {
   isTelemetryDisabled: boolean

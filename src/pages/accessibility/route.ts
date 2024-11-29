@@ -1,5 +1,7 @@
-import { rootRoute } from '@/router/router'
 import { createRoute } from '@tanstack/react-router'
+
+import { rootRoute } from '@/router/router'
+
 import { AccessibilityPage } from './AccessibilityPage'
 
 export const accessibilityPath = '/accessibilite'

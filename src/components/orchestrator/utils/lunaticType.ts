@@ -1,7 +1,7 @@
 import {
-  VTLExpressionError,
   type LunaticOptions,
   type LunaticState,
+  VTLExpressionError,
 } from '@inseefr/lunatic'
 
 export type LunaticGetReferentiel = LunaticOptions['getReferentiel']

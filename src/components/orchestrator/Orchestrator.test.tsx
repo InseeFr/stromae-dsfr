@@ -1,10 +1,12 @@
+import { act, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { expect } from 'vitest'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import { TelemetryContext } from '@/contexts/TelemetryContext'
 import { renderWithRouter } from '@/utils/tests'
-import { act, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { expect } from 'vitest'
+
 import { Orchestrator } from './Orchestrator'
 
 describe('Orchestrator', () => {

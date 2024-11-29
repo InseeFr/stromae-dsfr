@@ -1,7 +1,9 @@
-import { declareComponentKeys, useTranslation } from '@/i18n'
+import { type MutableRefObject, useEffect, useId, useState } from 'react'
+
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-import { useEffect, useId, useState, type MutableRefObject } from 'react'
 import { assert } from 'tsafe/assert'
+
+import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export type Props = {
   actionsRef: MutableRefObject<{

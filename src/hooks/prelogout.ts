@@ -1,5 +1,6 @@
-import { useEvent } from '@/utils/useEvent'
 import { useEffect } from 'react'
+
+import { useEvent } from '@/utils/useEvent'
 
 const actions = new Set<() => Promise<void> | void>()
 

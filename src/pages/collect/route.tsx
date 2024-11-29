@@ -1,3 +1,7 @@
+import type { LunaticSource } from '@inseefr/lunatic'
+import { createRoute } from '@tanstack/react-router'
+import { z } from 'zod'
+
 import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
   getGetSurveyUnitMetadataByIdQueryOptions,
@@ -10,9 +14,7 @@ import type { SurveyUnitData } from '@/models/SurveyUnitData'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
-import type { LunaticSource } from '@inseefr/lunatic'
-import { createRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+
 import { CollectPage } from './CollectPage'
 
 const collectSearchParams = z.object({

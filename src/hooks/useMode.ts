@@ -1,8 +1,9 @@
+import { useMatchRoute } from '@tanstack/react-router'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { collectPath } from '@/pages/collect/route'
 import { reviewPath } from '@/pages/review/route'
 import { visualizePath } from '@/pages/visualize/route'
-import { useMatchRoute } from '@tanstack/react-router'
 
 /** Returns current mode based on url */
 export function useMode():

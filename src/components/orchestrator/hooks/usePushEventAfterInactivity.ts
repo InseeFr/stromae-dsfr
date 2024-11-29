@@ -1,6 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
+
 import type { CommonParadata, InputParadata } from '@/models/telemetry'
 import { areInputParadataIdentical } from '@/utils/telemetry'
-import { useEffect, useRef, useState } from 'react'
 
 const defaultInactivityDelay = 1_000
 

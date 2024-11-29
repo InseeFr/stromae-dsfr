@@ -1,7 +1,9 @@
+import { memo } from 'react'
+
+import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+
 import { Grid } from '@/components/Grid'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
-import { memo } from 'react'
 
 export const AccessibilityPage = memo(function AccessibilityPage() {
   const { t } = useTranslation({ AccessibilityPage })

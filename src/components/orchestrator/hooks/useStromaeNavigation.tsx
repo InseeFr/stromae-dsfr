@@ -1,7 +1,10 @@
+import { useState } from 'react'
+
+import { type Equals, assert } from 'tsafe/assert'
+
 import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
-import { useState } from 'react'
-import { assert, type Equals } from 'tsafe/assert'
+
 import type {
   LunaticGoNextPage,
   LunaticGoPreviousPage,

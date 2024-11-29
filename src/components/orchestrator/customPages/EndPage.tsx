@@ -1,7 +1,8 @@
+import { fr } from '@codegouvfr/react-dsfr'
+
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { StateData } from '@/models/StateData'
-import { fr } from '@codegouvfr/react-dsfr'
 
 /**
  * Display time at which user has sent its answers.

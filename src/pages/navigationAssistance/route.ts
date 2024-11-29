@@ -1,5 +1,7 @@
-import { rootRoute } from '@/router/router'
 import { createRoute } from '@tanstack/react-router'
+
+import { rootRoute } from '@/router/router'
+
 import { NavigationAssistancePage } from './NavigationAssistancePage'
 
 export const navigationPath = '/aide-a-la-navigation'

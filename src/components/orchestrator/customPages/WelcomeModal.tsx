@@ -1,6 +1,8 @@
-import { declareComponentKeys, useTranslation } from '@/i18n'
-import { createModal } from '@codegouvfr/react-dsfr/Modal'
 import { useEffect, useRef } from 'react'
+
+import { createModal } from '@codegouvfr/react-dsfr/Modal'
+
+import { declareComponentKeys, useTranslation } from '@/i18n'
 
 const modal = createModal({
   id: 'welcomeModal',

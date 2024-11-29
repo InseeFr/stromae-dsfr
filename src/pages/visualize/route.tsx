@@ -1,3 +1,6 @@
+import { createRoute } from '@tanstack/react-router'
+import { z } from 'zod'
+
 import {
   metadataQueryOptions,
   sourceQueryOptions,
@@ -7,10 +10,8 @@ import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
-import { createRoute } from '@tanstack/react-router'
-
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
-import { z } from 'zod'
+
 import { VisualizePage } from './Visualize'
 
 const visualizeSearchSchema = z

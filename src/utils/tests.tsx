@@ -1,6 +1,7 @@
-import { router } from '@/router/__mocks__'
 import { RouterProvider } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
+
+import { router } from '@/router/__mocks__'
 
 export const renderWithRouter = (component: React.ReactElement) => {
   return render(

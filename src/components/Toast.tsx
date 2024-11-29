@@ -1,8 +1,10 @@
-import { isMobileScreen } from '@/utils/isMobileScreen'
+import type { ComponentProps, ReactNode } from 'react'
+
 import { fr } from '@codegouvfr/react-dsfr'
 import Alert from '@codegouvfr/react-dsfr/Alert'
-import type { ComponentProps, ReactNode } from 'react'
 import { toast } from 'react-hot-toast'
+
+import { isMobileScreen } from '@/utils/isMobileScreen'
 
 type Params = {
   severity: ComponentProps<typeof Alert>['severity']

@@ -1,11 +1,14 @@
-import { useTranslation } from '@/i18n'
+import { useState } from 'react'
+
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
 import { VTLExpressionError, VTLInterpretationError } from '@inseefr/lunatic'
 import Badge from '@mui/material/Badge'
 import Fab from '@mui/material/Fab'
 import { declareComponentKeys } from 'i18nifty'
-import { useState } from 'react'
+
+import { useTranslation } from '@/i18n'
+
 import { useLoggerErrors } from './VTLErrorStore'
 
 export const VTLDevTools = () => {

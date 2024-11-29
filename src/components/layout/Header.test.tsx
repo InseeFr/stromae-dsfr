@@ -1,12 +1,14 @@
+import { waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { expect } from 'vitest'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import { TelemetryContext } from '@/contexts/TelemetryContext'
 import { useMode } from '@/hooks/useMode'
 import { OidcProvider } from '@/oidc'
 import { renderWithRouter } from '@/utils/tests'
-import { waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { expect } from 'vitest'
+
 import { Header } from './Header'
 
 vi.mock('@/hooks/useMode')

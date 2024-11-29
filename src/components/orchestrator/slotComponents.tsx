@@ -1,8 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 import { slotComponents as dsfrSlotsComponents } from '@inseefr/lunatic-dsfr'
 import { assert } from 'tsafe/assert'
+
+import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 
 const Sequence: LunaticSlotComponents['Sequence'] = (props) => {
   const DsfrSequence = dsfrSlotsComponents['Sequence']

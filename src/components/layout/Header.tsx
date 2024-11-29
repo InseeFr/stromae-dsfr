@@ -1,3 +1,7 @@
+import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
+import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
+import { useSearch } from '@tanstack/react-router'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_EXIT_SOURCE } from '@/constants/telemetry'
 import { useTelemetry } from '@/contexts/TelemetryContext'
@@ -12,9 +16,6 @@ import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
-import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
-import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
-import { useSearch } from '@tanstack/react-router'
 
 export function Header() {
   const { t } = useTranslation({ Header })

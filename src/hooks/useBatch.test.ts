@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
+
 import { useBatch } from './useBatch'
 
 describe('Use batch', () => {
@@ -49,7 +50,7 @@ describe('Use batch', () => {
 
     expect(mock).not.toHaveBeenCalled()
 
-    act(() => result.current.triggerTimeoutEvent())
+    await act(() => result.current.triggerTimeoutEvent())
 
     expect(mock).toHaveBeenCalledOnce()
     expect(mock).toHaveBeenCalledWith([1, 2])

@@ -1,3 +1,16 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+import { fr } from '@codegouvfr/react-dsfr'
+import {
+  type LunaticChangesHandler,
+  LunaticComponents,
+  type LunaticData,
+  type LunaticError,
+  type LunaticSource,
+  useLunatic,
+} from '@inseefr/lunatic'
+import { useNavigate } from '@tanstack/react-router'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
@@ -13,17 +26,8 @@ import {
   computeInputEvent,
   computeNewPageEvent,
 } from '@/utils/telemetry'
-import { fr } from '@codegouvfr/react-dsfr'
-import {
-  LunaticComponents,
-  useLunatic,
-  type LunaticChangesHandler,
-  type LunaticData,
-  type LunaticError,
-  type LunaticSource,
-} from '@inseefr/lunatic'
-import { useNavigate } from '@tanstack/react-router'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+import { SurveyContainer } from './SurveyContainer'
 import { EndPage } from './customPages/EndPage'
 import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
@@ -34,7 +38,6 @@ import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
 import { slotComponents } from './slotComponents'
-import { SurveyContainer } from './SurveyContainer'
 import { computeLunaticComponents } from './utils/components'
 import { isBlockingError } from './utils/controls'
 import { trimCollectedData } from './utils/data'

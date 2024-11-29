@@ -1,10 +1,13 @@
+import { type PropsWithChildren, type ReactNode, useState } from 'react'
+
+import { fr } from '@codegouvfr/react-dsfr'
+import Button from '@codegouvfr/react-dsfr/Button'
+
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { InternalPageType } from '@/models/Page'
-import { fr } from '@codegouvfr/react-dsfr'
-import Button from '@codegouvfr/react-dsfr/Button'
-import { useState, type PropsWithChildren, type ReactNode } from 'react'
+
 import type { OrchestratorProps } from './Orchestrator'
 import { SequenceHeader } from './SequenceHeader'
 import type { LunaticOverview } from './utils/lunaticType'

@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
+
+import { declareComponentKeys } from 'i18nifty'
+
 import { useTranslation } from '@/i18n'
 import { useOidc } from '@/oidc'
-import { declareComponentKeys } from 'i18nifty'
-import { useEffect, useState } from 'react'
 
 export function AutoLogoutCountdown() {
   const { isUserLoggedIn, subscribeToAutoLogoutCountdown } = useOidc()

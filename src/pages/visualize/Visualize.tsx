@@ -1,9 +1,12 @@
+import { memo } from 'react'
+
+import { useQueryClient } from '@tanstack/react-query'
+
 import { nomenclatureQueryOptions } from '@/api/visualizeQueryOptions'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import type { LunaticGetReferentiel } from '@/components/orchestrator/utils/lunaticType'
 import { MODE_TYPE } from '@/constants/mode'
-import { useQueryClient } from '@tanstack/react-query'
-import { memo } from 'react'
+
 import { VisualizeForm } from './form/VisualizeForm'
 import { visualizeRoute } from './route'
 

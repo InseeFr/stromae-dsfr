@@ -2,6 +2,7 @@ import {
   TELEMETRY_EVENT_EXIT_SOURCE,
   TELEMETRY_EVENT_TYPE,
 } from '@/constants/telemetry'
+
 import {
   areInputParadataIdentical,
   computeContactSupportEvent,

@@ -11,6 +11,7 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
+
 import { stromaeInstance } from './axiosInstance'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]

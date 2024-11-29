@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react'
 
 import { PAGE_TYPE } from '@/constants/page'
-import type { InternalPageType, PageType } from '@/models/Page'
+import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
 
 import { useStromaeNavigation } from './useStromaeNavigation'
 
@@ -118,5 +118,41 @@ describe('Use stromae navigation', () => {
 
     expect(goPrevLunaticMock).not.toHaveBeenCalled()
     expect(result.current.currentPage).toBe(PAGE_TYPE.WELCOME)
+  })
+
+  test.each<{ page: StromaePage; shouldGoToLunaticPageBeCalled?: boolean }>([
+    { page: PAGE_TYPE.WELCOME },
+    { page: PAGE_TYPE.VALIDATION },
+    { page: PAGE_TYPE.END },
+  ])('go to page $page', ({ page }) => {
+    const goToLunaticPageMock = vi.fn()
+
+    const { result } = renderHook(() =>
+      useStromaeNavigation({
+        goToLunaticPage: goToLunaticPageMock,
+      }),
+    )
+
+    act(() => result.current.goToPage({ page }))
+    expect(goToLunaticPageMock).not.toHaveBeenCalled()
+
+    expect(result.current.currentPage).toBe(page)
+  })
+
+  test('go to lunatic page ', () => {
+    const goToLunaticPageMock = vi.fn()
+
+    const { result } = renderHook(() =>
+      useStromaeNavigation({
+        goToLunaticPage: goToLunaticPageMock,
+      }),
+    )
+
+    act(() => result.current.goToPage({ page: 1 }))
+
+    expect(goToLunaticPageMock).toHaveBeenCalledOnce()
+    expect(goToLunaticPageMock).toHaveBeenCalledWith({ page: 1 })
+
+    expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
   })
 })

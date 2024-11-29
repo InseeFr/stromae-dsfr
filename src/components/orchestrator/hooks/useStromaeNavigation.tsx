@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import { type Equals, assert } from 'tsafe/assert'
-
 import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
 import type {
@@ -54,7 +52,6 @@ export function useStromaeNavigation({
       case PAGE_TYPE.END:
         return
     }
-    assert<Equals<typeof currentPage, never>>(false)
   }
 
   const goPrevious = () => {
@@ -67,7 +64,6 @@ export function useStromaeNavigation({
       case PAGE_TYPE.WELCOME:
         return
     }
-    assert<Equals<typeof currentPage, never>>(false)
   }
 
   const goToPage = (

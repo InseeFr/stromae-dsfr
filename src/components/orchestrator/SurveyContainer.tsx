@@ -7,11 +7,12 @@ import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { InternalPageType } from '@/models/Page'
+import type { LunaticOverview } from '@/models/lunaticType'
 
 import type { OrchestratorProps } from './Orchestrator'
 import { SequenceHeader } from './SequenceHeader'
-import type { LunaticOverview } from './utils/lunaticType'
 
+/** Displays form, allows to go next and back */
 export function SurveyContainer(
   props: PropsWithChildren<{
     currentPage: InternalPageType

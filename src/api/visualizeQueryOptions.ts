@@ -4,9 +4,9 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import { ZodError } from 'zod'
 
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
-import type { Nomenclature } from '@/components/orchestrator/utils/lunaticType'
 import type { Metadata } from '@/models/Metadata'
 import type { SurveyUnitData } from '@/models/SurveyUnitData'
+import type { Nomenclature } from '@/models/lunaticType'
 import { surveyUnitMetadataSchema } from '@/models/metadataSchema'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {

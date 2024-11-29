@@ -4,11 +4,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
-import type {
-  LunaticGetReferentiel,
-  Nomenclature,
-} from '@/components/orchestrator/utils/lunaticType'
 import { MODE_TYPE } from '@/constants/mode'
+import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
 
 import { reviewRoute } from './route'
 

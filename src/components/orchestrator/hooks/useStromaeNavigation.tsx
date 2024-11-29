@@ -4,44 +4,39 @@ import { type Equals, assert } from 'tsafe/assert'
 
 import { PAGE_TYPE } from '@/constants/page'
 import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
-
 import type {
   LunaticGoNextPage,
   LunaticGoPreviousPage,
   LunaticGoToPage,
-} from '../utils/lunaticType'
+} from '@/models/lunaticType'
 
 type Params = {
-  isFirstPage: boolean
-  isLastPage: boolean
-  initialCurrentPage: PageType | undefined
-  goNextWithControls: (goNext: () => void) => void
-  goNextLunatic: LunaticGoNextPage
-  goPrevLunatic: LunaticGoPreviousPage
-  openValidationModal: () => Promise<void>
-  goToLunaticPage: LunaticGoToPage
+  isFirstPage?: boolean
+  isLastPage?: boolean
+  initialCurrentPage?: PageType
+  goNextWithControls?: (goNext: () => void) => void
+  goNextLunatic?: LunaticGoNextPage
+  goPrevLunatic?: LunaticGoPreviousPage
+  openValidationModal?: () => Promise<void>
+  goToLunaticPage?: LunaticGoToPage
 }
 
+/**
+ * Hook that manages which page should one navigate to
+ */
 export function useStromaeNavigation({
-  isFirstPage,
-  isLastPage,
+  isFirstPage = false,
+  isLastPage = false,
   initialCurrentPage = PAGE_TYPE.WELCOME,
-  goNextWithControls,
-  goNextLunatic,
-  goPrevLunatic,
-  goToLunaticPage,
-  openValidationModal,
+  goNextWithControls = () => {},
+  goNextLunatic = () => {},
+  goPrevLunatic = () => {},
+  goToLunaticPage = () => {},
+  openValidationModal = () => new Promise<void>(() => {}),
 }: Params) {
   const [currentPage, setCurrentPage] = useState<InternalPageType>(() =>
     initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME,
   )
-
-  const goNextFromLunaticPage = (isLastPage: boolean) => {
-    const goNext = isLastPage
-      ? () => setCurrentPage(PAGE_TYPE.VALIDATION)
-      : goNextLunatic
-    return goNextWithControls(goNext)
-  }
 
   const goNext = () => {
     switch (currentPage) {
@@ -53,12 +48,15 @@ export function useStromaeNavigation({
       case PAGE_TYPE.WELCOME:
         return setCurrentPage(PAGE_TYPE.LUNATIC)
       case PAGE_TYPE.LUNATIC:
-        return goNextFromLunaticPage(isLastPage)
+        return isLastPage
+          ? goNextWithControls(() => setCurrentPage(PAGE_TYPE.VALIDATION))
+          : goNextWithControls(goNextLunatic)
       case PAGE_TYPE.END:
         return
     }
     assert<Equals<typeof currentPage, never>>(false)
   }
+
   const goPrevious = () => {
     switch (currentPage) {
       case PAGE_TYPE.VALIDATION:

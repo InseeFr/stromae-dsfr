@@ -7,7 +7,7 @@ import type { LunaticData } from '@inseefr/lunatic'
 export function trimCollectedData(
   data: LunaticData['COLLECTED'],
 ): LunaticData['COLLECTED'] {
-  const trimmedData = Object.assign({}, data)
+  const trimmedData = structuredClone(data)
   for (const key in trimmedData) {
     delete trimmedData[key]['EDITED']
     delete trimmedData[key]['FORCED']

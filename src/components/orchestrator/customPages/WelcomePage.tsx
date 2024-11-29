@@ -44,6 +44,7 @@ function renderMetadataContents(contents: Contents[] | undefined) {
   )
 }
 
+/** Page displayed when the user first arrives on the orchestrator */
 export function WelcomePage(props: { metadata: Metadata }) {
   const { t } = useTranslation({ WelcomePage })
   const { metadata } = props

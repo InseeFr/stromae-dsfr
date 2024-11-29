@@ -1,3 +1,8 @@
+### 1.3.1
+
+#### QoL
+- suppression de variables non utilisées dans les données téléchargées en mode visualisation
+
 ### 1.3.0
 
 #### Nouvelles fonctionnalités

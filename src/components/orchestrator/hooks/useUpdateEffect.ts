@@ -11,6 +11,7 @@ function useFirstMountState(): boolean {
   return isFirstRef.current
 }
 
+/** Hook that does not trigger in the first render */
 export const useUpdateEffect: typeof useEffect = (effect, deps) => {
   const isFirstMount = useFirstMountState()
 

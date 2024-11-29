@@ -1,3 +1,4 @@
+/** Download provided data as a JSON file */
 export function downloadAsJson<T extends object>(params: {
   dataToDownload: T
   filename?: string

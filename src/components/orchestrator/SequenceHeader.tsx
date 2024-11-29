@@ -2,8 +2,7 @@ import { fr } from '@codegouvfr/react-dsfr'
 
 import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
-
-import type { LunaticOverview } from './utils/lunaticType'
+import type { LunaticOverview } from '@/models/lunaticType'
 
 type SequenceHeaderProps = {
   pagination: 'question' | 'sequence'
@@ -28,15 +27,15 @@ export function SequenceHeader(props: SequenceHeaderProps) {
 
   if (currentSequenceIndex < 0 || currentSequence === undefined) return null
 
-  const stepCount = overview.length
-  const currentStep = currentSequenceIndex + 1 //overview is sorted and index starts at 0
-
   if (pagination === 'question')
     return (
       <div className={fr.cx('fr-mt-1w')}>
         <h2 className={fr.cx('fr-stepper__title')}>{currentSequence.label}</h2>
       </div>
     )
+
+  const stepCount = overview.length
+  const currentStep = currentSequenceIndex + 1 //overview is sorted and index starts at 0
 
   return (
     <div className={fr.cx('fr-stepper', 'fr-mb-2v')}>

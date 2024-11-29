@@ -25,10 +25,10 @@ test('trim collected data works', () => {
     },
     objectD: {
       COLLECTED: ['je', 'suis', 'un', 'tableau'],
-      EDITED: null,
-      FORCED: null,
-      INPUTTED: null,
-      PREVIOUS: null,
+      EDITED: [],
+      FORCED: [],
+      INPUTTED: [],
+      PREVIOUS: [],
     },
   }
   expect(trimCollectedData(data)).toMatchObject({

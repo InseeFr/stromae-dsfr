@@ -10,6 +10,11 @@ export type Props = {
     open?: () => Promise<void>
   }>
 }
+
+/**
+ * Modal displayed at the end of the survey to make sure the user understands
+ * they won't be able to change their answers once submitted
+ */
 export function ValidationModal({ actionsRef }: Props) {
   const id = useId()
 

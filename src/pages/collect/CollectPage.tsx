@@ -11,12 +11,9 @@ import {
 } from '@/api/06-survey-units'
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
-import type {
-  LunaticGetReferentiel,
-  Nomenclature,
-} from '@/components/orchestrator/utils/lunaticType'
 import { MODE_TYPE } from '@/constants/mode'
 import type { StateData } from '@/models/StateData'
+import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
 
 import { collectRoute } from './route'
 

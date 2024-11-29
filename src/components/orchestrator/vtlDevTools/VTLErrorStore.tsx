@@ -6,7 +6,7 @@ import type {
   ErrorMessage,
   LoggerMessage,
   LunaticPageTag,
-} from '@/components/orchestrator/utils/lunaticType'
+} from '@/models/lunaticType'
 
 function getErrorId(error: ErrorMessage) {
   return error.error.expression

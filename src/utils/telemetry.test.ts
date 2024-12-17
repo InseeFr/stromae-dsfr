@@ -8,7 +8,9 @@ import {
   computeContactSupportEvent,
   computeControlEvent,
   computeControlSkipEvent,
+  computeDataMaxLength,
   computeExitEvent,
+  computeInactivityDelay,
   computeInitEvent,
   computeInputEvent,
   computeNewPageEvent,
@@ -137,4 +139,38 @@ test('correctly compares input paradata', async () => {
       computeInputEvent({ name: 'name', iteration: [1] }),
     ),
   ).toBeFalsy()
+})
+
+describe('computeDataMaxLength', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
+  test.each([
+    [undefined, undefined],
+    ['', undefined],
+    ['100', 100],
+    ['-1', undefined],
+    ['azear', undefined],
+  ])('with env var %i -> %i', (env, res) => {
+    vi.stubEnv('VITE_TELEMETRY_MAX_LENGTH', env)
+    expect(computeDataMaxLength()).toBe(res)
+  })
+})
+
+describe('computeInactivityDelay', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
+  test.each([
+    [undefined, undefined],
+    ['', undefined],
+    ['100', 100],
+    ['-1', undefined],
+    ['azear', undefined],
+  ])('with env var %i -> %i', (env, res) => {
+    vi.stubEnv('VITE_TELEMETRY_MAX_DELAY', env)
+    expect(computeInactivityDelay()).toBe(res)
+  })
 })

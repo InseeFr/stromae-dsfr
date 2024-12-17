@@ -1,3 +1,9 @@
+### 1.3.3
+
+#### QoL
+
+- ajout des variables d'environnemment `VITE_TELEMETRY_MAX_DELAY` et `VITE_TELEMETRY_MAX_LENGTH` permettant de paramétrer le méchanisme de batch du tracking des paradonnées
+
 ### 1.3.2
 
 #### Montée de version Lunatic

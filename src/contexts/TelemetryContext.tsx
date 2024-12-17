@@ -14,6 +14,7 @@ import type {
   TelemetryEvent,
   TelemetryParadata,
 } from '@/models/telemetry'
+import { computeDataMaxLength, computeInactivityDelay } from '@/utils/telemetry'
 
 type TelemetryContextType = {
   isTelemetryDisabled: boolean
@@ -22,7 +23,7 @@ type TelemetryContextType = {
   triggerBatchTelemetryCallback?: () => Promise<void>
 }
 
-/** Mandatory values used as a context's last-resort fallback */
+/** Mandatory values used as a context's last-resort fallback. */
 const defaultValues = {
   isTelemetryDisabled: true,
   pushEvent: (_: TelemetryParadata) => {},
@@ -30,7 +31,7 @@ const defaultValues = {
 }
 
 /**
- * Exposes shared functions to handle telemetry events.
+ * Expose shared functions to handle telemetry events.
  *
  * Should be used with the useBatch hook to reduce external API load.
  */
@@ -38,7 +39,7 @@ export const TelemetryContext: React.Context<TelemetryContextType> =
   createContext(defaultValues)
 
 /**
- * Returns the current telemetry context value.
+ * Return the current telemetry context value.
  *
  * @version 1.3.0
  * @see https://react.dev/reference/react/useContext
@@ -47,7 +48,13 @@ export function useTelemetry() {
   return useContext(TelemetryContext)
 }
 
-/** Initializes the telemetry context with a batch system */
+/**
+ * Initialize the telemetry context with a batch system.
+ *
+ * A batch mechanism will be used to avoid sending too many event to the API.
+ * It can be configured through the environment variables
+ * `VITE_TELEMETRY_MAX_DELAY` and `VITE_TELEMETRY_MAX_LENGTH`.
+ */
 export function TelemetryProvider({
   children,
 }: Readonly<{
@@ -66,7 +73,11 @@ export function TelemetryProvider({
     }
   }, [])
 
-  const { addDatum, triggerTimeoutEvent } = useBatch(pushEvents)
+  const { addDatum, triggerTimeoutEvent } = useBatch(
+    pushEvents,
+    computeDataMaxLength(),
+    computeInactivityDelay(),
+  )
 
   /** Add the event to a batch mechanism. */
   const pushEvent = useCallback(

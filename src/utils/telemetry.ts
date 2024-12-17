@@ -6,13 +6,17 @@ import type {
   TelemetryParadata,
 } from '@/models/telemetry'
 
+/**
+ * Compute paradata values that are common to every paradata but must be
+ * recalculated for each event (e.g. date).
+ */
 function getCommonData(): CommonParadata {
   return {
     date: new Date().toISOString(),
   }
 }
 
-/** Creates an event to be used by telemetry context when the user starts the app */
+/** Create an event to be used by telemetry context when the user starts the app. */
 export function computeInitEvent(): TelemetryParadata {
   return {
     ...getCommonData(),
@@ -20,7 +24,7 @@ export function computeInitEvent(): TelemetryParadata {
   }
 }
 
-/** Creates an event to be used by telemetry context when the user quits the app */
+/** Create an event to be used by telemetry context when the user quits the app. */
 export function computeExitEvent({
   source,
 }: {
@@ -33,7 +37,7 @@ export function computeExitEvent({
   }
 }
 
-/** Creates an event to be used by telemetry context when the user goes to a new page  */
+/** Create an event to be used by telemetry context when the user goes to a new page.  */
 export function computeNewPageEvent({
   page,
   pageTag,
@@ -49,7 +53,7 @@ export function computeNewPageEvent({
   }
 }
 
-/** Creates an event to be used by telemetry context when the user inputs something in lunatic components */
+/** Create an event to be used by telemetry context when the user inputs something in lunatic components. */
 export function computeInputEvent({
   name,
   iteration,
@@ -65,7 +69,7 @@ export function computeInputEvent({
   }
 }
 
-/** Creates an event to be used by telemetry context when lunatic shows a control to the user */
+/** Create an event to be used by telemetry context when lunatic shows a control to the user. */
 export function computeControlEvent({
   controlIds,
 }: {
@@ -78,7 +82,7 @@ export function computeControlEvent({
   }
 }
 
-/** Creates an event to be used by telemetry context when the user ignores the control shown by lunatic */
+/** Create an event to be used by telemetry context when the user ignores the control shown by lunatic. */
 export function computeControlSkipEvent({
   controlIds,
 }: {
@@ -91,7 +95,7 @@ export function computeControlSkipEvent({
   }
 }
 
-/** Creates an event to be used by telemetry context when the user clicks on 'contact support' */
+/** Create an event to be used by telemetry context when the user clicks on 'contact support'. */
 export function computeContactSupportEvent(): TelemetryParadata {
   return {
     ...getCommonData(),
@@ -99,6 +103,10 @@ export function computeContactSupportEvent(): TelemetryParadata {
   }
 }
 
+/**
+ * Check if two input paradata are about the same input (i.e. based on input
+ * name and iteration).
+ */
 export function areInputParadataIdentical(
   event1: InputParadata,
   event2: InputParadata,
@@ -118,4 +126,30 @@ function areArraysEqual(array1: any[], array2: any[]): boolean {
     array1.length === array2.length &&
     array1.every((value, index) => value === array2[index])
   )
+}
+
+/**
+ * Compute batch parameters based on environment variable
+ * `VITE_TELEMETRY_MAX_LENGTH` for max data to send in one batch.
+ */
+export function computeDataMaxLength(): number | undefined {
+  const envVar = import.meta.env.VITE_TELEMETRY_MAX_LENGTH
+  if (envVar) {
+    const parsedEnvVar = parseInt(envVar, 10)
+    if (!isNaN(parsedEnvVar) && parsedEnvVar > 0) return parsedEnvVar
+  }
+  return undefined
+}
+
+/**
+ * Compute batch parameters based on environment variable
+ * `VITE_TELEMETRY_MAX_DELAY` for max delay to wait before sending a batch.
+ */
+export function computeInactivityDelay(): number | undefined {
+  const envVar = import.meta.env.VITE_TELEMETRY_MAX_DELAY
+  if (envVar) {
+    const parsedEnvVar = parseInt(envVar, 10)
+    if (!isNaN(parsedEnvVar) && parsedEnvVar > 0) return parsedEnvVar
+  }
+  return undefined
 }

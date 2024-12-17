@@ -12,6 +12,8 @@ type ImportMetaEnv = {
   VITE_BASE_PATH: string
   VITE_REVIEW_IDENTITY_PROVIDER: string
   VITE_TELEMETRY_DISABLED: string
+  VITE_TELEMETRY_MAX_DELAY: string
+  VITE_TELEMETRY_MAX_LENGTH: string
   BASE_URL: string
   MODE: string
   DEV: boolean

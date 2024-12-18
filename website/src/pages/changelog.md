@@ -3,6 +3,7 @@
 #### QoL
 
 - ajout des variables d'environnemment `VITE_TELEMETRY_MAX_DELAY` et `VITE_TELEMETRY_MAX_LENGTH` permettant de paramétrer le méchanisme de batch du tracking des paradonnées
+- on n'affiche plus la rubrique "Qui doit répondre" quand elle est vide
 
 ### 1.3.2
 
@@ -14,6 +15,7 @@ Montée de version Lunatic-DSFR 2.4.4
 ### 1.3.1
 
 #### QoL
+
 - suppression de variables non utilisées dans les données téléchargées en mode visualisation
 
 ### 1.3.0

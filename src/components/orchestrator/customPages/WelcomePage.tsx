@@ -45,7 +45,7 @@ function renderMetadataContents(contents: Contents[] | undefined) {
 }
 
 /** Page displayed when the user first arrives on the orchestrator */
-export function WelcomePage(props: { metadata: Metadata }) {
+export function WelcomePage(props: Readonly<{ metadata: Metadata }>) {
   const { t } = useTranslation({ WelcomePage })
   const { metadata } = props
   const { resolveLocalizedString } = useResolveLocalizedString({
@@ -55,16 +55,14 @@ export function WelcomePage(props: { metadata: Metadata }) {
   useDocumentTitle(t('document title'))
 
   return (
-    <>
-      <div className={fr.cx('fr-my-4w')}>
-        <h1>{t('title')}</h1>
-        <p className={fr.cx('fr-text--lead')}>
-          {resolveLocalizedString(metadata.objectives)}
-        </p>
-        {renderMetadataContents(metadata.campaignInfo)}
-        {renderMetadataContents(metadata.surveyUnitInfo)}
-      </div>
-    </>
+    <div className={fr.cx('fr-my-4w')}>
+      <h1>{t('title')}</h1>
+      <p className={fr.cx('fr-text--lead')}>
+        {resolveLocalizedString(metadata.objectives)}
+      </p>
+      {renderMetadataContents(metadata.campaignInfo)}
+      {renderMetadataContents(metadata.surveyUnitInfo)}
+    </div>
   )
 }
 

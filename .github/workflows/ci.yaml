@@ -95,7 +95,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
-      - uses: softprops/action-gh-release@v2.0.8
+      - uses: softprops/action-gh-release@v2.2.1
         with:
           name: Release v${{ needs.check_if_version_upgraded.outputs.to_version }}
           tag_name: v${{ needs.check_if_version_upgraded.outputs.to_version }}

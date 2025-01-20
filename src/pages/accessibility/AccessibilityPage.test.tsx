@@ -3,14 +3,11 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { AccessibilityPage } from './AccessibilityPage'
 
-// Mock the Grid component
 vi.mock('@/components/Grid', () => ({
   Grid: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="grid">{children}</div>
   ),
 }))
-
-// Mock the Breadcrumb component
 vi.mock('@codegouvfr/react-dsfr/Breadcrumb', () => ({
   Breadcrumb: ({ currentPageLabel }: { currentPageLabel: string }) => (
     <nav data-testid="breadcrumb">{currentPageLabel}</nav>

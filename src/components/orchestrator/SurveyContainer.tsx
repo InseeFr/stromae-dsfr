@@ -23,6 +23,7 @@ export function SurveyContainer(
     mode: OrchestratorProps['mode']
     pagination: 'question' | 'sequence'
     overview: LunaticOverview
+    isDirtyState?: boolean
     isSequencePage: boolean
     bottomContent: ReactNode
   }>,
@@ -37,6 +38,7 @@ export function SurveyContainer(
     mode,
     pagination,
     overview,
+    isDirtyState = false,
     isSequencePage,
     bottomContent,
   } = props
@@ -57,7 +59,11 @@ export function SurveyContainer(
       {!isPreviousButtonDisplayed && (
         <div className={fr.cx('fr-container')}>
           {displaySequenceHeader && (
-            <SequenceHeader overview={overview} pagination={pagination} />
+            <SequenceHeader
+              overview={overview}
+              pagination={pagination}
+              isDirtyState={isDirtyState}
+            />
           )}
           <div className={fr.cx('fr-grid-row', 'fr-grid-row--center')}>
             <div className={fr.cx('fr-col', 'fr-grid-row--left')}>

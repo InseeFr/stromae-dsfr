@@ -15,6 +15,7 @@ import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
+import { useBeforeUnload } from '@/hooks/useBeforeUnload'
 import { usePrevious } from '@/hooks/usePrevious'
 import type { Metadata } from '@/models/Metadata'
 import type { StateData } from '@/models/StateData'
@@ -107,6 +108,10 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const navigate = useNavigate()
 
+  // Display a modal to warn the user their change might not be sent
+  const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
+  useBeforeUnload(isDirtyState)
+
   // Allow to send telemetry events once survey unit id has been set
   const [isTelemetryActivated, setIsTelemetryActivated] =
     useState<boolean>(false)
@@ -186,6 +191,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getReferentiel,
     autoSuggesterLoading: true,
     onChange: (e) => {
+      setIsDirtyState(true)
       // once the user has changed its input, we need to retrigger the controls
       setIsControlsAcknowledged(false)
       if (isTelemetryActivated) handleLunaticChange(e)
@@ -311,6 +317,7 @@ export function Orchestrator(props: OrchestratorProps) {
           : stateData.currentPage === previousPage)
       ) {
         // no change, no need to push anything
+        setIsDirtyState(false)
         return
       }
 
@@ -323,6 +330,7 @@ export function Orchestrator(props: OrchestratorProps) {
         data: collectedData,
         onSuccess: resetChangedData,
       })
+      setIsDirtyState(false)
       // update date to show on end page message
       setLastUpdateDate(stateData.date)
     }
@@ -438,6 +446,7 @@ export function Orchestrator(props: OrchestratorProps) {
           handleDepositProofClick={handleDepositProofClick}
           pagination={pagination}
           overview={overview}
+          isDirtyState={isDirtyState}
           isSequencePage={isSequencePage(components)}
           bottomContent={
             bottomComponents.length > 0 && (

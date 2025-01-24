@@ -15,7 +15,10 @@ export function useDocumentTitle(title: string) {
   }, [title])
 }
 
-export function useSequenceTitle(sequenceLabel: ReactNode) {
+export function useSequenceTitle(
+  sequenceLabel: ReactNode,
+  isDirtyState: boolean = false,
+) {
   /**
    * This is a dirty, sequenceLabel is today a LabelType VTL|MD,
    * it will be replaced by VTL only so we will be able to just sequenceLabel.toString()
@@ -24,5 +27,5 @@ export function useSequenceTitle(sequenceLabel: ReactNode) {
 
   // Décoder les entités HTML
   const decodedString = decode(renderedString)
-  return useDocumentTitle(decodedString)
+  return useDocumentTitle(`${isDirtyState ? '*' : ''}${decodedString}`)
 }

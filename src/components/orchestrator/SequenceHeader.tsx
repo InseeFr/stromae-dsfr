@@ -7,10 +7,11 @@ import type { LunaticOverview } from '@/models/lunaticType'
 type SequenceHeaderProps = {
   pagination: 'question' | 'sequence'
   overview: LunaticOverview
+  isDirtyState?: boolean
 }
 
 export function SequenceHeader(props: SequenceHeaderProps) {
-  const { overview, pagination } = props
+  const { overview, pagination, isDirtyState = false } = props
 
   const { t } = useTranslation('SequenceHeader')
   const currentSequenceIndex = overview.findIndex(
@@ -23,7 +24,7 @@ export function SequenceHeader(props: SequenceHeaderProps) {
 
   const currentSequence = overview.at(currentSequenceIndex) //currentSequence can be undefined when overview equals to []
 
-  useSequenceTitle(currentSequence?.label)
+  useSequenceTitle(currentSequence?.label, isDirtyState)
 
   if (currentSequenceIndex < 0 || currentSequence === undefined) return null
 

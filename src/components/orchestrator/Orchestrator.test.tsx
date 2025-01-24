@@ -23,19 +23,22 @@ describe('Orchestrator', () => {
     surveyUnitIdentifier: 'my survey id',
   }
   const source = {
+    componentType: 'Questionnaire',
     components: [
       {
         componentType: 'Sequence',
         page: '1',
         id: 's1',
+        label: [{ type: 'VTL', value: '"Ma séquence"' }],
       },
       {
         componentType: 'Question',
-        page: '1',
+        page: '2',
+        id: 'q1',
         components: [
           {
             componentType: 'Input',
-            page: '1',
+            page: '2',
             label: { value: 'my-question', type: 'TXT' },
             id: 'i1',
             response: { name: 'my-question-input' },
@@ -44,6 +47,7 @@ describe('Orchestrator', () => {
       },
     ],
     variables: [],
+    maxPage: '2',
   }
   const OrchestratorTestWrapper = ({
     mode,
@@ -218,17 +222,38 @@ describe('Orchestrator', () => {
     )
 
     act(() => getByText('Start').click())
+    act(() => getByText('Continue').click())
 
     const e = getByText('my-question')
     await user.click(e)
     await user.keyboard('f')
 
     await new Promise((r) => setTimeout(r, 1000))
-    await waitFor(() => expect(pushEvent).toHaveBeenCalledTimes(3))
+    await waitFor(() => expect(pushEvent).toHaveBeenCalledTimes(4))
     expect(pushEvent).toHaveBeenLastCalledWith(
       expect.objectContaining({
         type: TELEMETRY_EVENT_TYPE.INPUT,
       }),
     )
+  })
+
+  it('enters dirty state on user input', async () => {
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
+    )
+
+    act(() => getByText('Start').click())
+    act(() => getByText('Continue').click())
+    expect(document.title).not.toContain('*')
+
+    const e = getByText('my-question')
+    await user.click(e)
+    await user.keyboard('f')
+    expect(document.title).toContain('*')
+
+    act(() => getByText('Continue').click())
+    expect(document.title).not.toContain('*')
   })
 })

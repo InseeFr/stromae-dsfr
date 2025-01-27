@@ -42,6 +42,7 @@ import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
+import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { computeLunaticComponents } from './utils/components'
 import { isBlockingError } from './utils/controls'

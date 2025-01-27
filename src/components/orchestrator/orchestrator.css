@@ -1,0 +1,4 @@
+/* Adapt suggester popper width in table. Should be handled by Lunatic-dsfr. */
+.fr-table .field .MuiAutocomplete-popper {
+  min-width: fit-content;
+}

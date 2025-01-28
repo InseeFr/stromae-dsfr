@@ -8,6 +8,8 @@ const decodedIdTokenSchema = z.object({
   preferred_username: z.string(),
 })
 
+const params = new URLSearchParams(window.location.search)
+
 export const { OidcProvider, useOidc, getOidc } =
   import.meta.env.VITE_OIDC_ENABLED === 'false'
     ? createMockReactOidc({
@@ -24,5 +26,9 @@ export const { OidcProvider, useOidc, getOidc } =
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
         publicUrl: import.meta.env.BASE_URL,
+        autoLogoutParams: {
+          redirectTo: 'specific url',
+          url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathLogout') ?? ''}`,
+        },
         decodedIdTokenSchema,
       })

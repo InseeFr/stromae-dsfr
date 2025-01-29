@@ -10,6 +10,13 @@ const decodedIdTokenSchema = z.object({
 
 const params = new URLSearchParams(window.location.search)
 
+const autoLogoutParams = import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION
+  ? {
+      redirectTo: 'specific url' as const,
+      url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathLogout') ?? ''}`,
+    }
+  : { redirectTo: 'current page' as const }
+
 export const { OidcProvider, useOidc, getOidc } =
   import.meta.env.VITE_OIDC_ENABLED === 'false'
     ? createMockReactOidc({
@@ -26,9 +33,6 @@ export const { OidcProvider, useOidc, getOidc } =
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
         publicUrl: import.meta.env.BASE_URL,
-        autoLogoutParams: {
-          redirectTo: 'specific url',
-          url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathLogout') ?? ''}`,
-        },
+        autoLogoutParams,
         decodedIdTokenSchema,
       })

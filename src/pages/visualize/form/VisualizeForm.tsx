@@ -43,7 +43,7 @@ export function VisualizeForm() {
           (acc, { name, uri }) => ({ ...acc, [name]: uri }),
           {},
         ),
-      },
+      } as any,
     })
   })
 

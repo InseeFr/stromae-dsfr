@@ -13,7 +13,7 @@ const params = new URLSearchParams(window.location.search)
 const autoLogoutParams = import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION
   ? {
       redirectTo: 'specific url' as const,
-      url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathLogout') ?? ''}`,
+      url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathAutoLogout') ?? ''}`,
     }
   : { redirectTo: 'current page' as const }
 

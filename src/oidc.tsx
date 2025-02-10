@@ -10,12 +10,13 @@ const decodedIdTokenSchema = z.object({
 
 const params = new URLSearchParams(window.location.search)
 
-const autoLogoutParams = import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION
-  ? {
-      redirectTo: 'specific url' as const,
-      url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathAutoLogout') ?? ''}`,
-    }
-  : { redirectTo: 'current page' as const }
+const autoLogoutParams =
+  import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION === 'true'
+    ? {
+        redirectTo: 'specific url' as const,
+        url: `${import.meta.env.VITE_PORTAIL_URL}${params.get('pathAutoLogout') ?? ''}`,
+      }
+    : { redirectTo: 'current page' as const }
 
 export const { OidcProvider, useOidc, getOidc } =
   import.meta.env.VITE_OIDC_ENABLED === 'false'

@@ -28,4 +28,4 @@ La configuration de l'authentification se fait au sein du fichier `src/oidc.tsx`
 
 ### Cas particulier de la déconnexion par inactivité
 Lorsque l'utilisateur est inactif pendant un certain temps, il est automatiquement déconnecté.
-Par défaut, l'utilisateur est redirigé vers la page d'authentification. Si l'on souhaite rediriger l'utilisateur vers une autre page, il est possible de le faire en modifiant la variable `VITE_AUTO_LOGOUT_REDIRECTION` à "true" dans le fichier `.env`. La page de redirection est alors déterminée par le paramètre d'URL 'pathAutoLogout' de la page en cours.
+Par défaut, l'utilisateur est redirigé vers la page d'authentification. Si l'on souhaite rediriger l'utilisateur vers une autre page, il est possible de le faire en modifiant la variable `VITE_AUTO_LOGOUT_REDIRECTION` à "true" dans le fichier `.env`. La page de redirection est alors déterminée par le paramètre d'URL 'pathLogout' de la page en cours.

@@ -20,7 +20,6 @@ import { CollectPage } from './CollectPage'
 const collectSearchParams = z.object({
   pathLogout: z.string().optional(),
   pathAssistance: z.string().optional(),
-  pathAutoLogout: z.string().optional(),
 })
 
 export const collectPath =

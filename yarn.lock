@@ -914,10 +914,10 @@
   dependencies:
     react-number-format "^5.4.0"
 
-"@inseefr/lunatic@^3.4.13-rc.0":
-  version "3.4.13-rc.0"
-  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.4.13-rc.0.tgz#7d751032f36278bbd6dd5e60768488fe9a63c7e3"
-  integrity sha512-BBj02XYD30//uHytlMXM6G5LXP/aAthgH5fsBAXxVoTUEYLxoDUEWTe/uP2QdfQ8ILGHpGN+EDrMTGjnXtli6w==
+"@inseefr/lunatic@^3.4.17":
+  version "3.4.17"
+  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.4.17.tgz#decea715debad0225efa581de746400b8d7bb095"
+  integrity sha512-57aUkVzHxG6WiiNbkdYuegWNb2sJeY9aPU4U3xbwsvCbpIKvbGQfotdjlA1TJtS3i9Y4DAA6nbnADlISKqBg+g==
   dependencies:
     "@inseefr/trevas" "^0.1.21"
     "@inseefr/vtl-2.0-antlr-tools" "^0.3.2"

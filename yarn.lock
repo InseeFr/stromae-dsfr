@@ -907,17 +907,17 @@
     minimatch "^6.2.0"
     validator "^13.11.0"
 
-"@inseefr/lunatic-dsfr@^2.4.6":
-  version "2.4.6"
-  resolved "https://registry.yarnpkg.com/@inseefr/lunatic-dsfr/-/lunatic-dsfr-2.4.6.tgz#8fa90ba67c54ed97dd4c7d763e8601a13db24d59"
-  integrity sha512-SFlQ8kBFUPSKbBcFYD9qF00pX7ZXnxqXkzj1x1Fcpohi6zMmcAx12KufTjLjFIxH7izoX7AEXwEAlNZSUX98bg==
+"@inseefr/lunatic-dsfr@^2.4.7":
+  version "2.4.7"
+  resolved "https://registry.yarnpkg.com/@inseefr/lunatic-dsfr/-/lunatic-dsfr-2.4.7.tgz#a403f922e559c8d1000d879c7933bc0771738bdb"
+  integrity sha512-WwRT37DCmLwvsqd/Lh1I6cpdxnbhfMHY5d7vUjkUQhX/+sr+vDcIvfBghSFOssjNDtE0aQuCU5Tw3LD5lmJHtw==
   dependencies:
     react-number-format "^5.4.0"
 
-"@inseefr/lunatic@^3.4.13-rc.0":
-  version "3.4.13-rc.0"
-  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.4.13-rc.0.tgz#7d751032f36278bbd6dd5e60768488fe9a63c7e3"
-  integrity sha512-BBj02XYD30//uHytlMXM6G5LXP/aAthgH5fsBAXxVoTUEYLxoDUEWTe/uP2QdfQ8ILGHpGN+EDrMTGjnXtli6w==
+"@inseefr/lunatic@^3.4.17":
+  version "3.4.17"
+  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.4.17.tgz#decea715debad0225efa581de746400b8d7bb095"
+  integrity sha512-57aUkVzHxG6WiiNbkdYuegWNb2sJeY9aPU4U3xbwsvCbpIKvbGQfotdjlA1TJtS3i9Y4DAA6nbnADlISKqBg+g==
   dependencies:
     "@inseefr/trevas" "^0.1.21"
     "@inseefr/vtl-2.0-antlr-tools" "^0.3.2"

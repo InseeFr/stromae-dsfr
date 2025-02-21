@@ -265,9 +265,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@codegouvfr/react-dsfr@^1.13.6":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.17.0.tgz#f781abd40493de02d89d1b11240a4500d24b097a"
-  integrity sha512-zYluHhGRD39ckZvQFgK8hSeo76TbxPtuot+I6N66vC6XXkILvv0llbIvezkxv3xlz4J8fvq4Ou5Hngt5EWtpeg==
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.20.0.tgz#a2bf6a59be02682e7e2ab9b881f68095b00ad877"
+  integrity sha512-7JqcqPnPrzKhoOAT0WshiyaG/hZkfuHTFjoqSmhlQ1wMEJ/HztcZV1mnbVZ/3CYLtStjohFI6QLpJ/FPXujqSw==
   dependencies:
     tsafe "^1.8.5"
     yargs-parser "^21.1.1"
@@ -1667,31 +1667,31 @@
     "@stoplight/yaml-ast-parser" "0.0.50"
     tslib "^2.2.0"
 
-"@tanstack/history@1.99.0":
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.99.0.tgz#9cec4001ca03519d8f4e8e8dbc19f8f3c04eb6af"
-  integrity sha512-MQS1Lg8D+1vpasEJKf4zs1sxhxbXcoejmVCZDbo0bq2wq+xVK+kRixj5Pae2kb2APzdXYga4u236GBbgCKTcnQ==
+"@tanstack/history@1.99.13":
+  version "1.99.13"
+  resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.99.13.tgz#51f9832ce7e9c08d38ff61509313c508eb78ae54"
+  integrity sha512-JMd7USmnp8zV8BRGIjALqzPxazvKtQ7PGXQC7n39HpbqdsmfV2ePCzieO84IvN+mwsTrXErpbjI4BfKCa+ZNCg==
 
-"@tanstack/query-core@5.66.0":
-  version "5.66.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.66.0.tgz#163f670b3b4e3b3cdbff6698ad44b2edfcaed185"
-  integrity sha512-J+JeBtthiKxrpzUu7rfIPDzhscXF2p5zE/hVdrqkACBP8Yu0M96mwJ5m/8cPPYQE9aRNvXztXHlNwIh4FEeMZw==
+"@tanstack/query-core@5.66.4":
+  version "5.66.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.66.4.tgz#44b87bff289466adbfa0de8daa5756cbd2d61c61"
+  integrity sha512-skM/gzNX4shPkqmdTCSoHtJAPMTtmIJNS0hE+xwTTUVYwezArCT34NMermABmBVUg5Ls5aiUXEDXfqwR1oVkcA==
 
 "@tanstack/react-query@^5.52.0":
-  version "5.66.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.0.tgz#9f7aa1b3e844ea6a0ad2ee61fccaed76e614b865"
-  integrity sha512-z3sYixFQJe8hndFnXgWu7C79ctL+pI0KAelYyW+khaNJ1m22lWrhJU2QrsTcRKMuVPtoZvfBYrTStIdKo+x0Xw==
+  version "5.66.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.66.9.tgz#1c8be303adae59e9cee877490fbb2c23dfa26927"
+  integrity sha512-NRI02PHJsP5y2gAuWKP+awamTIBFBSKMnO6UVzi03GTclmHHHInH5UzVgzi5tpu4+FmGfsdT7Umqegobtsp23A==
   dependencies:
-    "@tanstack/query-core" "5.66.0"
+    "@tanstack/query-core" "5.66.4"
 
 "@tanstack/react-router@^1.99.0":
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.99.0.tgz#1d9941894f690d2723cdf7252a48d24e5335302e"
-  integrity sha512-MwKQxckJMdxpYwpZsItM1SCodcAKu1bqWha2s2d5/Iy1F/9XzqT8gZXpZW5fvC7+21YOuwMxvJmwbSPkpVeWRw==
+  version "1.109.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.109.2.tgz#0f4d58ebbec3521719d89a6d7f08a0dd00e51bb4"
+  integrity sha512-cJZGIvYIrd5lcwbwoB2vxJe379TQZIM5/RAzlDSrvV5KAPlkmK3cqZHZ8zPrsZIBASEyERM8Od+jM9s3qDTXkA==
   dependencies:
-    "@tanstack/history" "1.99.0"
+    "@tanstack/history" "1.99.13"
     "@tanstack/react-store" "^0.7.0"
-    "@tanstack/router-core" "^1.99.0"
+    "@tanstack/router-core" "^1.108.0"
     jsesc "^3.1.0"
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
@@ -1704,12 +1704,12 @@
     "@tanstack/store" "0.7.0"
     use-sync-external-store "^1.4.0"
 
-"@tanstack/router-core@^1.99.0":
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.99.0.tgz#ef2c42b1a7ced4f05b9637d8d72b7404961f4a09"
-  integrity sha512-/9HMagUilxdjHNfgZaRSjyMvuJ+BL8/IXLTN9NtbXOJZvB2q4Vu0GIWZJfwMiz9czXqdQ/NxtPxeG/b+YTnUOg==
+"@tanstack/router-core@^1.108.0":
+  version "1.108.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.108.0.tgz#7d5cf3b16cc5f71d619cd3e594329689eadac542"
+  integrity sha512-lo6Nqdp8gxWNZ8YZ6UhiQgR0CgcAiMaw1cxgKK7M4u3nFFwqW7Hzycl5ik1l3NRh5/pQVK+OVzlKok5rrrHxSg==
   dependencies:
-    "@tanstack/history" "1.99.0"
+    "@tanstack/history" "1.99.13"
     "@tanstack/store" "^0.7.0"
 
 "@tanstack/store@0.7.0", "@tanstack/store@^0.7.0":
@@ -3918,11 +3918,11 @@ husky@^9.1.6:
   integrity sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==
 
 i18nifty@^3.2.2:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/i18nifty/-/i18nifty-3.2.3.tgz#dfb40441e1c7e2993debd14c09dd7e20b439fa9a"
-  integrity sha512-LqEbyPMHdfLNqySeBe6hQF97OYRkCtAryUfSjDx+eoJGXNMtRMypHoYYN+recYEx9RQjDubOOzfIVDjv587jug==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/i18nifty/-/i18nifty-3.2.4.tgz#cb427830ea9b7588057ccf09499cedd9ca386041"
+  integrity sha512-2pGtran5qXyuiB5PG3p1o1qjQPZLoEDxgVjF+CbhMZPVnEC86HRKgFWsSu7cpL7ayz0VvJ9b50GGLzD9OKqqIQ==
   dependencies:
-    powerhooks "^1.0.19"
+    powerhooks "^1.0.20"
     tsafe "^1.8.5"
 
 iconv-lite@0.6.3:
@@ -5493,7 +5493,7 @@ postcss@^8.4.43, postcss@^8.4.49:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-powerhooks@^1.0.19:
+powerhooks@^1.0.20:
   version "1.0.20"
   resolved "https://registry.yarnpkg.com/powerhooks/-/powerhooks-1.0.20.tgz#2a634dc26907ebfa45d5602e03bd8a6535ccec2d"
   integrity sha512-OdKPWt6Zd3p8bu85nlGKFsrvhU0Nyg2N436ne0Z1JtkZPXj22z/9mk9Acc3jHtG2Qnr5xIkFl6ueZo/sPT9Z6A==
@@ -5583,9 +5583,9 @@ react-hook-form@^7.53.0:
   integrity sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==
 
 react-hot-toast@^2.4.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.5.1.tgz#fcb182d96353c803ee5af82e96c806d5eaa4dcfa"
-  integrity sha512-54Gq1ZD1JbmAb4psp9bvFHjS7lje+8ubboUmvKZkCsQBLH6AOpZ9JemfRvIdHcfb9AZXRaFLrb3qUobGYDJhFQ==
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.5.2.tgz#b55328966a26add56513e2dc1682e2cb4753c244"
+  integrity sha512-Tun3BbCxzmXXM7C+NI4qiv6lT0uwGh4oAfeJyNOjYUejTsm35mK9iCaYLGv8cBz9L5YxZLx/2ii7zsIwPtPUdw==
   dependencies:
     csstype "^3.1.3"
     goober "^2.1.16"
@@ -6410,12 +6410,12 @@ timers-ext@^0.1.7:
 
 tiny-invariant@^1.3.3:
   version "1.3.3"
-  resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.3.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
   integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
 
 tiny-warning@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 tinybench@^2.9.0:
@@ -7091,9 +7091,9 @@ yocto-queue@^0.1.0:
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 zod@^3.23.8:
-  version "3.24.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
-  integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==
+  version "3.24.2"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.2.tgz#8efa74126287c675e92f46871cfc8d15c34372b3"
+  integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
 
 zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"

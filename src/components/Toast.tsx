@@ -31,3 +31,7 @@ export const showToast = (params: Params) => {
     },
   )
 }
+
+export const dismissAllToasts = () => {
+  toast.remove()
+}

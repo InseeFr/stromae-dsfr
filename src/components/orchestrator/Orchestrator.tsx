@@ -32,6 +32,7 @@ import {
   computeNewPageEvent,
 } from '@/utils/telemetry'
 
+import { dismissAllToasts } from '../Toast'
 import { SurveyContainer } from './SurveyContainer'
 import { EndPage } from './customPages/EndPage'
 import { ValidationModal } from './customPages/ValidationModal'
@@ -98,6 +99,7 @@ export namespace OrchestratorProps {
       stateData: StateData
       data: LunaticData['COLLECTED']
       onSuccess?: () => void
+      isLogout: boolean
     }) => Promise<void>
     /** Allows user to download a deposit proof PDF */
     getDepositProof: () => Promise<void>
@@ -304,7 +306,7 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  const triggerDataAndStateUpdate = () => {
+  const triggerDataAndStateUpdate = (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       const stateData = getCurrentStateData.current()
       const data = getChangedData()
@@ -330,6 +332,7 @@ export function Orchestrator(props: OrchestratorProps) {
         stateData,
         data: collectedData,
         onSuccess: resetChangedData,
+        isLogout: isLogout,
       })
       setIsDirtyState(false)
       // update date to show on end page message
@@ -362,7 +365,8 @@ export function Orchestrator(props: OrchestratorProps) {
     if (isTelemetryActivated) {
       triggerInactivityTimeoutEvent()
     }
-    triggerDataAndStateUpdate()
+    triggerDataAndStateUpdate(true)
+    dismissAllToasts()
   })
 
   // On page change

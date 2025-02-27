@@ -40,6 +40,7 @@ export const CollectPage = memo(function CollectPage() {
     stateData: StateData
     data: LunaticData['COLLECTED']
     onSuccess?: () => void
+    isLogout: boolean
   }) =>
     updateSurveyUnitDataStateDataById(surveyUnitId, {
       data: params.data,
@@ -52,7 +53,7 @@ export const CollectPage = memo(function CollectPage() {
 
         params.onSuccess?.()
 
-        if (params.data) {
+        if (params.data && !params.isLogout) {
           showToast({
             severity: 'success',
             description:
@@ -62,12 +63,14 @@ export const CollectPage = memo(function CollectPage() {
         }
       })
       .catch(() => {
-        showToast({
-          severity: 'error',
-          title: 'Erreur de sauvegarde',
-          description:
-            "Une erreur est survenue lors de l'enregistrement de vos modifications. ",
-        })
+        if (!params.isLogout) {
+          showToast({
+            severity: 'error',
+            title: 'Erreur de sauvegarde',
+            description:
+              "Une erreur est survenue lors de l'enregistrement de vos modifications.",
+          })
+        }
       })
 
   const getDepositProof = () =>

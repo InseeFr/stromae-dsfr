@@ -5239,10 +5239,10 @@ object.assign@^4.1.7:
     has-symbols "^1.1.0"
     object-keys "^1.1.1"
 
-oidc-spa@^5.3.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-5.7.0.tgz#2299c63c2a94051285d809c63f1d7fd223e65640"
-  integrity sha512-Oz1R4BKTcltzsvT1RsRXHCeAFzouWR0aXeBRKQepGikuqgoP0rgqSPRTbnPgPmVoGcjgNLtD0IQM8nx+UDOqXg==
+oidc-spa@^6.8.2:
+  version "6.8.2"
+  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-6.8.2.tgz#005f353a7ae7385a8d3b85808f895fbc49723ccd"
+  integrity sha512-R27+BDg9RW/eI0uZLDnBC/BzKdhkPcOrLIyFwnwCLeL9D9oe+YGXt0LlxSHlgU1DQ3ElLEWNCCNQc9bjpb4oeg==
 
 onetime@^5.1.2:
   version "5.1.2"

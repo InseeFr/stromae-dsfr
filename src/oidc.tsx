@@ -29,11 +29,12 @@ export const { OidcProvider, useOidc, getOidc } =
             preferred_username: 'mock-user',
           } satisfies z.infer<typeof decodedIdTokenSchema>,
         },
+        homeUrl: import.meta.env.BASE_URL,
       })
     : createReactOidc({
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
-        publicUrl: import.meta.env.BASE_URL,
+        homeUrl: import.meta.env.BASE_URL,
         autoLogoutParams,
         decodedIdTokenSchema,
       })

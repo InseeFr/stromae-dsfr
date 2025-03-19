@@ -1,4 +1,4 @@
-import { fr } from '@codegouvfr/react-dsfr'
+import { type FrCxArg, fr } from '@codegouvfr/react-dsfr'
 
 import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
@@ -39,7 +39,9 @@ export function SequenceHeader(props: SequenceHeaderProps) {
   const currentStep = currentSequenceIndex + 1 //overview is sorted and index starts at 0
 
   return (
-    <div className={fr.cx('fr-stepper', 'fr-mb-2v')}>
+    <div
+      className={fr.cx('fr-stepper', 'fr-mb-2v', 'sequence-header' as FrCxArg)}
+    >
       <h2 className={fr.cx('fr-stepper__title', 'fr-mb-0')}>
         {currentSequence.label}
         <span className={fr.cx('fr-stepper__state')}>

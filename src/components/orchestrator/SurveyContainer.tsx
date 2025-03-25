@@ -49,7 +49,9 @@ export function SurveyContainer(
     currentPage,
   )
 
-  const [isLayoutExpanded, setIsLayoutExpanded] = useState<boolean>(false)
+  const [isLayoutExpanded, setIsLayoutExpanded] = useState<boolean>(
+    pagination === 'sequence',
+  )
 
   const displaySequenceHeader =
     !isSequencePage && currentPage === PAGE_TYPE.LUNATIC

@@ -44,7 +44,7 @@ describe('Header', () => {
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
 
-    const e = getAllByText('Contact support')[0]
+    const e = getAllByText('Need help?')[0]
     await user.click(e)
 
     await waitFor(() => expect(pushEvent).toHaveBeenCalledOnce())
@@ -79,7 +79,7 @@ describe('Header', () => {
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
 
-    const e = getAllByText('Contact support')[0]
+    const e = getAllByText('Need help?')[0]
     await user.click(e)
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -107,7 +107,7 @@ describe('Header', () => {
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
 
-    const e = getAllByText('Contact support')[0]
+    const e = getAllByText('Need help?')[0]
     await user.click(e)
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())

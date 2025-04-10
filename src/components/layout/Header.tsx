@@ -56,7 +56,7 @@ export function Header() {
       quickAccessItems={[
         headerFooterDisplayItem,
         {
-          iconId: 'fr-icon-mail-fill',
+          iconId: 'fr-icon-customer-service-fill',
           linkProps: {
             href: collectPath
               ? `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathAssistance'] ?? ''}`

@@ -29,7 +29,7 @@ export const translations: Translations<'en'> = {
   Header: {
     'home link title':
       'Home - Name of the entity (ministry, state secretariat, government)',
-    'quick access support': 'Contact support',
+    'quick access support': 'Need help?',
     'quick access logout': 'Log out',
   },
   AutoLogoutCountdown: {

@@ -28,7 +28,7 @@ export const translations: Translations<'fr'> = {
   },
   Header: {
     'home link title': 'Application de collecte internet',
-    'quick access support': "Contacter l'assistance",
+    'quick access support': "Besoin d'aide ?",
     'quick access logout': 'Se déconnecter',
   },
   AutoLogoutCountdown: {

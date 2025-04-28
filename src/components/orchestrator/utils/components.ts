@@ -20,7 +20,8 @@ export function computeLunaticComponents(
       }
 
       // We want to be able to display at the bottom components with position "bottom"
-      if (c.position === 'bottom') {
+      // But position is not defined in lunatic components type
+      if ('position' in c && c.position === 'bottom') {
         return {
           components: acc.components,
           bottomComponents: [...acc.bottomComponents, c],

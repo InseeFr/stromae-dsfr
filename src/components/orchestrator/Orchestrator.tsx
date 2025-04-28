@@ -56,15 +56,6 @@ import { isSequencePage } from './utils/sequence'
 import { VTLDevTools } from './vtlDevTools/VTLDevtools'
 import { createLunaticLogger } from './vtlDevTools/VTLErrorStore'
 
-/**
- * Module augmentation to specify that Lunatic Component can have an additional props position
- */
-declare module '@inseefr/lunatic' {
-  interface LunaticExtraProps {
-    position: 'bottom' | undefined
-  }
-}
-
 export type OrchestratorProps = OrchestratorProps.Common &
   (
     | OrchestratorProps.Visualize

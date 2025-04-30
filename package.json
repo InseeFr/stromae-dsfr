@@ -7,7 +7,7 @@
     "prepare": "husky && vite-envs update-types",
     "dev": "vite",
     "check": "tsc --noEmit",
-    "build": "tsc && vite build",
+    "build": "tsc -p tsconfig.build.json && vite build",
     "lint": "eslint ./src",
     "preview": "vite preview",
     "_format": "prettier --ignore-unknown .",

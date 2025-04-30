@@ -19,7 +19,6 @@ export const source: LunaticSource = {
       componentType: 'RosterForLoop',
       label: { value: '"Ajouter un individu"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
-      bindingDependencies: ['PRENOM'],
       lines: {
         min: { value: '1', type: 'VTL' },
         max: { value: '10', type: 'VTL' },
@@ -31,15 +30,10 @@ export const source: LunaticSource = {
           label: { value: '"Prénom"', type: 'VTL' },
           conditionFilter: { value: 'true', type: 'VTL' },
           maxLength: 30,
-          bindingDependencies: ['PRENOM'],
           id: 'prenom',
-          response: {
-            name: 'PRENOM',
-          },
-          page: '1',
+          response: { name: 'PRENOM' },
         },
       ],
-      positioning: 'HORIZONTAL',
     },
     {
       id: 'pairwise-links',
@@ -79,9 +73,7 @@ export const source: LunaticSource = {
             value: '"Qui est " || yAxis || " pour " || xAxis || " ?"',
             type: 'VTL',
           },
-          response: {
-            name: 'LINKS',
-          },
+          response: { name: 'LINKS' },
           options: [
             {
               value: '1',
@@ -141,31 +133,19 @@ export const source: LunaticSource = {
             },
             {
               value: '10',
-              label: {
-                value: '"Sa petite-fille, petit-fils"',
-                type: 'VTL|MD',
-              },
+              label: { value: '"Sa petite-fille, petit-fils"', type: 'VTL|MD' },
             },
             {
               value: '11',
-              label: {
-                value: '"Sa tante, son oncle"',
-                type: 'VTL|MD',
-              },
+              label: { value: '"Sa tante, son oncle"', type: 'VTL|MD' },
             },
             {
               value: '12',
-              label: {
-                value: '"Sa cousine, son cousin"',
-                type: 'VTL|MD',
-              },
+              label: { value: '"Sa cousine, son cousin"', type: 'VTL|MD' },
             },
             {
               value: '13',
-              label: {
-                value: '"Sa nièce, son neveu"',
-                type: 'VTL|MD',
-              },
+              label: { value: '"Sa nièce, son neveu"', type: 'VTL|MD' },
             },
             {
               value: '14',
@@ -183,10 +163,7 @@ export const source: LunaticSource = {
             },
             {
               value: '16',
-              label: {
-                value: '"Un autre lien familial"',
-                type: 'VTL|MD',
-              },
+              label: { value: '"Un autre lien familial"', type: 'VTL|MD' },
             },
             {
               value: '17',
@@ -204,7 +181,6 @@ export const source: LunaticSource = {
               },
             },
           ],
-          page: '2',
         },
         {
           componentType: 'Input',
@@ -219,10 +195,7 @@ export const source: LunaticSource = {
             type: 'VTL',
           },
           id: 'other',
-          response: {
-            name: 'OTHER',
-          },
-          page: '2',
+          response: { name: 'OTHER' },
           maxLength: 249,
         },
       ],
@@ -230,10 +203,7 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Subsequence',
-      label: {
-        value: '"Bye !"',
-        type: 'VTL',
-      },
+      label: { value: '"Bye !"', type: 'VTL' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '3',
     },
@@ -242,23 +212,17 @@ export const source: LunaticSource = {
     {
       variableType: 'COLLECTED',
       name: 'PRENOM',
-      values: {
-        COLLECTED: [null],
-      },
+      values: { COLLECTED: [null] },
     },
     {
       variableType: 'COLLECTED',
       name: 'LINKS',
-      values: {
-        COLLECTED: [[null]],
-      },
+      values: { COLLECTED: [[null]] },
     },
     {
       variableType: 'COLLECTED',
       name: 'OTHER',
-      values: {
-        COLLECTED: [[null]],
-      },
+      values: { COLLECTED: [[null]] },
     },
     {
       variableType: 'CALCULATED',
@@ -266,7 +230,6 @@ export const source: LunaticSource = {
       expression: { value: 'PRENOM', type: 'VTL' },
       bindingDependencies: ['PRENOM'],
       shapeFrom: 'PRENOM',
-      inFilter: 'false',
     },
     {
       variableType: 'CALCULATED',
@@ -274,7 +237,6 @@ export const source: LunaticSource = {
       expression: { value: 'PRENOM', type: 'VTL' },
       bindingDependencies: ['PRENOM'],
       shapeFrom: 'PRENOM',
-      inFilter: 'false',
     },
   ],
   resizing: {
@@ -284,15 +246,11 @@ export const source: LunaticSource = {
     },
   },
   pagination: 'question',
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
 }
 
@@ -300,11 +258,7 @@ export const data: LunaticData = {
   COLLECTED: {
     PRENOM: { COLLECTED: ['Dad', 'Mom', 'Son'] },
     AGE: { COLLECTED: [30, 29, 5] },
-    LINKS: {
-      COLLECTED: [[null]],
-    },
-    OTHER: {
-      COLLECTED: [[null]],
-    },
+    LINKS: { COLLECTED: [[null]] },
+    OTHER: { COLLECTED: [[null]] },
   },
 }

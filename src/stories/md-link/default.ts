@@ -19,31 +19,19 @@ export const source: LunaticSource = {
       conditionFilter: { value: 'true', type: 'VTL' },
       maxLength: 30,
       id: 'name',
-      response: {
-        name: 'NAME',
-      },
+      response: { name: 'NAME' },
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NAME',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NAME', values: { COLLECTED: null } },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '1',
 }

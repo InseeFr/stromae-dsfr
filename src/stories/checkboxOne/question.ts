@@ -6,23 +6,17 @@ export const source: LunaticSource = {
   variables: [
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'CHECKBOXBO',
     },
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'CHECK_ONE_1',
     },
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'CHECK_ONE_2',
     },
   ],
@@ -31,14 +25,8 @@ export const source: LunaticSource = {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -64,15 +52,10 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'CheckboxOne',
-          response: {
-            name: 'CHECKBOXBO',
-          },
+          response: { name: 'CHECKBOXBO' },
           options: [
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 1"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 1"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 1"',
@@ -80,10 +63,7 @@ export const source: LunaticSource = {
               value: '1',
             },
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 2"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 2"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 2"',
@@ -91,12 +71,9 @@ export const source: LunaticSource = {
               value: '2',
             },
           ],
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'ltfrftp8',
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
@@ -104,14 +81,8 @@ export const source: LunaticSource = {
       componentType: 'Question',
       id: 'idQuestion2',
       page: '2',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -137,15 +108,10 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'CheckboxOne',
-          response: {
-            name: 'CHECK_ONE_1',
-          },
+          response: { name: 'CHECK_ONE_1' },
           options: [
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 1"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 1"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 1"',
@@ -153,10 +119,7 @@ export const source: LunaticSource = {
               value: '1',
             },
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 2"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 2"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 2"',
@@ -164,10 +127,7 @@ export const source: LunaticSource = {
               value: '2',
             },
           ],
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'checkboxone1',
           label: {
             type: 'VTL|MD',
@@ -177,19 +137,14 @@ export const source: LunaticSource = {
             type: 'VTL|MD',
             value: '"Description du composant CheckboxOne"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
         {
           componentType: 'CheckboxOne',
-          response: {
-            name: 'CHECK_ONE_2',
-          },
+          response: { name: 'CHECK_ONE_2' },
           options: [
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 1"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 1"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 1"',
@@ -197,10 +152,7 @@ export const source: LunaticSource = {
               value: '1',
             },
             {
-              label: {
-                type: 'VTL|MD',
-                value: '"Label de l\'option 2"',
-              },
+              label: { type: 'VTL|MD', value: '"Label de l\'option 2"' },
               description: {
                 type: 'VTL|MD',
                 value: '"Description de l\'option 2"',
@@ -208,10 +160,7 @@ export const source: LunaticSource = {
               value: '2',
             },
           ],
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'checkboxone2',
           label: {
             type: 'VTL|MD',
@@ -221,17 +170,14 @@ export const source: LunaticSource = {
             type: 'VTL|MD',
             value: '"Description du composant CheckboxOne"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

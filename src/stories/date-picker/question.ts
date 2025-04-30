@@ -4,41 +4,17 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '3',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'DATE',
-    },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'DATE1',
-    },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'DATE2',
-    },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'DATE' },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'DATE1' },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'DATE2' },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -66,15 +42,10 @@ export const source: LunaticSource = {
           componentType: 'Datepicker',
           max: '2000-12-12',
           dateFormat: 'YYYY-MM-DD',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
-          mandatory: false,
+          conditionFilter: { type: 'VTL', value: 'true' },
+          isMandatory: false,
           min: '1900-01-01',
-          response: {
-            name: 'DATE',
-          },
+          response: { name: 'DATE' },
           id: 'ltct556j',
           controls: [
             {
@@ -100,10 +71,7 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
         value: '"Question avec deux composants Datepicker"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -131,23 +99,15 @@ export const source: LunaticSource = {
           componentType: 'Datepicker',
           max: '2000-12-12',
           dateFormat: 'YYYY-MM-DD',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Datepicker 1"',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
+          label: { type: 'VTL|MD', value: '"Label du composant Datepicker 1"' },
           description: {
             type: 'VTL|MD',
             value: '"Description du composant Datepicker"',
           },
-          mandatory: false,
+          isMandatory: false,
           min: '1900-01-01',
-          response: {
-            name: 'DATE1',
-          },
+          response: { name: 'DATE1' },
           id: 'datepicker1',
           controls: [
             {
@@ -167,23 +127,15 @@ export const source: LunaticSource = {
           componentType: 'Datepicker',
           max: '2000-12-12',
           dateFormat: 'YYYY-MM-DD',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Datepicker 2"',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
+          label: { type: 'VTL|MD', value: '"Label du composant Datepicker 2"' },
           description: {
             type: 'VTL|MD',
             value: '"Description du composant Datepicker"',
           },
-          mandatory: false,
+          isMandatory: false,
           min: '1900-01-01',
-          response: {
-            name: 'DATE2',
-          },
+          response: { name: 'DATE2' },
           id: 'datepicker2',
           controls: [
             {
@@ -204,20 +156,14 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Bye!"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Bye!"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '3',
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

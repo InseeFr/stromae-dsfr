@@ -2,60 +2,31 @@ import type { LunaticData, LunaticSource } from '@inseefr/lunatic'
 
 export const source: LunaticSource = {
   id: 'kzguw1v7',
-  label: {
-    type: 'VTL|MD',
-    value: 'QNONREG - Controles Non Numériques VTL',
-  },
+  label: { type: 'VTL|MD', value: 'QNONREG - Controles Non Numériques VTL' },
   modele: 'QTESTCONTNONNUM',
   maxPage: '4',
   resizing: {},
   variables: [
     {
       name: 'TESTDATEA',
-      values: {
-        COLLECTED: null,
-      },
-      dimension: 0,
+      values: { COLLECTED: null },
       variableType: 'COLLECTED',
     },
-    {
-      name: 'DUREE',
-      values: {
-        COLLECTED: null,
-      },
-      dimension: 0,
-      variableType: 'COLLECTED',
-    },
-    {
-      name: 'FIN',
-      values: {
-        COLLECTED: null,
-      },
-      dimension: 0,
-      variableType: 'COLLECTED',
-    },
+    { name: 'DUREE', values: { COLLECTED: null }, variableType: 'COLLECTED' },
+    { name: 'FIN', values: { COLLECTED: null }, variableType: 'COLLECTED' },
     {
       name: 'FILTER_RESULT_TESTDATEA',
-      expression: {
-        type: 'VTL',
-        value: 'true',
-      },
+      expression: { type: 'VTL', value: 'true' },
       variableType: 'CALCULATED',
     },
     {
       name: 'FILTER_RESULT_DUREE',
-      expression: {
-        type: 'VTL',
-        value: 'true',
-      },
+      expression: { type: 'VTL', value: 'true' },
       variableType: 'CALCULATED',
     },
     {
       name: 'FILTER_RESULT_FIN',
-      expression: {
-        type: 'VTL',
-        value: 'true',
-      },
+      expression: { type: 'VTL', value: 'true' },
       variableType: 'CALCULATED',
     },
   ],
@@ -68,10 +39,7 @@ export const source: LunaticSource = {
         value: '"I - " || "TEST SUR BOOLEEN CODE DATE ET TEXTE"',
       },
       componentType: 'Sequence',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
+      conditionFilter: { type: 'VTL', value: 'true' },
     },
     {
       id: 'question-kfxnfv4l',
@@ -86,11 +54,10 @@ export const source: LunaticSource = {
           id: 'kfxnfv4l',
           max: '2040-12-31',
           min: '1990-12-31',
-          page: '2',
           controls: [
             {
               id: 'kfxnfv4l-format-date-borne-inf-sup',
-              type: 'SIMPLE',
+              type: 'simple',
               control: {
                 type: 'VTL',
                 value:
@@ -106,7 +73,7 @@ export const source: LunaticSource = {
             },
             {
               id: 'kfxnfv4l-CI-0',
-              type: 'SIMPLE',
+              type: 'simple',
               control: {
                 type: 'VTL',
                 value:
@@ -121,24 +88,19 @@ export const source: LunaticSource = {
             },
             {
               id: 'kfxnfv4l-CI-1',
-              type: 'SIMPLE',
+              type: 'simple',
               control: {
                 type: 'VTL',
                 value:
                   'not(cast(cast(TESTDATEA, date, "YYYY-MM-DD"), string , "YYYY-MM-DD") <> TESTDATEA)',
               },
               criticality: 'WARN',
-              errorMessage: {
-                type: 'VTL|MD',
-                value: '"aa"',
-              },
+              errorMessage: { type: 'VTL|MD', value: '"aa"' },
               typeOfControl: 'CONSISTENCY',
             },
           ],
-          response: {
-            name: 'TESTDATEA',
-          },
-          mandatory: false,
+          response: { name: 'TESTDATEA' },
+          isMandatory: false,
           dateFormat: 'YYYY-MM-DD',
           componentType: 'Datepicker',
         },
@@ -156,10 +118,7 @@ export const source: LunaticSource = {
         },
       ],
       componentType: 'Question',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
+      conditionFilter: { type: 'VTL', value: 'true' },
     },
     {
       id: 'question-lwkb6v9e',
@@ -171,12 +130,11 @@ export const source: LunaticSource = {
       components: [
         {
           id: 'lwkb6v9e',
-          page: '3',
           format: 'PTnHnM',
           controls: [
             {
               id: 'lwkb6v9e-CI-0',
-              type: 'SIMPLE',
+              type: 'simple',
               control: {
                 type: 'VTL',
                 value:
@@ -190,10 +148,8 @@ export const source: LunaticSource = {
               typeOfControl: 'CONSISTENCY',
             },
           ],
-          response: {
-            name: 'DUREE',
-          },
-          mandatory: false,
+          response: { name: 'DUREE' },
+          isMandatory: false,
           componentType: 'Duration',
         },
       ],
@@ -210,39 +166,26 @@ export const source: LunaticSource = {
         },
       ],
       componentType: 'Question',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
+      conditionFilter: { type: 'VTL', value: 'true' },
     },
     {
       id: 'question-lwkbf6h8',
       page: '4',
-      label: {
-        type: 'VTL|MD',
-        value: '"3\\. " || "FIN "',
-      },
+      label: { type: 'VTL|MD', value: '"3\\. " || "FIN "' },
       components: [
         {
           id: 'lwkbf6h8',
-          page: '4',
-          response: {
-            name: 'FIN',
-          },
-          mandatory: false,
+          response: { name: 'FIN' },
+          isMandatory: false,
           maxLength: 249,
           componentType: 'Input',
         },
       ],
       componentType: 'Question',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
+      conditionFilter: { type: 'VTL', value: 'true' },
     },
   ],
   pagination: 'question',
-  componentType: 'Questionnaire',
   enoCoreVersion: '3.24.0',
   generatingDate: '29-07-2024 12:03:48',
   lunaticModelVersion: '3.12.0',

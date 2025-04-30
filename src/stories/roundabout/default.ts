@@ -6,7 +6,7 @@ export const source: LunaticSource = {
     {
       id: 'how',
       componentType: 'InputNumber',
-      mandatory: false,
+      isMandatory: false,
       page: '1',
       min: 1,
       max: 10,
@@ -22,7 +22,6 @@ export const source: LunaticSource = {
       id: 'loop',
       componentType: 'Loop',
       page: '2',
-      depth: 1,
       paginatedLoop: false,
       conditionFilter: { value: 'true', type: 'VTL' },
       loopDependencies: ['NHAB'],
@@ -34,30 +33,17 @@ export const source: LunaticSource = {
         {
           id: 'prenom',
           componentType: 'Input',
-          mandatory: false,
+          isMandatory: false,
           maxLength: 20,
-          label: {
-            value: '"Prénom"))',
-            type: 'VTL|MD',
-          },
-          conditionFilter: {
-            value: 'true',
-            type: 'VTL',
-          },
+          label: { value: '"Prénom"))', type: 'VTL|MD' },
+          conditionFilter: { value: 'true', type: 'VTL' },
           response: { name: 'PRENOMS' },
         },
         {
           id: 'age',
           componentType: 'InputNumber',
-          maxLength: 3,
-          label: {
-            value: '"Age"))',
-            type: 'VTL|MD',
-          },
-          conditionFilter: {
-            value: 'true',
-            type: 'VTL',
-          },
+          label: { value: '"Age"))', type: 'VTL|MD' },
+          conditionFilter: { value: 'true', type: 'VTL' },
           response: { name: 'AGE' },
         },
       ],
@@ -72,26 +58,20 @@ export const source: LunaticSource = {
       locked: false,
       progressVariable: 'PROGRESS',
       item: {
-        label: {
-          value: '"Questions de " || PRENOMS',
-          type: 'VTL',
-        },
+        label: { value: '"Questions de " || PRENOMS', type: 'VTL' },
         description: {
           value:
             'if AGE > 18 then "Aller aux question destinées à " || PRENOMS else PRENOMS || " n\'est pas majeur, il/elle n\'a pas à répondre aux questions"',
           type: 'VTL',
         },
-        disabled: {
-          value: 'AGE < 18',
-          type: 'VTL',
-        },
+        disabled: { value: 'AGE < 18', type: 'VTL' },
       },
       controls: [],
       components: [
         {
           id: 'radio',
           componentType: 'Radio',
-          mandatory: false,
+          isMandatory: false,
           page: '3.1',
           label: {
             value: '"Connaissez-vous le recensement de la population ?"',
@@ -121,23 +101,11 @@ export const source: LunaticSource = {
           id: 'sexe',
           componentType: 'Radio',
           page: '3.2',
-          label: {
-            value: '"Sexe"',
-            type: 'VTL',
-          },
-          conditionFilter: {
-            value: 'true',
-            type: 'VTL',
-          },
+          label: { value: '"Sexe"', type: 'VTL' },
+          conditionFilter: { value: 'true', type: 'VTL' },
           options: [
-            {
-              value: '1',
-              label: { value: '"Homme"', type: 'VTL|MD' },
-            },
-            {
-              value: '2',
-              label: { value: '"Femme"', type: 'VTL|MD' },
-            },
+            { value: '1', label: { value: '"Homme"', type: 'VTL|MD' } },
+            { value: '2', label: { value: '"Femme"', type: 'VTL|MD' } },
           ],
           response: { name: 'SEXE' },
         },
@@ -156,14 +124,8 @@ export const source: LunaticSource = {
           componentType: 'Input',
           maxLength: 30,
           page: '3.3',
-          label: {
-            value: '"Dites quelque chose."))',
-            type: 'VTL|MD',
-          },
-          conditionFilter: {
-            value: 'true',
-            type: 'VTL',
-          },
+          label: { value: '"Dites quelque chose."))', type: 'VTL|MD' },
+          conditionFilter: { value: 'true', type: 'VTL' },
           response: { name: 'SOMETHING' },
         },
       ],
@@ -172,70 +134,28 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Merci !"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Merci !"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '4',
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NB_HAB',
-      values: {
-        COLLECTED: 2,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'SOMETHING',
-      values: {
-        COLLECTED: [],
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'AGE',
-      values: {
-        COLLECTED: [15, 15],
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'SEXE',
-      values: {
-        COLLECTED: [],
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NB_HAB', values: { COLLECTED: 2 } },
+    { variableType: 'COLLECTED', name: 'SOMETHING', values: { COLLECTED: [] } },
+    { variableType: 'COLLECTED', name: 'AGE', values: { COLLECTED: [15, 15] } },
+    { variableType: 'COLLECTED', name: 'SEXE', values: { COLLECTED: [] } },
     {
       variableType: 'COLLECTED',
       name: 'PRENOMS',
-      values: {
-        COLLECTED: ['Fanny', 'Ines'],
-      },
+      values: { COLLECTED: ['Fanny', 'Ines'] },
     },
-    {
-      variableType: 'COLLECTED',
-      name: 'KNOWREC',
-      values: {
-        COLLECTED: [],
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'PROGRESS',
-      values: {
-        COLLECTED: [],
-      },
-    },
+    { variableType: 'COLLECTED', name: 'KNOWREC', values: { COLLECTED: [] } },
+    { variableType: 'COLLECTED', name: 'PROGRESS', values: { COLLECTED: [] } },
     {
       variableType: 'CALCULATED',
       name: 'PRENOMREF',
       expression: { value: 'first_value(PRENOMS over())', type: 'VTL' },
       bindingDependencies: ['PRENOMS'],
-      inFilter: 'true',
     },
     {
       variableType: 'CALCULATED',
@@ -247,7 +167,6 @@ export const source: LunaticSource = {
       },
       bindingDependencies: ['KNOWREC', 'SEXE', 'SOMETHING'],
       shapeFrom: 'PRENOMS',
-      inFilter: 'true',
     },
     {
       variableType: 'CALCULATED',
@@ -259,7 +178,6 @@ export const source: LunaticSource = {
       },
       bindingDependencies: ['KNOWREC', 'SEXE', 'SOMETHING'],
       shapeFrom: 'PRENOMS',
-      inFilter: 'true',
     },
   ],
   resizing: {
@@ -272,17 +190,9 @@ export const source: LunaticSource = {
 
 export const data: LunaticData = {
   COLLECTED: {
-    NB_HAB: {
-      COLLECTED: 2,
-    },
-    PRENOMS: {
-      COLLECTED: ['Fanny', 'Ines'],
-    },
-    AGE: {
-      COLLECTED: [24, 22],
-    },
-    PROGRESS: {
-      COLLECTED: [-1, -1],
-    },
+    NB_HAB: { COLLECTED: 2 },
+    PRENOMS: { COLLECTED: ['Fanny', 'Ines'] },
+    AGE: { COLLECTED: [24, 22] },
+    PROGRESS: { COLLECTED: [-1, -1] },
   },
 }

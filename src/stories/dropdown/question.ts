@@ -4,41 +4,17 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '3',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'STATE',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'STATE_1',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'STATE_2',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'STATE', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'STATE_1', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'STATE_2', values: { COLLECTED: null } },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -65,10 +41,8 @@ export const source: LunaticSource = {
         {
           id: 'j4nw5cqz',
           componentType: 'Dropdown',
-          mandatory: false,
-          response: {
-            name: 'STATE',
-          },
+          isMandatory: false,
+          response: { name: 'STATE' },
           options: [
             {
               value: '1',
@@ -111,10 +85,7 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
         value: '"Question avec deux composants Dropdown"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -141,18 +112,13 @@ export const source: LunaticSource = {
         {
           id: 'drop1',
           componentType: 'Dropdown',
-          mandatory: false,
-          label: {
-            value: '"Label du composant Dropdown"',
-            type: 'VTL|MD',
-          },
+          isMandatory: false,
+          label: { value: '"Label du composant Dropdown"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Dropdown"',
             type: 'VTL|MD',
           },
-          response: {
-            name: 'STATE_1',
-          },
+          response: { name: 'STATE_1' },
           options: [
             {
               value: '1',
@@ -188,18 +154,13 @@ export const source: LunaticSource = {
         {
           id: 'drop2',
           componentType: 'Dropdown',
-          mandatory: false,
-          label: {
-            value: '"Label du composant Dropdown"',
-            type: 'VTL|MD',
-          },
+          isMandatory: false,
+          label: { value: '"Label du composant Dropdown"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Dropdown"',
             type: 'VTL|MD',
           },
-          response: {
-            name: 'STATE_2',
-          },
+          response: { name: 'STATE_2' },
           options: [
             {
               value: '1',
@@ -237,20 +198,14 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Bye!"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Bye!"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '3',
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

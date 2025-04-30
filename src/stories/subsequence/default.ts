@@ -6,24 +6,15 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Subsequence',
-      label: {
-        value: '"Subsequence label"',
-        type: 'VTL|MD',
-      },
-      description: {
-        value: '"Subsequence description"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Subsequence label"', type: 'VTL|MD' },
+      description: { value: '"Subsequence description"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '1',
       declarations: [
         {
           declarationType: 'HELP',
           id: 'jruq5os5-kqhuxnytfszzz',
-          label: {
-            type: 'VTL|MD',
-            value: '"declaration help before label"',
-          },
+          label: { type: 'VTL|MD', value: '"declaration help before label"' },
           position: 'BEFORE_QUESTION_TEXT',
         },
         {
@@ -47,6 +38,5 @@ export const source: LunaticSource = {
   modele: 'SEQUENCE',
   enoCoreVersion: '2.3.10',
   generatingDate: '05-09-2022 14:37:43',
-  missing: false,
   id: 'l7ovbqou',
 }

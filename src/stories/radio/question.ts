@@ -4,41 +4,17 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '2',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'Q1',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'rad1',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'rad2',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'Q1', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'rad1', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'rad2', values: { COLLECTED: null } },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -65,7 +41,7 @@ export const source: LunaticSource = {
         {
           id: 'radiototo',
           componentType: 'Radio',
-          mandatory: false,
+          isMandatory: false,
           conditionFilter: { value: 'true', type: 'VTL' },
           options: [
             {
@@ -93,14 +69,8 @@ export const source: LunaticSource = {
       componentType: 'Question',
       id: 'idQuestion2',
       page: '2',
-      label: {
-        type: 'VTL|MD',
-        value: '"Question avec 2 composants Radio"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Question avec 2 composants Radio"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -127,11 +97,8 @@ export const source: LunaticSource = {
         {
           id: 'radio1',
           componentType: 'Radio',
-          mandatory: false,
-          label: {
-            value: '"Label du composant Radio"',
-            type: 'VTL|MD',
-          },
+          isMandatory: false,
+          label: { value: '"Label du composant Radio"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Radio"',
             type: 'VTL|MD',
@@ -160,11 +127,8 @@ export const source: LunaticSource = {
         {
           id: 'radio2',
           componentType: 'Radio',
-          mandatory: false,
-          label: {
-            value: '"Label du composant Radio"',
-            type: 'VTL|MD',
-          },
+          isMandatory: false,
+          label: { value: '"Label du composant Radio"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Radio"',
             type: 'VTL|MD',
@@ -195,10 +159,7 @@ export const source: LunaticSource = {
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

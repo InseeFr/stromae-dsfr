@@ -6,7 +6,7 @@ export const source: LunaticSource = {
     {
       id: 'kxi788',
       componentType: 'Duration',
-      mandatory: false,
+      isMandatory: false,
       format: 'PnYnM',
       page: '1',
       label: {
@@ -19,25 +19,15 @@ export const source: LunaticSource = {
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'DUREE',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'DUREE', values: { COLLECTED: null } },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '1',
 }

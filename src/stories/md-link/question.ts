@@ -4,13 +4,7 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '1',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NAME',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NAME', values: { COLLECTED: null } },
   ],
   components: [
     {
@@ -51,9 +45,7 @@ export const source: LunaticSource = {
       ],
       components: [
         {
-          page: '1',
           componentType: 'Input',
-          bindingDependencies: ['NAME'],
           label: {
             value:
               '"A label with a [link](https://inseefr.github.io/stromae-dsfr/docs/intro) and a [tooltip](https://google.com \'une infobule avec du texte très très long pour voir ce que cela donne Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\')"',
@@ -67,23 +59,17 @@ export const source: LunaticSource = {
           conditionFilter: { value: 'true', type: 'VTL' },
           maxLength: 249,
           id: 'name',
-          response: {
-            name: 'NAME',
-          },
+          response: { name: 'NAME' },
         },
       ],
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
 }

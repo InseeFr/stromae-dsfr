@@ -3,21 +3,11 @@ import type { LunaticData, LunaticSource } from '@inseefr/lunatic'
 export const source: LunaticSource = {
   cleaning: {},
   variables: [
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'DATE',
-    },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'DATE' },
     {
       variableType: 'CALCULATED',
-      expression: {
-        type: 'VTL',
-        value: 'true',
-      },
+      expression: { type: 'VTL', value: 'true' },
       name: 'FILTER_RESULT_DATE',
-      inFilter: 'false',
     },
   ],
   components: [
@@ -42,45 +32,29 @@ export const source: LunaticSource = {
       ],
       max: '2000-12-12',
       dateFormat: 'YYYY-MM-DD',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
-      label: {
-        type: 'VTL|MD',
-        value: '"➡ 1. " || "Date"',
-      },
-      mandatory: false,
-      bindingDependencies: ['DATE'],
+      conditionFilter: { type: 'VTL', value: 'true' },
+      label: { type: 'VTL|MD', value: '"➡ 1. " || "Date"' },
+      isMandatory: false,
       min: '1900-01-01',
-      response: {
-        name: 'DATE',
-      },
+      response: { name: 'DATE' },
       id: 'ltct556j',
       page: '1',
     },
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Bye!"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Bye!"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '2',
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '04-03-2024 10:33:53',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '2',
 }

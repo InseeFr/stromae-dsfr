@@ -7,16 +7,12 @@ export const source: LunaticSource = {
     {
       variableType: 'COLLECTED',
       name: 'TESTTEXTE1',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
     },
     {
       variableType: 'COLLECTED',
       name: 'TESTTEXTE2',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
     },
   ],
   components: [
@@ -24,14 +20,8 @@ export const source: LunaticSource = {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -58,39 +48,21 @@ export const source: LunaticSource = {
         {
           componentType: 'Input',
           response: { name: 'TESTTEXTE1' },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'input1',
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Input 1"',
-          },
-          description: {
-            type: 'VTL|MD',
-            value: '"Description du composant"',
-          },
-          mandatory: false,
+          label: { type: 'VTL|MD', value: '"Label du composant Input 1"' },
+          description: { type: 'VTL|MD', value: '"Description du composant"' },
+          isMandatory: false,
           maxLength: 15,
         },
         {
           componentType: 'Input',
           response: { name: 'TESTTEXTE2' },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'input2',
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Input 2"',
-          },
-          description: {
-            type: 'VTL|MD',
-            value: '"Description du composant"',
-          },
-          mandatory: false,
+          label: { type: 'VTL|MD', value: '"Label du composant Input 2"' },
+          description: { type: 'VTL|MD', value: '"Description du composant"' },
+          isMandatory: false,
           maxLength: 15,
         },
       ],
@@ -98,10 +70,7 @@ export const source: LunaticSource = {
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

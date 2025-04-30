@@ -6,23 +6,15 @@ export const source: LunaticSource = {
     {
       variableType: 'COLLECTED',
       name: 'TESTTEXTE',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
     },
   ],
   components: [
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Sequence label"',
-        type: 'VTL|MD',
-      },
-      description: {
-        value: '"Sequence description"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Sequence label"', type: 'VTL|MD' },
+      description: { value: '"Sequence description"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '1',
       declarations: [
@@ -50,14 +42,8 @@ export const source: LunaticSource = {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -83,23 +69,12 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'Input',
-          bindingDependencies: ['TESTTEXTE'],
           response: { name: 'TESTTEXTE' },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'kfxn6f16',
-          page: '1',
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant (Input ici)"',
-          },
-          description: {
-            type: 'VTL|MD',
-            value: '"Description du composant"',
-          },
-          mandatory: false,
+          label: { type: 'VTL|MD', value: '"Label du composant (Input ici)"' },
+          description: { type: 'VTL|MD', value: '"Description du composant"' },
+          isMandatory: false,
           maxLength: 15,
         },
       ],
@@ -107,10 +82,7 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Sequence label"',
-        type: 'VTL',
-      },
+      label: { value: '"Sequence label"', type: 'VTL' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '2',
     },
@@ -122,7 +94,6 @@ export const source: LunaticSource = {
   modele: 'SEQUENCE',
   enoCoreVersion: '2.3.10',
   generatingDate: '05-09-2022 14:37:43',
-  missing: false,
   id: 'l7ovbqou',
   maxPage: '2',
 }

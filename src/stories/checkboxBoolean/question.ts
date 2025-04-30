@@ -6,39 +6,19 @@ export const source: LunaticSource = {
   variables: [
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'CHECKBOXBoolean',
     },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'BOL1',
-    },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'BOL2',
-    },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'BOL1' },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'BOL2' },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -64,15 +44,10 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'CheckboxBoolean',
-          response: {
-            name: 'CHECKBOXBoolean',
-          },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          response: { name: 'CHECKBOXBoolean' },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'ltfrftp8',
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
@@ -85,10 +60,7 @@ export const source: LunaticSource = {
         value:
           '"Question avec 2 composants CheckboxBoolean (à ne surtout pas faire), utiliser un CheckboxGroup à la place"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -114,13 +86,8 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'CheckboxBoolean',
-          response: {
-            name: 'BOL1',
-          },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          response: { name: 'BOL1' },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'check1',
           label: {
             type: 'VTL|MD',
@@ -130,17 +97,12 @@ export const source: LunaticSource = {
             type: 'VTL|MD',
             value: '"Description du composant CheckboxBoolean"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
         {
           componentType: 'CheckboxBoolean',
-          response: {
-            name: 'BOL2',
-          },
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          response: { name: 'BOL2' },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'check2',
           label: {
             type: 'VTL|MD',
@@ -150,17 +112,14 @@ export const source: LunaticSource = {
             type: 'VTL|MD',
             value: '"Description du composant CheckboxBoolean"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

@@ -4,41 +4,17 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '2',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NB',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'NB1',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'NB2',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NB', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'NB1', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'NB2', values: { COLLECTED: null } },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -65,7 +41,7 @@ export const source: LunaticSource = {
         {
           id: 'kze792d8',
           componentType: 'InputNumber',
-          mandatory: false,
+          isMandatory: false,
           min: 0,
           decimals: 2,
           conditionFilter: { value: 'true', type: 'VTL' },
@@ -81,10 +57,7 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
         value: '"Question avec 2 composants InputNumber"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -111,7 +84,7 @@ export const source: LunaticSource = {
         {
           id: 'input1',
           componentType: 'InputNumber',
-          mandatory: false,
+          isMandatory: false,
           min: 0,
           max: 10,
           decimals: 2,
@@ -126,7 +99,7 @@ export const source: LunaticSource = {
         {
           id: 'input2',
           componentType: 'InputNumber',
-          mandatory: false,
+          isMandatory: false,
           min: 0,
           max: 10,
           decimals: 2,
@@ -143,10 +116,7 @@ export const source: LunaticSource = {
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

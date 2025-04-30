@@ -6,14 +6,8 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Sequence label"',
-        type: 'VTL|MD',
-      },
-      description: {
-        value: '"Sequence description"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Sequence label"', type: 'VTL|MD' },
+      description: { value: '"Sequence description"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '1',
       declarations: [
@@ -40,10 +34,7 @@ export const source: LunaticSource = {
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Sequence label"',
-        type: 'VTL',
-      },
+      label: { value: '"Sequence label"', type: 'VTL' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '2',
     },
@@ -56,7 +47,6 @@ export const source: LunaticSource = {
   modele: 'SEQUENCE',
   enoCoreVersion: '2.3.10',
   generatingDate: '05-09-2022 14:37:43',
-  missing: false,
   id: 'l7ovbqou',
   maxPage: '2',
 }

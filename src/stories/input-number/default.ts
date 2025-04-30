@@ -6,7 +6,7 @@ export const source: LunaticSource = {
     {
       id: 'kze792d8',
       componentType: 'InputNumber',
-      mandatory: false,
+      isMandatory: false,
       page: '1',
       min: 0,
       max: 10,
@@ -17,40 +17,26 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
       },
       conditionFilter: { value: 'true', type: 'VTL' },
-      bindingDependencies: ['NB'],
       response: { name: 'NB' },
     },
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Bye!"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Bye!"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '2',
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NB',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NB', values: { COLLECTED: null } },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '2',
 }

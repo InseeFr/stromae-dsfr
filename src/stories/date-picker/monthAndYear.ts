@@ -5,19 +5,13 @@ export const source: LunaticSource = {
   variables: [
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'MONTHANDYE',
     },
     {
       variableType: 'CALCULATED',
-      expression: {
-        type: 'VTL',
-        value: 'true',
-      },
+      expression: { type: 'VTL', value: 'true' },
       name: 'FILTER_RESULT_MONTHANDYE',
-      inFilter: 'false',
     },
   ],
   components: [
@@ -42,45 +36,29 @@ export const source: LunaticSource = {
       ],
       max: '2300-12',
       dateFormat: 'YYYY-MM',
-      conditionFilter: {
-        type: 'VTL',
-        value: 'true',
-      },
-      label: {
-        type: 'VTL|MD',
-        value: '"➡ 1. " || "Month and Year"',
-      },
-      mandatory: false,
-      bindingDependencies: ['MONTHANDYE'],
+      conditionFilter: { type: 'VTL', value: 'true' },
+      label: { type: 'VTL|MD', value: '"➡ 1. " || "Month and Year"' },
+      isMandatory: false,
       min: '1900-01',
-      response: {
-        name: 'MONTHANDYE',
-      },
+      response: { name: 'MONTHANDYE' },
       id: 'ltwrnvod',
       page: '1',
     },
     {
       id: 'seq',
       componentType: 'Sequence',
-      label: {
-        value: '"Bye!"',
-        type: 'VTL|MD',
-      },
+      label: { value: '"Bye!"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
       page: '2',
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '18-03-2024 09:42:07',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '2',
 }

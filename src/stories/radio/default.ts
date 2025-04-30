@@ -5,17 +5,13 @@ export const source: LunaticSource = {
   components: [
     {
       id: 'radiototo',
-      bindingDependencies: ['Q1'],
       componentType: 'Radio',
-      mandatory: false,
+      isMandatory: false,
       label: {
         value: '"Does Spongebob live in a pineapple under the sea?"',
         type: 'VTL|MD',
       },
-      description: {
-        value: '"Spongebob works for Mr. Krabs"',
-        type: 'VTL|MD',
-      },
+      description: { value: '"Spongebob works for Mr. Krabs"', type: 'VTL|MD' },
       page: '1',
       conditionFilter: { value: 'true', type: 'VTL' },
       controls: [
@@ -53,24 +49,14 @@ export const source: LunaticSource = {
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'Q1',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'Q1', values: { COLLECTED: null } },
   ],
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
-  missing: false,
   id: 'lsvuvtbg',
   maxPage: '1',
 }

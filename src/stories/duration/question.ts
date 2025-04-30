@@ -4,41 +4,17 @@ export const source: LunaticSource = {
   cleaning: {},
   maxPage: '2',
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'DUREE',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'DUREE1',
-      values: {
-        COLLECTED: null,
-      },
-    },
-    {
-      variableType: 'COLLECTED',
-      name: 'DUREE2',
-      values: {
-        COLLECTED: null,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'DUREE', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'DUREE1', values: { COLLECTED: null } },
+    { variableType: 'COLLECTED', name: 'DUREE2', values: { COLLECTED: null } },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -65,7 +41,7 @@ export const source: LunaticSource = {
         {
           id: 'kxi788',
           componentType: 'Duration',
-          mandatory: false,
+          isMandatory: false,
           format: 'PnYnM',
           conditionFilter: { value: 'true', type: 'VTL' },
           response: { name: 'DUREE' },
@@ -80,10 +56,7 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
         value: '"Question avec deux composants Duration"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -110,12 +83,9 @@ export const source: LunaticSource = {
         {
           id: 'duration1',
           componentType: 'Duration',
-          mandatory: false,
+          isMandatory: false,
           format: 'PnYnM',
-          label: {
-            value: '"Label du composant Duration 1"',
-            type: 'VTL|MD',
-          },
+          label: { value: '"Label du composant Duration 1"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Duration"',
             type: 'VTL|MD',
@@ -126,12 +96,9 @@ export const source: LunaticSource = {
         {
           id: 'duration2',
           componentType: 'Duration',
-          mandatory: false,
+          isMandatory: false,
           format: 'PnYnM',
-          label: {
-            value: '"Label du composant Duration 2"',
-            type: 'VTL|MD',
-          },
+          label: { value: '"Label du composant Duration 2"', type: 'VTL|MD' },
           description: {
             value: '"Description du composant Duration"',
             type: 'VTL|MD',
@@ -144,10 +111,7 @@ export const source: LunaticSource = {
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

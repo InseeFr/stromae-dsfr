@@ -7,19 +7,15 @@ export const source: LunaticSource = {
     {
       id: 'Summary',
       componentType: 'Summary',
-      label: {
-        value: '"Récapulatif des habitants "',
-        type: 'VTL',
-      },
+      label: { value: '"Récapulatif des habitants "', type: 'VTL' },
       sections: [
         {
+          id: 'id-section',
           iterations: { value: 'NB_HAB', type: 'VTL' },
-          title: {
-            value: 'PRENOMS || " " || NOMS',
-            type: 'VTL',
-          },
+          title: { value: 'PRENOMS || " " || NOMS', type: 'VTL' },
           responses: [
             {
+              id: 'id-response-1',
               label: {
                 value: '(if(SEXES = "1") then ("Né") else ("Née")) || " le "',
                 type: 'VTL',
@@ -30,6 +26,7 @@ export const source: LunaticSource = {
               },
             },
             {
+              id: 'id-response-2',
               label: { value: '"de sexe "', type: 'VTL' },
               value: {
                 value: 'if(SEXES = "1") then "Masculin" else "Féminin"',
@@ -44,76 +41,37 @@ export const source: LunaticSource = {
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'NB_HAB',
-      values: {
-        COLLECTED: 2,
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NB_HAB', values: { COLLECTED: 2 } },
     {
       variableType: 'COLLECTED',
       name: 'VIVEZVOUSDS',
-      values: {
-        COLLECTED: [null],
-      },
+      values: { COLLECTED: [null] },
     },
     {
       variableType: 'COLLECTED',
       name: 'DATENAISS',
-      values: {
-        COLLECTED: [null],
-      },
+      values: { COLLECTED: [null] },
     },
-    {
-      variableType: 'COLLECTED',
-      name: 'SEXES',
-      values: {
-        COLLECTED: [null],
-      },
-    },
+    { variableType: 'COLLECTED', name: 'SEXES', values: { COLLECTED: [null] } },
     {
       variableType: 'COLLECTED',
       name: 'PRENOMS',
-      values: {
-        COLLECTED: [null],
-      },
+      values: { COLLECTED: [null] },
     },
-    {
-      variableType: 'COLLECTED',
-      name: 'NOMS',
-      values: {
-        COLLECTED: [null],
-      },
-    },
+    { variableType: 'COLLECTED', name: 'NOMS', values: { COLLECTED: [null] } },
   ],
   resizing: {
-    NB_HAB: {
-      size: 'NB_HAB',
-      variables: ['PRENOMS', 'SEXES', 'DATENAISS'],
-    },
+    NB_HAB: { size: 'NB_HAB', variables: ['PRENOMS', 'SEXES', 'DATENAISS'] },
   },
 }
 
 export const data: LunaticData = {
   COLLECTED: {
-    NB_HAB: {
-      COLLECTED: 2,
-    },
-    PRENOMS: {
-      COLLECTED: ['John', 'Martin'],
-    },
-    NOMS: {
-      COLLECTED: ['Doe', 'Dupont'],
-    },
-    DATENAISS: {
-      COLLECTED: ['1993-01-18', '1990-10-10'],
-    },
-    AGE: {
-      COLLECTED: [26, 31],
-    },
-    SEXES: {
-      COLLECTED: ['1', '2'],
-    },
+    NB_HAB: { COLLECTED: 2 },
+    PRENOMS: { COLLECTED: ['John', 'Martin'] },
+    NOMS: { COLLECTED: ['Doe', 'Dupont'] },
+    DATENAISS: { COLLECTED: ['1993-01-18', '1990-10-10'] },
+    AGE: { COLLECTED: [26, 31] },
+    SEXES: { COLLECTED: ['1', '2'] },
   },
 }

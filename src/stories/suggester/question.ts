@@ -6,80 +6,44 @@ export const source: LunaticSource = {
   suggesters: [
     {
       name: 'L_PAYS-1-2-0',
-      fields: [
-        {
-          name: 'label',
-          rules: ['[\\w]+'],
-          min: 3,
-        },
-      ],
+      fields: [{ name: 'label', rules: ['[\\w]+'], min: 3 }],
       queryParser: {
         type: 'tokenized',
-        params: {
-          language: 'French',
-          pattern: '[\\w.]+',
-          min: 3,
-        },
+        params: { language: 'French', pattern: '[\\w.]+', min: 3 },
       },
     },
   ],
   variables: [
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'SUGGESTER_VARIABLEPA_LABEL',
     },
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'VARIABLEPA',
     },
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'SUG1_LABEL',
     },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'SUG1' },
     {
       variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'SUG1',
-    },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
+      values: { COLLECTED: null },
       name: 'SUG2_LABEL',
     },
-    {
-      variableType: 'COLLECTED',
-      values: {
-        COLLECTED: null,
-      },
-      name: 'SUG2',
-    },
+    { variableType: 'COLLECTED', values: { COLLECTED: null }, name: 'SUG2' },
   ],
   components: [
     {
       componentType: 'Question',
       id: 'idQuestion',
       page: '1',
-      label: {
-        type: 'VTL|MD',
-        value: '"Label de la Question"',
-      },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      label: { type: 'VTL|MD', value: '"Label de la Question"' },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -105,22 +69,14 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'Suggester',
-          response: {
-            name: 'VARIABLEPA',
-          },
+          response: { name: 'VARIABLEPA' },
           optionResponses: [
-            {
-              name: 'SUGGESTER_VARIABLEPA_LABEL',
-              attribute: 'label',
-            },
+            { name: 'SUGGESTER_VARIABLEPA_LABEL', attribute: 'label' },
           ],
           storeName: 'L_PAYS-1-2-0',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'lt4fjoev',
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
@@ -132,10 +88,7 @@ export const source: LunaticSource = {
         type: 'VTL|MD',
         value: '"Question avec 2 composants Suggester"',
       },
-      description: {
-        type: 'VTL|MD',
-        value: '"Description de la question"',
-      },
+      description: { type: 'VTL|MD', value: '"Description de la question"' },
       declarations: [
         {
           declarationType: 'HELP',
@@ -161,67 +114,38 @@ export const source: LunaticSource = {
       components: [
         {
           componentType: 'Suggester',
-          response: {
-            name: 'SUG1',
-          },
-          optionResponses: [
-            {
-              name: 'SUG1_LABEL',
-              attribute: 'label',
-            },
-          ],
+          response: { name: 'SUG1' },
+          optionResponses: [{ name: 'SUG1_LABEL', attribute: 'label' }],
           storeName: 'L_PAYS-1-2-0',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'suggester1',
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Suggester 1"',
-          },
+          label: { type: 'VTL|MD', value: '"Label du composant Suggester 1"' },
           description: {
             type: 'VTL|MD',
             value: '"Description du composant Suggester"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
         {
           componentType: 'Suggester',
-          response: {
-            name: 'SUG2',
-          },
-          optionResponses: [
-            {
-              name: 'SUG2_LABEL',
-              attribute: 'label',
-            },
-          ],
+          response: { name: 'SUG2' },
+          optionResponses: [{ name: 'SUG2_LABEL', attribute: 'label' }],
           storeName: 'L_PAYS-1-2-0',
-          conditionFilter: {
-            type: 'VTL',
-            value: 'true',
-          },
+          conditionFilter: { type: 'VTL', value: 'true' },
           id: 'suggester1',
-          label: {
-            type: 'VTL|MD',
-            value: '"Label du composant Suggester 2"',
-          },
+          label: { type: 'VTL|MD', value: '"Label du composant Suggester 2"' },
           description: {
             type: 'VTL|MD',
             value: '"Description du composant Suggester"',
           },
-          mandatory: false,
+          isMandatory: false,
         },
       ],
     },
   ],
   pagination: 'question',
   resizing: {},
-  label: {
-    type: 'VTL|MD',
-    value: 'Test-Dylan',
-  },
+  label: { type: 'VTL|MD', value: 'Test-Dylan' },
   lunaticModelVersion: '2.5.0',
   modele: 'TESTDYLAN',
   enoCoreVersion: '2.7.1',

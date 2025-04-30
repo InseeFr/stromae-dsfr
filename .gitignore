@@ -27,3 +27,5 @@ public/workers/*
 coverage
 
 /public/nomenclatures/
+
+storybook-static/

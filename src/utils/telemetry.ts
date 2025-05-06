@@ -2,6 +2,7 @@ import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import type {
   CommonParadata,
   ExitParadata,
+  ExitParadataPortal,
   InputParadata,
   TelemetryParadata,
 } from '@/models/telemetry'
@@ -29,6 +30,18 @@ export function computeExitEvent({
   source,
 }: {
   source: ExitParadata['source']
+}): TelemetryParadata {
+  return {
+    ...getCommonData(),
+    source,
+    type: TELEMETRY_EVENT_TYPE.EXIT,
+  }
+}
+
+export function computeExitPortalEvent({
+  source,
+}: {
+  source: ExitParadataPortal['source']
 }): TelemetryParadata {
   return {
     ...getCommonData(),

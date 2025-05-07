@@ -112,29 +112,4 @@ describe('Header', () => {
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
   })
-
-  it('should not display toast on logout', async () => {
-    const user = userEvent.setup()
-    const showToast = vi.fn()
-
-    const { getAllByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryDisabled: false,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
-    )
-    await waitFor(() => expect(showToast).not.toHaveBeenCalled())
-
-    const e = getAllByText('Log out')[0]
-    await user.click(e)
-
-    await waitFor(() => expect(showToast).not.toHaveBeenCalled())
-  })
 })

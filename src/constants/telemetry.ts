@@ -10,4 +10,5 @@ export enum TELEMETRY_EVENT_TYPE {
 
 export enum TELEMETRY_EVENT_EXIT_SOURCE {
   LOGOUT = 'logout',
+  PORTAL = 'portal',
 }

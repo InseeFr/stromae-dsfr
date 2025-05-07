@@ -1,2 +1,0 @@
-/*! For license information please see button.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e={EQUISIZED_BUTTON:t.internals.ns.selector("btns-group--equisized")+" "+t.internals.ns.selector("btn"),EQUISIZED_GROUP:t.internals.ns.selector("btns-group--equisized")};t.button={ButtonSelector:e},t.internals.register(t.button.ButtonSelector.EQUISIZED_BUTTON,t.core.Equisized),t.internals.register(t.button.ButtonSelector.EQUISIZED_GROUP,t.core.EquisizedsGroup)}();

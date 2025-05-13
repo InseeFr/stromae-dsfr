@@ -15,16 +15,12 @@ import {
 } from '@/i18n'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
-import {
-  computeContactSupportEvent,
-  computeExitPortalEvent,
-} from '@/utils/telemetry'
+import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
 
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
 export function Header() {
   const { t } = useTranslation({ Header })
-  // const { isUserLoggedIn, logout } = useOidc()
   const { resolveLocalizedString, resolveLocalizedStringDetailed } =
     useResolveLocalizedString({
       labelWhenMismatchingLanguage: true,
@@ -48,12 +44,12 @@ export function Header() {
   const goToPortal = () => {
     if (isCollectRoute && !isTelemetryDisabled) {
       pushEvent(
-        computeExitPortalEvent({
-          source: TELEMETRY_EVENT_EXIT_SOURCE.PORTAL,
+        computeExitEvent({
+          source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
         }),
       )
     }
-    window.location.href = import.meta.env.VITE_PORTAIL_URL
+    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathLogout'] ?? ''}`
   }
 
   return (
@@ -67,11 +63,10 @@ export function Header() {
           </>
         }
         homeLinkProps={{
-          search: true,
           title: t('home link title'),
         }}
         quickAccessItems={[
-          headerFooterDisplayItem,
+          headerFooterDisplayItem || {},
           {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {

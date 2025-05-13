@@ -21,7 +21,6 @@ export type TelemetryParadata = CommonParadata &
   (
     | InitParadata
     | ExitParadata
-    | ExitParadataPortal
     | PageParadata
     | InputParadata
     | ControlParadata
@@ -42,12 +41,6 @@ export type InitParadata = {
 /** Event sent when the user logs out of the orchestrator */
 export type ExitParadata = {
   source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT
-  type: TELEMETRY_EVENT_TYPE.EXIT
-}
-
-/** Event sent when the user leave of the orchestrator to the portal */
-export type ExitParadataPortal = {
-  source: TELEMETRY_EVENT_EXIT_SOURCE.PORTAL
   type: TELEMETRY_EVENT_TYPE.EXIT
 }
 

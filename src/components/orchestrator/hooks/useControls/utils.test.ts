@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorType, computeErrorType, sortErrors } from './utils'
+import { ErrorType, computeErrorType } from './utils'
 
 describe('Compute error type', () => {
   it('returns blocking when there is at least one error', () => {
@@ -37,25 +37,5 @@ describe('Compute error type', () => {
       }),
     ).toBeUndefined()
     expect(computeErrorType()).toBeUndefined()
-  })
-})
-
-describe('Sort errors', () => {
-  it('puts most critical first', () => {
-    expect(
-      sortErrors({
-        Q1: [
-          { id: 'id1', criticality: 'INFO', errorMessage: 'info' },
-          { id: 'id2', criticality: 'ERROR', errorMessage: 'error' },
-          { id: 'id3', criticality: 'WARN', errorMessage: 'warn' },
-        ],
-      }),
-    ).toStrictEqual({
-      Q1: [
-        { id: 'id2', criticality: 'ERROR', errorMessage: 'error' },
-        { id: 'id3', criticality: 'WARN', errorMessage: 'warn' },
-        { id: 'id1', criticality: 'INFO', errorMessage: 'info' },
-      ],
-    })
   })
 })

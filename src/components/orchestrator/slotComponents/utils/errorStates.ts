@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 
 import type { LunaticError } from '@inseefr/lunatic'
 
+import { isBlockingError, isWarningError } from '@/utils/controls'
+
 /**
  * Determines the state of errors for a given component.
  * @param errors - Optional. An object containing errors keyed by component ID.
@@ -13,8 +15,7 @@ import type { LunaticError } from '@inseefr/lunatic'
  * - "error": Critical errors or warnings found for the component.
  * - "success": Non-critical informational errors found for the component.
  * If the provided errors are undefined the function returns the default state.
- * Only the first error for the specified component is considered.
- * @throws {Error} Throws an error if the criticality of the first error is not recognized.
+ * Only the first error of the highest criticality for the specified component is considered.
  */
 export function getErrorStates(errors?: LunaticError[]): {
   state: 'default' | 'error' | 'success'
@@ -23,13 +24,24 @@ export function getErrorStates(errors?: LunaticError[]): {
   if (!errors || errors.length === 0) {
     return { state: 'default', stateRelatedMessage: undefined }
   }
-  switch (errors[0].criticality) {
-    case 'ERROR':
-    case 'WARN':
-      return { state: 'error', stateRelatedMessage: errors[0].errorMessage }
-    case 'INFO':
-      return { state: 'success', stateRelatedMessage: errors[0].errorMessage }
-    default:
-      throw new Error('We do not know this type of criticality')
+
+  let warningMessage
+  let infoMessage
+  for (const error of errors) {
+    if (isBlockingError(error)) {
+      return { state: 'error', stateRelatedMessage: error.errorMessage }
+    }
+    if (warningMessage) continue
+
+    if (isWarningError(error)) {
+      warningMessage = error.errorMessage
+      continue
+    }
+    infoMessage ??= error.errorMessage
   }
+
+  if (warningMessage) {
+    return { state: 'error', stateRelatedMessage: warningMessage }
+  }
+  return { state: 'success', stateRelatedMessage: infoMessage }
 }

@@ -6,7 +6,7 @@ import type { TelemetryParadata } from '@/models/telemetry'
 import { computeControlEvent, computeControlSkipEvent } from '@/utils/telemetry'
 
 import { useStromaeNavigation } from '../useStromaeNavigation'
-import { ErrorType, computeErrorType, isSameErrors, sortErrors } from './utils'
+import { ErrorType, computeErrorType, isSameErrors } from './utils'
 
 type useControlsProps = {
   compileControls: LunaticState['compileControls']
@@ -43,23 +43,19 @@ export function useControls({
   const handleNextPage = () => {
     const { currentErrors } = compileControls()
 
-    // sort errors to display the most critical first since the UI can display
-    // only one error at a time
-    const sortedErrors = sortErrors(currentErrors)
-
-    const errorType = computeErrorType(sortedErrors)
+    const errorType = computeErrorType(currentErrors)
     switch (errorType) {
       case ErrorType.BLOCKING:
         // If error is blocking we prevent further navigation no matter what
         if (isTelemetryInitialized) {
           pushEvent(
             computeControlEvent({
-              controlIds: Object.keys(sortedErrors!),
+              controlIds: Object.keys(currentErrors!),
             }),
           )
         }
         setIsBlocking(true)
-        setActiveErrors(sortedErrors)
+        setActiveErrors(currentErrors)
         return
       case ErrorType.WARNING:
         // If error is warning we prevent further navigation if the user did not
@@ -67,14 +63,14 @@ export function useControls({
         // same error is triggered twice), user can proceed
         if (
           isWarningAcknowledged &&
-          sortedErrors &&
+          currentErrors &&
           activeErrors &&
-          isSameErrors(sortedErrors, activeErrors)
+          isSameErrors(currentErrors, activeErrors)
         ) {
           if (isTelemetryInitialized) {
             pushEvent(
               computeControlSkipEvent({
-                controlIds: Object.keys(sortedErrors),
+                controlIds: Object.keys(currentErrors),
               }),
             )
           }
@@ -85,12 +81,12 @@ export function useControls({
         if (isTelemetryInitialized) {
           pushEvent(
             computeControlEvent({
-              controlIds: Object.keys(sortedErrors!),
+              controlIds: Object.keys(currentErrors!),
             }),
           )
         }
         setIsWarningAcknowledged(true)
-        setActiveErrors(sortedErrors)
+        setActiveErrors(currentErrors)
         return
       default:
         resetControls()

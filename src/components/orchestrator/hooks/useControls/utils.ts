@@ -1,15 +1,13 @@
 import type { LunaticError } from '@inseefr/lunatic'
 
-export enum ErrorType {
-  BLOCKING,
-  WARNING,
-}
+import { isBlockingError, isWarningError } from '@/utils/controls'
 
-function isBlockingError(error: LunaticError): boolean {
-  return error.typeOfControl === 'FORMAT' || error.criticality === 'ERROR'
-}
-function isWarningError(error: LunaticError): boolean {
-  return error.criticality === 'WARN'
+/** Type of error on an input that can be computed from the Lunatic controls. */
+export enum ErrorType {
+  /** Should prevent further navigation (e.g. mandatory variables, format). */
+  BLOCKING,
+  /** Should not prevent further navigation (e.g. seemingly invalid answer). */
+  WARNING,
 }
 
 /**
@@ -60,36 +58,4 @@ export function isSameErrors(
   }
 
   return idsA.toString() === idsB.toString()
-}
-
-/** Sort the errors to display the most critical error first. */
-export function sortErrors(
-  controls?: Record<string, LunaticError[]>,
-): Record<string, LunaticError[]> | undefined {
-  if (!controls) return undefined
-
-  const sortedControls: Record<string, LunaticError[]> = {}
-
-  for (const [id, control] of Object.entries(controls)) {
-    const blockingErrors: LunaticError[] = []
-    const warnErrors: LunaticError[] = []
-    const infoErrors: LunaticError[] = []
-    for (const error of control) {
-      if (isBlockingError(error)) {
-        blockingErrors.push(error)
-      } else if (isWarningError(error)) {
-        warnErrors.push(error)
-      } else {
-        infoErrors.push(error)
-      }
-    }
-    const sortedErrors: LunaticError[] = [
-      ...blockingErrors,
-      ...warnErrors,
-      ...infoErrors,
-    ]
-    sortedControls[id] = sortedErrors
-  }
-
-  return sortedControls
 }

@@ -25,19 +25,17 @@ export function getErrorStates(errors?: LunaticError[]): {
     return { state: 'default', stateRelatedMessage: undefined }
   }
 
-  let warningMessage
-  let infoMessage
+  let warningMessage: ReactNode | undefined
+  let infoMessage: ReactNode | undefined
   for (const error of errors) {
     if (isBlockingError(error)) {
       return { state: 'error', stateRelatedMessage: error.errorMessage }
     }
-    if (warningMessage) continue
-
-    if (isWarningError(error)) {
-      warningMessage = error.errorMessage
-      continue
+    if (!warningMessage) {
+      if (isWarningError(error)) {
+        warningMessage = error.errorMessage
+      } else infoMessage ??= error.errorMessage
     }
-    infoMessage ??= error.errorMessage
   }
 
   if (warningMessage) {

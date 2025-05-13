@@ -19,8 +19,8 @@ type ImportMetaEnv = {
   MODE: string
   DEV: boolean
   PROD: boolean
-  APP_VERSION: any
-  LUNATIC_VERSION: any
+  APP_VERSION: string
+  LUNATIC_VERSION: string
   // @user-defined-start
   /*
    * Here you can define your own special variables

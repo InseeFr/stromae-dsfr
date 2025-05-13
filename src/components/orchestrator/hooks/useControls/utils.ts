@@ -73,15 +73,21 @@ export function sortErrors(
   for (const [id, control] of Object.entries(controls)) {
     const blockingErrors: LunaticError[] = []
     const warnErrors: LunaticError[] = []
+    const infoErrors: LunaticError[] = []
     for (const error of control) {
       if (isBlockingError(error)) {
         blockingErrors.push(error)
-      }
-      if (isWarningError(error)) {
+      } else if (isWarningError(error)) {
         warnErrors.push(error)
+      } else {
+        infoErrors.push(error)
       }
     }
-    const sortedErrors: LunaticError[] = [...blockingErrors, ...warnErrors]
+    const sortedErrors: LunaticError[] = [
+      ...blockingErrors,
+      ...warnErrors,
+      ...infoErrors,
+    ]
     sortedControls[id] = sortedErrors
   }
 

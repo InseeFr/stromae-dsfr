@@ -26,7 +26,6 @@ export function useStromaeNavigation({
   isFirstPage = false,
   isLastPage = false,
   initialCurrentPage = PAGE_TYPE.WELCOME,
-  goNextWithControls = () => {},
   goNextLunatic = () => {},
   goPrevLunatic = () => {},
   goToLunaticPage = () => {},
@@ -47,8 +46,8 @@ export function useStromaeNavigation({
         return setCurrentPage(PAGE_TYPE.LUNATIC)
       case PAGE_TYPE.LUNATIC:
         return isLastPage
-          ? goNextWithControls(() => setCurrentPage(PAGE_TYPE.VALIDATION))
-          : goNextWithControls(goNextLunatic)
+          ? setCurrentPage(PAGE_TYPE.VALIDATION)
+          : goNextLunatic()
       case PAGE_TYPE.END:
         return
     }

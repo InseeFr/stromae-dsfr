@@ -1,0 +1,137 @@
+import { useState } from 'react'
+
+import type { LunaticError, LunaticState } from '@inseefr/lunatic'
+
+import type { TelemetryParadata } from '@/models/telemetry'
+import { computeControlEvent, computeControlSkipEvent } from '@/utils/telemetry'
+
+import { useStromaeNavigation } from '../useStromaeNavigation'
+import { ErrorType, computeErrorType, isSameErrors, sortErrors } from './utils'
+
+type useControlsProps = {
+  compileControls: LunaticState['compileControls']
+  goNextPage: () => void
+  goPreviousPage: () => void
+  goToPage: (
+    page: Parameters<ReturnType<typeof useStromaeNavigation>['goToPage']>[0],
+  ) => void
+  isTelemetryInitialized?: boolean
+  pushEvent: (e: TelemetryParadata) => void | Promise<boolean>
+}
+
+/**
+ * On navigation, compute controls from filled inputs.
+ *
+ * It will return what is necessary to display the errors and block the user if
+ * the error is blocking.
+ */
+export function useControls({
+  isTelemetryInitialized = false,
+  pushEvent,
+  compileControls,
+  goNextPage,
+  goPreviousPage,
+  goToPage,
+}: Readonly<useControlsProps>) {
+  const [activeErrors, setActiveErrors] = useState<
+    Record<string, LunaticError[]> | undefined
+  >(undefined)
+  const [isBlocking, setIsBlocking] = useState<boolean>(false)
+  const [isWarningAcknowledged, setIsWarningAcknowledged] =
+    useState<boolean>(false)
+
+  const handleNextPage = () => {
+    const { currentErrors } = compileControls()
+
+    // sort errors to display the most critical first since the UI can display
+    // only one error at a time
+    const sortedErrors = sortErrors(currentErrors)
+
+    const errorType = computeErrorType(sortedErrors)
+    switch (errorType) {
+      case ErrorType.BLOCKING:
+        // If error is blocking we prevent further navigation no matter what
+        if (isTelemetryInitialized) {
+          pushEvent(
+            computeControlEvent({
+              controlIds: Object.keys(sortedErrors!),
+            }),
+          )
+        }
+        setIsBlocking(true)
+        setActiveErrors(sortedErrors)
+        return
+      case ErrorType.WARNING:
+        // If error is warning we prevent further navigation if the user did not
+        // see this error before ; if the user wants to pursue anyway (i.e. the
+        // same error is triggered twice), user can proceed
+        if (
+          isWarningAcknowledged &&
+          sortedErrors &&
+          activeErrors &&
+          isSameErrors(sortedErrors, activeErrors)
+        ) {
+          if (isTelemetryInitialized) {
+            pushEvent(
+              computeControlSkipEvent({
+                controlIds: Object.keys(sortedErrors),
+              }),
+            )
+          }
+          resetControls()
+          goNextPage()
+          return
+        }
+        if (isTelemetryInitialized) {
+          pushEvent(
+            computeControlEvent({
+              controlIds: Object.keys(sortedErrors!),
+            }),
+          )
+        }
+        setIsWarningAcknowledged(true)
+        setActiveErrors(sortedErrors)
+        return
+      default:
+        resetControls()
+        goNextPage()
+    }
+  }
+
+  const handlePreviousPage = () => {
+    resetControls()
+    goPreviousPage()
+  }
+
+  const handleGoToPage = (
+    page: Parameters<ReturnType<typeof useStromaeNavigation>['goToPage']>[0],
+  ) => {
+    resetControls()
+    goToPage(page)
+  }
+
+  const resetControls = () => {
+    setActiveErrors(undefined)
+    setIsWarningAcknowledged(false)
+    setIsBlocking(false)
+  }
+
+  return {
+    /** Errors to be displayed by Lunatic components (sorted by criticality). */
+    activeErrors,
+    /** Go to page handler which reset controls (e.g. active errors). */
+    handleGoToPage,
+    /** Go to next page handler which check controls shenanigans. */
+    handleNextPage,
+    /** Go to previous page handler which reset controls (e.g. active errors). */
+    handlePreviousPage,
+    /**
+     * Whether or not the respondent should be blocked from further navigation
+     * until the filled input is changed. Should be used to set navigation
+     * buttons as disabled.
+     */
+    isBlocking,
+    /** Allow to manually reset controls (e.g. when the input is changed). */
+    resetControls,
+  }
+}

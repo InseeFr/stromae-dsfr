@@ -5,7 +5,6 @@ import {
   type LunaticChangesHandler,
   LunaticComponents,
   type LunaticData,
-  type LunaticError,
   type LunaticSource,
   useLunatic,
 } from '@inseefr/lunatic'
@@ -25,8 +24,6 @@ import type {
   LunaticPageTag,
 } from '@/models/lunaticType'
 import {
-  computeControlEvent,
-  computeControlSkipEvent,
   computeInitEvent,
   computeInputEvent,
   computeNewPageEvent,
@@ -39,6 +36,7 @@ import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
 import { WelcomeModal } from './customPages/WelcomeModal'
 import { WelcomePage } from './customPages/WelcomePage'
+import { useControls } from './hooks/useControls'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
@@ -46,7 +44,6 @@ import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { computeLunaticComponents } from './utils/components'
-import { isBlockingError } from './utils/controls'
 import { trimCollectedData } from './utils/data'
 import { downloadAsJson } from './utils/downloadAsJson'
 import { isObjectEmpty } from './utils/isObjectEmpty'
@@ -107,7 +104,7 @@ export function Orchestrator(props: OrchestratorProps) {
   useBeforeUnload(isDirtyState)
 
   // Allow to send telemetry events once survey unit id has been set
-  const [isTelemetryActivated, setIsTelemetryActivated] =
+  const [isTelemetryInitialized, setIsTelemetryInitialized] =
     useState<boolean>(false)
   const {
     isTelemetryDisabled,
@@ -169,8 +166,8 @@ export function Orchestrator(props: OrchestratorProps) {
     getComponents,
     Provider: LunaticProvider,
     compileControls,
-    goPreviousPage: goPrevLunatic,
-    goNextPage: goNextLunatic,
+    goPreviousPage: goPreviousLunaticPage,
+    goNextPage: goNextLunaticPage,
     getData,
     isFirstPage,
     isLastPage,
@@ -186,9 +183,8 @@ export function Orchestrator(props: OrchestratorProps) {
     autoSuggesterLoading: true,
     onChange: (e) => {
       setIsDirtyState(true)
-      // once the user has changed its input, we need to retrigger the controls
-      setIsControlsAcknowledged(false)
-      if (isTelemetryActivated) handleLunaticChange(e)
+      resetControls()
+      if (isTelemetryInitialized) handleLunaticChange(e)
     },
     trackChanges: mode === MODE_TYPE.COLLECT,
     withOverview: true,
@@ -200,67 +196,32 @@ export function Orchestrator(props: OrchestratorProps) {
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
     surveyUnitData?.stateData?.date,
   )
-  // whether or not the user has seen the errors and did not change anything
-  const [isControlsAcknowledged, setIsControlsAcknowledged] =
-    useState<boolean>(false)
-  const [activeErrors, setActiveErrors] = useState<
-    Record<string, LunaticError[]> | undefined
-  >(undefined)
-
-  // Decorates goNext function with controls behavior
-  const goNextWithControls = (goNext: () => void) => {
-    const { currentErrors } = compileControls()
-
-    // No errors, continue
-    if (!currentErrors) {
-      setActiveErrors(undefined)
-      goNext()
-      return
-    }
-
-    //compileControls returns isCritical but I prefer define my own rules of blocking error in the orchestrator
-    const shouldBlock = isBlockingError(currentErrors)
-
-    // we've already seen the errors, changed nothing since and they're not blocking, we go next
-    if (isControlsAcknowledged && !shouldBlock) {
-      if (isTelemetryActivated) {
-        pushEvent(
-          computeControlSkipEvent({
-            controlIds: Object.keys(currentErrors),
-          }),
-        )
-      }
-      setActiveErrors(undefined)
-      goNext()
-      return
-    }
-
-    // we stay on the page and display the errors since either:
-    // - an error is blocking
-    // - we've never seen the errors
-    // - we've seen the errors but changed something since
-    if (isTelemetryActivated) {
-      pushEvent(
-        computeControlEvent({
-          controlIds: Object.keys(currentErrors),
-        }),
-      )
-    }
-
-    setIsControlsAcknowledged(true)
-    setActiveErrors(currentErrors)
-  }
 
   const { currentPage, goNext, goToPage, goPrevious } = useStromaeNavigation({
-    goNextWithControls,
-    goNextLunatic,
-    goPrevLunatic,
+    goNextLunatic: goNextLunaticPage,
+    goPrevLunatic: goPreviousLunaticPage,
+    goToLunaticPage: goToLunaticPage,
     isFirstPage,
     isLastPage,
-    goToLunaticPage,
     initialCurrentPage,
     openValidationModal: () => validationModalActionsRef.current.open(),
   })
+
+  const {
+    activeErrors,
+    handleGoToPage,
+    handleNextPage,
+    handlePreviousPage,
+    resetControls,
+  } = useControls({
+    compileControls,
+    pushEvent,
+    isTelemetryInitialized,
+    goNextPage: goNext,
+    goPreviousPage: goPrevious,
+    goToPage: goToPage,
+  })
+
   const previousPage = usePrevious(currentPage) ?? initialCurrentPage
   const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
 
@@ -335,16 +296,16 @@ export function Orchestrator(props: OrchestratorProps) {
   useEffect(() => {
     if (!isTelemetryDisabled && mode === MODE_TYPE.COLLECT) {
       setDefaultValues({ idSU: surveyUnitData?.id })
-      setIsTelemetryActivated(true)
+      setIsTelemetryInitialized(true)
     }
   }, [isTelemetryDisabled, mode, setDefaultValues, surveyUnitData?.id])
 
   // Initialization
   useEffect(() => {
-    if (isTelemetryActivated) {
+    if (isTelemetryInitialized) {
       pushEvent(computeInitEvent())
     }
-  }, [isTelemetryActivated, pushEvent])
+  }, [isTelemetryInitialized, pushEvent])
 
   useEffect(() => {
     if (activeErrors) {
@@ -353,7 +314,7 @@ export function Orchestrator(props: OrchestratorProps) {
   }, [activeErrors])
 
   useAddPreLogoutAction(async () => {
-    if (isTelemetryActivated) {
+    if (isTelemetryInitialized) {
       triggerInactivityTimeoutEvent()
     }
     triggerDataAndStateUpdate(true)
@@ -362,7 +323,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   // On page change
   useUpdateEffect(() => {
-    if (isTelemetryActivated) {
+    if (isTelemetryInitialized) {
       triggerInactivityTimeoutEvent()
       pushEvent(
         computeNewPageEvent({
@@ -392,7 +353,7 @@ export function Orchestrator(props: OrchestratorProps) {
       })
       contentRef.current.removeAttribute('tabindex')
     }
-    setIsControlsAcknowledged(false)
+    resetControls()
     // Persist data and stateData when page change in "collect" mode
     triggerDataAndStateUpdate()
   }, [currentPage, pageTag])
@@ -400,7 +361,7 @@ export function Orchestrator(props: OrchestratorProps) {
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
     return () => {
-      if (isTelemetryActivated) {
+      if (isTelemetryInitialized) {
         triggerInactivityTimeoutEvent()
         if (triggerBatchTelemetryCallback) {
           ;(async () => {
@@ -434,8 +395,8 @@ export function Orchestrator(props: OrchestratorProps) {
     <div ref={containerRef}>
       <LunaticProvider>
         <SurveyContainer
-          handleNextClick={goNext}
-          handlePreviousClick={goPrevious}
+          handleNextClick={handleNextPage}
+          handlePreviousClick={handlePreviousPage}
           handleDownloadData={downloadAsJsonRef.current} // Visualize
           currentPage={currentPage}
           mode={mode}
@@ -480,7 +441,7 @@ export function Orchestrator(props: OrchestratorProps) {
             <WelcomeModal
               goBack={() =>
                 initialCurrentPage
-                  ? goToPage({ page: initialCurrentPage })
+                  ? handleGoToPage({ page: initialCurrentPage })
                   : null
               }
               open={shouldDisplayWelcomeModal(initialState, initialCurrentPage)}

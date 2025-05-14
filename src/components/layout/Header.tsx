@@ -66,6 +66,7 @@ export function Header() {
           </>
         }
         homeLinkProps={{
+          search: true,
           title: t('home link title'),
         }}
         quickAccessItems={[

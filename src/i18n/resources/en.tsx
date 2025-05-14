@@ -31,6 +31,7 @@ export const translations: Translations<'en'> = {
       'Home - Name of the entity (ministry, state secretariat, government)',
     'quick access support': 'Need help?',
     'quick access logout': 'Log out',
+    'quick access portal': 'Back to the portal',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'Are you still there?',
@@ -83,6 +84,13 @@ export const translations: Translations<'en'> = {
     'button validate': 'Submit my responses',
     content:
       'You are about to submit your responses to the questionnaire. After submission, you will not be able to modify your responses.',
+  },
+  ExitModal: {
+    title: 'Do you want to leave the questionnaire?',
+    'button cancel': 'Cancel',
+    'button validate': 'I understand',
+    content:
+      'If you leave the questionnaire, your responses will be saved. You can return to the questionnaire at any time to complete or finalize it.',
   },
   SequenceHeader: {
     'stepper state': ({ currentStep, stepCount }) =>

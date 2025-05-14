@@ -7,12 +7,14 @@ import { useSearch } from '@tanstack/react-router'
 import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_EXIT_SOURCE } from '@/constants/telemetry'
 import { useTelemetry } from '@/contexts/TelemetryContext'
+import { executePreLogoutActions } from '@/hooks/prelogout'
 import { useMode } from '@/hooks/useMode'
 import {
   declareComponentKeys,
   useResolveLocalizedString,
   useTranslation,
 } from '@/i18n'
+import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
@@ -21,6 +23,7 @@ import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
 export function Header() {
   const { t } = useTranslation({ Header })
+  const { isUserLoggedIn } = useOidc()
   const { resolveLocalizedString, resolveLocalizedStringDetailed } =
     useResolveLocalizedString({
       labelWhenMismatchingLanguage: true,
@@ -83,13 +86,20 @@ export function Header() {
             },
             text: t('quick access support'),
           },
-          {
-            iconId: 'fr-icon-external-link-line',
-            buttonProps: {
-              onClick: () => setOpen(true),
-            },
-            text: t('quick access portal'),
-          },
+          ...(!isUserLoggedIn
+            ? []
+            : [
+                {
+                  iconId: 'ri-account-box-line',
+                  buttonProps: {
+                    onClick: async () => {
+                      await executePreLogoutActions()
+                      setOpen(true)
+                    },
+                  },
+                  text: t('quick access portal'),
+                } as const,
+              ]),
         ]}
         serviceTagline={resolveLocalizedString(surveyUnitIdentifier)}
         serviceTitle={resolveLocalizedString(serviceTitle)}

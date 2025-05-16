@@ -197,30 +197,31 @@ export function Orchestrator(props: OrchestratorProps) {
     surveyUnitData?.stateData?.date,
   )
 
-  const { currentPage, goNext, goToPage, goPrevious } = useStromaeNavigation({
-    goNextLunatic: goNextLunaticPage,
-    goPrevLunatic: goPreviousLunaticPage,
-    goToLunaticPage: goToLunaticPage,
-    isFirstPage,
-    isLastPage,
-    initialCurrentPage,
-    openValidationModal: () => validationModalActionsRef.current.open(),
-  })
-
   const {
     activeErrors,
-    handleGoToPage,
-    handleNextPage,
-    handlePreviousPage,
+    handleGoToLunaticPage,
+    handleNextLunaticPage,
+    handlePreviousLunaticPage,
     resetControls,
   } = useControls({
     compileControls,
     pushEvent,
     isTelemetryInitialized,
-    goNextPage: goNext,
-    goPreviousPage: goPrevious,
-    goToPage: goToPage,
+    goNextPage: goNextLunaticPage,
+    goPreviousPage: goPreviousLunaticPage,
+    goToPage: goToLunaticPage,
   })
+
+  const { currentPage, handleNextPage, handleGoToPage, handlePreviousPage } =
+    useStromaeNavigation({
+      goNextLunatic: handleNextLunaticPage,
+      goPrevLunatic: handlePreviousLunaticPage,
+      goToLunaticPage: handleGoToLunaticPage,
+      isFirstPage,
+      isLastPage,
+      initialCurrentPage,
+      openValidationModal: () => validationModalActionsRef.current.open(),
+    })
 
   const previousPage = usePrevious(currentPage) ?? initialCurrentPage
   const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage

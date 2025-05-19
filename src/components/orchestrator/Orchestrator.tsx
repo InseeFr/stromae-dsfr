@@ -183,7 +183,7 @@ export function Orchestrator(props: OrchestratorProps) {
     autoSuggesterLoading: true,
     onChange: (e) => {
       setIsDirtyState(true)
-      acknowledgeControls()
+      obsoleteControls()
       if (isTelemetryInitialized) handleLunaticChange(e)
     },
     trackChanges: mode === MODE_TYPE.COLLECT,
@@ -208,11 +208,11 @@ export function Orchestrator(props: OrchestratorProps) {
   })
 
   const {
-    acknowledgeControls,
     activeErrors,
     handleGoToPage,
     handleNextPage,
     handlePreviousPage,
+    obsoleteControls,
     resetControls,
   } = useControls({
     compileControls,

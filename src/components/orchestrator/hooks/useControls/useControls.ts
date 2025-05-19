@@ -36,7 +36,6 @@ export function useControls({
   const [activeErrors, setActiveErrors] = useState<
     Record<string, LunaticError[]> | undefined
   >(undefined)
-  const [isBlocking, setIsBlocking] = useState<boolean>(false)
   const [isWarningAcknowledged, setIsWarningAcknowledged] =
     useState<boolean>(false)
 
@@ -56,7 +55,6 @@ export function useControls({
             }),
           )
         }
-        setIsBlocking(true)
         setActiveErrors(currentErrors)
         return
       case ErrorType.WARNING:
@@ -111,17 +109,13 @@ export function useControls({
   const resetControls = () => {
     setActiveErrors(undefined)
     setIsWarningAcknowledged(false)
-    setIsBlocking(false)
   }
 
-  const acknowledgeControls = () => {
+  const obsoleteControls = () => {
     setIsWarningAcknowledged(false)
-    setIsBlocking(false)
   }
 
   return {
-    /** Allow to manually set controls as acknowledged (e.g. when the input is changed). */
-    acknowledgeControls,
     /** Errors to be displayed by Lunatic components (sorted by criticality). */
     activeErrors,
     /** Go to page handler which reset controls (e.g. active errors). */
@@ -131,11 +125,11 @@ export function useControls({
     /** Go to previous page handler which reset controls (e.g. active errors). */
     handlePreviousPage,
     /**
-     * Whether or not the respondent should be blocked from further navigation
-     * until the filled input is changed. Should be used to set navigation
-     * buttons as disabled.
+     * Allow to manually set acknowledgement as obsolete (e.g. when the input is
+     * changed) so that new controls can trigger the same warning again but do
+     * not erase the displayed errors.
      */
-    isBlocking,
+    obsoleteControls,
     /** Allow to manually reset controls (e.g. when we go to another page). */
     resetControls,
   }

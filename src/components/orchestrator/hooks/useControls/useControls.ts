@@ -114,7 +114,14 @@ export function useControls({
     setIsBlocking(false)
   }
 
+  const acknowledgeControls = () => {
+    setIsWarningAcknowledged(false)
+    setIsBlocking(false)
+  }
+
   return {
+    /** Allow to manually set controls as acknowledged (e.g. when the input is changed). */
+    acknowledgeControls,
     /** Errors to be displayed by Lunatic components (sorted by criticality). */
     activeErrors,
     /** Go to page handler which reset controls (e.g. active errors). */
@@ -129,7 +136,7 @@ export function useControls({
      * buttons as disabled.
      */
     isBlocking,
-    /** Allow to manually reset controls (e.g. when the input is changed). */
+    /** Allow to manually reset controls (e.g. when we go to another page). */
     resetControls,
   }
 }

@@ -395,7 +395,9 @@ export function Orchestrator(props: OrchestratorProps) {
     <div ref={containerRef}>
       <LunaticProvider>
         <SurveyContainer
-          handleNextClick={handleNextPage}
+          handleNextClick={() =>
+            handleNextPage(currentPage === PAGE_TYPE.LUNATIC)
+          }
           handlePreviousClick={handlePreviousPage}
           handleDownloadData={downloadAsJsonRef.current} // Visualize
           currentPage={currentPage}

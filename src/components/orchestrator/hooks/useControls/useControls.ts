@@ -40,7 +40,9 @@ export function useControls({
   const [isWarningAcknowledged, setIsWarningAcknowledged] =
     useState<boolean>(false)
 
-  const handleNextPage = () => {
+  const handleNextPage = (isOnLunaticPage: boolean) => {
+    if (!isOnLunaticPage) return goNextPage()
+
     const { currentErrors } = compileControls()
 
     const errorType = computeErrorType(currentErrors)

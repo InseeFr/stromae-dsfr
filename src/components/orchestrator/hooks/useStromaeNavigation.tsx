@@ -35,7 +35,7 @@ export function useStromaeNavigation({
     initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME,
   )
 
-  const handleNextPage = () => {
+  const goNext = () => {
     switch (currentPage) {
       case PAGE_TYPE.VALIDATION:
         openValidationModal().then(() => {
@@ -53,7 +53,7 @@ export function useStromaeNavigation({
     }
   }
 
-  const handlePreviousPage = () => {
+  const goPrevious = () => {
     switch (currentPage) {
       case PAGE_TYPE.VALIDATION:
         return setCurrentPage(PAGE_TYPE.LUNATIC)
@@ -65,7 +65,7 @@ export function useStromaeNavigation({
     }
   }
 
-  const handleGoToPage = (
+  const goToPage = (
     params:
       | {
           page: StromaePage
@@ -84,5 +84,5 @@ export function useStromaeNavigation({
         goToLunaticPage(params)
     }
   }
-  return { handleNextPage, handlePreviousPage, handleGoToPage, currentPage }
+  return { goNext, goPrevious, goToPage, currentPage }
 }

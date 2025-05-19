@@ -2,27 +2,25 @@ import { useState } from 'react'
 
 import type { LunaticError, LunaticState } from '@inseefr/lunatic'
 
-import type {
-  LunaticGoNextPage,
-  LunaticGoPreviousPage,
-  LunaticGoToPage,
-} from '@/models/lunaticType'
 import type { TelemetryParadata } from '@/models/telemetry'
 import { computeControlEvent, computeControlSkipEvent } from '@/utils/telemetry'
 
+import { useStromaeNavigation } from '../useStromaeNavigation'
 import { ErrorType, computeErrorType, isSameErrors } from './utils'
 
 type useControlsProps = {
   compileControls: LunaticState['compileControls']
-  goNextPage: LunaticGoNextPage
-  goPreviousPage: LunaticGoPreviousPage
-  goToPage: LunaticGoToPage
+  goNextPage: () => void
+  goPreviousPage: () => void
+  goToPage: (
+    page: Parameters<ReturnType<typeof useStromaeNavigation>['goToPage']>[0],
+  ) => void
   isTelemetryInitialized?: boolean
   pushEvent: (e: TelemetryParadata) => void | Promise<boolean>
 }
 
 /**
- * On navigation in a Lunatic page, compute controls from filled inputs.
+ * On navigation, compute controls from filled inputs.
  *
  * It will return what is necessary to display the errors and block the user if
  * the error is blocking.
@@ -42,7 +40,7 @@ export function useControls({
   const [isWarningAcknowledged, setIsWarningAcknowledged] =
     useState<boolean>(false)
 
-  const handleNextLunaticPage = () => {
+  const handleNextPage = () => {
     const { currentErrors } = compileControls()
 
     const errorType = computeErrorType(currentErrors)
@@ -96,12 +94,14 @@ export function useControls({
     }
   }
 
-  const handlePreviousLunaticPage = () => {
+  const handlePreviousPage = () => {
     resetControls()
     goPreviousPage()
   }
 
-  const handleGoToLunaticPage = (page: Parameters<LunaticGoToPage>[0]) => {
+  const handleGoToPage = (
+    page: Parameters<ReturnType<typeof useStromaeNavigation>['goToPage']>[0],
+  ) => {
     resetControls()
     goToPage(page)
   }
@@ -116,11 +116,11 @@ export function useControls({
     /** Errors to be displayed by Lunatic components (sorted by criticality). */
     activeErrors,
     /** Go to page handler which reset controls (e.g. active errors). */
-    handleGoToLunaticPage,
+    handleGoToPage,
     /** Go to next page handler which check controls shenanigans. */
-    handleNextLunaticPage,
+    handleNextPage,
     /** Go to previous page handler which reset controls (e.g. active errors). */
-    handlePreviousLunaticPage,
+    handlePreviousPage,
     /**
      * Whether or not the respondent should be blocked from further navigation
      * until the filled input is changed. Should be used to set navigation

@@ -20,7 +20,7 @@ describe('Use stromae navigation', () => {
         }),
       )
 
-      act(() => result.current.handleNextPage())
+      act(() => result.current.goNext())
 
       expect(result.current.currentPage).toBe(expected)
     },
@@ -37,9 +37,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleNextPage()) // go to lunatic page
+    act(() => result.current.goNext()) // go to lunatic page
 
-    act(() => result.current.handleNextPage())
+    act(() => result.current.goNext())
 
     expect(goNextLunaticMock).toHaveBeenCalledOnce()
     expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
@@ -57,9 +57,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleNextPage()) // go to lunatic page
+    act(() => result.current.goNext()) // go to lunatic page
 
-    act(() => result.current.handleNextPage())
+    act(() => result.current.goNext())
 
     expect(goNextLunaticMock).not.toHaveBeenCalled()
     expect(result.current.currentPage).toBe(PAGE_TYPE.VALIDATION)
@@ -79,7 +79,7 @@ describe('Use stromae navigation', () => {
         }),
       )
 
-      act(() => result.current.handlePreviousPage())
+      act(() => result.current.goPrevious())
 
       expect(result.current.currentPage).toBe(expected)
     },
@@ -94,9 +94,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleNextPage()) // go to lunatic page
+    act(() => result.current.goNext()) // go to lunatic page
 
-    act(() => result.current.handlePreviousPage())
+    act(() => result.current.goPrevious())
 
     expect(goPrevLunaticMock).toHaveBeenCalledOnce()
     expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
@@ -112,9 +112,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleNextPage()) // go to lunatic page
+    act(() => result.current.goNext()) // go to lunatic page
 
-    act(() => result.current.handlePreviousPage())
+    act(() => result.current.goPrevious())
 
     expect(goPrevLunaticMock).not.toHaveBeenCalled()
     expect(result.current.currentPage).toBe(PAGE_TYPE.WELCOME)
@@ -133,7 +133,7 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleGoToPage({ page }))
+    act(() => result.current.goToPage({ page }))
     expect(goToLunaticPageMock).not.toHaveBeenCalled()
 
     expect(result.current.currentPage).toBe(page)
@@ -148,7 +148,7 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.handleGoToPage({ page: 1 }))
+    act(() => result.current.goToPage({ page: 1 }))
 
     expect(goToLunaticPageMock).toHaveBeenCalledOnce()
     expect(goToLunaticPageMock).toHaveBeenCalledWith({ page: 1 })

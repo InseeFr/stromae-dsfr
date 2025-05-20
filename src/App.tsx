@@ -14,6 +14,8 @@ import { TelemetryProvider } from '@/contexts/TelemetryContext'
 import { OidcProvider } from '@/oidc'
 import { routeTree } from '@/router/router'
 
+import './assets/fonts/OpenSans/main.css'
+
 startReactDsfr({
   defaultColorScheme: 'system',
   Link,
@@ -36,7 +38,7 @@ const { DsfrCustomBrandingProvider } = createDsfrCustomBrandingProvider({
         },
       },
       typography: {
-        fontFamily: '"Geist"',
+        fontFamily: '"Open Sans"',
       },
     })
 

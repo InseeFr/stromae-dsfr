@@ -37,7 +37,7 @@ describe('CollectPage', () => {
   it('should render Orchestrator with props ', () => {
     const mockCollectData = {
       source: { id: 'sourceId' },
-      surveyUnitData: { id: 'su1', name: 'Survey Unit 1' },
+      surveyUnit: { id: 'su1', name: 'Survey Unit 1' },
       metadata: { label: 'metadataLabel' },
     }
     vi.mocked(collectRoute.useLoaderData).mockReturnValue(mockCollectData)
@@ -47,7 +47,7 @@ describe('CollectPage', () => {
     expect(Orchestrator).toHaveBeenCalledWith(
       expect.objectContaining({
         source: mockCollectData.source,
-        surveyUnitData: mockCollectData.surveyUnitData,
+        surveyUnit: mockCollectData.surveyUnit,
         metadata: mockCollectData.metadata,
         getReferentiel: expect.any(Function),
         updateDataAndStateData: expect.any(Function),

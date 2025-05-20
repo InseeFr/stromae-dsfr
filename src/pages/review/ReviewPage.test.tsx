@@ -37,7 +37,7 @@ describe('ReviewPage', () => {
   it('should render Orchestrator with props when loader results are present', () => {
     const mockLoaderResults = {
       source: { id: 'sourceId' },
-      surveyUnitData: { id: 'su1', name: 'Survey Unit 1' },
+      surveyUnit: { id: 'su1', name: 'Survey Unit 1' },
       metadata: { label: 'metadataLabel' },
     }
     vi.mocked(reviewRoute.useLoaderData).mockReturnValue(mockLoaderResults)
@@ -54,7 +54,7 @@ describe('ReviewPage', () => {
         mode: 'review',
         metadata: mockLoaderResults.metadata,
         source: mockLoaderResults.source,
-        surveyUnitData: mockLoaderResults.surveyUnitData,
+        surveyUnit: mockLoaderResults.surveyUnit,
         getReferentiel: expect.any(Function),
       }),
       {},

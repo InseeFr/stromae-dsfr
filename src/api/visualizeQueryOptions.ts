@@ -5,7 +5,7 @@ import { ZodError } from 'zod'
 
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
 import type { Metadata } from '@/models/Metadata'
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
+import type { SurveyUnit } from '@/models/SurveyUnit'
 import type { Nomenclature } from '@/models/lunaticType'
 import { surveyUnitMetadataSchema } from '@/models/metadataSchema'
 
@@ -22,13 +22,13 @@ export const sourceQueryOptions = (
     queryFn: () => axiosGet<LunaticSource>(sourceUrl, options),
   })
 
-export const surveyUnitDataQueryOptions = (
-  surveyUnitDataUrl: string,
+export const surveyUnitQueryOptions = (
+  surveyUnitUrl: string,
   options?: AxiosRequestConfig,
 ) =>
   queryOptions({
-    queryKey: [surveyUnitDataUrl],
-    queryFn: () => axiosGet<SurveyUnitData>(surveyUnitDataUrl, options),
+    queryKey: [surveyUnitUrl],
+    queryFn: () => axiosGet<SurveyUnit>(surveyUnitUrl, options),
   })
 
 export const metadataQueryOptions = (

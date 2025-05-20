@@ -14,7 +14,7 @@ export const ReviewPage = memo(function ReviewPage() {
 
   const loaderResults = reviewRoute.useLoaderData()
 
-  const { source, surveyUnitData, metadata } = loaderResults
+  const { source, surveyUnit, metadata } = loaderResults
 
   const getReferentiel: LunaticGetReferentiel = (name: string) =>
     queryClient
@@ -26,7 +26,7 @@ export const ReviewPage = memo(function ReviewPage() {
       mode={MODE_TYPE.REVIEW}
       metadata={metadata}
       source={source}
-      surveyUnitData={surveyUnitData}
+      surveyUnit={surveyUnit}
       getReferentiel={getReferentiel}
     />
   )

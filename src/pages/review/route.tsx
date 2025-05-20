@@ -9,7 +9,7 @@ import {
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { protectedRouteLoader } from '@/loader/protectedLoader'
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
+import type { SurveyUnit } from '@/models/SurveyUnit'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
@@ -40,13 +40,11 @@ export const reviewRoute = createRoute({
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
-    const surveyUnitDataPr = queryClient
-      .ensureQueryData(
-        getGetSurveyUnitByIdQueryOptions(surveyUnitId, {
-          request: { signal: abortController.signal },
-        }),
-      )
-      .then((suData) => suData as SurveyUnitData) // data are heavy too
+    const surveyUnitPr = queryClient.ensureQueryData(
+      getGetSurveyUnitByIdQueryOptions(surveyUnitId, {
+        request: { signal: abortController.signal },
+      }),
+    ) as SurveyUnit
 
     const metadataPr = queryClient
       .ensureQueryData(
@@ -66,10 +64,10 @@ export const reviewRoute = createRoute({
         })
       })
 
-    return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
-      ([source, surveyUnitData, metadata]) => ({
+    return Promise.all([sourcePr, surveyUnitPr, metadataPr]).then(
+      ([source, surveyUnit, metadata]) => ({
         source,
-        surveyUnitData,
+        surveyUnit,
         metadata,
       }),
     )

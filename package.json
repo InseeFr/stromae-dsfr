@@ -44,7 +44,7 @@
     "react-hot-toast": "^2.4.1",
     "react-number-format": "^5.4.0",
     "tsafe": "^1.7.2",
-    "tss-react": "^4.9.13",
+    "tss-react": "^4.9.18",
     "zod": "^3.23.8"
   },
   "devDependencies": {

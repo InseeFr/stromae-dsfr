@@ -12,12 +12,22 @@ export function useSurveyUnit(initialSurveyUnit: SurveyUnit) {
   const [surveyUnitData, setSurveyUnitData] = useState<SurveyUnitData>(
     initialSurveyUnit.data ?? {},
   )
-  const [surveyUnitState, setSurveyUnitState] = useState<QuestionnaireState>(
-    initialSurveyUnit.stateData?.state ?? 'INIT',
-  )
+  const [surveyUnitState, setSurveyUnitState] = useState<
+    QuestionnaireState | undefined
+  >(initialSurveyUnit.stateData?.state ?? undefined)
 
   /** Compute new state and send an update if necessary. */
-  function updateState(currentPage: PageType): QuestionnaireState | undefined {
+  function updateState(
+    hasDataChanged: boolean,
+    currentPage: PageType,
+  ): QuestionnaireState | undefined {
+    // if there was no state and data has changed, initialize the state (INIT)
+    if (!surveyUnitState && hasDataChanged) {
+      const newState = 'INIT'
+      setSurveyUnitState(newState)
+      return newState
+    }
+
     // on the end page, update state to VALIDATED
     if (currentPage === PAGE_TYPE.END) {
       const newState = 'VALIDATED'
@@ -44,7 +54,7 @@ export function useSurveyUnit(initialSurveyUnit: SurveyUnit) {
       setSurveyUnitData(newData)
     }
 
-    const newState = updateState(currentPage)
+    const newState = updateState(hasDataBeenUpdated, currentPage)
 
     return {
       ...initialSurveyUnit,

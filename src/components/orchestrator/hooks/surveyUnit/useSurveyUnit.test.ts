@@ -52,18 +52,14 @@ describe('Use survey unit', () => {
     })
   })
 
-  test('inits state to INIT even if there is no changed data', () => {
+  test('does not set state if there is no change and no initial state', () => {
     const { result } = renderHook(() =>
       useSurveyUnit({ id: 'id', questionnaireId: 'qid', data: {} }),
     )
 
     act(() => {
       const res = result.current.updateSurveyUnit({}, '1')
-      expect(res.stateData).toStrictEqual({
-        currentPage: '1',
-        date: vi.getMockedSystemTime()?.valueOf(),
-        state: 'INIT',
-      })
+      expect(res.stateData).toBeUndefined()
     })
 
     expect(result.current.surveyUnitData).toStrictEqual({})

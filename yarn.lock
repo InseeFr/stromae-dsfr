@@ -286,10 +286,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@codegouvfr/react-dsfr@^1.23.6":
-  version "1.23.6"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.23.6.tgz#ac4232dd99d294b073e5f816f4b97692d2e7f2a7"
-  integrity sha512-c8uQAWLsnM6eRk7kg1XHs3MXwbrE2aj1+OqDySddX8AaVxaVev8b3bPaRh33vl5jbeCSaTuG2JXbmNZKOFvaBw==
+"@codegouvfr/react-dsfr@^1.23.9":
+  version "1.23.9"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.23.9.tgz#a016abf6d61ca7c5447c8cb2c28795ff7b47510f"
+  integrity sha512-QeyTDGSUbU7JqbJ96PDMhcipsy0q6a+Fjv/kJh4S+cgtHvUDzM3/XdOnrppYFaG5VXLblNoZgavOmJuFVyPzwA==
   dependencies:
     tsafe "^1.8.5"
     yargs-parser "^21.1.1"

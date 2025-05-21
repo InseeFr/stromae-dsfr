@@ -46,7 +46,7 @@ import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { computeLunaticComponents } from './utils/components'
-import { computeSurveyUnit } from './utils/data'
+import { computeSurveyUnit, trimCollectedData } from './utils/data'
 import { downloadAsJson } from './utils/downloadAsJson'
 import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
@@ -259,7 +259,9 @@ export function Orchestrator(props: OrchestratorProps) {
       props.updateDataAndStateData({
         // stateData is not null if data has changed
         stateData: surveyUnit.stateData!,
-        data: changedData,
+        // we push only the new data, not the full data
+        // changedData.COLLECTED is defined since hasDataChanged checks it
+        data: trimCollectedData(changedData.COLLECTED!),
         onSuccess: resetChangedData,
         isLogout: isLogout,
       })

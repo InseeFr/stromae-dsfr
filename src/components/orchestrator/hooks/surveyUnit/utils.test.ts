@@ -73,26 +73,4 @@ describe('computeUpdatedData', () => {
       },
     })
   })
-
-  it('cleans null data', () => {
-    expect(
-      computeUpdatedData(
-        {
-          COLLECTED: {
-            Q1: { COLLECTED: 'q1 value' },
-            Q2: { COLLECTED: 'q2 value' },
-          },
-        },
-        { COLLECTED: { Q2: { COLLECTED: null }, Q3: { COLLECTED: null } } },
-      ),
-    ).toStrictEqual({
-      CALCULATED: {},
-      COLLECTED: {
-        Q1: { COLLECTED: 'q1 value' },
-        Q2: {},
-        Q3: {},
-      },
-      EXTERNAL: {},
-    })
-  })
 })

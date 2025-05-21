@@ -1,13 +1,20 @@
 import type { SurveyUnit } from '@/models/SurveyUnit'
-import type { CollectedValues } from '@/models/SurveyUnitData'
+import type {
+  CollectedData,
+  CollectedValues,
+  VariableType,
+} from '@/models/SurveyUnitData'
+
+type ExtendedCollectedValues = CollectedValues &
+  Partial<Record<'EDITED' | 'FORCED' | 'INPUTED' | 'PREVIOUS', VariableType>>
+
+type ExtendedCollectedData = Record<string, ExtendedCollectedValues>
 
 /**
  * Remove useless variables to reduce payload size in API calls
  * (i.e. everything except COLLECTED)
  */
-export function trimCollectedData(
-  data: Record<string, CollectedValues>,
-): CollectedValues {
+export function trimCollectedData(data: ExtendedCollectedData): CollectedData {
   const trimmedData = structuredClone(data)
   for (const key in trimmedData) {
     delete trimmedData[key]['EDITED']

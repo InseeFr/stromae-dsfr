@@ -137,4 +137,35 @@ describe('Header', () => {
 
     await waitFor(() => expect(showToast).not.toHaveBeenCalled())
   })
+
+  it('navigates to "#" when clicking the home link', async () => {
+    const user = userEvent.setup()
+
+    vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
+
+    const { getByTitle } = renderWithRouter(
+      <OidcProvider>
+        <TelemetryContext.Provider
+          value={{
+            isTelemetryDisabled: false,
+            pushEvent: vi.fn(),
+            setDefaultValues: () => {},
+          }}
+        >
+          <Header />
+        </TelemetryContext.Provider>
+      </OidcProvider>,
+    )
+
+    const homeLink = getByTitle(
+      'Home - Name of the entity (ministry, state secretariat, government)',
+    )
+    const initialHref = window.location.href
+
+    await user.click(homeLink)
+
+    await waitFor(() => {
+      expect(window.location.href).toBe(`${initialHref}#`)
+    })
+  })
 })

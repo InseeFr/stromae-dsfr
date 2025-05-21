@@ -52,6 +52,9 @@ export function Header() {
       homeLinkProps={{
         search: true,
         title: t('home link title'),
+        // needs a href to prevent the default redirection to the homepage.
+        // we assume it is a link pointing to the current url
+        href: '#',
       }}
       quickAccessItems={[
         headerFooterDisplayItem,

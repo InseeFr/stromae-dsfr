@@ -1,12 +1,10 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
-import ArtWorkBackground from '@codegouvfr/react-dsfr/dsfr/artwork/background/ovoid.svg'
-import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
-import ArtWork from '@codegouvfr/react-dsfr/dsfr/artwork/system.svg'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 
 import { Container } from '@/components/Container'
 import { errorNormalizer } from '@/components/error/errorNormalizer'
+import { TechnicalError } from '@/components/pictogram/TechnicalError'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 
@@ -73,38 +71,7 @@ export function ErrorComponent(props: Props) {
             'fr-unhidden-lg',
           )}
         >
-          <svg
-            className={fr.cx('fr-artwork', 'fr-responsive-img')}
-            aria-hidden="true"
-            width="160"
-            height="200"
-            viewBox="0 0 160 200"
-          >
-            <use
-              className={fr.cx('fr-artwork-motif')}
-              href={`${ArtWorkBackground}#artwork-motif`}
-            ></use>
-            <use href={`${ArtWork}#artwork-motif`}></use>
-
-            <use
-              className={fr.cx('fr-artwork-background')}
-              href={`${ArtWorkBackground}#artwork-background`}
-            ></use>
-            <g transform="translate(40, 60)">
-              <use
-                className={fr.cx('fr-artwork-decorative')}
-                xlinkHref={`${TechnicalError}#artwork-decorative`}
-              ></use>
-              <use
-                className={fr.cx('fr-artwork-minor')}
-                xlinkHref={`${TechnicalError}#artwork-minor`}
-              ></use>
-              <use
-                className={fr.cx('fr-artwork-major')}
-                xlinkHref={`${TechnicalError}#artwork-major`}
-              ></use>
-            </g>
-          </svg>
+          <TechnicalError />
         </div>
       </div>
     </Container>

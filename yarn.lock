@@ -286,10 +286,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@codegouvfr/react-dsfr@^1.13.6":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.17.0.tgz#f781abd40493de02d89d1b11240a4500d24b097a"
-  integrity sha512-zYluHhGRD39ckZvQFgK8hSeo76TbxPtuot+I6N66vC6XXkILvv0llbIvezkxv3xlz4J8fvq4Ou5Hngt5EWtpeg==
+"@codegouvfr/react-dsfr@^1.23.9":
+  version "1.23.9"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-1.23.9.tgz#a016abf6d61ca7c5447c8cb2c28795ff7b47510f"
+  integrity sha512-QeyTDGSUbU7JqbJ96PDMhcipsy0q6a+Fjv/kJh4S+cgtHvUDzM3/XdOnrppYFaG5VXLblNoZgavOmJuFVyPzwA==
   dependencies:
     tsafe "^1.8.5"
     yargs-parser "^21.1.1"
@@ -5742,10 +5742,10 @@ object.assign@^4.1.7:
     has-symbols "^1.1.0"
     object-keys "^1.1.1"
 
-oidc-spa@^6.8.2:
-  version "6.8.2"
-  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-6.8.2.tgz#005f353a7ae7385a8d3b85808f895fbc49723ccd"
-  integrity sha512-R27+BDg9RW/eI0uZLDnBC/BzKdhkPcOrLIyFwnwCLeL9D9oe+YGXt0LlxSHlgU1DQ3ElLEWNCCNQc9bjpb4oeg==
+oidc-spa@^6.14.0:
+  version "6.14.0"
+  resolved "https://registry.yarnpkg.com/oidc-spa/-/oidc-spa-6.14.0.tgz#38ec7d2a5d76829421bb3318c5f8f33878f0d227"
+  integrity sha512-RpdvmwDy54YGACn6jv3UpPwg2U1eRfgEhgX3M/OOtB3bFOjN+MnmpuKLwPSr2/gg2zMUXLsoap9RUB76PrbTsQ==
 
 onetime@^5.1.2:
   version "5.1.2"
@@ -7131,10 +7131,10 @@ tslib@^2.0.1, tslib@^2.2.0, tslib@^2.6.0, tslib@^2.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
-tss-react@^4.9.13:
-  version "4.9.15"
-  resolved "https://registry.yarnpkg.com/tss-react/-/tss-react-4.9.15.tgz#a26fc24889a462ab4858094bc5b33cdda36e45ab"
-  integrity sha512-rLiEmDwUtln9RKTUR/ZPYBrufF0Tq/PFggO1M7P8M3/FAcodPQ746Ug9MCEFkURKDlntN17+Oja0DMMz5yBnsQ==
+tss-react@^4.9.18:
+  version "4.9.18"
+  resolved "https://registry.yarnpkg.com/tss-react/-/tss-react-4.9.18.tgz#34828008381f2dd3fe79f835ecd43fde5a349505"
+  integrity sha512-Uc+VvP4RXVzfEacw735xRvne1lwt5HNhvIFptpvmK+G6F/hRA5TeEr3SEzxrqTb6ixA4vANB0iXjBB6LdexxJA==
   dependencies:
     "@emotion/cache" "*"
     "@emotion/serialize" "*"

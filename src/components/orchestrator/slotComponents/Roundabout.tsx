@@ -5,7 +5,7 @@ import Alert from '@codegouvfr/react-dsfr/Alert'
 import { Badge } from '@codegouvfr/react-dsfr/Badge'
 import Button from '@codegouvfr/react-dsfr/Button'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
-import { useStyles } from 'tss-react/dsfr'
+import { useStyles } from 'tss-react'
 
 import { Declarations } from './Declarations'
 import type { ItemOf } from './utils/type'

@@ -1,11 +1,10 @@
-import React from 'react'
+import { oidcEarlyInit } from 'oidc-spa/entrypoint'
 
-import ReactDOM from 'react-dom/client'
+const { shouldLoadApp } = oidcEarlyInit({
+  freezeFetch: true,
+  freezeXMLHttpRequest: true,
+})
 
-import { App } from './App'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+if (shouldLoadApp) {
+  import('./main.lazy')
+}

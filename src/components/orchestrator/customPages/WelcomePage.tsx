@@ -8,7 +8,7 @@ import {
   useResolveLocalizedString,
   useTranslation,
 } from '@/i18n'
-import type { Contents, Metadata } from '@/models/Metadata'
+import type { Contents, Metadata } from '@/models/metadata'
 
 function renderMetadataContents(contents: Contents[] | undefined) {
   if (contents === undefined) return null

@@ -1,4 +1,4 @@
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
+import type { SurveyUnitData } from '@/models/surveyUnitData'
 
 import { trimCollectedData } from '../../utils/data'
 

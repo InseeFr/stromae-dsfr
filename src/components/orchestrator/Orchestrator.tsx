@@ -15,14 +15,14 @@ import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
-import type { Metadata } from '@/models/Metadata'
-import type { StateData } from '@/models/StateData'
-import type { SurveyUnit } from '@/models/SurveyUnit'
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
 import type {
   LunaticGetReferentiel,
   LunaticPageTag,
 } from '@/models/lunaticType'
+import type { Metadata } from '@/models/metadata'
+import type { StateData } from '@/models/stateData'
+import type { SurveyUnit } from '@/models/surveyUnit'
+import type { SurveyUnitData } from '@/models/surveyUnitData'
 import {
   computeInitEvent,
   computeInputEvent,

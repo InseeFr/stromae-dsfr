@@ -4,10 +4,10 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import { ZodError } from 'zod'
 
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
-import type { Metadata } from '@/models/Metadata'
-import type { SurveyUnit } from '@/models/SurveyUnit'
 import type { Nomenclature } from '@/models/lunaticType'
+import type { Metadata } from '@/models/metadata'
 import { surveyUnitMetadataSchema } from '@/models/metadataSchema'
+import type { SurveyUnit } from '@/models/surveyUnit'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
   return axios.get<T>(url, options).then(({ data }) => data)

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 import { PAGE_TYPE } from '@/constants/page'
-import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
 import type {
   LunaticGoNextPage,
   LunaticGoPreviousPage,
   LunaticGoToPage,
 } from '@/models/lunaticType'
+import type { InternalPageType, PageType, StromaePage } from '@/models/page'
 
 type Params = {
   isFirstPage?: boolean

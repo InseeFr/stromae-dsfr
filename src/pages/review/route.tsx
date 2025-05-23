@@ -9,7 +9,7 @@ import {
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { protectedRouteLoader } from '@/loader/protectedLoader'
-import type { SurveyUnit } from '@/models/SurveyUnit'
+import type { SurveyUnit } from '@/models/surveyUnit'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'

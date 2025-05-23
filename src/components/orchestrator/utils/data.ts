@@ -1,9 +1,9 @@
-import type { SurveyUnit } from '@/models/SurveyUnit'
+import type { SurveyUnit } from '@/models/surveyUnit'
 import type {
   CollectedData,
   CollectedValues,
   VariableType,
-} from '@/models/SurveyUnitData'
+} from '@/models/surveyUnitData'
 
 type ExtendedCollectedValues = CollectedValues &
   Partial<Record<'EDITED' | 'FORCED' | 'INPUTED' | 'PREVIOUS', VariableType>>

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import { PAGE_TYPE } from '@/constants/page'
-import type { PageType } from '@/models/Page'
-import type { QuestionnaireState } from '@/models/QuestionnaireState'
-import type { SurveyUnit } from '@/models/SurveyUnit'
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
+import type { PageType } from '@/models/page'
+import type { QuestionnaireState } from '@/models/questionnaireState'
+import type { SurveyUnit } from '@/models/surveyUnit'
+import type { SurveyUnitData } from '@/models/surveyUnitData'
 
 import { computeUpdatedData, hasDataChanged } from './utils'
 

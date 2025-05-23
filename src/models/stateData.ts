@@ -1,9 +1,9 @@
 import { type Extends } from 'tsafe/Extends'
 import { assert } from 'tsafe/assert'
 
-import type { PageType } from './Page'
-import type { QuestionnaireState } from './QuestionnaireState'
 import type { StateData as StateDataApi } from './api'
+import type { PageType } from './page'
+import type { QuestionnaireState } from './questionnaireState'
 
 export type StateData = {
   state: QuestionnaireState

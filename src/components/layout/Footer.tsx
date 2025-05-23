@@ -8,7 +8,7 @@ import {
   useResolveLocalizedString,
   useTranslation,
 } from '@/i18n'
-import type { Logo } from '@/models/Metadata'
+import type { Logo } from '@/models/metadata'
 import { NavigationAssistancePage } from '@/pages/navigationAssistance/NavigationAssistancePage'
 import { SecurityPage } from '@/pages/security/SecurityPage'
 import { useMetadataStore } from '@/stores/useMetadataStore'

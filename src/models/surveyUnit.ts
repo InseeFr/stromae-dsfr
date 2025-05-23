@@ -1,9 +1,9 @@
 import type { Extends } from 'tsafe/Extends'
 import { assert } from 'tsafe/assert'
 
-import type { StateData } from './StateData'
-import type { SurveyUnitData } from './SurveyUnitData'
 import type { SurveyUnit as ApiSurveyUnit } from './api'
+import type { StateData } from './stateData'
+import type { SurveyUnitData } from './surveyUnitData'
 
 export type SurveyUnit = {
   data?: SurveyUnitData

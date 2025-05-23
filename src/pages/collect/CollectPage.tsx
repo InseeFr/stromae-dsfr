@@ -12,8 +12,8 @@ import {
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import { MODE_TYPE } from '@/constants/mode'
-import type { StateData } from '@/models/StateData'
 import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
+import type { StateData } from '@/models/stateData'
 
 import { collectRoute } from './route'
 

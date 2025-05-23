@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react'
 
 import { PAGE_TYPE } from '@/constants/page'
-import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
+import type { InternalPageType, PageType, StromaePage } from '@/models/page'
 
 import { useStromaeNavigation } from './useStromaeNavigation'
 

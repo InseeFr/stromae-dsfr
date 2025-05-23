@@ -124,7 +124,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
                 priority="secondary"
                 onClick={onClear}
                 title="vider le champ"
-                disabled={inputValue === ''}
+                disabled={inputValue === '' || readOnly}
               />
             </div>
             {errorState !== 'default' && (

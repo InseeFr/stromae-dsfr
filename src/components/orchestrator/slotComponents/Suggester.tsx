@@ -118,21 +118,13 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
                   minHeight: 0, //Override dsfr minHeight
                   resize: 'none',
                 }}
-              >
-                <Button
-                  iconId="ri-close-line"
-                  priority="secondary"
-                  onClick={onClear}
-                  title="vider le champ"
-                  disabled={inputValue === ''}
-                />
-              </TextareaAutosize>
+              ></TextareaAutosize>
               <Button
                 iconId="ri-close-line"
                 priority="secondary"
                 onClick={onClear}
                 title="vider le champ"
-                disabled={inputValue === ''}
+                disabled={inputValue === '' || readOnly}
               />
             </div>
             {errorState !== 'default' && (

@@ -4,7 +4,7 @@ import { z } from 'zod'
 import {
   metadataQueryOptions,
   sourceQueryOptions,
-  surveyUnitDataQueryOptions,
+  surveyUnitQueryOptions,
 } from '@/api/visualizeQueryOptions'
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
@@ -31,13 +31,13 @@ export const visualizeRoute = createRoute({
   validateSearch: visualizeSearchSchema,
   loaderDeps: ({ search }) => ({
     sourceUrl: search?.source,
-    surveyUnitDataUrl: search?.data,
+    surveyUnitUrl: search?.data,
     metadataUrl: search?.metadata,
     nomenclature: search?.nomenclature,
   }),
   loader: async ({
     context: { queryClient },
-    deps: { sourceUrl, surveyUnitDataUrl, metadataUrl, nomenclature },
+    deps: { sourceUrl, surveyUnitUrl, metadataUrl, nomenclature },
     abortController,
   }) => {
     document.title = "Visualisation | Filière d'Enquête"
@@ -50,9 +50,9 @@ export const visualizeRoute = createRoute({
       sourceQueryOptions(sourceUrl, { signal: abortController.signal }),
     )
 
-    const surveyUnitDataPr = surveyUnitDataUrl
+    const surveyUnitPr = surveyUnitUrl
       ? queryClient.ensureQueryData(
-          surveyUnitDataQueryOptions(surveyUnitDataUrl, {
+          surveyUnitQueryOptions(surveyUnitUrl, {
             signal: abortController.signal,
           }),
         )
@@ -80,9 +80,9 @@ export const visualizeRoute = createRoute({
           })
       : Promise.resolve(metadataStore.getSnapshot())
 
-    return Promise.all([sourcePr, surveyUnitDataPr, metadataPr]).then(
-      ([source, surveyUnitData, metadata]) => {
-        return { source, surveyUnitData, metadata, nomenclature }
+    return Promise.all([sourcePr, surveyUnitPr, metadataPr]).then(
+      ([source, surveyUnit, metadata]) => {
+        return { source, surveyUnit, metadata, nomenclature }
       },
     )
   },

@@ -1,6 +1,6 @@
 import { PAGE_TYPE } from '@/constants/page'
-import type { PageType } from '@/models/Page'
-import type { StateData } from '@/models/StateData'
+import type { PageType } from '@/models/page'
+import type { StateData } from '@/models/stateData'
 
 // Whether or not the form has been sent and cannot be updated anymore
 export function hasBeenSent(state?: StateData['state']): boolean {

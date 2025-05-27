@@ -12,8 +12,8 @@ import {
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import { MODE_TYPE } from '@/constants/mode'
-import type { StateData } from '@/models/StateData'
 import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
+import type { StateData } from '@/models/stateData'
 
 import { collectRoute } from './route'
 
@@ -24,7 +24,7 @@ export const CollectPage = memo(function CollectPage() {
 
   const loaderResults = collectRoute.useLoaderData()
 
-  const { source, surveyUnitData, metadata } = loaderResults
+  const { source, surveyUnit, metadata } = loaderResults
 
   const getReferentiel: LunaticGetReferentiel = useCallback(
     (name: string) =>
@@ -100,7 +100,7 @@ export const CollectPage = memo(function CollectPage() {
       metadata={metadata}
       mode={MODE_TYPE.COLLECT}
       source={source}
-      surveyUnitData={surveyUnitData}
+      surveyUnit={surveyUnit}
       getReferentiel={getReferentiel}
       updateDataAndStateData={updateDataAndStateData}
       getDepositProof={getDepositProof}

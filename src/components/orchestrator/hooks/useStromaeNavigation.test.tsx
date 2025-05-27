@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react'
 
 import { PAGE_TYPE } from '@/constants/page'
-import type { InternalPageType, PageType, StromaePage } from '@/models/Page'
+import type { InternalPageType, PageType, StromaePage } from '@/models/page'
 
 import { useStromaeNavigation } from './useStromaeNavigation'
 
@@ -22,7 +22,7 @@ describe('Use stromae navigation', () => {
 
       act(() => result.current.goNext())
 
-      expect(result.current.currentPage).toBe(expected)
+      expect(result.current.currentPageType).toBe(expected)
     },
   )
 
@@ -42,7 +42,7 @@ describe('Use stromae navigation', () => {
     act(() => result.current.goNext())
 
     expect(goNextLunaticMock).toHaveBeenCalledOnce()
-    expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
   })
 
   test('go to next lunaticPage -> validationPage (last page)', () => {
@@ -62,7 +62,7 @@ describe('Use stromae navigation', () => {
     act(() => result.current.goNext())
 
     expect(goNextLunaticMock).not.toHaveBeenCalled()
-    expect(result.current.currentPage).toBe(PAGE_TYPE.VALIDATION)
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
   })
 
   test.each<{ initialCurrentPage?: PageType; expected: InternalPageType }>([
@@ -81,7 +81,7 @@ describe('Use stromae navigation', () => {
 
       act(() => result.current.goPrevious())
 
-      expect(result.current.currentPage).toBe(expected)
+      expect(result.current.currentPageType).toBe(expected)
     },
   )
 
@@ -99,7 +99,7 @@ describe('Use stromae navigation', () => {
     act(() => result.current.goPrevious())
 
     expect(goPrevLunaticMock).toHaveBeenCalledOnce()
-    expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
   })
 
   test('go to next lunaticPage -> welcomePage (first page)', () => {
@@ -117,7 +117,7 @@ describe('Use stromae navigation', () => {
     act(() => result.current.goPrevious())
 
     expect(goPrevLunaticMock).not.toHaveBeenCalled()
-    expect(result.current.currentPage).toBe(PAGE_TYPE.WELCOME)
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.WELCOME)
   })
 
   test.each<{ page: StromaePage; shouldGoToLunaticPageBeCalled?: boolean }>([
@@ -136,7 +136,7 @@ describe('Use stromae navigation', () => {
     act(() => result.current.goToPage({ page }))
     expect(goToLunaticPageMock).not.toHaveBeenCalled()
 
-    expect(result.current.currentPage).toBe(page)
+    expect(result.current.currentPageType).toBe(page)
   })
 
   test('go to lunatic page ', () => {
@@ -153,6 +153,6 @@ describe('Use stromae navigation', () => {
     expect(goToLunaticPageMock).toHaveBeenCalledOnce()
     expect(goToLunaticPageMock).toHaveBeenCalledWith({ page: 1 })
 
-    expect(result.current.currentPage).toBe(PAGE_TYPE.LUNATIC)
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
   })
 })

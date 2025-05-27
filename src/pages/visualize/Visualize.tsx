@@ -17,7 +17,7 @@ export const VisualizePage = memo(function VisualizePage() {
   if (!loaderResults) {
     return <VisualizeForm />
   }
-  const { source, surveyUnitData, nomenclature, metadata } = loaderResults
+  const { source, surveyUnit, nomenclature, metadata } = loaderResults
 
   const getReferentiel: LunaticGetReferentiel = (name: string) => {
     if (!nomenclature) {
@@ -39,7 +39,7 @@ export const VisualizePage = memo(function VisualizePage() {
       mode={MODE_TYPE.VISUALIZE}
       metadata={metadata}
       source={source}
-      surveyUnitData={surveyUnitData}
+      surveyUnit={surveyUnit}
       getReferentiel={getReferentiel}
     />
   )

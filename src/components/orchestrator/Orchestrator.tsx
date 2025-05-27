@@ -15,14 +15,14 @@ import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
-import { usePrevious } from '@/hooks/usePrevious'
-import type { Metadata } from '@/models/Metadata'
-import type { StateData } from '@/models/StateData'
-import type { SurveyUnitData } from '@/models/SurveyUnitData'
 import type {
   LunaticGetReferentiel,
   LunaticPageTag,
 } from '@/models/lunaticType'
+import type { Metadata } from '@/models/metadata'
+import type { StateData } from '@/models/stateData'
+import type { SurveyUnit } from '@/models/surveyUnit'
+import type { SurveyUnitData } from '@/models/surveyUnitData'
 import {
   computeInitEvent,
   computeInputEvent,
@@ -36,6 +36,8 @@ import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
 import { WelcomeModal } from './customPages/WelcomeModal'
 import { WelcomePage } from './customPages/WelcomePage'
+import { useSurveyUnit } from './hooks/surveyUnit/useSurveyUnit'
+import { hasDataChanged } from './hooks/surveyUnit/utils'
 import { useControls } from './hooks/useControls'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
@@ -44,9 +46,8 @@ import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { computeLunaticComponents } from './utils/components'
-import { trimCollectedData } from './utils/data'
+import { computeSurveyUnit, trimCollectedData } from './utils/data'
 import { downloadAsJson } from './utils/downloadAsJson'
-import { isObjectEmpty } from './utils/isObjectEmpty'
 import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
@@ -64,8 +65,8 @@ export namespace OrchestratorProps {
   export type Common = {
     /** Questionnaire data consumed by Lunatic to make its components */
     source: LunaticSource
-    /** Initial survey unit data when we initialize the orchestrator */
-    surveyUnitData: SurveyUnitData | undefined
+    /** Initial survey unit when we initialize the orchestrator */
+    surveyUnit?: SurveyUnit
     /** Allows to fetch nomenclature by id */
     getReferentiel: LunaticGetReferentiel
     /** Survey unit metadata */
@@ -95,9 +96,11 @@ export namespace OrchestratorProps {
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, surveyUnitData, getReferentiel, mode, metadata } = props
+  const { source, surveyUnit, getReferentiel, mode, metadata } = props
 
   const navigate = useNavigate()
+
+  const initialSurveyUnit = computeSurveyUnit(surveyUnit)
 
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
@@ -150,8 +153,8 @@ export function Orchestrator(props: OrchestratorProps) {
     open: () => Promise.resolve(),
   })
 
-  const initialCurrentPage = surveyUnitData?.stateData?.currentPage
-  const initialState = surveyUnitData?.stateData?.state
+  const initialCurrentPage = initialSurveyUnit?.stateData?.currentPage
+  const initialState = initialSurveyUnit?.stateData?.state
   const pagination = source.pagination ?? 'question'
 
   const lunaticLogger = useMemo(
@@ -168,7 +171,6 @@ export function Orchestrator(props: OrchestratorProps) {
     compileControls,
     goPreviousPage: goPreviousLunaticPage,
     goNextPage: goNextLunaticPage,
-    getData,
     isFirstPage,
     isLastPage,
     pageTag,
@@ -176,7 +178,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getChangedData,
     resetChangedData,
     overview,
-  } = useLunatic(source, surveyUnitData?.data, {
+  } = useLunatic(source, initialSurveyUnit?.data, {
     logger: lunaticLogger,
     activeControls: true,
     getReferentiel,
@@ -186,7 +188,7 @@ export function Orchestrator(props: OrchestratorProps) {
       obsoleteControls()
       if (isTelemetryInitialized) handleLunaticChange(e)
     },
-    trackChanges: mode === MODE_TYPE.COLLECT,
+    trackChanges: true,
     withOverview: true,
   })
 
@@ -194,18 +196,21 @@ export function Orchestrator(props: OrchestratorProps) {
 
   // current date to show in end page on validation
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
-    surveyUnitData?.stateData?.date,
+    initialSurveyUnit?.stateData?.date,
   )
 
-  const { currentPage, goNext, goToPage, goPrevious } = useStromaeNavigation({
-    goNextLunatic: goNextLunaticPage,
-    goPrevLunatic: goPreviousLunaticPage,
-    goToLunaticPage: goToLunaticPage,
-    isFirstPage,
-    isLastPage,
-    initialCurrentPage,
-    openValidationModal: () => validationModalActionsRef.current.open(),
-  })
+  const { updateSurveyUnit } = useSurveyUnit(initialSurveyUnit)
+
+  const { currentPageType, goNext, goToPage, goPrevious } =
+    useStromaeNavigation({
+      goNextLunatic: goNextLunaticPage,
+      goPrevLunatic: goPreviousLunaticPage,
+      goToLunaticPage: goToLunaticPage,
+      isFirstPage,
+      isLastPage,
+      initialCurrentPage,
+      openValidationModal: () => validationModalActionsRef.current.open(),
+    })
 
   const {
     activeErrors,
@@ -223,37 +228,18 @@ export function Orchestrator(props: OrchestratorProps) {
     goToPage: goToPage,
   })
 
-  const previousPage = usePrevious(currentPage) ?? initialCurrentPage
-  const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
-
-  const getCurrentStateData = useRefSync((): StateData => {
-    switch (currentPage) {
-      case PAGE_TYPE.END:
-        return { date: Date.now(), currentPage, state: 'VALIDATED' }
-      case PAGE_TYPE.LUNATIC:
-        return { date: Date.now(), currentPage: pageTag, state: 'INIT' }
-      case PAGE_TYPE.VALIDATION:
-      case PAGE_TYPE.WELCOME:
-      default:
-        return { date: Date.now(), currentPage, state: 'INIT' }
-    }
-  })
+  const currentPage =
+    currentPageType === PAGE_TYPE.LUNATIC ? pageTag : currentPageType
 
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
-    const data = getData(false)
-    const trimmedCollectedData = trimCollectedData(data.COLLECTED)
-    const trimmedData = {
-      ...data,
-      COLLECTED: trimmedCollectedData,
-    }
+    const surveyUnit = updateSurveyUnit(
+      getChangedData(true) as SurveyUnitData,
+      currentPage,
+    )
 
-    downloadAsJson<SurveyUnitData>({
-      dataToDownload: {
-        data: trimmedData,
-        stateData: getCurrentStateData.current(),
-        personalization: surveyUnitData?.personalization,
-      },
+    downloadAsJson<SurveyUnit>({
+      dataToDownload: surveyUnit,
       //The label of source is not dynamic
       filename: `${source.label?.value}-${new Date().toLocaleDateString()}`,
     })
@@ -261,45 +247,37 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const triggerDataAndStateUpdate = (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
-      const stateData = getCurrentStateData.current()
-      const data = getChangedData()
+      const changedData = getChangedData(true) as SurveyUnitData
+      const surveyUnit = updateSurveyUnit(changedData, currentPage)
 
-      // check if any data has been updated
-      const isCollectedDataEmpty = isObjectEmpty(data.COLLECTED ?? {})
-      if (
-        isCollectedDataEmpty &&
-        (currentPage === PAGE_TYPE.LUNATIC
-          ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
-          : stateData.currentPage === previousPage)
-      ) {
+      if (!hasDataChanged(changedData)) {
         // no change, no need to push anything
         setIsDirtyState(false)
         return
       }
 
-      const collectedData = isCollectedDataEmpty
-        ? undefined
-        : trimCollectedData(data.COLLECTED)
-
       props.updateDataAndStateData({
-        stateData,
-        data: collectedData,
+        // stateData is not null if data has changed
+        stateData: surveyUnit.stateData!,
+        // we push only the new data, not the full data
+        // changedData.COLLECTED is defined since hasDataChanged checks it
+        data: trimCollectedData(changedData.COLLECTED!),
         onSuccess: resetChangedData,
         isLogout: isLogout,
       })
       setIsDirtyState(false)
       // update date to show on end page message
-      setLastUpdateDate(stateData.date)
+      setLastUpdateDate(surveyUnit.stateData!.date)
     }
   }
 
   // Telemetry initialization
   useEffect(() => {
     if (!isTelemetryDisabled && mode === MODE_TYPE.COLLECT) {
-      setDefaultValues({ idSU: surveyUnitData?.id })
+      setDefaultValues({ idSU: initialSurveyUnit?.id })
       setIsTelemetryInitialized(true)
     }
-  }, [isTelemetryDisabled, mode, setDefaultValues, surveyUnitData?.id])
+  }, [isTelemetryDisabled, mode, setDefaultValues, initialSurveyUnit?.id])
 
   // Initialization
   useEffect(() => {
@@ -328,11 +306,11 @@ export function Orchestrator(props: OrchestratorProps) {
       triggerInactivityTimeoutEvent()
       pushEvent(
         computeNewPageEvent({
-          page: currentPage,
+          page: currentPageType,
           pageTag,
         }),
       )
-      if (currentPage === PAGE_TYPE.END) {
+      if (currentPageType === PAGE_TYPE.END) {
         if (triggerBatchTelemetryCallback) {
           triggerBatchTelemetryCallback()
         }
@@ -357,7 +335,7 @@ export function Orchestrator(props: OrchestratorProps) {
     resetControls()
     // Persist data and stateData when page change in "collect" mode
     triggerDataAndStateUpdate()
-  }, [currentPage, pageTag])
+  }, [currentPageType, pageTag])
 
   // Persist data when component unmount (ie when navigate etc...)
   useEffect(() => {
@@ -397,11 +375,11 @@ export function Orchestrator(props: OrchestratorProps) {
       <LunaticProvider>
         <SurveyContainer
           handleNextClick={() =>
-            handleNextPage(currentPage === PAGE_TYPE.LUNATIC)
+            handleNextPage(currentPageType === PAGE_TYPE.LUNATIC)
           }
           handlePreviousClick={handlePreviousPage}
           handleDownloadData={downloadAsJsonRef.current} // Visualize
-          currentPage={currentPage}
+          currentPage={currentPageType}
           mode={mode}
           handleDepositProofClick={handleDepositProofClick}
           pagination={pagination}
@@ -411,7 +389,7 @@ export function Orchestrator(props: OrchestratorProps) {
           bottomContent={
             bottomComponents.length > 0 && (
               <div className={fr.cx('fr-my-10v')}>
-                {currentPage === PAGE_TYPE.LUNATIC && (
+                {currentPageType === PAGE_TYPE.LUNATIC && (
                   <LunaticComponents
                     components={bottomComponents}
                     slots={slotComponents}
@@ -425,10 +403,10 @@ export function Orchestrator(props: OrchestratorProps) {
           }
         >
           <div ref={contentRef} className={fr.cx('fr-mb-4v')}>
-            {currentPage === PAGE_TYPE.WELCOME && (
+            {currentPageType === PAGE_TYPE.WELCOME && (
               <WelcomePage metadata={metadata} />
             )}
-            {currentPage === PAGE_TYPE.LUNATIC && (
+            {currentPageType === PAGE_TYPE.LUNATIC && (
               <LunaticComponents
                 components={components}
                 slots={slotComponents}
@@ -437,8 +415,8 @@ export function Orchestrator(props: OrchestratorProps) {
                 })}
               />
             )}
-            {currentPage === PAGE_TYPE.VALIDATION && <ValidationPage />}
-            {currentPage === PAGE_TYPE.END && (
+            {currentPageType === PAGE_TYPE.VALIDATION && <ValidationPage />}
+            {currentPageType === PAGE_TYPE.END && (
               <EndPage state={initialState} date={lastUpdateDate} />
             )}
             <WelcomeModal

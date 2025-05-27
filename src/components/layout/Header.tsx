@@ -1,5 +1,8 @@
+import { useMemo } from 'react'
+
 import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
 import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
+import { createModal } from '@codegouvfr/react-dsfr/Modal'
 import { useSearch } from '@tanstack/react-router'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -17,9 +20,11 @@ import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
 
+import { ExitModal } from '../orchestrator/customPages/ExitModal'
+
 export function Header() {
   const { t } = useTranslation({ Header })
-  const { isUserLoggedIn, logout } = useOidc()
+  const { isUserLoggedIn } = useOidc()
   const { resolveLocalizedString, resolveLocalizedStringDetailed } =
     useResolveLocalizedString({
       labelWhenMismatchingLanguage: true,
@@ -39,84 +44,97 @@ export function Header() {
    */
   const isCollectRoute = mode === MODE_TYPE.COLLECT
   const search = useSearch({ strict: false })
+  const exitModal = useMemo(
+    () =>
+      createModal({
+        id: 'exitModal',
+        isOpenedByDefault: false,
+      }),
+    [],
+  )
+
+  const goToPortal = async () => {
+    await executePreLogoutActions()
+    if (!isTelemetryDisabled) {
+      await pushEvent(
+        computeExitEvent({
+          source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
+        }),
+      )
+      if (triggerBatchTelemetryCallback) {
+        await triggerBatchTelemetryCallback()
+      }
+    }
+    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathExit'] ?? ''}`
+  }
 
   return (
-    <DsfrHeader
-      brandTop={
-        <>
-          République
-          <br />
-          Française
-        </>
-      }
-      homeLinkProps={{
-        search: true,
-        title: t('home link title'),
-        // needs a href to prevent the default redirection to the homepage.
-        // we assume it is a link pointing to the current url
-        href: '#',
-      }}
-      quickAccessItems={[
-        headerFooterDisplayItem,
-        {
-          iconId: 'fr-icon-customer-service-fill',
-          linkProps: {
-            href: collectPath
-              ? `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathAssistance'] ?? ''}`
-              : '',
-            disabled: isCollectRoute,
-            onClick:
-              isCollectRoute && !isTelemetryDisabled
-                ? () => {
-                    pushEvent(computeContactSupportEvent())
-                  }
-                : undefined,
-          },
-          text: t('quick access support'),
-        },
-        ...(!isUserLoggedIn
-          ? []
-          : [
-              {
-                iconId: 'ri-account-box-line',
-                buttonProps: {
-                  onClick: async () => {
-                    await executePreLogoutActions()
-                    if (!isTelemetryDisabled) {
-                      await pushEvent(
-                        computeExitEvent({
-                          source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
-                        }),
-                      )
-                      if (triggerBatchTelemetryCallback) {
-                        await triggerBatchTelemetryCallback()
-                      }
+    <>
+      <DsfrHeader
+        brandTop={
+          <>
+            République
+            <br />
+            Française
+          </>
+        }
+        homeLinkProps={{
+          search: true,
+          title: t('home link title'),
+          // needs a href to prevent the default redirection to the homepage.
+          // we assume it is a link pointing to the current url
+          href: '#',
+        }}
+        quickAccessItems={[
+          headerFooterDisplayItem || {},
+          {
+            iconId: 'fr-icon-customer-service-fill',
+            linkProps: {
+              href: collectPath
+                ? `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathAssistance'] ?? ''}`
+                : '',
+              disabled: isCollectRoute,
+              onClick:
+                isCollectRoute && !isTelemetryDisabled
+                  ? () => {
+                      pushEvent(computeContactSupportEvent())
                     }
-                    logout({
-                      redirectTo: 'specific url',
-                      url: `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathLogout'] ?? ''}`,
-                    })
+                  : undefined,
+            },
+            text: t('quick access support'),
+          },
+          ...(!isUserLoggedIn
+            ? []
+            : [
+                {
+                  iconId: 'ri-account-box-line',
+                  buttonProps: {
+                    onClick: exitModal?.open,
+                    disabled: !isCollectRoute,
                   },
-                  disabled: !isCollectRoute,
-                },
-                text: t('quick access logout'),
-              } as const,
-            ]),
-      ]}
-      serviceTagline={resolveLocalizedString(surveyUnitIdentifier)}
-      serviceTitle={resolveLocalizedString(serviceTitle)}
-      operatorLogo={{
-        alt: resolveLocalizedStringDetailed(mainLogo.label).str,
-        imgUrl: mainLogo.url,
-        orientation: 'vertical',
-      }}
-    />
+                  text: t('quick access portal'),
+                } as const,
+              ]),
+        ]}
+        serviceTagline={resolveLocalizedString(surveyUnitIdentifier)}
+        serviceTitle={resolveLocalizedString(serviceTitle)}
+        operatorLogo={{
+          alt: resolveLocalizedStringDetailed(mainLogo.label).str,
+          imgUrl: mainLogo.url,
+          orientation: 'vertical',
+        }}
+      />
+      <ExitModal modal={exitModal} navigatePortal={goToPortal} />
+    </>
   )
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { i18n } = declareComponentKeys<
-  'home link title' | 'quick access support' | 'quick access logout'
+  | 'home link title'
+  | 'quick access support'
+  | 'quick access logout'
+  | 'quick access portal'
 >()({ Header })
 
 export type I18n = typeof i18n

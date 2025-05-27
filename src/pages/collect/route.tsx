@@ -18,7 +18,7 @@ import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
 import { CollectPage } from './CollectPage'
 
 const collectSearchParams = z.object({
-  pathLogout: z.string().optional(),
+  pathExit: z.string().optional(),
   pathAssistance: z.string().optional(),
 })
 

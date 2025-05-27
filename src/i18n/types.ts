@@ -16,6 +16,7 @@ export type ComponentKey =
   | import('@/components/error/ErrorComponent').I18n
   | import('@/components/orchestrator/customPages/EndPage').I18n
   | import('@/components/orchestrator/customPages/ValidationModal').I18n
+  | import('@/components/orchestrator/customPages/ExitModal').I18n
   | import('@/components/orchestrator/customPages/ValidationPage').I18n
   | import('@/components/orchestrator/customPages/WelcomePage').I18n
   | import('@/components/orchestrator/customPages/WelcomeModal').I18n

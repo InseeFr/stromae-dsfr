@@ -15,6 +15,7 @@ import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
+import { usePrevious } from '@/hooks/usePrevious'
 import type {
   LunaticGetReferentiel,
   LunaticPageTag,
@@ -231,6 +232,9 @@ export function Orchestrator(props: OrchestratorProps) {
   const currentPage =
     currentPageType === PAGE_TYPE.LUNATIC ? pageTag : currentPageType
 
+  const previousPage = usePrevious(currentPageType) ?? initialCurrentPage
+  const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
+
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
     const surveyUnit = updateSurveyUnit(
@@ -250,15 +254,20 @@ export function Orchestrator(props: OrchestratorProps) {
       const changedData = getChangedData(true) as SurveyUnitData
       const surveyUnit = updateSurveyUnit(changedData, currentPage)
 
-      if (!hasDataChanged(changedData)) {
-        // no change, no need to push anything
+      if (
+        !surveyUnit.stateData ||
+        (!hasDataChanged(changedData) &&
+          (currentPageType === PAGE_TYPE.LUNATIC
+            ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
+            : currentPage === previousPage))
+      ) {
+        // no change and we are still on the same page, no need to push anything
         setIsDirtyState(false)
         return
       }
 
       props.updateDataAndStateData({
-        // stateData is not null if data has changed
-        stateData: surveyUnit.stateData!,
+        stateData: surveyUnit.stateData,
         // we push only the new data, not the full data
         // changedData.COLLECTED is defined since hasDataChanged checks it
         data: trimCollectedData(changedData.COLLECTED!),
@@ -267,7 +276,7 @@ export function Orchestrator(props: OrchestratorProps) {
       })
       setIsDirtyState(false)
       // update date to show on end page message
-      setLastUpdateDate(surveyUnit.stateData!.date)
+      setLastUpdateDate(surveyUnit.stateData?.date)
     }
   }
 

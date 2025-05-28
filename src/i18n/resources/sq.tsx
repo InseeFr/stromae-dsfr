@@ -31,6 +31,7 @@ export const translations: Translations<'sq'> = {
       'Faqja kryesore - Emri i entitetit (ministria, sekretariati i shtetit, qeveria)',
     'quick access support': 'Kontakto asistencën',
     'quick access logout': 'Dil',
+    'quick access portal': 'Portali i përgjigjeve online',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'A jeni ende aty?',
@@ -83,6 +84,13 @@ export const translations: Translations<'sq'> = {
     'button validate': 'Dërgo përgjigjet e mia',
     content:
       'Jeni gati të dërgoni përgjigjet tuaja në pyetësor. Pasi të dërgoni, nuk do të mund të modifikoni më përgjigjet tuaja.',
+  },
+  ExitModal: {
+    title: 'Dëshironi të dilni nga pyetësori',
+    'button cancel': 'Anulo',
+    'button validate': 'Dil',
+    content:
+      "Jeni gati të dilni nga pyetësori. Pasi të dilni, përgjigjet tuaja do të ruhen dhe do të mund t'i riktheheni më vonë.",
   },
   SequenceHeader: {
     'stepper state': ({ currentStep, stepCount }) =>

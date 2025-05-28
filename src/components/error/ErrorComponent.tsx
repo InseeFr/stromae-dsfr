@@ -48,7 +48,7 @@ export function ErrorComponent(props: Props) {
                     return { to: '/' }
                   case 'portal':
                     return {
-                      href: `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathLogout'] ?? ''}`,
+                      href: `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathExit'] ?? ''}`,
                     }
                   case 'visualizeForm':
                     return {

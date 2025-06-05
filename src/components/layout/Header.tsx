@@ -65,7 +65,7 @@ export function Header() {
         await triggerBatchTelemetryCallback()
       }
     }
-    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathExit'] ?? ''}`
+    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_EXIT_PATH}`
   }
 
   return (

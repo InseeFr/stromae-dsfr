@@ -49,6 +49,7 @@ export const RadioGroup: LunaticSlotComponents['RadioGroup'] = (props) => {
                 label={option.detailLabel}
                 nativeInputProps={{
                   id: 'detailId',
+                  maxLength: option.detailMaxLength,
                   value: (option.detailValue as string) ?? '', //TODO Delete cast when https://github.com/InseeFr/Lunatic/pull/1025 is merged
                   onChange: (e) => option.onDetailChange!(e.target.value), //can't be undefined if displayArbitraryInput is true
                 }}

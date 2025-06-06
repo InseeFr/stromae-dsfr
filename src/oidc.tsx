@@ -12,7 +12,7 @@ const autoLogoutParams =
   import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION === 'true'
     ? {
         redirectTo: 'specific url' as const,
-        url: `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_EXIT_PATH}`,
+        url: `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_LOGOUT_PATH}`,
       }
     : { redirectTo: 'current page' as const }
 

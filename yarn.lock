@@ -2322,9 +2322,9 @@
   integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*", "@types/node@^22.7.3":
-  version "22.15.29"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.29.tgz#c75999124a8224a3f79dd8b6ccfb37d74098f678"
-  integrity sha512-LNdjOkUDlU1RZb8e1kOIUpN1qQUlzGkEtbVNo53vbrwDg5om6oduhm4SiUaPW5ASTXhAiP0jInWG8Qx9fVlOeQ==
+  version "22.15.30"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.30.tgz#3a20431783e28dd0b0326f84ab386a2ec81d921d"
+  integrity sha512-6Q7lr06bEHdlfplU6YRbgG1SFBdlsfNC4/lX+SkhiTs0cpJkOElmWls8PxDFv4yY/xKb8Y6SO0OmSX4wgqTZbA==
   dependencies:
     undici-types "~6.21.0"
 
@@ -7500,9 +7500,9 @@ vfile@^6.0.0:
     vfile-message "^4.0.0"
 
 vite-envs@^4.4.5:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/vite-envs/-/vite-envs-4.6.0.tgz#88533d95e09061a0c6c5bf992f36b8a46aac3e0c"
-  integrity sha512-LkkkWiIsJhogm0YP6hYJhjUFfG8KLKJvnwFtTz4J5Otg9/RjmCCTkgbJWdb65cv5vlvA8xwGfm+NwSMl5H1Wjg==
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/vite-envs/-/vite-envs-4.6.1.tgz#c8ab6ecf3ead1097ab3e150b7a83d30e29273f02"
+  integrity sha512-ZVAwXI5eT2NDJiKKb45b8/s5aXrFQtJosDJOoAE2CAzA5/t6RE1cIhCz857Dj6ICTyLEVJa6phEszDTeFmzZYg==
 
 vite-node@2.1.9:
   version "2.1.9"

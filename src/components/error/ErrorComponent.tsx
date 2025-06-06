@@ -3,7 +3,7 @@ import Button from '@codegouvfr/react-dsfr/Button'
 import ArtWorkBackground from '@codegouvfr/react-dsfr/dsfr/artwork/background/ovoid.svg'
 import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
 import ArtWork from '@codegouvfr/react-dsfr/dsfr/artwork/system.svg'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 
 import { Container } from '@/components/Container'
 import { errorNormalizer } from '@/components/error/errorNormalizer'
@@ -24,7 +24,6 @@ export function ErrorComponent(props: Props) {
 
   useDocumentTitle(title)
 
-  const search = useSearch({ strict: false })
   return (
     <Container>
       <div
@@ -48,7 +47,7 @@ export function ErrorComponent(props: Props) {
                     return { to: '/' }
                   case 'portal':
                     return {
-                      href: `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathLogout'] ?? ''}`,
+                      href: `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_EXIT_PATH}`,
                     }
                   case 'visualizeForm':
                     return {

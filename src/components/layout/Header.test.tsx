@@ -113,7 +113,7 @@ describe('Header', () => {
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
   })
 
-  it('should not display toast on logout', async () => {
+  it('should not display toast on exit', async () => {
     const user = userEvent.setup()
     const showToast = vi.fn()
 
@@ -132,8 +132,11 @@ describe('Header', () => {
     )
     await waitFor(() => expect(showToast).not.toHaveBeenCalled())
 
-    const e = getAllByText('Log out')[0]
-    await user.click(e)
+    const exitButton = getAllByText('Back to the portal')[0]
+    await user.click(exitButton)
+
+    const confirmButton = getAllByText('I understand')[0]
+    await user.click(confirmButton)
 
     await waitFor(() => expect(showToast).not.toHaveBeenCalled())
   })

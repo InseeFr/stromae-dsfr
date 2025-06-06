@@ -8,6 +8,8 @@ type ImportMetaEnv = {
   VITE_OIDC_CLIENT_ID: string
   VITE_AUTO_LOGOUT_REDIRECTION: string
   VITE_PORTAIL_URL: string
+  VITE_EXIT_PATH: string
+  VITE_LOGOUT_PATH: string
   VITE_API_URL: string
   VITE_VISUALIZE_DISABLED: string
   VITE_BASE_PATH: string

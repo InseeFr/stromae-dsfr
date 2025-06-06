@@ -34,9 +34,6 @@ export const LegalsPage = memo(function LegalsPage() {
         <h3>{t('editor information title')}</h3>
         <p>{t('editor information content')}</p>
 
-        <h3>{t('design production title')}</h3>
-        <p>{t('design production content')}</p>
-
         <h3>{t('personal data title')}</h3>
         <p>{t('personal data content')}</p>
       </section>

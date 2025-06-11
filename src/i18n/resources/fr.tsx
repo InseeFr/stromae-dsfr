@@ -30,6 +30,7 @@ export const translations: Translations<'fr'> = {
     'home link title': 'Application de collecte internet',
     'quick access support': "Besoin d'aide ?",
     'quick access logout': 'Se déconnecter',
+    'quick access portal': 'Quitter le questionnaire ',
   },
   AutoLogoutCountdown: {
     'paragraph still there': 'Êtes-vous toujours là?',
@@ -82,6 +83,13 @@ export const translations: Translations<'fr'> = {
     'button validate': 'Envoyer mes réponses',
     content:
       "Vous êtes sur le point d'envoyer vos réponses au questionnaire. Après envoi, vous ne pourrez plus modifier vos réponses.",
+  },
+  ExitModal: {
+    title: 'Voulez-vous quitter le questionnaire ?',
+    'button cancel': 'Annuler',
+    'button validate': "J'ai compris",
+    content:
+      'Vos données seront enregistrées, vous allez être renvoyer vers le portail de réponse',
   },
   SequenceHeader: {
     'stepper state': ({ currentStep, stepCount }) =>

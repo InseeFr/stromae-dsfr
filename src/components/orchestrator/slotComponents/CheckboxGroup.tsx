@@ -77,6 +77,7 @@ function getOptions({
             label={option.detailLabel}
             nativeInputProps={{
               id: 'detailId',
+              maxLength: option.detailMaxLength,
               value: option.detailValue ?? '',
               onChange: (e) => option.onDetailChange!(e.target.value), //can't be undefined if displayArbitraryInput is true
             }}

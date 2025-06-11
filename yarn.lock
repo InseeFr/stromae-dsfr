@@ -1012,10 +1012,10 @@
     minimatch "^6.2.0"
     validator "^13.11.0"
 
-"@inseefr/lunatic@^3.6.2":
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.6.2.tgz#988b8c602b92a7abff77e48a768f0ae287ba82c8"
-  integrity sha512-z2gzK4CNhinnbOXQHPs2SBOx7ebSN4s+phs/ClaJa3AX+Is5RFlxQ1yVlur2HJvlpiqRhKrC9ZJySJo0VENq/A==
+"@inseefr/lunatic@^3.6.3":
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/@inseefr/lunatic/-/lunatic-3.6.3.tgz#3632235040d564c5c29d239963b81dd4fe238b67"
+  integrity sha512-D9eJH9P1GdnAA80y1EN7meNvgwvMKljbsYr26ghRfGw3/kgNzy5Koowgp/OVjh0LRcZ9BAVP3AG8Fj6zuHOR1Q==
   dependencies:
     "@inseefr/trevas" "^0.1.21"
     "@inseefr/vtl-2.0-antlr-tools" "^0.3.2"

@@ -23,7 +23,7 @@ export default defineConfig({
       },
     },
     hooks: {
-      afterAllFilesWrite: 'yarn format',
+      afterAllFilesWrite: 'pnpm run format',
     },
   },
 })

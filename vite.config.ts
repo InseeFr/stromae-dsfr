@@ -16,11 +16,22 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       viteEnvs({
-        computedEnv: () => ({
-          APP_VERSION: process.env.npm_package_version,
-          LUNATIC_VERSION:
-            process.env.npm_package_dependencies__inseefr_lunatic,
-        }),
+        computedEnv: async () => {
+          const path = await import('path')
+          const fs = await import('fs/promises')
+
+          const packageJson = JSON.parse(
+            await fs.readFile(path.resolve(__dirname, 'package.json'), 'utf-8'),
+          )
+
+          // Here you can define any arbitrary values they will be available
+          // in `import.meta.env` and it's type definitions.
+          // You can also compute defaults for variable declared in `.env` files.
+          return {
+            APP_VERSION: packageJson.version,
+            LUNATIC_VERSION: packageJson.dependencies['@inseefr/lunatic'],
+          }
+        },
       }),
     ],
   }

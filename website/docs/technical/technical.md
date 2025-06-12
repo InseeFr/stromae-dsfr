@@ -13,10 +13,10 @@ git clone https://github.com/InseeFr/stromae-dsfr
 cd stromae-dsfr
 
 # Installer les dépendances
-yarn
+pnpm install
 
 # pour démarrer l'application localement
-yarn dev
+pnpm run dev
 ```
 
 ## Gestion de l'authentification

@@ -177,6 +177,7 @@ export function Orchestrator(props: OrchestratorProps) {
     pageTag,
     goToPage: goToLunaticPage,
     getChangedData,
+    getData,
     resetChangedData,
     overview,
   } = useLunatic(source, initialSurveyUnit?.data, {
@@ -238,7 +239,7 @@ export function Orchestrator(props: OrchestratorProps) {
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
     const surveyUnit = updateSurveyUnit(
-      getChangedData(true) as SurveyUnitData,
+      getData(true) as SurveyUnitData,
       currentPage,
     )
 

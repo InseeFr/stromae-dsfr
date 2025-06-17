@@ -5,3 +5,10 @@
 .sequence-header .styles-module_tooltip__mnnfp {
   max-width: 98vw;
 }
+
+/** Add a spacing between fields when there are multiple in the same page (e.g. pairing). */
+.field-container > .field {
+  & > :not(:last-child, .sequence-lunatic) {
+    margin-block-end: 1.5rem;
+  }
+}

@@ -48,6 +48,7 @@ export const RadioGroup: LunaticSlotComponents['RadioGroup'] = (props) => {
               <Input
                 label={option.detailLabel}
                 nativeInputProps={{
+                  autoFocus: true,
                   id: 'detailId',
                   maxLength: option.detailMaxLength,
                   value: (option.detailValue as string) ?? '', //TODO Delete cast when https://github.com/InseeFr/Lunatic/pull/1025 is merged

@@ -76,6 +76,7 @@ function getOptions({
           <Input
             label={option.detailLabel}
             nativeInputProps={{
+              autoFocus: true,
               id: 'detailId',
               maxLength: option.detailMaxLength,
               value: option.detailValue ?? '',

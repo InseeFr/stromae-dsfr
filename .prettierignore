@@ -1,3 +1,4 @@
 .yarn_home/
 src/vite-env.d.ts
 website/
+pnpm-lock.yaml

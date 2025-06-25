@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { source as controlSource } from './control'
-import { data, source } from './default'
-import { data as lockedData, source as lockedSource } from './locked'
+import {
+  controlSource,
+  defaultData,
+  defaultSource,
+  lockedData,
+  lockedSource,
+} from './sources'
 
 const meta = {
   title: 'Components/Roundabout',
@@ -31,7 +35,7 @@ export const Default = {
       },
     },
   },
-  args: { source: source, data: data },
+  args: { source: defaultSource, data: defaultData },
 } satisfies Story
 
 export const RoundaboutWithLocked = {

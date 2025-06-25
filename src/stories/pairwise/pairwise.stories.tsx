@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { data, source } from './default'
+import { defaultData, defaultSource } from './sources'
 
 const meta = {
   title: 'Components/Pairwise',
@@ -20,5 +20,5 @@ export default meta
 type Story = StoryObj<typeof Orchestrator>
 
 export const Default = {
-  args: { source: source, data: data },
+  args: { source: defaultSource, data: defaultData },
 } satisfies Story

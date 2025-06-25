@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { source } from './default'
-import { source as questionSource } from './question'
+import { defaultSource, questionSource, readonlySource } from './sources'
 
 const meta = {
   title: 'Components/Input',
@@ -21,10 +20,6 @@ export default meta
 
 type Story = StoryObj<typeof Orchestrator>
 
-export const Default = {
-  args: { source: source },
-} satisfies Story
-
-export const Question = {
-  args: { source: questionSource },
-} satisfies Story
+export const Default = { args: { source: defaultSource } } satisfies Story
+export const Readonly = { args: { source: readonlySource } } satisfies Story
+export const Question = { args: { source: questionSource } } satisfies Story

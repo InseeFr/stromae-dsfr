@@ -12,6 +12,4 @@ export default meta
 
 type Story = StoryObj<typeof Orchestrator>
 
-export const Default = {
-  args: { source, data },
-} satisfies Story
+export const Default = { args: { source, data } } satisfies Story

@@ -6,6 +6,7 @@ import {
   defaultSource,
   multilineSource,
   questionSource,
+  readonlyData,
   readonlySource,
 } from './sources'
 
@@ -35,7 +36,9 @@ export default meta
 type Story = StoryObj<typeof Orchestrator>
 
 export const Default = { args: { source: defaultSource } } satisfies Story
-export const Readonly = { args: { source: readonlySource } } satisfies Story
+export const Readonly = {
+  args: { data: readonlyData, source: readonlySource },
+} satisfies Story
 export const Arbitrary = { args: { source: arbitrarySource } } satisfies Story
 export const Multiline = { args: { source: multilineSource } } satisfies Story
 export const Question = { args: { source: questionSource } } satisfies Story

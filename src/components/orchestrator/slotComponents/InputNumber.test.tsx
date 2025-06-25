@@ -82,16 +82,15 @@ describe('InputNumber', () => {
     expect(input).toBeDisabled()
   })
 
-  it('should handle readOnly', () => {
-    const { container } = render(
-      <InputNumber {...baseProps} value={123} readOnly />,
+  it('should only display the value when readOnly', () => {
+    const { getByText, container } = render(
+      <InputNumber {...baseProps} readOnly />,
     )
 
     const input = container.querySelector('input[type="text"]')
-    expect(input).toHaveAttribute('readonly')
-    ;(input as HTMLElement).focus()
-    expect(input).toHaveFocus()
-    expect(input).toHaveValue('123')
+    expect(input).toBeNull()
+
+    expect(getByText('10')).toBeInTheDocument()
   })
 
   it('should display input value from the start when user leave input', () => {

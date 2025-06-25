@@ -35,6 +35,10 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
   const inputValue = (value[0]?.label ?? search ?? '').toString()
   const { state: errorState, stateRelatedMessage } = getErrorStates(errors)
 
+  if (readOnly) {
+    return <p>{inputValue}</p>
+  }
+
   return (
     <Autocomplete
       id={id}

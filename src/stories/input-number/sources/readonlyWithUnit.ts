@@ -8,24 +8,31 @@ export const source: LunaticSource = {
       componentType: 'InputNumber',
       isMandatory: false,
       page: '1',
+      unit: '€',
       min: 0,
-      max: 10,
-      decimals: 2,
-      label: { value: '"Your favourite number"', type: 'VTL|MD' },
+      max: 1000000,
+      decimals: 0,
+      label: {
+        value: '"What\'s your ideal annual salary in euros?"',
+        type: 'VTL|MD',
+      },
       description: {
-        value: '"A number between 0 and 10 with 2 decimals maximum."',
+        value: '"A number in euro between 0 and 1000000."',
         type: 'VTL|MD',
       },
       conditionFilter: { value: 'true', type: 'VTL' },
       conditionReadOnly: { value: 'true', type: 'VTL' },
+      controls: [
+        {
+          id: 'kze792d8',
+          typeOfControl: 'CONSISTENCY',
+          criticality: 'WARN',
+          control: { value: 'NB = 5', type: 'VTL' },
+          errorMessage: { value: '"Maybe try 5"', type: 'VTL|MD' },
+          bindingDependencies: ['NB'],
+        },
+      ],
       response: { name: 'NB' },
-    },
-    {
-      id: 'seq',
-      componentType: 'Sequence',
-      label: { value: '"Bye!"', type: 'VTL|MD' },
-      conditionFilter: { value: 'true', type: 'VTL' },
-      page: '2',
     },
   ],
   variables: [
@@ -39,7 +46,7 @@ export const source: LunaticSource = {
   enoCoreVersion: '2.7.1',
   generatingDate: '06-03-2024 12:46:44',
   id: 'lsvuvtbg',
-  maxPage: '2',
+  maxPage: '1',
 }
 
 export const data: LunaticData = {

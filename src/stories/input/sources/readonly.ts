@@ -1,4 +1,4 @@
-import type { LunaticSource } from '@inseefr/lunatic'
+import type { LunaticData, LunaticSource } from '@inseefr/lunatic'
 
 export const source: LunaticSource = {
   cleaning: {},
@@ -27,4 +27,8 @@ export const source: LunaticSource = {
   generatingDate: '06-03-2024 12:46:44',
   id: 'lsvuvtbg',
   maxPage: '1',
+}
+
+export const data: LunaticData = {
+  COLLECTED: { NAME: { COLLECTED: 'readonly input value' } },
 }

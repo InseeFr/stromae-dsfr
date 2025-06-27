@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { source } from './default'
-import { source as detailSource } from './detail'
-import { source as questionSource } from './question'
+import {
+  defaultSource,
+  detailSource,
+  questionSource,
+  readonlySource,
+} from './sources'
 
 const meta = {
   title: 'Components/CheckboxOne',
@@ -22,9 +25,8 @@ export default meta
 
 type Story = StoryObj<typeof Orchestrator>
 
-export const Default = {
-  args: { source },
-} satisfies Story
+export const Default = { args: { source: defaultSource } } satisfies Story
+export const Readonly = { args: { source: readonlySource } } satisfies Story
 
 export const withDetail = {
   args: { source: detailSource, detailAlwaysDisplayed: false },
@@ -35,6 +37,4 @@ export const withDetail = {
   },
 } satisfies Story
 
-export const Question = {
-  args: { source: questionSource },
-} satisfies Story
+export const Question = { args: { source: questionSource } } satisfies Story

@@ -17,7 +17,6 @@ export const Input: LunaticSlotComponents['Input'] = (props) => {
     description,
     errors,
     readOnly,
-    declarations,
   } = props
 
   const id = useId()
@@ -30,9 +29,8 @@ export const Input: LunaticSlotComponents['Input'] = (props) => {
 
   const { state, stateRelatedMessage } = getErrorStates(errors)
 
-  if (declarations) {
-    //TODO throw and handle globaly errors in an alert with a condition to avoid to display alert in prod
-    console.error('Only declaration in Question are displayed')
+  if (readOnly) {
+    return <p>{value}</p>
   }
 
   return (

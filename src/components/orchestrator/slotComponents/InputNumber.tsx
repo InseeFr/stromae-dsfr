@@ -26,7 +26,6 @@ export const InputNumber: LunaticSlotComponents['InputNumber'] = (props) => {
     errors,
     required = true,
     description,
-    declarations,
     iteration,
   } = props
 
@@ -37,11 +36,6 @@ export const InputNumber: LunaticSlotComponents['InputNumber'] = (props) => {
    * See: https://github.com/codegouvfr/react-dsfr/blob/4c41367febcb78307f261df1b761fedb52c8a905/src/Input.tsx#L103
    */
   const errorMessageId = `${id}-desc-error`
-
-  if (declarations) {
-    //TODO throw and handle globaly errors in an alert with a condition to avoid to display alert in prod
-    console.error('Only declaration in Question are displayed')
-  }
 
   const { state, stateRelatedMessage } = getErrorStates(errors)
 
@@ -63,6 +57,11 @@ export const InputNumber: LunaticSlotComponents['InputNumber'] = (props) => {
     if (min > 0 && max > 0) return floatValue <= max && floatValue > 0
     // if min & max have different sign or equal to 0, check if value is within the min-max range
     return floatValue >= min && floatValue <= max
+  }
+
+  if (readOnly) {
+    const suffix = unit ? ` ${unit}` : ''
+    return <p>{`${value}${suffix}`}</p>
   }
 
   return (

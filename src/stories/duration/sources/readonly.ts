@@ -2,25 +2,25 @@ import type { LunaticSource } from '@inseefr/lunatic'
 
 export const source: LunaticSource = {
   cleaning: {},
-
   components: [
     {
-      id: 'name',
-      componentType: 'Textarea',
-      label: { value: '"Label"', type: 'VTL|MD' },
+      id: 'kxi788',
+      componentType: 'Duration',
+      isMandatory: false,
+      format: 'PnYnM',
+      page: '1',
+      label: {
+        value: '"➡ 1. " || "Duration (format: PnYnM) "',
+        type: 'VTL|MD',
+      },
       description: { value: '"Description"', type: 'VTL|MD' },
       conditionFilter: { value: 'true', type: 'VTL' },
-      maxLength: 30,
-      response: { name: 'SOMETHING' },
-      page: '1',
+      conditionReadOnly: { value: 'true', type: 'VTL' },
+      response: { name: 'DUREE' },
     },
   ],
   variables: [
-    {
-      variableType: 'COLLECTED',
-      name: 'SOMETHING',
-      values: { COLLECTED: null },
-    },
+    { variableType: 'COLLECTED', name: 'DUREE', values: { COLLECTED: null } },
   ],
   pagination: 'question',
   resizing: {},

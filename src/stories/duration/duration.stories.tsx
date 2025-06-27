@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { source as dateSource } from './date'
-import { source as questionSource } from './question'
-import { source as timeSource } from './time'
+import {
+  dateSource,
+  questionSource,
+  readonlySource,
+  timeSource,
+} from './sources'
 
 const meta = {
   title: 'Components/Duration',
@@ -22,14 +25,7 @@ export default meta
 
 type Story = StoryObj<typeof Orchestrator>
 
-export const DateStory = {
-  args: { source: dateSource },
-} satisfies Story
-
-export const TimeStory = {
-  args: { source: timeSource },
-} satisfies Story
-
-export const Question = {
-  args: { source: questionSource },
-} satisfies Story
+export const DateFormat = { args: { source: dateSource } } satisfies Story
+export const TimeFormat = { args: { source: timeSource } } satisfies Story
+export const Readonly = { args: { source: readonlySource } } satisfies Story
+export const Question = { args: { source: questionSource } } satisfies Story

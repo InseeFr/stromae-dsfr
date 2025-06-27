@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { source as arbitrarySource } from './arbitrary'
-import { source as multilineSource } from './multiline'
-import { source as questionSource } from './question'
-import { source } from './source'
+import {
+  arbitrarySource,
+  defaultSource,
+  multilineSource,
+  questionSource,
+  readonlyData,
+  readonlySource,
+} from './sources'
 
 const meta = {
   title: 'Components/Suggester',
@@ -31,17 +35,10 @@ export default meta
 
 type Story = StoryObj<typeof Orchestrator>
 
-export const Default = {
-  args: { source },
+export const Default = { args: { source: defaultSource } } satisfies Story
+export const Readonly = {
+  args: { data: readonlyData, source: readonlySource },
 } satisfies Story
-
-export const Arbitrary = {
-  args: { source: arbitrarySource },
-} satisfies Story
-
-export const Multiline = {
-  args: { source: multilineSource },
-} satisfies Story
-export const Question = {
-  args: { source: questionSource },
-} satisfies Story
+export const Arbitrary = { args: { source: arbitrarySource } } satisfies Story
+export const Multiline = { args: { source: multilineSource } } satisfies Story
+export const Question = { args: { source: questionSource } } satisfies Story

@@ -1,13 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Orchestrator } from '../Orchestrator'
-import { data, source } from './default'
 import {
-  data as dataMonthAndYear,
-  source as sourceMonthAndYear,
-} from './monthAndYear'
-import { source as questionSource } from './question'
-import { data as dataYear, source as sourceYear } from './year'
+  defaultData,
+  defaultSource,
+  monthAndYearData,
+  monthAndYearSource,
+  questionSource,
+  readonlyData,
+  readonlySource,
+  yearData,
+  yearSource,
+} from './sources'
 
 const meta = {
   title: 'Components/DatePicker',
@@ -27,14 +31,20 @@ export default meta
 type Story = StoryObj<typeof Orchestrator>
 
 export const Default = {
-  args: { source: source, data: data },
+  args: { source: defaultSource, data: defaultData },
+} satisfies Story
+
+export const Readonly = {
+  args: { source: readonlySource, data: readonlyData },
 } satisfies Story
 
 export const MonthAndYear = {
-  args: { source: sourceMonthAndYear, data: dataMonthAndYear },
-}
+  args: { source: monthAndYearSource, data: monthAndYearData },
+} satisfies Story
 
-export const YearOnly = { args: { source: sourceYear, data: dataYear } }
+export const YearOnly = {
+  args: { source: yearSource, data: yearData },
+} satisfies Story
 
 export const Question = {
   args: { source: questionSource },

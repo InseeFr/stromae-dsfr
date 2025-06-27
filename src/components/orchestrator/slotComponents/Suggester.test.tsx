@@ -67,20 +67,14 @@ describe('Suggester', () => {
     expect(input).toBeDisabled()
   })
 
-  it('should handle readOnly, also disabling clear button', () => {
-    const { getByRole, container } = render(
-      <Suggester {...baseProps} readOnly errors={undefined} />,
+  it('should only display the value when readOnly', () => {
+    const { getByText, container } = render(
+      <Suggester {...baseProps} readOnly />,
     )
 
     const input = container.querySelector('textarea')
-    expect(input).toHaveAttribute('readonly')
+    expect(input).toBeNull()
 
-    const clearButton = getByRole('button', { name: 'vider le champ' })
-    expect(clearButton).toBeDisabled()
-
-    // focus input
-    ;(input as HTMLElement).focus()
-    expect(input).toHaveFocus()
-    expect(input).toHaveValue('France')
+    expect(getByText('France')).toBeInTheDocument()
   })
 })

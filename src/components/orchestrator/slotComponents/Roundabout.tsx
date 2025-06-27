@@ -31,7 +31,6 @@ export const Roundabout: LunaticSlotComponents['Roundabout'] = (props) => {
     ),
   ]
 
-  console.log(errors)
   const hasErrors = errors.length > 0
 
   return (

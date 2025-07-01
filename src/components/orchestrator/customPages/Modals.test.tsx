@@ -12,7 +12,7 @@ describe('WelcomeModal', () => {
     const continueDataTestId = 'continue-button-welcome-modal'
 
     const { getByTestId } = render(
-      <WelcomeModal goBack={goBackMock} open={true} />,
+      <WelcomeModal goBack={goBackMock} open={false} />,
     )
 
     expect(getByTestId(backToSartDataTestId)).toBeInTheDocument()

@@ -40,11 +40,15 @@ export function WelcomeModal({ goBack, open }: Props) {
         {
           doClosesModal: true,
           children: t('button first page'),
+          nativeButtonProps: {
+            'data-testid': 'back-to-start-button-welcome-modal',
+          },
         },
         {
           doClosesModal: true,
           children: t('button go back'),
           onClick: goBack,
+          nativeButtonProps: { 'data-testid': 'continue-button-welcome-modal' },
         },
       ]}
       concealingBackdrop={true}

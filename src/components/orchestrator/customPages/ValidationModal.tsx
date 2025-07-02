@@ -49,6 +49,9 @@ export function ValidationModal({ actionsRef }: Props) {
         {
           doClosesModal: true, //Default true, clicking a button close the modal.
           children: t('button cancel'),
+          nativeButtonProps: {
+            'data-testid': 'cancel-button-validation-modal',
+          },
         },
         {
           doClosesModal: true,
@@ -57,6 +60,9 @@ export function ValidationModal({ actionsRef }: Props) {
             assert(openState !== undefined)
             openState.resolve()
             setOpenState(undefined)
+          },
+          nativeButtonProps: {
+            'data-testid': 'validate-button-validation-modal',
           },
         },
       ]}

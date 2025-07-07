@@ -3,9 +3,9 @@ import { createRoute } from '@tanstack/react-router'
 
 import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
-  getGetSurveyUnitByIdQueryOptions,
-  getGetSurveyUnitMetadataByIdQueryOptions,
-} from '@/api/06-survey-units'
+  getGetInterrogationByIdQueryOptions,
+  getGetInterrogationMetadataByIdQueryOptions,
+} from '@/api/06-interrogations'
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { protectedRouteLoader } from '@/loader/protectedLoader'
@@ -41,14 +41,14 @@ export const reviewRoute = createRoute({
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
     const surveyUnitPr = queryClient.ensureQueryData(
-      getGetSurveyUnitByIdQueryOptions(surveyUnitId, {
+      getGetInterrogationByIdQueryOptions(surveyUnitId, {
         request: { signal: abortController.signal },
       }),
     ) as SurveyUnit
 
     const metadataPr = queryClient
       .ensureQueryData(
-        getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
+        getGetInterrogationMetadataByIdQueryOptions(surveyUnitId, {
           request: { signal: abortController.signal },
         }),
       )

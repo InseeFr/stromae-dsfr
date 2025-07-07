@@ -2,7 +2,7 @@ import type { Extends } from 'tsafe/Extends'
 import { assert } from 'tsafe/assert'
 import { z } from 'zod'
 
-import type { SurveyUnitMetadata } from '@/models/api'
+import type { InterrogationMetadata } from '@/models/api'
 
 const logoSchema = z.object({
   label: z.string(),
@@ -45,4 +45,4 @@ export const surveyUnitMetadataSchema = z.object({
 })
 
 type InferredMetadata = z.infer<typeof surveyUnitMetadataSchema>
-assert<Extends<InferredMetadata, SurveyUnitMetadata>>() //When SurveyUnitMetadata will change according to the new modelisation, replace Extends by Equals
+assert<Extends<InferredMetadata, InterrogationMetadata>>() //When SurveyUnitMetadata will change according to the new modelisation, replace Extends by Equals

@@ -6,9 +6,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import {
   getGenerateDepositProofQueryOptions,
-  getGetSurveyUnitByIdQueryKey,
-  updateSurveyUnitDataStateDataById,
-} from '@/api/06-survey-units'
+  getGetInterrogationByIdQueryKey,
+  updateInterrogationDataStateDataById,
+} from '@/api/06-interrogations'
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import { MODE_TYPE } from '@/constants/mode'
@@ -34,7 +34,7 @@ export const CollectPage = memo(function CollectPage() {
     [queryClient],
   )
 
-  const queryKeyToInvalidate = getGetSurveyUnitByIdQueryKey(surveyUnitId)
+  const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(surveyUnitId)
 
   const updateDataAndStateData = (params: {
     stateData: StateData
@@ -42,7 +42,7 @@ export const CollectPage = memo(function CollectPage() {
     onSuccess?: () => void
     isLogout: boolean
   }) =>
-    updateSurveyUnitDataStateDataById(surveyUnitId, {
+    updateInterrogationDataStateDataById(surveyUnitId, {
       data: params.data,
       stateData: params.stateData,
     })

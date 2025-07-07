@@ -1,7 +1,7 @@
 import type { Extends } from 'tsafe/Extends'
 import { assert } from 'tsafe/assert'
 
-import type { SurveyUnit as ApiSurveyUnit } from './api'
+import type { Interrogation as ApiInterrogation } from './api'
 import type { StateData } from './stateData'
 import type { SurveyUnitData } from './surveyUnitData'
 
@@ -13,4 +13,4 @@ export type SurveyUnit = {
   stateData?: StateData
 }
 
-assert<Extends<SurveyUnit, ApiSurveyUnit>>()
+assert<Extends<SurveyUnit, ApiInterrogation>>()

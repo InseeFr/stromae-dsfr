@@ -10,7 +10,7 @@ import { renderWithRouter } from '@/utils/tests'
 import { Orchestrator } from './Orchestrator'
 
 describe('Orchestrator', () => {
-  const surveyUnit = {
+  const interrogation = {
     stateData: undefined,
     data: undefined,
     personalization: undefined,
@@ -20,7 +20,7 @@ describe('Orchestrator', () => {
     label: 'my label',
     objectives: 'my objectives',
     mainLogo: { label: 'logo label', url: '' },
-    surveyUnitIdentifier: 'my survey id',
+    interrogationIdentifier: 'my survey id',
   }
   const source = {
     componentType: 'Questionnaire',
@@ -57,7 +57,7 @@ describe('Orchestrator', () => {
     <Orchestrator
       metadata={metadata}
       mode={mode}
-      surveyUnit={surveyUnit}
+      interrogation={interrogation}
       // @ts-expect-error: we should have a better lunatic mock
       source={source}
       getReferentiel={() => {

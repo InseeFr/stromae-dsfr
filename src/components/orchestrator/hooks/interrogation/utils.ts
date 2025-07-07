@@ -1,30 +1,30 @@
-import type { SurveyUnitData } from '@/models/surveyUnitData'
+import type { InterrogationData } from '@/models/interrogationData'
 
 import { trimCollectedData } from '../../utils/data'
 
-export function hasDataChanged(changedData: SurveyUnitData): boolean {
+export function hasDataChanged(changedData: InterrogationData): boolean {
   if (changedData.COLLECTED) {
     return Object.keys(changedData.COLLECTED).length > 0
   }
   return false
 }
 
-/** Get updated surveyUnit data, using the current data and changed data */
+/** Get updated interrogation data, using the current data and changed data */
 export function computeUpdatedData(
-  currentSurveyUnitData: SurveyUnitData,
-  changedData: SurveyUnitData,
-): SurveyUnitData {
+  currentInterrogationData: InterrogationData,
+  changedData: InterrogationData,
+): InterrogationData {
   if (hasDataChanged(changedData)) {
-    return computeFullData(currentSurveyUnitData, changedData)
+    return computeFullData(currentInterrogationData, changedData)
   }
-  return currentSurveyUnitData
+  return currentInterrogationData
 }
 
 /** get full data, computing current data with changed data */
 function computeFullData(
-  currentData: SurveyUnitData,
-  changedData: SurveyUnitData,
-): SurveyUnitData {
+  currentData: InterrogationData,
+  changedData: InterrogationData,
+): InterrogationData {
   const changedCollectedData = changedData.COLLECTED
     ? trimCollectedData(changedData.COLLECTED)
     : undefined

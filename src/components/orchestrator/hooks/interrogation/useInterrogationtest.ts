@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
 import { PAGE_TYPE } from '@/constants/page'
 
-import { useSurveyUnit } from './useSurveyUnit'
+import { useInterrogation } from './useInterrogation'
 
 beforeAll(() => {
   vi.useFakeTimers()
@@ -14,16 +14,16 @@ afterAll(() => {
   vi.useRealTimers()
 })
 
-describe('Use survey unit', () => {
-  test('inits correctly survey unit data and set state as INIT', async () => {
+describe('Use interrogation', () => {
+  test('inits correctly interrogation data and set state as INIT', async () => {
     const { result } = renderHook(() =>
-      useSurveyUnit({ id: 'id', questionnaireId: 'qid', data: {} }),
+      useInterrogation({ id: 'id', questionnaireId: 'qid', data: {} }),
     )
 
-    expect(result.current.surveyUnitData).toStrictEqual({})
+    expect(result.current.interrogationData).toStrictEqual({})
 
     act(() => {
-      const res = result.current.updateSurveyUnit(
+      const res = result.current.updateInterrogation(
         {
           COLLECTED: { Q1: { COLLECTED: 'new data' } },
         },
@@ -45,7 +45,7 @@ describe('Use survey unit', () => {
       })
     })
 
-    expect(result.current.surveyUnitData).toStrictEqual({
+    expect(result.current.interrogationData).toStrictEqual({
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},
@@ -54,20 +54,20 @@ describe('Use survey unit', () => {
 
   test('does not set state if there is no change and no initial state', () => {
     const { result } = renderHook(() =>
-      useSurveyUnit({ id: 'id', questionnaireId: 'qid', data: {} }),
+      useInterrogation({ id: 'id', questionnaireId: 'qid', data: {} }),
     )
 
     act(() => {
-      const res = result.current.updateSurveyUnit({}, '1')
+      const res = result.current.updateInterrogation({}, '1')
       expect(res.stateData).toBeUndefined()
     })
 
-    expect(result.current.surveyUnitData).toStrictEqual({})
+    expect(result.current.interrogationData).toStrictEqual({})
   })
 
   test('sets state to VALIDATED when on end page', () => {
     const { result } = renderHook(() =>
-      useSurveyUnit({
+      useInterrogation({
         id: 'id',
         questionnaireId: 'qid',
         data: { COLLECTED: { Q1: { COLLECTED: 'data' } } },
@@ -76,7 +76,7 @@ describe('Use survey unit', () => {
     )
 
     act(() => {
-      const res = result.current.updateSurveyUnit(
+      const res = result.current.updateInterrogation(
         { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
         PAGE_TYPE.END,
       )
@@ -99,7 +99,7 @@ describe('Use survey unit', () => {
 
   test('does not update the state on a lunatic page if state was already INIT', async () => {
     const { result } = renderHook(() =>
-      useSurveyUnit({
+      useInterrogation({
         id: 'id',
         questionnaireId: 'qid',
         data: {
@@ -110,7 +110,7 @@ describe('Use survey unit', () => {
     )
 
     act(() => {
-      const res = result.current.updateSurveyUnit(
+      const res = result.current.updateInterrogation(
         {
           COLLECTED: { Q1: { COLLECTED: 'new data' } },
         },
@@ -132,7 +132,7 @@ describe('Use survey unit', () => {
       })
     })
 
-    expect(result.current.surveyUnitData).toStrictEqual({
+    expect(result.current.interrogationData).toStrictEqual({
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},

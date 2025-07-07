@@ -37,7 +37,7 @@ describe('ReviewPage', () => {
   it('should render Orchestrator with props when loader results are present', () => {
     const mockLoaderResults = {
       source: { id: 'sourceId' },
-      surveyUnit: { id: 'su1', name: 'Survey Unit 1' },
+      interrogation: { id: 'int1', name: 'Interrogation 1' },
       metadata: { label: 'metadataLabel' },
     }
     vi.mocked(reviewRoute.useLoaderData).mockReturnValue(mockLoaderResults)
@@ -54,7 +54,7 @@ describe('ReviewPage', () => {
         mode: 'review',
         metadata: mockLoaderResults.metadata,
         source: mockLoaderResults.source,
-        surveyUnit: mockLoaderResults.surveyUnit,
+        interrogation: mockLoaderResults.interrogation,
         getReferentiel: expect.any(Function),
       }),
       {},
@@ -64,7 +64,7 @@ describe('ReviewPage', () => {
   it('should handle error when ensureQueryData fails', async () => {
     const mockLoaderResults = {
       source: { id: 'sourceId' },
-      surveyUnitData: { id: 'su1', name: 'Survey Unit 1' },
+      interrogationData: { id: 'int1', name: 'Interrogation 1' },
       metadata: { label: 'metadataLabel' },
     }
     vi.mocked(reviewRoute.useLoaderData).mockReturnValue(mockLoaderResults)

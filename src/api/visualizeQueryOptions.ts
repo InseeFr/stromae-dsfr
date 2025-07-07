@@ -4,10 +4,10 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import { ZodError } from 'zod'
 
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
+import type { Interrogation } from '@/models/interrogation'
 import type { Nomenclature } from '@/models/lunaticType'
 import type { Metadata } from '@/models/metadata'
-import { surveyUnitMetadataSchema } from '@/models/metadataSchema'
-import type { SurveyUnit } from '@/models/surveyUnit'
+import { interrogationMetadataSchema } from '@/models/metadataSchema'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
   return axios.get<T>(url, options).then(({ data }) => data)
@@ -22,13 +22,13 @@ export const sourceQueryOptions = (
     queryFn: () => axiosGet<LunaticSource>(sourceUrl, options),
   })
 
-export const surveyUnitQueryOptions = (
-  surveyUnitUrl: string,
+export const interrogationQueryOptions = (
+  interrogationUrl: string,
   options?: AxiosRequestConfig,
 ) =>
   queryOptions({
-    queryKey: [surveyUnitUrl],
-    queryFn: () => axiosGet<SurveyUnit>(surveyUnitUrl, options),
+    queryKey: [interrogationUrl],
+    queryFn: () => axiosGet<Interrogation>(interrogationUrl, options),
   })
 
 export const metadataQueryOptions = (
@@ -39,7 +39,7 @@ export const metadataQueryOptions = (
     queryKey: [metadataUrl],
     queryFn: () =>
       axiosGet<Metadata>(metadataUrl, options)
-        .then((metadata) => surveyUnitMetadataSchema.parse(metadata))
+        .then((metadata) => interrogationMetadataSchema.parse(metadata))
         .catch((e) => {
           if (e instanceof ZodError) {
             throw new ZodErrorWithName(e.issues, 'metadata')

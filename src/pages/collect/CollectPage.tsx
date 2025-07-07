@@ -18,13 +18,13 @@ import type { StateData } from '@/models/stateData'
 import { collectRoute } from './route'
 
 export const CollectPage = memo(function CollectPage() {
-  const { surveyUnitId } = collectRoute.useParams()
+  const { interrogationId } = collectRoute.useParams()
 
   const queryClient = useQueryClient()
 
   const loaderResults = collectRoute.useLoaderData()
 
-  const { source, surveyUnit, metadata } = loaderResults
+  const { source, interrogation, metadata } = loaderResults
 
   const getReferentiel: LunaticGetReferentiel = useCallback(
     (name: string) =>
@@ -34,7 +34,7 @@ export const CollectPage = memo(function CollectPage() {
     [queryClient],
   )
 
-  const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(surveyUnitId)
+  const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(interrogationId)
 
   const updateDataAndStateData = (params: {
     stateData: StateData
@@ -42,7 +42,7 @@ export const CollectPage = memo(function CollectPage() {
     onSuccess?: () => void
     isLogout: boolean
   }) =>
-    updateInterrogationDataStateDataById(surveyUnitId, {
+    updateInterrogationDataStateDataById(interrogationId, {
       data: params.data,
       stateData: params.stateData,
     })
@@ -75,7 +75,7 @@ export const CollectPage = memo(function CollectPage() {
 
   const getDepositProof = () =>
     queryClient
-      .ensureQueryData(getGenerateDepositProofQueryOptions(surveyUnitId))
+      .ensureQueryData(getGenerateDepositProofQueryOptions(interrogationId))
       .then((response) => {
         const fileName =
           (response.headers['content-disposition']?.match(
@@ -100,7 +100,7 @@ export const CollectPage = memo(function CollectPage() {
       metadata={metadata}
       mode={MODE_TYPE.COLLECT}
       source={source}
-      surveyUnit={surveyUnit}
+      interrogation={interrogation}
       getReferentiel={getReferentiel}
       updateDataAndStateData={updateDataAndStateData}
       getDepositProof={getDepositProof}

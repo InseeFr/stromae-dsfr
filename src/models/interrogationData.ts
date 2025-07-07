@@ -20,10 +20,10 @@ assert<Extends<CollectedValues, LunaticCollectedValue>>()
 
 export type CollectedData = Record<string, CollectedValues>
 
-export type SurveyUnitData = {
+export type InterrogationData = {
   CALCULATED?: Record<string, VariableType>
   EXTERNAL?: Record<string, VariableType>
   COLLECTED?: CollectedData
 }
 
-assert<Extends<SurveyUnitData, Partial<LunaticData>>>()
+assert<Extends<InterrogationData, Partial<LunaticData>>>()

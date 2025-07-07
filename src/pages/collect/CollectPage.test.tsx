@@ -25,7 +25,7 @@ vi.mock('@/components/orchestrator/Orchestrator', () => ({
 vi.mock('./route', () => ({
   collectRoute: {
     useLoaderData: vi.fn(),
-    useParams: vi.fn(() => ({ surveyUnitId: 'test-id' })),
+    useParams: vi.fn(() => ({ interrogationId: 'test-id' })),
   },
 }))
 
@@ -37,7 +37,7 @@ describe('CollectPage', () => {
   it('should render Orchestrator with props ', () => {
     const mockCollectData = {
       source: { id: 'sourceId' },
-      surveyUnit: { id: 'su1', name: 'Survey Unit 1' },
+      interrogation: { id: 'int1', name: 'Interrogation 1' },
       metadata: { label: 'metadataLabel' },
     }
     vi.mocked(collectRoute.useLoaderData).mockReturnValue(mockCollectData)
@@ -47,7 +47,7 @@ describe('CollectPage', () => {
     expect(Orchestrator).toHaveBeenCalledWith(
       expect.objectContaining({
         source: mockCollectData.source,
-        surveyUnit: mockCollectData.surveyUnit,
+        interrogation: mockCollectData.interrogation,
         metadata: mockCollectData.metadata,
         getReferentiel: expect.any(Function),
         updateDataAndStateData: expect.any(Function),

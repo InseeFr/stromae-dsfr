@@ -24,7 +24,7 @@ function convertContent(
  */
 export function convertOldPersonalization(
   personalization: InterrogationMetadata['personalization'],
-): Metadata['surveyUnitInfo'] {
+): Metadata['interrogationInfo'] {
   const contentBlock = convertContent(personalization)
 
   if (contentBlock === undefined) return undefined

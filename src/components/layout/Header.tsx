@@ -34,7 +34,7 @@ export function Header() {
   const {
     label: serviceTitle,
     mainLogo,
-    surveyUnitIdentifier,
+    interrogationIdentifier,
   } = useMetadataStore()
   const { isTelemetryDisabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
@@ -116,7 +116,7 @@ export function Header() {
                 } as const,
               ]),
         ]}
-        serviceTagline={resolveLocalizedString(surveyUnitIdentifier)}
+        serviceTagline={resolveLocalizedString(interrogationIdentifier)}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,

@@ -1,9 +1,9 @@
-import type { SurveyUnit } from '@/models/surveyUnit'
+import type { Interrogation } from '@/models/interrogation'
 import type {
   CollectedData,
   CollectedValues,
   VariableType,
-} from '@/models/surveyUnitData'
+} from '@/models/interrogationData'
 
 type ExtendedCollectedValues = CollectedValues &
   Partial<Record<'EDITED' | 'FORCED' | 'INPUTED' | 'PREVIOUS', VariableType>>
@@ -26,15 +26,17 @@ export function trimCollectedData(data: ExtendedCollectedData): CollectedData {
 }
 
 /**
- * Initialize the survey unit with the expected format since it can be empty or
+ * Initialize the interrogation with the expected format since it can be empty or
  * partial. State data must be initialized the first time.
  */
-export function computeSurveyUnit(partial?: Partial<SurveyUnit>): SurveyUnit {
-  const surveyUnitId = partial?.id ?? ''
+export function computeInterrogation(
+  partial?: Partial<Interrogation>,
+): Interrogation {
+  const interrogationId = partial?.id ?? ''
   const questionnaireId = partial?.questionnaireId ?? ''
 
   return {
-    id: surveyUnitId,
+    id: interrogationId,
     questionnaireId,
     personalization: partial?.personalization,
     data: partial?.data,

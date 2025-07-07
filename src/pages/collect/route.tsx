@@ -10,7 +10,7 @@ import {
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { protectedRouteLoader } from '@/loader/protectedLoader'
-import type { SurveyUnit } from '@/models/surveyUnit'
+import type { Interrogation } from '@/models/interrogation'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
@@ -22,7 +22,7 @@ const collectSearchParams = z.object({
 })
 
 export const collectPath =
-  '/questionnaire/$questionnaireId/unite-enquetee/$surveyUnitId'
+  '/questionnaire/$questionnaireId/unite-enquetee/$interrogationId'
 
 export const collectRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -31,7 +31,7 @@ export const collectRoute = createRoute({
   beforeLoad: async () => protectedRouteLoader(),
   validateSearch: collectSearchParams,
   loader: async ({
-    params: { questionnaireId, surveyUnitId },
+    params: { questionnaireId, interrogationId },
     context: { queryClient },
     abortController,
   }) => {
@@ -44,15 +44,15 @@ export const collectRoute = createRoute({
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
     //We don't need the cache from react-query for data that changed too often and need to be fresh
-    const surveyUnitPr = getInterrogationById(
-      surveyUnitId,
+    const interrogationPr = getInterrogationById(
+      interrogationId,
       undefined,
       abortController.signal,
-    ) as SurveyUnit
+    ) as Interrogation
 
     const metadataPr = queryClient
       .ensureQueryData(
-        getGetInterrogationMetadataByIdQueryOptions(surveyUnitId, {
+        getGetInterrogationMetadataByIdQueryOptions(interrogationId, {
           request: { signal: abortController.signal },
         }),
       )
@@ -63,14 +63,16 @@ export const collectRoute = createRoute({
           ...metadata,
           mainLogo: metadata.logos?.main,
           secondariesLogo: metadata.logos?.secondaries,
-          surveyUnitInfo: convertOldPersonalization(metadata.personalization),
+          interrogationInfo: convertOldPersonalization(
+            metadata.personalization,
+          ),
         })
       })
 
-    return Promise.all([sourcePr, surveyUnitPr, metadataPr]).then(
-      ([source, surveyUnit, metadata]) => ({
+    return Promise.all([sourcePr, interrogationPr, metadataPr]).then(
+      ([source, interrogation, metadata]) => ({
         source,
-        surveyUnit,
+        interrogation,
         metadata,
       }),
     )

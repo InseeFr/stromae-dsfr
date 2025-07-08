@@ -16,8 +16,7 @@ import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
 
 import { ReviewPage } from './ReviewPage'
 
-export const reviewPath =
-  '/review/questionnaire/$questionnaireId/unite-enquetee/$interrogationId'
+export const reviewPath = '/review/interrogations/$interrogationId'
 
 export const reviewRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -27,24 +26,30 @@ export const reviewRoute = createRoute({
     protectedRouteLoader({
       kc_idp_hint: import.meta.env.VITE_REVIEW_IDENTITY_PROVIDER,
     }),
-  loader: ({
-    params: { questionnaireId, interrogationId },
+  loader: async ({
+    params: { interrogationId },
     context: { queryClient },
     abortController,
   }) => {
+    const interrogation = (await queryClient.ensureQueryData(
+      getGetInterrogationByIdQueryOptions(interrogationId, {
+        request: { signal: abortController.signal },
+      }),
+    )) as Interrogation
+
+    if (!interrogation.questionnaireId) {
+      throw new Error(
+        `Missing questionnaireId in interrogation ${interrogationId}`,
+      )
+    }
+
     const sourcePr = queryClient
       .ensureQueryData(
-        getGetQuestionnaireDataQueryOptions(questionnaireId, {
+        getGetQuestionnaireDataQueryOptions(interrogation.questionnaireId, {
           request: { signal: abortController.signal },
         }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
-
-    const interrogationPr = queryClient.ensureQueryData(
-      getGetInterrogationByIdQueryOptions(interrogationId, {
-        request: { signal: abortController.signal },
-      }),
-    ) as Interrogation
 
     const metadataPr = queryClient
       .ensureQueryData(
@@ -66,13 +71,13 @@ export const reviewRoute = createRoute({
         })
       })
 
-    return Promise.all([sourcePr, interrogationPr, metadataPr]).then(
-      ([source, interrogation, metadata]) => ({
-        source,
-        interrogation,
-        metadata,
-      }),
-    )
+    const [source, metadata] = await Promise.all([sourcePr, metadataPr])
+
+    return {
+      source,
+      interrogation,
+      metadata,
+    }
   },
   errorComponent: ({ error }) => {
     return <ErrorComponent error={error} redirectTo={undefined} />

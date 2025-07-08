@@ -21,8 +21,7 @@ const collectSearchParams = z.object({
   pathAssistance: z.string().optional(),
 })
 
-export const collectPath =
-  '/questionnaire/$questionnaireId/unite-enquetee/$interrogationId'
+export const collectPath = '/interrogations/$interrogationId'
 
 export const collectRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -31,24 +30,30 @@ export const collectRoute = createRoute({
   beforeLoad: async () => protectedRouteLoader(),
   validateSearch: collectSearchParams,
   loader: async ({
-    params: { questionnaireId, interrogationId },
+    params: { interrogationId },
     context: { queryClient },
     abortController,
   }) => {
+    //We don't need the cache from react-query for data that changed too often and need to be fresh
+    const interrogation = (await getInterrogationById(
+      interrogationId,
+      undefined,
+      abortController.signal,
+    )) as Interrogation
+
+    if (!interrogation.questionnaireId) {
+      throw new Error(
+        `Missing questionnaireId in interrogation ${interrogationId}`,
+      )
+    }
+
     const sourcePr = queryClient
       .ensureQueryData(
-        getGetQuestionnaireDataQueryOptions(questionnaireId, {
+        getGetQuestionnaireDataQueryOptions(interrogation.questionnaireId, {
           request: { signal: abortController.signal },
         }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
-
-    //We don't need the cache from react-query for data that changed too often and need to be fresh
-    const interrogationPr = getInterrogationById(
-      interrogationId,
-      undefined,
-      abortController.signal,
-    ) as Interrogation
 
     const metadataPr = queryClient
       .ensureQueryData(
@@ -69,13 +74,13 @@ export const collectRoute = createRoute({
         })
       })
 
-    return Promise.all([sourcePr, interrogationPr, metadataPr]).then(
-      ([source, interrogation, metadata]) => ({
-        source,
-        interrogation,
-        metadata,
-      }),
-    )
+    const [source, metadata] = await Promise.all([sourcePr, metadataPr])
+
+    return {
+      source,
+      interrogation,
+      metadata,
+    }
   },
   // Do not cache this route's data after it's unloaded
   gcTime: 0,

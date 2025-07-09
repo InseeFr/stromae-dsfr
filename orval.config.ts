@@ -2,10 +2,13 @@ import { defineConfig } from 'orval'
 
 export default defineConfig({
   openapi: {
+    input: {
+      target: 'generate-api-client/api-docs.json',
+    },
     output: {
       mode: 'tags',
       target: 'src/api/',
-      schemas: 'src/model/api',
+      schemas: 'src/models/api',
       client: 'react-query',
       override: {
         mutator: {

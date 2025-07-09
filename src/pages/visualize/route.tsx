@@ -2,9 +2,9 @@ import { createRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import {
+  interrogationQueryOptions,
   metadataQueryOptions,
   sourceQueryOptions,
-  surveyUnitQueryOptions,
 } from '@/api/visualizeQueryOptions'
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
@@ -31,13 +31,13 @@ export const visualizeRoute = createRoute({
   validateSearch: visualizeSearchSchema,
   loaderDeps: ({ search }) => ({
     sourceUrl: search?.source,
-    surveyUnitUrl: search?.data,
+    interrogationUrl: search?.data,
     metadataUrl: search?.metadata,
     nomenclature: search?.nomenclature,
   }),
   loader: async ({
     context: { queryClient },
-    deps: { sourceUrl, surveyUnitUrl, metadataUrl, nomenclature },
+    deps: { sourceUrl, interrogationUrl, metadataUrl, nomenclature },
     abortController,
   }) => {
     document.title = "Visualisation | Filière d'Enquête"
@@ -50,9 +50,9 @@ export const visualizeRoute = createRoute({
       sourceQueryOptions(sourceUrl, { signal: abortController.signal }),
     )
 
-    const surveyUnitPr = surveyUnitUrl
+    const interrogationPr = interrogationUrl
       ? queryClient.ensureQueryData(
-          surveyUnitQueryOptions(surveyUnitUrl, {
+          interrogationQueryOptions(interrogationUrl, {
             signal: abortController.signal,
           }),
         )
@@ -73,16 +73,16 @@ export const visualizeRoute = createRoute({
               ...metadata,
               mainLogo: metadata.logos?.main,
               secondariesLogo: metadata.logos?.secondaries,
-              surveyUnitInfo: convertOldPersonalization(
+              interrogationInfo: convertOldPersonalization(
                 metadata.personalization,
               ),
             })
           })
       : Promise.resolve(metadataStore.getSnapshot())
 
-    return Promise.all([sourcePr, surveyUnitPr, metadataPr]).then(
-      ([source, surveyUnit, metadata]) => {
-        return { source, surveyUnit, metadata, nomenclature }
+    return Promise.all([sourcePr, interrogationPr, metadataPr]).then(
+      ([source, interrogation, metadata]) => {
+        return { source, interrogation, metadata, nomenclature }
       },
     )
   },

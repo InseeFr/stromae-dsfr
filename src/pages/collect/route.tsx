@@ -4,13 +4,13 @@ import { z } from 'zod'
 
 import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
-  getGetSurveyUnitMetadataByIdQueryOptions,
-  getSurveyUnitById,
-} from '@/api/06-survey-units'
+  getGetInterrogationMetadataByIdQueryOptions,
+  getInterrogationById,
+} from '@/api/06-interrogations'
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { protectedRouteLoader } from '@/loader/protectedLoader'
-import type { SurveyUnit } from '@/models/surveyUnit'
+import type { Interrogation } from '@/models/interrogation'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
@@ -21,8 +21,7 @@ const collectSearchParams = z.object({
   pathAssistance: z.string().optional(),
 })
 
-export const collectPath =
-  '/questionnaire/$questionnaireId/unite-enquetee/$surveyUnitId'
+export const collectPath = '/interrogations/$interrogationId'
 
 export const collectRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -31,28 +30,34 @@ export const collectRoute = createRoute({
   beforeLoad: async () => protectedRouteLoader(),
   validateSearch: collectSearchParams,
   loader: async ({
-    params: { questionnaireId, surveyUnitId },
+    params: { interrogationId },
     context: { queryClient },
     abortController,
   }) => {
+    //We don't need the cache from react-query for data that changed too often and need to be fresh
+    const interrogation = (await getInterrogationById(
+      interrogationId,
+      undefined,
+      abortController.signal,
+    )) as Interrogation
+
+    if (!interrogation.questionnaireId) {
+      throw new Error(
+        `Missing questionnaireId in interrogation ${interrogationId}`,
+      )
+    }
+
     const sourcePr = queryClient
       .ensureQueryData(
-        getGetQuestionnaireDataQueryOptions(questionnaireId, {
+        getGetQuestionnaireDataQueryOptions(interrogation.questionnaireId, {
           request: { signal: abortController.signal },
         }),
       )
       .then((e) => e as unknown as LunaticSource) // We'd like to use zod, but the files are heavy.
 
-    //We don't need the cache from react-query for data that changed too often and need to be fresh
-    const surveyUnitPr = getSurveyUnitById(
-      surveyUnitId,
-      undefined,
-      abortController.signal,
-    ) as SurveyUnit
-
     const metadataPr = queryClient
       .ensureQueryData(
-        getGetSurveyUnitMetadataByIdQueryOptions(surveyUnitId, {
+        getGetInterrogationMetadataByIdQueryOptions(interrogationId, {
           request: { signal: abortController.signal },
         }),
       )
@@ -63,17 +68,19 @@ export const collectRoute = createRoute({
           ...metadata,
           mainLogo: metadata.logos?.main,
           secondariesLogo: metadata.logos?.secondaries,
-          surveyUnitInfo: convertOldPersonalization(metadata.personalization),
+          interrogationInfo: convertOldPersonalization(
+            metadata.personalization,
+          ),
         })
       })
 
-    return Promise.all([sourcePr, surveyUnitPr, metadataPr]).then(
-      ([source, surveyUnit, metadata]) => ({
-        source,
-        surveyUnit,
-        metadata,
-      }),
-    )
+    const [source, metadata] = await Promise.all([sourcePr, metadataPr])
+
+    return {
+      source,
+      interrogation,
+      metadata,
+    }
   },
   // Do not cache this route's data after it's unloaded
   gcTime: 0,

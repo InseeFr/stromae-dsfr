@@ -1,10 +1,10 @@
-import type { SurveyUnitMetadata } from '@/models/api'
+import type { InterrogationMetadata } from '@/models/api'
 import type { Content, Metadata } from '@/models/metadata'
 
 const keysToExtract = ['whoAnswers1', 'whoAnswers2', 'whoAnswers3']
 
 function convertContent(
-  personalization: SurveyUnitMetadata['personalization'],
+  personalization: InterrogationMetadata['personalization'],
 ): Content | undefined {
   const textItems = personalization
     ?.filter((item) => keysToExtract.includes(item.name) && item.value !== '')
@@ -23,8 +23,8 @@ function convertContent(
  * Temporary function before the api move to new Schema described here @url https://github.com/InseeFr/stromae-dsfr/issues/81#issuecomment-2216825059
  */
 export function convertOldPersonalization(
-  personalization: SurveyUnitMetadata['personalization'],
-): Metadata['surveyUnitInfo'] {
+  personalization: InterrogationMetadata['personalization'],
+): Metadata['interrogationInfo'] {
   const contentBlock = convertContent(personalization)
 
   if (contentBlock === undefined) return undefined

@@ -10,4 +10,4 @@ Son fonctionnement est très similaire à celui du contexte de collecte, à la s
 
 Il est possible, pendant la navigation dans le questionnaire, de modifier les réponses (afin de vérifier par exemple le comportement du questionnaire en direct avec un enquêté), mais les données ne sont pas sauvegardées.
 
-Ce contexte est disponible sur la route suivante : `/review/questionnaire/$questionnaireId/unite-enquetee/$surveyUnitId`
+Ce contexte est disponible sur la route suivante : `/review/questionnaire/$questionnaireId/unite-enquetee/$interrogationId`

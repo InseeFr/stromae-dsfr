@@ -17,6 +17,6 @@ export type Metadata = {
   mainLogo: Logo
   secondariesLogo?: Logo[]
   campaignInfo?: Contents[]
-  surveyUnitInfo?: Contents[]
-  surveyUnitIdentifier: LocalizedString
+  interrogationInfo?: Contents[]
+  interrogationIdentifier: LocalizedString
 }

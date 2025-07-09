@@ -61,7 +61,7 @@ export function WelcomePage(props: Readonly<{ metadata: Metadata }>) {
         {resolveLocalizedString(metadata.objectives)}
       </p>
       {renderMetadataContents(metadata.campaignInfo)}
-      {renderMetadataContents(metadata.surveyUnitInfo)}
+      {renderMetadataContents(metadata.interrogationInfo)}
     </div>
   )
 }

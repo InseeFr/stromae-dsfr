@@ -16,14 +16,14 @@ import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
 import { usePrevious } from '@/hooks/usePrevious'
+import type { Interrogation } from '@/models/interrogation'
+import type { InterrogationData } from '@/models/interrogationData'
 import type {
   LunaticGetReferentiel,
   LunaticPageTag,
 } from '@/models/lunaticType'
 import type { Metadata } from '@/models/metadata'
 import type { StateData } from '@/models/stateData'
-import type { SurveyUnit } from '@/models/surveyUnit'
-import type { SurveyUnitData } from '@/models/surveyUnitData'
 import {
   computeInitEvent,
   computeInputEvent,
@@ -37,8 +37,8 @@ import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
 import { WelcomeModal } from './customPages/WelcomeModal'
 import { WelcomePage } from './customPages/WelcomePage'
-import { useSurveyUnit } from './hooks/surveyUnit/useSurveyUnit'
-import { hasDataChanged } from './hooks/surveyUnit/utils'
+import { useInterrogation } from './hooks/interrogation/useInterrogation'
+import { hasDataChanged } from './hooks/interrogation/utils'
 import { useControls } from './hooks/useControls'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
@@ -47,7 +47,7 @@ import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { computeLunaticComponents } from './utils/components'
-import { computeSurveyUnit, trimCollectedData } from './utils/data'
+import { computeInterrogation, trimCollectedData } from './utils/data'
 import { downloadAsJson } from './utils/downloadAsJson'
 import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
@@ -66,11 +66,11 @@ export namespace OrchestratorProps {
   export type Common = {
     /** Questionnaire data consumed by Lunatic to make its components */
     source: LunaticSource
-    /** Initial survey unit when we initialize the orchestrator */
-    surveyUnit?: SurveyUnit
+    /** Initial interrogation when we initialize the orchestrator */
+    interrogation?: Interrogation
     /** Allows to fetch nomenclature by id */
     getReferentiel: LunaticGetReferentiel
-    /** Survey unit metadata */
+    /** Interrogation metadata */
     metadata: Metadata
   }
 
@@ -97,17 +97,17 @@ export namespace OrchestratorProps {
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, surveyUnit, getReferentiel, mode, metadata } = props
+  const { source, interrogation, getReferentiel, mode, metadata } = props
 
   const navigate = useNavigate()
 
-  const initialSurveyUnit = computeSurveyUnit(surveyUnit)
+  const initialInterrogation = computeInterrogation(interrogation)
 
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
   useBeforeUnload(isDirtyState)
 
-  // Allow to send telemetry events once survey unit id has been set
+  // Allow to send telemetry events once interrogation id has been set
   const [isTelemetryInitialized, setIsTelemetryInitialized] =
     useState<boolean>(false)
   const {
@@ -154,8 +154,8 @@ export function Orchestrator(props: OrchestratorProps) {
     open: () => Promise.resolve(),
   })
 
-  const initialCurrentPage = initialSurveyUnit?.stateData?.currentPage
-  const initialState = initialSurveyUnit?.stateData?.state
+  const initialCurrentPage = initialInterrogation?.stateData?.currentPage
+  const initialState = initialInterrogation?.stateData?.state
   const pagination = source.pagination ?? 'question'
 
   const lunaticLogger = useMemo(
@@ -180,7 +180,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getData,
     resetChangedData,
     overview,
-  } = useLunatic(source, initialSurveyUnit?.data, {
+  } = useLunatic(source, initialInterrogation?.data, {
     logger: lunaticLogger,
     activeControls: true,
     getReferentiel,
@@ -198,10 +198,10 @@ export function Orchestrator(props: OrchestratorProps) {
 
   // current date to show in end page on validation
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
-    initialSurveyUnit?.stateData?.date,
+    initialInterrogation?.stateData?.date,
   )
 
-  const { updateSurveyUnit } = useSurveyUnit(initialSurveyUnit)
+  const { updateInterrogation } = useInterrogation(initialInterrogation)
 
   const { currentPageType, goNext, goToPage, goPrevious } =
     useStromaeNavigation({
@@ -238,13 +238,13 @@ export function Orchestrator(props: OrchestratorProps) {
 
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
-    const surveyUnit = updateSurveyUnit(
-      getData(true) as SurveyUnitData,
+    const interrogation = updateInterrogation(
+      getData(true) as InterrogationData,
       currentPage,
     )
 
-    downloadAsJson<SurveyUnit>({
-      dataToDownload: surveyUnit,
+    downloadAsJson<Interrogation>({
+      dataToDownload: interrogation,
       //The label of source is not dynamic
       filename: `${source.label?.value}-${new Date().toLocaleDateString()}`,
     })
@@ -252,11 +252,11 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const triggerDataAndStateUpdate = (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
-      const changedData = getChangedData(true) as SurveyUnitData
-      const surveyUnit = updateSurveyUnit(changedData, currentPage)
+      const changedData = getChangedData(true) as InterrogationData
+      const interrogation = updateInterrogation(changedData, currentPage)
 
       if (
-        !surveyUnit.stateData ||
+        !interrogation.stateData ||
         (!hasDataChanged(changedData) &&
           (currentPageType === PAGE_TYPE.LUNATIC
             ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
@@ -268,7 +268,7 @@ export function Orchestrator(props: OrchestratorProps) {
       }
 
       props.updateDataAndStateData({
-        stateData: surveyUnit.stateData,
+        stateData: interrogation.stateData,
         // we push only the new data, not the full data
         // changedData.COLLECTED is defined since hasDataChanged checks it
         data: trimCollectedData(changedData.COLLECTED!),
@@ -277,17 +277,17 @@ export function Orchestrator(props: OrchestratorProps) {
       })
       setIsDirtyState(false)
       // update date to show on end page message
-      setLastUpdateDate(surveyUnit.stateData?.date)
+      setLastUpdateDate(interrogation.stateData?.date)
     }
   }
 
   // Telemetry initialization
   useEffect(() => {
     if (!isTelemetryDisabled && mode === MODE_TYPE.COLLECT) {
-      setDefaultValues({ idSU: initialSurveyUnit?.id })
+      setDefaultValues({ idSU: initialInterrogation?.id })
       setIsTelemetryInitialized(true)
     }
-  }, [isTelemetryDisabled, mode, setDefaultValues, initialSurveyUnit?.id])
+  }, [isTelemetryDisabled, mode, setDefaultValues, initialInterrogation?.id])
 
   // Initialization
   useEffect(() => {

@@ -72,7 +72,7 @@ describe('Orchestrator', () => {
     />
   )
 
-  it('sets idSU as default value', async () => {
+  it('sets idInterrogation as default value', async () => {
     const setDefaultValues = vi.fn()
 
     renderWithRouter(
@@ -90,7 +90,7 @@ describe('Orchestrator', () => {
     await waitFor(() => expect(setDefaultValues).toHaveBeenCalledOnce())
     await waitFor(() =>
       expect(setDefaultValues).toHaveBeenCalledWith({
-        idSU: 'my-service-unit-id',
+        idInterrogation: 'my-service-unit-id',
       }),
     )
   })

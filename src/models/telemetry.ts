@@ -11,7 +11,7 @@ export type TelemetryEvent = DefaultParadataValues &
 
 /** Values that are set up once and added to every telemetry event */
 export type DefaultParadataValues = {
-  idSU?: string
+  idInterrogation?: string
   sid?: string
   userAgent?: string
 }

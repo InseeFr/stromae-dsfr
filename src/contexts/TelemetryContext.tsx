@@ -69,7 +69,7 @@ export function TelemetryProvider({
   /** Push events to telemetry API after an arbitrary number of events or a delay. */
   const pushEvents = useCallback(async (events: Array<TelemetryEvent>) => {
     if (events.length > 0) {
-      return addParadata({ idSU: events[0].idSU, events })
+      return addParadata({ idInterrogation: events[0].idInterrogation, events })
     }
   }, [])
 

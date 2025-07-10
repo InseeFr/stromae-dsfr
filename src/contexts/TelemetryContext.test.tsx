@@ -46,7 +46,7 @@ describe('Telemetry context', () => {
 
     const { result } = renderHook(() => useTelemetry(), { wrapper })
 
-    const myValues = { idSU: 'abc' }
+    const myValues = { idInterrogation: 'abc' }
     result.current.setDefaultValues(myValues)
 
     expect(mock).toHaveBeenCalledWith(myValues)

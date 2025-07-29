@@ -29,11 +29,16 @@ export const MarkdownLink: LunaticSlotComponents['MarkdownLink'] = (props) => {
           tabIndex={0}
           aria-describedby={tooltip ? `tooltip-${id}` : undefined}
           className={css({
+            color: '#2D7B8B',
             textDecoration: 'underline',
+            textDecorationColor: '#2D7B8B',
+            textDecorationStyle: 'dotted',
             textDecorationThickness: 'var(--underline-thickness)',
-            textUnderlineOffset: 4,
-            ':hover': {
-              textDecorationThickness: 'calc(var(--underline-thickness) * 2)',
+            textUnderlineOffset: '0.3rem',
+            cursor: 'help',
+            ':after': {
+              content: '" 🛈"',
+              fontWeight: 'initial',
             },
           })}
         >

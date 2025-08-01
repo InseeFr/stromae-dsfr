@@ -1,8 +1,11 @@
 import { type FrCxArg, fr } from '@codegouvfr/react-dsfr'
+import { MDLabel } from '@inseefr/lunatic'
 
 import { useSequenceTitle } from '@/hooks/useDocumentTitle'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { LunaticOverview } from '@/models/lunaticType'
+
+import { MarkdownLink } from './slotComponents/MarkdownLink'
 
 type SequenceHeaderProps = {
   pagination: 'question' | 'sequence'
@@ -48,7 +51,14 @@ export function SequenceHeader(props: SequenceHeaderProps) {
           {t('stepper state', { currentStep, stepCount })}
         </span>
       </h2>
-      {currentSequence.description && <p>{currentSequence.description}</p>}
+      {currentSequence.description && (
+        <p>
+          <MDLabel
+            expression={(currentSequence.description as any).props.expression}
+            MarkdownLinkOverride={MarkdownLink}
+          />
+        </p>
+      )}
       <div
         className={fr.cx('fr-stepper__steps')}
         data-fr-current-step={currentStep}

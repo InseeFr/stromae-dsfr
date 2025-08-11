@@ -1,11 +1,7 @@
 import { memo, useEffect } from 'react'
 
 import type { QueryClient } from '@tanstack/react-query'
-import {
-  Outlet,
-  ScrollRestoration,
-  createRootRouteWithContext,
-} from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { Toaster } from 'react-hot-toast'
 
 import { ErrorComponent } from '@/components/error/ErrorComponent'
@@ -44,7 +40,6 @@ const RootComponent = memo(() => {
       <Header />
       <main id="main" role="main">
         <Toaster />
-        <ScrollRestoration />
         <Outlet />
       </main>
       <Footer />

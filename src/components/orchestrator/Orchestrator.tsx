@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import {
+  getArticulation,
   type LunaticChangesHandler,
   LunaticComponents,
   type LunaticData,
@@ -10,6 +11,7 @@ import {
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
 
+import { useEvents } from '@/components/orchestrator/hooks/useEvents'
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
@@ -60,7 +62,7 @@ export type OrchestratorProps = OrchestratorProps.Common &
     | OrchestratorProps.Visualize
     | OrchestratorProps.Collect
     | OrchestratorProps.Review
-  )
+    )
 
 export namespace OrchestratorProps {
   export type Common = {
@@ -97,11 +99,11 @@ export namespace OrchestratorProps {
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, interrogation, getReferentiel, mode, metadata } = props
+  const { source, getReferentiel, mode, metadata } = props
 
   const navigate = useNavigate()
 
-  const initialInterrogation = computeInterrogation(interrogation)
+  const initialInterrogation = computeInterrogation(props.interrogation)
 
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
@@ -180,6 +182,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getData,
     resetChangedData,
     overview,
+    getMultiMode,
   } = useLunatic(source, initialInterrogation?.data, {
     logger: lunaticLogger,
     activeControls: true,
@@ -196,12 +199,21 @@ export function Orchestrator(props: OrchestratorProps) {
 
   pageTagRef.current = pageTag
 
+
   // current date to show in end page on validation
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
     initialInterrogation?.stateData?.date,
   )
 
-  const { updateInterrogation } = useInterrogation(initialInterrogation)
+  const { interrogation, updateInterrogation } = useInterrogation(
+    initialInterrogation,
+    {
+      // @ts-expect-error source has articulation
+      getArticulation: () => getArticulation(source, getData(false)),
+      getMultiMode: getMultiMode,
+    })
+  useEvents(interrogation)
+
 
   const { currentPageType, goNext, goToPage, goPrevious } =
     useStromaeNavigation({

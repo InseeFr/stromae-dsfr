@@ -26,7 +26,7 @@ export const ReviewPage = memo(function ReviewPage() {
       mode={MODE_TYPE.REVIEW}
       metadata={metadata}
       source={source}
-      interrogation={interrogation}
+      initialInterrogation={interrogation}
       getReferentiel={getReferentiel}
     />
   )

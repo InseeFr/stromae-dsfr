@@ -2,16 +2,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import {
-  getArticulation,
   type LunaticChangesHandler,
   LunaticComponents,
   type LunaticData,
   type LunaticSource,
+  getArticulationState,
   useLunatic,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
 
-import { useEvents } from '@/components/orchestrator/hooks/useEvents'
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
@@ -42,6 +41,7 @@ import { WelcomePage } from './customPages/WelcomePage'
 import { useInterrogation } from './hooks/interrogation/useInterrogation'
 import { hasDataChanged } from './hooks/interrogation/utils'
 import { useControls } from './hooks/useControls'
+import { useEvents } from './hooks/useEvents'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
@@ -62,14 +62,14 @@ export type OrchestratorProps = OrchestratorProps.Common &
     | OrchestratorProps.Visualize
     | OrchestratorProps.Collect
     | OrchestratorProps.Review
-    )
+  )
 
 export namespace OrchestratorProps {
   export type Common = {
     /** Questionnaire data consumed by Lunatic to make its components */
     source: LunaticSource
     /** Initial interrogation when we initialize the orchestrator */
-    interrogation?: Interrogation
+    initialInterrogation?: Interrogation
     /** Allows to fetch nomenclature by id */
     getReferentiel: LunaticGetReferentiel
     /** Interrogation metadata */
@@ -103,7 +103,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const navigate = useNavigate()
 
-  const initialInterrogation = computeInterrogation(props.interrogation)
+  const initialInterrogation = computeInterrogation(props.initialInterrogation)
 
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
@@ -182,7 +182,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getData,
     resetChangedData,
     overview,
-    getMultiMode,
+    getMultimode,
   } = useLunatic(source, initialInterrogation?.data, {
     logger: lunaticLogger,
     activeControls: true,
@@ -199,7 +199,6 @@ export function Orchestrator(props: OrchestratorProps) {
 
   pageTagRef.current = pageTag
 
-
   // current date to show in end page on validation
   const [lastUpdateDate, setLastUpdateDate] = useState<number | undefined>(
     initialInterrogation?.stateData?.date,
@@ -208,12 +207,17 @@ export function Orchestrator(props: OrchestratorProps) {
   const { interrogation, updateInterrogation } = useInterrogation(
     initialInterrogation,
     {
-      // @ts-expect-error source has articulation
-      getArticulation: () => getArticulation(source, getData(false)),
-      getMultiMode: getMultiMode,
-    })
+      getArticulationState: () => {
+        if (!source.articulation) {
+          return { items: [] }
+        }
+        // @ts-expect-error source has articulation
+        return getArticulationState(source, getData(false))
+      },
+      getMultimode: getMultimode,
+    },
+  )
   useEvents(interrogation)
-
 
   const { currentPageType, goNext, goToPage, goPrevious } =
     useStromaeNavigation({

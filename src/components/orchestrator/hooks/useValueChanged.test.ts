@@ -1,68 +1,69 @@
-import { describe, expect, it, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
-import { useValueChanged } from './useValueChanged'
+import { describe, expect, it, vi } from 'vitest'
 
-describe("useValueChanged", () => {
-  it("should not trigger on initial render", () => {
-    const callback = vi.fn();
+import { useCallbackOnValueChange } from './useCallbackOnValueChange.ts'
 
-    renderHook(() => useValueChanged({ a: 1 }, callback));
+describe('useValueChanged', () => {
+  it('should not trigger on initial render', () => {
+    const callback = vi.fn()
 
-    expect(callback).not.toHaveBeenCalled();
-  });
+    renderHook(() => useCallbackOnValueChange({ a: 1 }, callback))
 
-  it("should trigger when value changes", () => {
-    const callback = vi.fn();
+    expect(callback).not.toHaveBeenCalled()
+  })
 
-    const { rerender } = renderHook(
-      ({ value }) => useValueChanged(value, callback),
-      { initialProps: { value: { a: 1 } } }
-    );
-
-    rerender({ value: { a: 2 } });
-
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith({ a: 2 });
-  });
-
-  it("should not trigger when value stays the same", () => {
-    const callback = vi.fn();
+  it('should trigger when value changes', () => {
+    const callback = vi.fn()
 
     const { rerender } = renderHook(
-      ({ value }) => useValueChanged(value, callback),
-      { initialProps: { value: { a: 1 } } }
-    );
+      ({ value }) => useCallbackOnValueChange(value, callback),
+      { initialProps: { value: { a: 1 } } },
+    )
 
-    rerender({ value: { a: 1 } }); // deep equal
+    rerender({ value: { a: 2 } })
 
-    expect(callback).not.toHaveBeenCalled();
-  });
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith({ a: 2 })
+  })
 
-  it("should handle nested object changes", () => {
-    const callback = vi.fn();
-
-    const { rerender } = renderHook(
-      ({ value }) => useValueChanged(value, callback),
-      { initialProps: { value: { a: { b: 1 } } } }
-    );
-
-    rerender({ value: { a: { b: 2 } } });
-
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith({ a: { b: 2 } });
-  });
-
-  it("should work with primitive values", () => {
-    const callback = vi.fn();
+  it('should not trigger when value stays the same', () => {
+    const callback = vi.fn()
 
     const { rerender } = renderHook(
-      ({ value }) => useValueChanged(value, callback),
-      { initialProps: { value: 1 } }
-    );
+      ({ value }) => useCallbackOnValueChange(value, callback),
+      { initialProps: { value: { a: 1 } } },
+    )
 
-    rerender({ value: 2 });
+    rerender({ value: { a: 1 } }) // deep equal
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(2);
-  });
-});
+    expect(callback).not.toHaveBeenCalled()
+  })
+
+  it('should handle nested object changes', () => {
+    const callback = vi.fn()
+
+    const { rerender } = renderHook(
+      ({ value }) => useCallbackOnValueChange(value, callback),
+      { initialProps: { value: { a: { b: 1 } } } },
+    )
+
+    rerender({ value: { a: { b: 2 } } })
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith({ a: { b: 2 } })
+  })
+
+  it('should work with primitive values', () => {
+    const callback = vi.fn()
+
+    const { rerender } = renderHook(
+      ({ value }) => useCallbackOnValueChange(value, callback),
+      { initialProps: { value: 1 } },
+    )
+
+    rerender({ value: 2 })
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(2)
+  })
+})

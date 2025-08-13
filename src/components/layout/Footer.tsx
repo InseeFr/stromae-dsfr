@@ -65,6 +65,7 @@ export function Footer() {
       accessibility="non compliant"
       license={t('license')}
       homeLinkProps={{
+        search: true,
         title: t_Header('home link title'),
         // needs a href to prevent the default redirection to the homepage.
         // we assume it is a link pointing to the current url

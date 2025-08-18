@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.5.1] - 2025-08-18
+## [1.5.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.5.1) - 2025-08-18
 
 ### Changed
 
@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed some issues with loops.
 
-## [1.5.0] - 2025-07-23
+## [1.5.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.5.0) - 2025-07-23
 
 ### Changed
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed some issues on roundabout and loops.
 - Improved performance.
 
-## [1.4.7] - 2025-07-04
+## [1.4.7](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.4.7) - 2025-07-04
 
 ### Changed
 
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed some issues on roundabout and loop controls.
 - Removed a few forgotten developpment logs.
 
-## [1.4.6] - 2025-06-23
+## [1.4.6](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.4.6) - 2025-06-23
 
 ### Changed
 
@@ -50,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved pairwise questions display.
 - In visualization, data download now includes calculated variables.
 
-## [1.4.5] - 2025-06-12
+## [1.4.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.4.5) - 2025-06-12
 
 ### Changed
 
@@ -60,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Do not ask for pairwise connection for individuals who do not have been filled in.
 
-## [1.4.4] - 2025-06-11
+## [1.4.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.4.4) - 2025-06-11
 
 ### Changed
 
@@ -73,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Do not redirect the user on header and footer click.
 - Do not calculate variables that are flagged to be ignored by Lunatic.
 
-## [1.4.3] - 2025-05-28
+## [1.4.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.4.3) - 2025-05-28
 
 ### Changed
 

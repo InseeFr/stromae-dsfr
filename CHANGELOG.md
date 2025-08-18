@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2025-08-18
+
+### Changed
+
+- Tooltip design in question labels has been improved to be more readable.
+
+### Fixed
+
+- Fixed some issues with loops.
+
+## [1.5.0] - 2025-07-23
+
+### Changed
+
+- API now use interrogation id instead of survey unit id.
+- Put idInterrogation in event paradata instead of idSU.
+
+### Fixed
+
+- Fixed some issues on roundabout and loops.
+- Improved performance.
+
 ## [1.4.7] - 2025-07-04
 
 ### Changed

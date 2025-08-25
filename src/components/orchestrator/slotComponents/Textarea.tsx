@@ -38,6 +38,11 @@ export const Textarea: LunaticSlotComponents['Textarea'] = (props) => {
     //TODO throw and handle globaly errors in an alert with a condition to avoid to display alert in prod
     console.error('Only declaration in Question are displayed')
   }
+
+  if (readOnly) {
+    return <p>{value}</p>
+  }
+
   return (
     <Input
       label={label}

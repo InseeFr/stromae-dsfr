@@ -39,7 +39,7 @@ export const VisualizePage = memo(function VisualizePage() {
       mode={MODE_TYPE.VISUALIZE}
       metadata={metadata}
       source={source}
-      interrogation={interrogation}
+      initialInterrogation={interrogation}
       getReferentiel={getReferentiel}
     />
   )

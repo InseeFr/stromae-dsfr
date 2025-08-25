@@ -2,6 +2,9 @@ import type { InterrogationData } from '@/models/interrogationData'
 
 import { trimCollectedData } from '../../utils/data'
 
+/**
+ * Check if there is collected value with the changes
+ */
 export function hasDataChanged(changedData: InterrogationData): boolean {
   if (changedData.COLLECTED) {
     return Object.keys(changedData.COLLECTED).length > 0
@@ -9,7 +12,9 @@ export function hasDataChanged(changedData: InterrogationData): boolean {
   return false
 }
 
-/** Get updated interrogation data, using the current data and changed data */
+/**
+ * Merge changes with the existing data
+ */
 export function computeUpdatedData(
   currentInterrogationData: InterrogationData,
   changedData: InterrogationData,
@@ -20,7 +25,10 @@ export function computeUpdatedData(
   return currentInterrogationData
 }
 
-/** get full data, computing current data with changed data */
+
+/**
+ * Retrieve the full data, merging the changes into the current data
+ */
 function computeFullData(
   currentData: InterrogationData,
   changedData: InterrogationData,

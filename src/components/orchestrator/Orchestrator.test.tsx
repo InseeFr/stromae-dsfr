@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
@@ -49,27 +50,30 @@ describe('Orchestrator', () => {
     variables: [],
     maxPage: '2',
   }
+  const queryClient = new QueryClient()
   const OrchestratorTestWrapper = ({
     mode,
   }: {
     mode: MODE_TYPE.COLLECT | MODE_TYPE.REVIEW | MODE_TYPE.VISUALIZE
   }) => (
-    <Orchestrator
-      metadata={metadata}
-      mode={mode}
-      interrogation={interrogation}
-      // @ts-expect-error: we should have a better lunatic mock
-      source={source}
-      getReferentiel={() => {
-        return new Promise(() => [])
-      }}
-      updateDataAndStateData={() => {
-        return new Promise<void>(() => {})
-      }}
-      getDepositProof={() => {
-        return new Promise<void>(() => {})
-      }}
-    />
+    <QueryClientProvider client={queryClient}>
+      <Orchestrator
+        metadata={metadata}
+        mode={mode}
+        initialInterrogation={interrogation}
+        // @ts-expect-error: we should have a better lunatic mock
+        source={source}
+        getReferentiel={() => {
+          return new Promise(() => [])
+        }}
+        updateDataAndStateData={() => {
+          return new Promise<void>(() => {})
+        }}
+        getDepositProof={() => {
+          return new Promise<void>(() => {})
+        }}
+      />
+    </QueryClientProvider>
   )
 
   it('sets idInterrogation as default value', async () => {

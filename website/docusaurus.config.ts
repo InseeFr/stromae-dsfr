@@ -87,7 +87,7 @@ const config: Config = {
     },
     footer: {
       logo: {
-        src: '/logo/Logo_Insee.svg',
+        src: '/logo/logo-insee.png',
       },
       links: [
         {

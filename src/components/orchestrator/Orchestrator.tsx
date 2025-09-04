@@ -6,6 +6,7 @@ import {
   LunaticComponents,
   type LunaticData,
   type LunaticSource,
+  getArticulationState,
   useLunatic,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
@@ -40,6 +41,7 @@ import { WelcomePage } from './customPages/WelcomePage'
 import { useInterrogation } from './hooks/interrogation/useInterrogation'
 import { hasDataChanged } from './hooks/interrogation/utils'
 import { useControls } from './hooks/useControls'
+import { useEvents } from './hooks/useEvents'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
@@ -67,7 +69,7 @@ export namespace OrchestratorProps {
     /** Questionnaire data consumed by Lunatic to make its components */
     source: LunaticSource
     /** Initial interrogation when we initialize the orchestrator */
-    interrogation?: Interrogation
+    initialInterrogation?: Interrogation
     /** Allows to fetch nomenclature by id */
     getReferentiel: LunaticGetReferentiel
     /** Interrogation metadata */
@@ -97,11 +99,11 @@ export namespace OrchestratorProps {
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, interrogation, getReferentiel, mode, metadata } = props
+  const { source, getReferentiel, mode, metadata } = props
 
   const navigate = useNavigate()
 
-  const initialInterrogation = computeInterrogation(interrogation)
+  const initialInterrogation = computeInterrogation(props.initialInterrogation)
 
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
@@ -180,6 +182,7 @@ export function Orchestrator(props: OrchestratorProps) {
     getData,
     resetChangedData,
     overview,
+    getMultimode,
   } = useLunatic(source, initialInterrogation?.data, {
     logger: lunaticLogger,
     activeControls: true,
@@ -201,7 +204,20 @@ export function Orchestrator(props: OrchestratorProps) {
     initialInterrogation?.stateData?.date,
   )
 
-  const { updateInterrogation } = useInterrogation(initialInterrogation)
+  const { interrogation, updateInterrogation } = useInterrogation(
+    initialInterrogation,
+    {
+      getArticulationState: () => {
+        if (!source.articulation) {
+          return { items: [] }
+        }
+        // @ts-expect-error source has articulation
+        return getArticulationState(source, getData(false))
+      },
+      getMultimode: getMultimode,
+    },
+  )
+  useEvents(interrogation)
 
   const { currentPageType, goNext, goToPage, goPrevious } =
     useStromaeNavigation({

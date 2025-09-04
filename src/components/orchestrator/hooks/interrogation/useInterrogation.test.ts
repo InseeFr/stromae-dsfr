@@ -20,7 +20,7 @@ describe('Use interrogation', () => {
       useInterrogation({ id: 'id', questionnaireId: 'qid', data: {} }),
     )
 
-    expect(result.current.interrogationData).toStrictEqual({})
+    expect(result.current.interrogation.data).toStrictEqual({})
 
     act(() => {
       const res = result.current.updateInterrogation(
@@ -29,7 +29,7 @@ describe('Use interrogation', () => {
         },
         '1',
       )
-      expect(res).toStrictEqual({
+      expect(res).toMatchObject({
         data: {
           CALCULATED: {},
           COLLECTED: { Q1: { COLLECTED: 'new data' } },
@@ -45,7 +45,7 @@ describe('Use interrogation', () => {
       })
     })
 
-    expect(result.current.interrogationData).toStrictEqual({
+    expect(result.current.interrogation.data).toStrictEqual({
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},
@@ -62,7 +62,7 @@ describe('Use interrogation', () => {
       expect(res.stateData).toBeUndefined()
     })
 
-    expect(result.current.interrogationData).toStrictEqual({})
+    expect(result.current.interrogation.data).toStrictEqual({})
   })
 
   test('sets state to VALIDATED when on end page', () => {
@@ -80,7 +80,7 @@ describe('Use interrogation', () => {
         { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
         PAGE_TYPE.END,
       )
-      expect(res).toStrictEqual({
+      expect(res).toMatchObject({
         data: {
           CALCULATED: {},
           COLLECTED: { Q1: { COLLECTED: 'new data' } },
@@ -116,7 +116,7 @@ describe('Use interrogation', () => {
         },
         '2',
       )
-      expect(res).toStrictEqual({
+      expect(res).toMatchObject({
         data: {
           CALCULATED: {},
           COLLECTED: { Q1: { COLLECTED: 'new data' } },
@@ -132,7 +132,7 @@ describe('Use interrogation', () => {
       })
     })
 
-    expect(result.current.interrogationData).toStrictEqual({
+    expect(result.current.interrogation.data).toMatchObject({
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},

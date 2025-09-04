@@ -18,8 +18,8 @@ importers:
         specifier: ^11.13.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react@18.3.1)
       '@inseefr/lunatic':
-        specifier: 3.6.15-rc.1
-        version: 3.6.15-rc.1(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 3.6.15
+        version: 3.6.15(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/material':
         specifier: ^5.16.7
         version: 5.16.14(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -966,8 +966,8 @@ packages:
     resolution: {integrity: sha512-3WK2FREmDA2aadCjD71PE7tx5evyvmhg80ts1kXp2IzXIA0ZJ7guGM66tj40kxaqwpMSGchwEnnfYswntav76g==}
     engines: {node: '>=16.0.0'}
 
-  '@inseefr/lunatic@3.6.15-rc.1':
-    resolution: {integrity: sha512-UsyAc1Xy5zj9FOgM0pg17LlrXBUrdfnjuYjVA8pU15oU2vIEcNZm889KASbrqEdl1/0bX40qVyvCY7YDD9QoEQ==}
+  '@inseefr/lunatic@3.6.15':
+    resolution: {integrity: sha512-12S+LTE8FEsW5IHNGwBmnmkA4TnqPSwhm1zz1VWd7DzAr3GizWitDalqTTkpDBqfOqRp6Bl/ZQIkaSrwXdrsDg==}
     peerDependencies:
       react: '^18.3.1 '
 
@@ -3805,8 +3805,8 @@ packages:
   remark-breaks@4.0.0:
     resolution: {integrity: sha512-IjEjJOkH4FuJvHZVIW0QCDWxcG96kCq7An/KVH2NfJe6rKZU2AsHeB3OEjPNRxi4QC34Xdx7I2KGYn6IpT7gxQ==}
 
-  remark-emoji@5.0.1:
-    resolution: {integrity: sha512-QCqTSvcZ65Ym+P+VyBKd4JfJfh7icMl7cIOGVmPMzWkDtdD8pQ0nQG7yxGolVIiMzSx90EZ7SwNiVpYpfTxn7w==}
+  remark-emoji@5.0.2:
+    resolution: {integrity: sha512-IyIqGELcyK5AVdLFafoiNww+Eaw/F+rGrNSXoKucjo95uL267zrddgxGM83GN1wFIb68pyDuAsY3m5t2Cav1pQ==}
     engines: {node: '>=18'}
 
   remark-parse@11.0.0:
@@ -5242,7 +5242,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@inseefr/lunatic@3.6.15-rc.1(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@inseefr/lunatic@3.6.15(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@inseefr/trevas': 0.1.21
       '@inseefr/vtl-2.0-antlr-tools': 0.3.2
@@ -5256,7 +5256,7 @@ snapshots:
       react-number-format: 5.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-tooltip: 5.29.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       remark-breaks: 4.0.0
-      remark-emoji: 5.0.1
+      remark-emoji: 5.0.2
       sass: 1.77.8
     transitivePeerDependencies:
       - '@types/react'
@@ -8710,7 +8710,7 @@ snapshots:
       mdast-util-newline-to-break: 2.0.0
       unified: 11.0.5
 
-  remark-emoji@5.0.1:
+  remark-emoji@5.0.2:
     dependencies:
       '@types/mdast': 4.0.4
       emoticon: 4.1.0

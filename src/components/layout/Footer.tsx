@@ -86,7 +86,7 @@ export function Footer() {
       operatorLogo={{
         alt: resolveLocalizedStringDetailed(mainLogo.label).str,
         imgUrl: mainLogo.url,
-        orientation: 'vertical',
+        orientation: 'horizontal',
       }}
       partnersLogos={partnersLogos}
       domains={[

@@ -121,7 +121,7 @@ export function Header() {
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,
           imgUrl: mainLogo.url,
-          orientation: 'vertical',
+          orientation: 'horizontal',
         }}
       />
       <ExitModal modal={exitModal} navigatePortal={goToPortal} />

@@ -114,7 +114,8 @@ export const translations: Translations<'sq'> = {
         return 'Shkarkoni konfirmimin e pranimit'
       return 'Kaloni në hapin tjetër'
     },
-    'button download': 'Shkarko të dhënat',
+    'button download data': 'Shkarko të dhënat',
+    'button download articulation': 'Shkarko tabelën e artikulimit',
     'button expand': 'Zgjero pamjen',
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',

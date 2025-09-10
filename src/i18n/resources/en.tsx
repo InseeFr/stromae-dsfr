@@ -114,7 +114,8 @@ export const translations: Translations<'en'> = {
         return 'Download the acknowledgment of receipt'
       return 'Proceed to the next step'
     },
-    'button download': 'Download data',
+    'button download data': 'Download data',
+    'button download articulation': 'Download articulation table',
     'button expand': 'Expand view',
     'button previous title': 'Return to the previous step',
     'button previous label': 'Previous',

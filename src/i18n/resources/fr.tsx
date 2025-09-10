@@ -113,7 +113,8 @@ export const translations: Translations<'fr'> = {
         return "Télécharger l'accusé de réception"
       return "Passer à l'étape suivante"
     },
-    'button download': 'Télécharger les données',
+    'button download data': 'Télécharger les données',
+    'button download articulation': "Télécharger le tableau d'articulation",
 
     'button expand': 'Étendre la vue',
 

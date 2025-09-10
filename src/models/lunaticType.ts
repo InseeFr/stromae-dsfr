@@ -2,6 +2,7 @@ import {
   type LunaticOptions,
   type LunaticState,
   VTLExpressionError,
+  getArticulationState,
 } from '@inseefr/lunatic'
 
 export type LunaticGetReferentiel = LunaticOptions['getReferentiel']
@@ -28,3 +29,7 @@ export type ErrorMessage = {
   error: VTLExpressionError
   pageTag: LunaticPageTag
 }
+
+export type ArticulationStateItems = ReturnType<
+  typeof getArticulationState
+>['items']

@@ -47,7 +47,7 @@ describe('CollectPage', () => {
     expect(Orchestrator).toHaveBeenCalledWith(
       expect.objectContaining({
         source: mockCollectData.source,
-        interrogation: mockCollectData.interrogation,
+        initialInterrogation: mockCollectData.interrogation,
         metadata: mockCollectData.metadata,
         getReferentiel: expect.any(Function),
         updateDataAndStateData: expect.any(Function),

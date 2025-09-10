@@ -64,7 +64,7 @@ describe('VisualizePage', () => {
         mode: 'visualize',
         metadata: mockLoaderResults.metadata,
         source: mockLoaderResults.source,
-        interrogation: mockLoaderResults.interrogation,
+        initialInterrogation: mockLoaderResults.interrogation,
         getReferentiel: expect.any(Function),
       }),
       expect.anything(),

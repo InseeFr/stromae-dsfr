@@ -54,7 +54,7 @@ describe('ReviewPage', () => {
         mode: 'review',
         metadata: mockLoaderResults.metadata,
         source: mockLoaderResults.source,
-        interrogation: mockLoaderResults.interrogation,
+        initialInterrogation: mockLoaderResults.interrogation,
         getReferentiel: expect.any(Function),
       }),
       {},

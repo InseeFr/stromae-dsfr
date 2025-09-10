@@ -36,6 +36,7 @@ const router = createRouter({
   context: {
     queryClient,
   },
+  scrollRestoration: true,
   defaultPreloadStaleTime: 0,
 })
 

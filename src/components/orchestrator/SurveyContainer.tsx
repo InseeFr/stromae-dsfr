@@ -24,7 +24,7 @@ export function SurveyContainer(
     mode: OrchestratorProps['mode']
     pagination: 'question' | 'sequence'
     overview: LunaticOverview
-    isArticulation: boolean
+    hasArticulation: boolean
     isDirtyState?: boolean
     isSequencePage: boolean
     bottomContent: ReactNode
@@ -41,7 +41,7 @@ export function SurveyContainer(
     mode,
     pagination,
     overview,
-    isArticulation,
+    hasArticulation,
     isDirtyState = false,
     isSequencePage,
     bottomContent,
@@ -149,7 +149,7 @@ export function SurveyContainer(
                 >
                   {t('button download data')}
                 </Button>
-                {isArticulation && (
+                {hasArticulation && (
                   <Button
                     iconId="ri-download-2-line"
                     priority="tertiary no outline"

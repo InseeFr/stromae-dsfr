@@ -160,7 +160,7 @@ export function Orchestrator(props: OrchestratorProps) {
   const initialCurrentPage = initialInterrogation?.stateData?.currentPage
   const initialState = initialInterrogation?.stateData?.state
   const pagination = source.pagination ?? 'question'
-  const isArticulation = source.articulation !== undefined
+  const hasArticulation = source.articulation !== undefined
 
   const lunaticLogger = useMemo(
     () =>
@@ -210,7 +210,7 @@ export function Orchestrator(props: OrchestratorProps) {
     initialInterrogation,
     {
       getArticulationState: () => {
-        if (!source.articulation) {
+        if (!hasArticulation) {
           return { items: [] }
         }
         // @ts-expect-error source has articulation
@@ -270,7 +270,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   /** Allows to download articulation for visualize  */
   const downloadArticulationRef = useRefSync(() => {
-    if (!source.articulation) {
+    if (!hasArticulation) {
       console.warn('No articulation available, skipping CSV download.')
       return
     }
@@ -430,7 +430,7 @@ export function Orchestrator(props: OrchestratorProps) {
           handleDepositProofClick={handleDepositProofClick}
           pagination={pagination}
           overview={overview}
-          isArticulation={isArticulation}
+          hasArticulation={hasArticulation}
           isDirtyState={isDirtyState}
           isSequencePage={isSequencePage(components)}
           bottomContent={

@@ -1,3 +1,4 @@
+import { useSearch } from '@tanstack/react-router'
 import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
@@ -12,6 +13,15 @@ import { renderWithRouter } from '@/utils/tests'
 import { Header } from './Header'
 
 vi.mock('@/hooks/useMode')
+
+vi.mock('@tanstack/react-router', async (importOriginal) => {
+  const actual =
+    (await importOriginal()) as typeof import('@tanstack/react-router')
+  return {
+    ...actual,
+    useSearch: vi.fn(),
+  }
+})
 
 vi.mock('@/oidc', () => ({
   OidcProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -169,6 +179,30 @@ describe('Header', () => {
 
     await waitFor(() => {
       expect(window.location.href).toBe(`${initialHref}#`)
+    })
+  })
+
+  it('displays surveyUnitLabel when present in search params', async () => {
+    vi.mocked(useSearch).mockReturnValue({ surveyUnitLabel: 'My Test Label' })
+
+    vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
+
+    const { getByText } = renderWithRouter(
+      <OidcProvider>
+        <TelemetryContext.Provider
+          value={{
+            isTelemetryDisabled: false,
+            pushEvent: vi.fn(),
+            setDefaultValues: () => {},
+          }}
+        >
+          <Header />
+        </TelemetryContext.Provider>
+      </OidcProvider>,
+    )
+
+    await waitFor(() => {
+      expect(getByText('My Test Label')).toBeInTheDocument()
     })
   })
 })

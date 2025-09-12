@@ -12,11 +12,6 @@ const defaultState: Metadata = {
     en: 'Short objective of your survey',
     sq: 'Objektivi i shkurtër i anketës tuaj',
   },
-  interrogationIdentifier: {
-    fr: 'Application de collecte internet',
-    en: 'Internet Collection Application',
-    sq: 'Aplikacioni për Mbledhjen e të Dhënave në Internet',
-  },
   mainLogo: {
     label: {
       fr: "Logo de l'insee",

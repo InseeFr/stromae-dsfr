@@ -31,11 +31,7 @@ export function Header() {
     })
   const mode = useMode()
 
-  const {
-    label: serviceTitle,
-    mainLogo,
-    interrogationIdentifier,
-  } = useMetadataStore()
+  const { label: serviceTitle, mainLogo } = useMetadataStore()
   const { isTelemetryDisabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
 
@@ -43,6 +39,7 @@ export function Header() {
    * There is an issue with this part of the code: the search type is not well narrowed with isCollectRoute. I'm waiting for a better solution.
    */
   const isCollectRoute = mode === MODE_TYPE.COLLECT
+
   const search = useSearch({ strict: false })
   const exitModal = useMemo(
     () =>
@@ -116,7 +113,7 @@ export function Header() {
                 } as const,
               ]),
         ]}
-        serviceTagline={resolveLocalizedString(interrogationIdentifier)}
+        serviceTagline={search?.surveyUnitLabel}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,

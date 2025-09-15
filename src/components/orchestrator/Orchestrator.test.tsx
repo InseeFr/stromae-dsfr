@@ -21,7 +21,6 @@ describe('Orchestrator', () => {
     label: 'my label',
     objectives: 'my objectives',
     mainLogo: { label: 'logo label', url: '' },
-    interrogationIdentifier: 'my survey id',
   }
   const source = {
     componentType: 'Questionnaire',

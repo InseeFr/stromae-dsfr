@@ -1,5 +1,6 @@
 import type { LunaticSource } from '@inseefr/lunatic'
 import { createRoute } from '@tanstack/react-router'
+import { z } from 'zod'
 
 import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import {
@@ -16,6 +17,10 @@ import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
 
 import { ReviewPage } from './ReviewPage'
 
+const reviewSearchParams = z.object({
+  surveyUnitLabel: z.string().optional(),
+})
+
 export const reviewPath = '/review/interrogations/$interrogationId'
 
 export const reviewRoute = createRoute({
@@ -26,6 +31,7 @@ export const reviewRoute = createRoute({
     protectedRouteLoader({
       kc_idp_hint: import.meta.env.VITE_REVIEW_IDENTITY_PROVIDER,
     }),
+  validateSearch: reviewSearchParams,
   loader: async ({
     params: { interrogationId },
     context: { queryClient },

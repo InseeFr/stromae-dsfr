@@ -39,7 +39,6 @@ export const interrogationMetadataSchema = z.object({
       }),
     )
     .optional(),
-  interrogationdentifier: z.string().optional(),
   interrogationInfo: contentsSchema.array().optional(),
   campaignInfo: contentsSchema.array().optional(),
 })

@@ -38,7 +38,6 @@ describe('WelcomePage', () => {
             },
           ],
           mainLogo: { label: '', url: '' },
-          interrogationIdentifier: 'Id de la personne qui répond',
         }}
       />,
     )

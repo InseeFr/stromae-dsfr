@@ -1,5 +1,8 @@
 import type { ArticulationStateItems } from '@/models/lunaticType'
 
+type ExtraFields = Omit<ArticulationStateItems[number], 'cells'>
+type Progress = ArticulationStateItems[number]['progress']
+
 /** Convert articulation items to a CSV string */
 export function articulationToCsv(
   articulationStateItems: ArticulationStateItems,
@@ -15,7 +18,7 @@ export function articulationToCsv(
 
   // Collect the "fixed" keys from the first item (excluding 'cells')
   const extraHeaders = Object.keys(articulationStateItems[0]).filter(
-    (k) => k !== 'cells',
+    (k): k is keyof ExtraFields => k !== 'cells',
   )
 
   const headers = [...cellHeaders, ...extraHeaders]
@@ -29,11 +32,11 @@ export function articulationToCsv(
       : str
   }
 
-  // change label for progress values
-  const progressLabel = (n: number) => {
-    if (n === -1) return 'Commencer'
-    if (n === 0) return 'Continuer'
-    return 'Complété'
+  // Map for progress states
+  const progressLabels: Record<Progress, string> = {
+    [-1]: 'Commencer',
+    [0]: 'Continuer',
+    [1]: 'Complété',
   }
 
   // Build rows
@@ -41,9 +44,10 @@ export function articulationToCsv(
     const cellMap = new Map(item.cells.map((c) => [c.label, c.value]))
 
     const extraValues = extraHeaders.map((key) => {
-      let value = (item as any)[key]
-      if (key === 'progress' && typeof value === 'number') {
-        value = progressLabel(value)
+      const value = item[key]
+      if (key === 'progress') {
+        // for progress we display a more readable label instead of its code value
+        return escapeCsv(progressLabels[value as Progress])
       }
       return escapeCsv(value)
     })

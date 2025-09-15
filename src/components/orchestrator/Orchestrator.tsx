@@ -48,9 +48,10 @@ import { useStromaeNavigation } from './hooks/useStromaeNavigation'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
+import { articulationToCsv } from './utils/articulationToCsv'
 import { computeLunaticComponents } from './utils/components'
 import { computeInterrogation, trimCollectedData } from './utils/data'
-import { downloadAsJson } from './utils/downloadAsJson'
+import { downloadAsCsv, downloadAsJson } from './utils/downloadFile'
 import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
@@ -159,6 +160,7 @@ export function Orchestrator(props: OrchestratorProps) {
   const initialCurrentPage = initialInterrogation?.stateData?.currentPage
   const initialState = initialInterrogation?.stateData?.state
   const pagination = source.pagination ?? 'question'
+  const hasArticulation = source.articulation !== undefined
 
   const lunaticLogger = useMemo(
     () =>
@@ -208,7 +210,7 @@ export function Orchestrator(props: OrchestratorProps) {
     initialInterrogation,
     {
       getArticulationState: () => {
-        if (!source.articulation) {
+        if (!hasArticulation) {
           return { items: [] }
         }
         // @ts-expect-error source has articulation
@@ -263,6 +265,23 @@ export function Orchestrator(props: OrchestratorProps) {
       dataToDownload: interrogation,
       //The label of source is not dynamic
       filename: `${source.label?.value}-${new Date().toLocaleDateString()}`,
+    })
+  })
+
+  /** Allows to download articulation for visualize  */
+  const downloadArticulationRef = useRefSync(() => {
+    if (!hasArticulation) {
+      console.warn('No articulation available, skipping CSV download.')
+      return
+    }
+
+    // @ts-expect-error source has articulation
+    const articulationState = getArticulationState(source, getData(false))
+
+    downloadAsCsv({
+      dataToDownload: articulationToCsv(articulationState.items),
+      //The label of source is not dynamic
+      filename: `${source.label?.value}-articulation-${new Date().toLocaleDateString()}`,
     })
   })
 
@@ -405,11 +424,13 @@ export function Orchestrator(props: OrchestratorProps) {
           }
           handlePreviousClick={handlePreviousPage}
           handleDownloadData={downloadAsJsonRef.current} // Visualize
+          handleDownloadArticulation={downloadArticulationRef.current} // Visualize
           currentPage={currentPageType}
           mode={mode}
           handleDepositProofClick={handleDepositProofClick}
           pagination={pagination}
           overview={overview}
+          hasArticulation={hasArticulation}
           isDirtyState={isDirtyState}
           isSequencePage={isSequencePage(components)}
           bottomContent={

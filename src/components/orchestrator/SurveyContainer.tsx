@@ -19,10 +19,12 @@ export function SurveyContainer(
     handlePreviousClick: () => void
     handleNextClick: () => void
     handleDownloadData: () => void
+    handleDownloadArticulation: () => void
     handleDepositProofClick: () => Promise<void>
     mode: OrchestratorProps['mode']
     pagination: 'question' | 'sequence'
     overview: LunaticOverview
+    hasArticulation: boolean
     isDirtyState?: boolean
     isSequencePage: boolean
     bottomContent: ReactNode
@@ -33,11 +35,13 @@ export function SurveyContainer(
     handleNextClick,
     handlePreviousClick,
     handleDownloadData,
+    handleDownloadArticulation,
     handleDepositProofClick,
     children,
     mode,
     pagination,
     overview,
+    hasArticulation,
     isDirtyState = false,
     isSequencePage,
     bottomContent,
@@ -141,10 +145,20 @@ export function SurveyContainer(
                   iconId="ri-download-2-line"
                   priority="tertiary no outline"
                   onClick={handleDownloadData}
-                  title={t('button download')}
+                  title={t('button download data')}
                 >
-                  {t('button download')}
+                  {t('button download data')}
                 </Button>
+                {hasArticulation && (
+                  <Button
+                    iconId="ri-download-2-line"
+                    priority="tertiary no outline"
+                    onClick={handleDownloadArticulation}
+                    title={t('button download articulation')}
+                  >
+                    {t('button download articulation')}
+                  </Button>
+                )}
               </div>
             )}
           </div>
@@ -169,7 +183,8 @@ const { i18n } = declareComponentKeys<
       P: { currentPage: InternalPageType }
       R: string
     }
-  | 'button download'
+  | 'button download data'
+  | 'button download articulation'
 >()({ SurveyContainer })
 
 export type I18n = typeof i18n

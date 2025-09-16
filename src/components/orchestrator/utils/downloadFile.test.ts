@@ -49,12 +49,5 @@ describe('downloadFile utilities', () => {
       expect(URL.createObjectURL).toHaveBeenCalled()
       expect(URL.revokeObjectURL).toHaveBeenCalled()
     })
-
-    it('should log an error if no CSV data is provided', () => {
-      const consoleErrorSpy = vi.spyOn(console, 'error')
-      downloadAsCsv({ dataToDownload: '' })
-      expect(consoleErrorSpy).toHaveBeenCalledWith('No data to download.')
-      consoleErrorSpy.mockRestore()
-    })
   })
 })

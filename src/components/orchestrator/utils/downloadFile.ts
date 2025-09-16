@@ -8,11 +8,6 @@ function downloadFile({
   filename: string
   mimeType: string
 }) {
-  if (!content) {
-    console.error('No data to download.')
-    return
-  }
-
   const blob = new Blob([content], { type: mimeType })
   const url = URL.createObjectURL(blob)
 

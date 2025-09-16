@@ -183,7 +183,9 @@ describe('Header', () => {
   })
 
   it('displays surveyUnitLabel when present in search params', async () => {
-    vi.mocked(useSearch).mockReturnValue({ surveyUnitLabel: 'My Test Label' })
+    vi.mocked(useSearch).mockReturnValue({
+      surveyUnitLabel: 'TXkgVGVzdCBMYWJlbA',
+    })
 
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 

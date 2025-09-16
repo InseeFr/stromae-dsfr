@@ -18,6 +18,7 @@ import {
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
+import { decodeUrlSafeBase64 } from '@/utils/decodeUrlSafeBase64'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
 
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
@@ -41,6 +42,10 @@ export function Header() {
   const isCollectRoute = mode === MODE_TYPE.COLLECT
 
   const search = useSearch({ strict: false })
+
+  const surveyUnitLabel = decodeUrlSafeBase64(search?.surveyUnitLabel)
+  const pathAssistance = decodeUrlSafeBase64(search?.pathAssistance)
+
   const exitModal = useMemo(
     () =>
       createModal({
@@ -88,7 +93,7 @@ export function Header() {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {
               href: collectPath
-                ? `${import.meta.env.VITE_PORTAIL_URL}${search?.['pathAssistance'] ?? ''}`
+                ? `${import.meta.env.VITE_PORTAIL_URL}${pathAssistance}`
                 : '',
               disabled: isCollectRoute,
               onClick:
@@ -113,7 +118,7 @@ export function Header() {
                 } as const,
               ]),
         ]}
-        serviceTagline={search?.surveyUnitLabel}
+        serviceTagline={surveyUnitLabel}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,

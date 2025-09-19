@@ -273,4 +273,148 @@ describe('Use interrogation', () => {
       })
     })
   })
+
+  describe('articulation / leafStates', () => {
+    const getMultimode: LunaticGetMultimode = () => ({
+      IS_MOVED: false,
+      IS_SPLIT: false,
+    })
+
+    beforeAll(() => {
+      // mock env var enabling multimode
+      import.meta.env.VITE_MULTIMODE_ENABLED = 'true'
+    })
+
+    test('creates leafStates when none exist', () => {
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 0,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.leafStates).toMatchObject([
+          { state: 'INIT', date: vi.getMockedSystemTime()?.valueOf() },
+          { state: 'COMPLETED', date: vi.getMockedSystemTime()?.valueOf() },
+        ])
+      })
+    })
+
+    test('updates leafStates if progress changes', () => {
+      const initialLeafStates: StateData['leafStates'] = [
+        { state: 'INIT', date: 123 },
+        { state: 'COMPLETED', date: 123 },
+      ]
+
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 1,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              leafStates: initialLeafStates,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.leafStates).toMatchObject([
+          { state: 'COMPLETED', date: vi.getMockedSystemTime()?.valueOf() }, // updated
+          { state: 'COMPLETED', date: 123 }, // unchanged
+        ])
+      })
+    })
+
+    test('does not update leafStates if progress did not change', () => {
+      const initialLeafStates: StateData['leafStates'] = [
+        { state: 'INIT', date: 123 },
+        { state: 'COMPLETED', date: 123 },
+      ]
+
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 0,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              leafStates: initialLeafStates,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.leafStates).toMatchObject(initialLeafStates) // unchanged
+      })
+    })
+  })
 })

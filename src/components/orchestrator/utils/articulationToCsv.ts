@@ -1,11 +1,11 @@
-import type { ArticulationStateItems } from '@/models/lunaticType'
+import type { LunaticArticulationStateItems } from '@/models/lunaticType'
 
-type ExtraFields = Omit<ArticulationStateItems[number], 'cells'>
-type Progress = ArticulationStateItems[number]['progress']
+type ExtraFields = Omit<LunaticArticulationStateItems[number], 'cells'>
+type Progress = LunaticArticulationStateItems[number]['progress']
 
 /** Convert articulation items to a CSV string */
 export function articulationToCsv(
-  articulationStateItems: ArticulationStateItems,
+  articulationStateItems: LunaticArticulationStateItems,
 ): string {
   if (articulationStateItems.length === 0) return ''
 

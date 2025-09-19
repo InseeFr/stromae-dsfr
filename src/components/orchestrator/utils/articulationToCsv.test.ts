@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import type {
-  ArticulationStateItems,
+  LunaticArticulationStateItems,
   LunaticPageTag,
 } from '@/models/lunaticType'
 
@@ -14,7 +14,7 @@ describe('articulationToCsv', () => {
   })
 
   it('should generate headers from cells + other properties', () => {
-    const items: ArticulationStateItems = [
+    const items: LunaticArticulationStateItems = [
       {
         cells: [
           { label: 'Name', value: 'Alice' },
@@ -32,7 +32,7 @@ describe('articulationToCsv', () => {
   })
 
   it('should generate rows correctly', () => {
-    const items: ArticulationStateItems = [
+    const items: LunaticArticulationStateItems = [
       {
         cells: [
           { label: 'Name', value: 'Alice' },

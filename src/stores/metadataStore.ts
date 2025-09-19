@@ -1,5 +1,8 @@
-import logoInsee from '@/assets/logo-insee.png'
+import darkLogoInsee from '@/assets/logo-insee-dark.webp'
+import logoInsee from '@/assets/logo-insee.webp'
 import type { Metadata } from '@/models/metadata'
+
+export { logoInsee, darkLogoInsee }
 
 const defaultState: Metadata = {
   label: {

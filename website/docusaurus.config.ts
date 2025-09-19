@@ -60,7 +60,8 @@ const config: Config = {
       title: 'Stromae',
       logo: {
         alt: 'Insee Logo',
-        src: '/logo/logo-insee.png',
+        src: '/logo/logo-insee.webp',
+        srcDark: 'logo/logo-insee-dark.webp'
       },
       items: [
         {
@@ -87,7 +88,8 @@ const config: Config = {
     },
     footer: {
       logo: {
-        src: '/logo/logo-insee.png',
+        src: '/logo/logo-insee.webp',
+        srcDark: 'logo/logo-insee-dark.webp'
       },
       links: [
         {

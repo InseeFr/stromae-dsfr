@@ -10,6 +10,11 @@ import { renderWithRouter } from '@/utils/tests'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
+// mock useIsDark to avoid using DSFR context, since it's used for main logo
+vi.mock('@codegouvfr/react-dsfr/useIsDark', () => ({
+  useIsDark: () => ({ isDark: false }),
+}))
+
 vi.mock('@/hooks/useMode')
 
 vi.mock('@/oidc', () => ({

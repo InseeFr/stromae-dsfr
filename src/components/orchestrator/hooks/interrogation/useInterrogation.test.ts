@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react'
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
 import { PAGE_TYPE } from '@/constants/page'
+import type { StateData } from '@/models/stateData'
 
 import { useInterrogation } from './useInterrogation'
 
@@ -136,6 +137,120 @@ describe('Use interrogation', () => {
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},
+    })
+  })
+
+  describe('multimode', () => {
+    beforeAll(() => {
+      // mock env var enabling multimode
+      import.meta.env.VITE_MULTIMODE_ENABLED = 'true'
+    })
+
+    test('sets multimode state when a key is true', () => {
+      const getMultimode = () => ({ IS_MOVED: true, IS_SPLIT: false })
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState: () => ({ items: [] }) },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.multimode).toMatchObject({
+          state: 'IS_MOVED',
+          date: vi.getMockedSystemTime()?.valueOf(),
+        })
+      })
+    })
+
+    test('keeps multimode undefined when all keys are false', () => {
+      const getMultimode = () => ({ IS_MOVED: false, IS_SPLIT: false })
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState: () => ({ items: [] }) },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.multimode).toBeUndefined()
+      })
+    })
+
+    test('does not update multimode if state has not changed', () => {
+      const getMultimode = () => ({ IS_MOVED: true, IS_SPLIT: false })
+      const initialMultimode: StateData['multimode'] = {
+        state: 'IS_MOVED',
+        date: 123456,
+      }
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              multimode: initialMultimode,
+            },
+          },
+          { getMultimode, getArticulationState: () => ({ items: [] }) },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        // multimode should stay the same because state did not change
+        expect(res.stateData?.multimode).toBe(initialMultimode)
+      })
+    })
+
+    test('updates multimode when state changes to a different key', () => {
+      const getMultimode = () => ({ IS_MOVED: false, IS_SPLIT: true })
+      const initialMultimode: StateData['multimode'] = {
+        state: 'IS_MOVED',
+        date: 123456,
+      }
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              multimode: initialMultimode,
+            },
+          },
+          { getMultimode, getArticulationState: () => ({ items: [] }) },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.multimode).toMatchObject({
+          state: 'IS_SPLIT',
+          date: vi.getMockedSystemTime()?.valueOf(),
+        })
+      })
     })
   })
 })

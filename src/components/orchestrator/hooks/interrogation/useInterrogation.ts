@@ -99,7 +99,8 @@ export function useInterrogation(
 }
 
 /**
- * Convert a multimode received into a payload for stateData
+ * Convert a multimode received into a payload for stateData.
+ * For now, we only check the first multimode key that is true.
  *
  * ## Input
  *
@@ -128,10 +129,6 @@ export function computeMultimodeStateData(
         state: key,
         date: new Date().getTime(),
       }
-    }
-    return {
-      state: null,
-      date: new Date().getTime(),
     }
   }
   return undefined

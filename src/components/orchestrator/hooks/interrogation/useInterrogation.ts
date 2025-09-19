@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-import type { getArticulationState, useLunatic } from '@inseefr/lunatic'
-
 import { PAGE_TYPE } from '@/constants/page'
 import type { Interrogation } from '@/models/interrogation'
 import type { InterrogationData } from '@/models/interrogationData'
+import type {
+  LunaticGetArticulationState,
+  LunaticGetMultimode,
+} from '@/models/lunaticType'
 import type { PageType } from '@/models/page'
 import type { QuestionnaireState } from '@/models/questionnaireState'
 import type { StateData } from '@/models/stateData'
@@ -13,8 +15,8 @@ import { hasMultimode } from '@/utils/env.ts'
 import { computeUpdatedData, hasDataChanged } from './utils'
 
 type Params = {
-  getMultimode: ReturnType<typeof useLunatic>['getMultimode']
-  getArticulationState: () => ReturnType<typeof getArticulationState>
+  getMultimode: LunaticGetMultimode
+  getArticulationState: () => LunaticGetArticulationState
 }
 
 const defaultParams: Params = {
@@ -119,7 +121,7 @@ export function useInterrogation(
  * }
  */
 export function computeMultimodeStateData(
-  multimode: ReturnType<ReturnType<typeof useLunatic>['getMultimode']>,
+  multimode: ReturnType<LunaticGetMultimode>,
 ): Required<Interrogation>['stateData']['multimode'] | undefined {
   for (const [key, value] of Object.entries(multimode)) {
     // Multimode changed value
@@ -138,7 +140,7 @@ export function computeMultimodeStateData(
  * Convert an articulation into leafStates
  */
 export function computeLeafStates(
-  articulation: ReturnType<typeof getArticulationState>,
+  articulation: LunaticGetArticulationState,
   currentLeaves?: StateData['leafStates'],
 ): Required<Interrogation>['stateData']['leafStates'] {
   // Compute the new leaves

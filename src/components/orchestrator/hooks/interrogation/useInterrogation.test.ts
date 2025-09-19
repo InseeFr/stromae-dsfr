@@ -2,6 +2,10 @@ import { act, renderHook } from '@testing-library/react'
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
 import { PAGE_TYPE } from '@/constants/page'
+import type {
+  LunaticGetArticulationState,
+  LunaticGetMultimode,
+} from '@/models/lunaticType'
 import type { StateData } from '@/models/stateData'
 
 import { useInterrogation } from './useInterrogation'
@@ -141,17 +145,24 @@ describe('Use interrogation', () => {
   })
 
   describe('multimode', () => {
+    const getArticulationState: () => LunaticGetArticulationState = () => ({
+      items: [],
+    })
+
     beforeAll(() => {
       // mock env var enabling multimode
       import.meta.env.VITE_MULTIMODE_ENABLED = 'true'
     })
 
     test('sets multimode state when a key is true', () => {
-      const getMultimode = () => ({ IS_MOVED: true, IS_SPLIT: false })
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: true,
+        IS_SPLIT: false,
+      })
       const { result } = renderHook(() =>
         useInterrogation(
           { id: 'id', questionnaireId: 'qid', data: {} },
-          { getMultimode, getArticulationState: () => ({ items: [] }) },
+          { getMultimode, getArticulationState },
         ),
       )
 
@@ -168,11 +179,14 @@ describe('Use interrogation', () => {
     })
 
     test('keeps multimode undefined when all keys are false', () => {
-      const getMultimode = () => ({ IS_MOVED: false, IS_SPLIT: false })
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: false,
+        IS_SPLIT: false,
+      })
       const { result } = renderHook(() =>
         useInterrogation(
           { id: 'id', questionnaireId: 'qid', data: {} },
-          { getMultimode, getArticulationState: () => ({ items: [] }) },
+          { getMultimode, getArticulationState },
         ),
       )
 
@@ -186,7 +200,10 @@ describe('Use interrogation', () => {
     })
 
     test('does not update multimode if state has not changed', () => {
-      const getMultimode = () => ({ IS_MOVED: true, IS_SPLIT: false })
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: true,
+        IS_SPLIT: false,
+      })
       const initialMultimode: StateData['multimode'] = {
         state: 'IS_MOVED',
         date: 123456,
@@ -204,7 +221,7 @@ describe('Use interrogation', () => {
               multimode: initialMultimode,
             },
           },
-          { getMultimode, getArticulationState: () => ({ items: [] }) },
+          { getMultimode, getArticulationState },
         ),
       )
 
@@ -219,7 +236,10 @@ describe('Use interrogation', () => {
     })
 
     test('updates multimode when state changes to a different key', () => {
-      const getMultimode = () => ({ IS_MOVED: false, IS_SPLIT: true })
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: false,
+        IS_SPLIT: true,
+      })
       const initialMultimode: StateData['multimode'] = {
         state: 'IS_MOVED',
         date: 123456,
@@ -237,7 +257,7 @@ describe('Use interrogation', () => {
               multimode: initialMultimode,
             },
           },
-          { getMultimode, getArticulationState: () => ({ items: [] }) },
+          { getMultimode, getArticulationState },
         ),
       )
 

@@ -2,6 +2,11 @@ import { act, renderHook } from '@testing-library/react'
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
 import { PAGE_TYPE } from '@/constants/page'
+import type {
+  LunaticGetArticulationState,
+  LunaticGetMultimode,
+} from '@/models/lunaticType'
+import type { StateData } from '@/models/stateData'
 
 import { useInterrogation } from './useInterrogation'
 
@@ -136,6 +141,280 @@ describe('Use interrogation', () => {
       CALCULATED: {},
       COLLECTED: { Q1: { COLLECTED: 'new data' } },
       EXTERNAL: {},
+    })
+  })
+
+  describe('multimode', () => {
+    const getArticulationState: () => LunaticGetArticulationState = () => ({
+      items: [],
+    })
+
+    beforeAll(() => {
+      // mock env var enabling multimode
+      import.meta.env.VITE_MULTIMODE_ENABLED = 'true'
+    })
+
+    test('sets multimode state when a key is true', () => {
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: true,
+        IS_SPLIT: false,
+      })
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.multimode).toMatchObject({
+          state: 'IS_MOVED',
+          date: vi.getMockedSystemTime()?.valueOf(),
+        })
+      })
+    })
+
+    test('keeps multimode undefined when all keys are false', () => {
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: false,
+        IS_SPLIT: false,
+      })
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.multimode).toBeUndefined()
+      })
+    })
+
+    test('does not update multimode if state has not changed', () => {
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: true,
+        IS_SPLIT: false,
+      })
+      const initialMultimode: StateData['multimode'] = {
+        state: 'IS_MOVED',
+        date: 123456,
+      }
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              multimode: initialMultimode,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        // multimode should stay the same because state did not change
+        expect(res.stateData?.multimode).toBe(initialMultimode)
+      })
+    })
+
+    test('updates multimode when state changes to a different key', () => {
+      const getMultimode: LunaticGetMultimode = () => ({
+        IS_MOVED: false,
+        IS_SPLIT: true,
+      })
+      const initialMultimode: StateData['multimode'] = {
+        state: 'IS_MOVED',
+        date: 123456,
+      }
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              multimode: initialMultimode,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.multimode).toMatchObject({
+          state: 'IS_SPLIT',
+          date: vi.getMockedSystemTime()?.valueOf(),
+        })
+      })
+    })
+  })
+
+  describe('articulation / leafStates', () => {
+    const getMultimode: LunaticGetMultimode = () => ({
+      IS_MOVED: false,
+      IS_SPLIT: false,
+    })
+
+    beforeAll(() => {
+      // mock env var enabling multimode
+      import.meta.env.VITE_MULTIMODE_ENABLED = 'true'
+    })
+
+    test('creates leafStates when none exist', () => {
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 0,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          { id: 'id', questionnaireId: 'qid', data: {} },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '1',
+        )
+        expect(res.stateData?.leafStates).toMatchObject([
+          { state: 'INIT', date: vi.getMockedSystemTime()?.valueOf() },
+          { state: 'COMPLETED', date: vi.getMockedSystemTime()?.valueOf() },
+        ])
+      })
+    })
+
+    test('updates leafStates if progress changes', () => {
+      const initialLeafStates: StateData['leafStates'] = [
+        { state: 'INIT', date: 123 },
+        { state: 'COMPLETED', date: 123 },
+      ]
+
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 1,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              leafStates: initialLeafStates,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.leafStates).toMatchObject([
+          { state: 'COMPLETED', date: vi.getMockedSystemTime()?.valueOf() }, // updated
+          { state: 'COMPLETED', date: 123 }, // unchanged
+        ])
+      })
+    })
+
+    test('does not update leafStates if progress did not change', () => {
+      const initialLeafStates: StateData['leafStates'] = [
+        { state: 'INIT', date: 123 },
+        { state: 'COMPLETED', date: 123 },
+      ]
+
+      const getArticulationState: () => LunaticGetArticulationState = () => ({
+        items: [
+          {
+            cells: [{ label: 'Q1', value: 'answer1' }],
+            progress: 0,
+            page: '2.1.1#1',
+          },
+          {
+            cells: [{ label: 'Q2', value: 'answer2' }],
+            progress: 1,
+            page: '2.1.1#2',
+          },
+        ],
+      })
+
+      const { result } = renderHook(() =>
+        useInterrogation(
+          {
+            id: 'id',
+            questionnaireId: 'qid',
+            data: {},
+            stateData: {
+              state: 'INIT',
+              date: 123,
+              currentPage: '1',
+              leafStates: initialLeafStates,
+            },
+          },
+          { getMultimode, getArticulationState },
+        ),
+      )
+
+      act(() => {
+        const res = result.current.updateInterrogation(
+          { COLLECTED: { Q1: { COLLECTED: 'new data' } } },
+          '2',
+        )
+        expect(res.stateData?.leafStates).toMatchObject(initialLeafStates) // unchanged
+      })
     })
   })
 })

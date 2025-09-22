@@ -20,13 +20,15 @@ describe('Use stromae navigation', () => {
         }),
       )
 
-      act(() => result.current.goNext())
+      await act(async () => {
+        await result.current.goNext()
+      })
 
       expect(result.current.currentPageType).toBe(expected)
     },
   )
 
-  test('go to next lunaticPage -> lunaticPage (not last page)', () => {
+  test('go to next lunaticPage -> lunaticPage (not last page)', async () => {
     const goNextWithControlsMock = (goNext: () => void) => goNext()
     const goNextLunaticMock = vi.fn()
 
@@ -37,15 +39,19 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.goNext()) // go to lunatic page
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
 
-    act(() => result.current.goNext())
+    await act(async () => {
+      await result.current.goNext()
+    })
 
     expect(goNextLunaticMock).toHaveBeenCalledOnce()
     expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
   })
 
-  test('go to next lunaticPage -> validationPage (last page)', () => {
+  test('go to next lunaticPage -> validationPage (last page)', async () => {
     const goNextWithControlsMock = (goNext: () => void) => goNext()
     const goNextLunaticMock = vi.fn()
 
@@ -57,9 +63,13 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.goNext()) // go to lunatic page
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
 
-    act(() => result.current.goNext())
+    await act(async () => {
+      await result.current.goNext()
+    })
 
     expect(goNextLunaticMock).not.toHaveBeenCalled()
     expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
@@ -85,7 +95,7 @@ describe('Use stromae navigation', () => {
     },
   )
 
-  test('go to previous lunaticPage -> lunaticPage (not first page)', () => {
+  test('go to previous lunaticPage -> lunaticPage (not first page)', async () => {
     const goPrevLunaticMock = vi.fn()
 
     const { result } = renderHook(() =>
@@ -94,7 +104,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.goNext()) // go to lunatic page
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
 
     act(() => result.current.goPrevious())
 
@@ -102,7 +114,7 @@ describe('Use stromae navigation', () => {
     expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
   })
 
-  test('go to next lunaticPage -> welcomePage (first page)', () => {
+  test('go to next lunaticPage -> welcomePage (first page)', async () => {
     const goPrevLunaticMock = vi.fn()
 
     const { result } = renderHook(() =>
@@ -112,7 +124,9 @@ describe('Use stromae navigation', () => {
       }),
     )
 
-    act(() => result.current.goNext()) // go to lunatic page
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
 
     act(() => result.current.goPrevious())
 
@@ -154,5 +168,77 @@ describe('Use stromae navigation', () => {
     expect(goToLunaticPageMock).toHaveBeenCalledWith({ page: 1 })
 
     expect(result.current.currentPageType).toBe(PAGE_TYPE.LUNATIC)
+  })
+
+  test('go to next validation page -> end page when validation succeeds', async () => {
+    // Mock validateQuestionnaire to succeed
+    const validateQuestionnaireMock = vi.fn().mockResolvedValue(undefined)
+    const openValidationModalMock = vi.fn().mockResolvedValue(undefined)
+
+    const { result } = renderHook(() =>
+      useStromaeNavigation({
+        isLastPage: true,
+        validateQuestionnaire: validateQuestionnaireMock,
+        openValidationModal: openValidationModalMock,
+      }),
+    )
+
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
+
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to validation page
+
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
+
+    await act(async () => {
+      await result.current.goNext()
+    }) // validate questionnaire
+
+    // It should open the modal
+    expect(openValidationModalMock).toHaveBeenCalledOnce()
+    // After modal resolve, it should call questionnaire validation
+    expect(validateQuestionnaireMock).toHaveBeenCalledOnce()
+    // It should go to end page
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.END)
+  })
+
+  test('validation page -> stays on validation page when validation fails', async () => {
+    // Mock validateQuestionnaire to fail
+    const validateQuestionnaireMock = vi
+      .fn()
+      .mockRejectedValue(new Error('validation failed'))
+    const openValidationModalMock = vi.fn().mockResolvedValue(undefined)
+
+    const { result } = renderHook(() =>
+      useStromaeNavigation({
+        isLastPage: true,
+        validateQuestionnaire: validateQuestionnaireMock,
+        openValidationModal: openValidationModalMock,
+      }),
+    )
+
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to lunatic page
+
+    await act(async () => {
+      await result.current.goNext()
+    }) // go to validation page
+
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
+
+    await act(async () => {
+      await result.current.goNext() // attempt validation
+    })
+
+    // It should open the modal
+    expect(openValidationModalMock).toHaveBeenCalledOnce()
+    // // After modal resolve, validation function is called and failed
+    expect(validateQuestionnaireMock).toHaveBeenCalledOnce()
+    // Page should remain on VALIDATION because validation failed
+    expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
   })
 })

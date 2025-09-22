@@ -17,6 +17,7 @@ type Params = {
   goPrevLunatic?: LunaticGoPreviousPage
   openValidationModal?: () => Promise<void>
   goToLunaticPage?: LunaticGoToPage
+  validateQuestionnaire?: () => Promise<void>
 }
 
 /**
@@ -30,18 +31,23 @@ export function useStromaeNavigation({
   goPrevLunatic = () => {},
   goToLunaticPage = () => {},
   openValidationModal = () => new Promise<void>(() => {}),
+  validateQuestionnaire = () => new Promise<void>(() => {}),
 }: Params) {
   const [currentPageType, setCurrentPageType] = useState<InternalPageType>(
     () =>
       initialCurrentPage === PAGE_TYPE.END ? PAGE_TYPE.END : PAGE_TYPE.WELCOME,
   )
 
-  const goNext = () => {
+  const goNext = async () => {
     switch (currentPageType) {
       case PAGE_TYPE.VALIDATION:
-        openValidationModal().then(() => {
+        await openValidationModal()
+        try {
+          await validateQuestionnaire()
           setCurrentPageType(PAGE_TYPE.END)
-        })
+        } catch {
+          /* empty */
+        }
         return
       case PAGE_TYPE.WELCOME:
         return setCurrentPageType(PAGE_TYPE.LUNATIC)

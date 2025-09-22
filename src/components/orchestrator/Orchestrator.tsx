@@ -10,6 +10,7 @@ import {
   useLunatic,
 } from '@inseefr/lunatic'
 import { useNavigate } from '@tanstack/react-router'
+import { assert } from 'tsafe/assert'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
@@ -221,6 +222,27 @@ export function Orchestrator(props: OrchestratorProps) {
   )
   useEvents(interrogation)
 
+  /** For validating the questionnaire, it tries to put a `VALIDATED` stateData with the `endPage` */
+  const validateQuestionnaire = () => {
+    if (mode === MODE_TYPE.COLLECT) {
+      assert(interrogation.stateData !== undefined)
+
+      return props.updateDataAndStateData({
+        stateData: {
+          ...interrogation.stateData,
+          state: 'VALIDATED',
+          date: new Date().getTime(),
+          currentPage: PAGE_TYPE.END,
+        },
+        // there is no new data to send on validation page
+        data: {},
+        isLogout: false,
+      })
+    }
+
+    return Promise.resolve()
+  }
+
   const { currentPageType, goNext, goToPage, goPrevious } =
     useStromaeNavigation({
       goNextLunatic: goNextLunaticPage,
@@ -230,6 +252,7 @@ export function Orchestrator(props: OrchestratorProps) {
       isLastPage,
       initialCurrentPage,
       openValidationModal: () => validationModalActionsRef.current.open(),
+      validateQuestionnaire,
     })
 
   const {
@@ -379,7 +402,9 @@ export function Orchestrator(props: OrchestratorProps) {
     }
     resetControls()
     // Persist data and stateData when page change in "collect" mode
-    triggerDataAndStateUpdate()
+    if (currentPageType !== PAGE_TYPE.END) {
+      triggerDataAndStateUpdate()
+    }
   }, [currentPageType, pageTag])
 
   // Persist data when component unmount (ie when navigate etc...)

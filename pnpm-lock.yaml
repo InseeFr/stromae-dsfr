@@ -18,8 +18,8 @@ importers:
         specifier: ^11.13.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react@18.3.1)
       '@inseefr/lunatic':
-        specifier: ^3.7.0
-        version: 3.7.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^3.7.1
+        version: 3.7.1(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/material':
         specifier: ^5.16.7
         version: 5.16.14(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -966,8 +966,8 @@ packages:
     resolution: {integrity: sha512-3WK2FREmDA2aadCjD71PE7tx5evyvmhg80ts1kXp2IzXIA0ZJ7guGM66tj40kxaqwpMSGchwEnnfYswntav76g==}
     engines: {node: '>=16.0.0'}
 
-  '@inseefr/lunatic@3.7.0':
-    resolution: {integrity: sha512-cefikkCTwU4A9rWRk991e4W0nEXRpM1VrUmN8Kyd4zEw1gB/RCAre/P8Oo58MicqE+rlzmf24VR5BUY/CuSn2A==}
+  '@inseefr/lunatic@3.7.1':
+    resolution: {integrity: sha512-6OLlD+5ILAdXR5V2cy4wBg5i7kIgJe6ttU+9r5f+/E6Z9ozlJev8uiiwJbEDWB9epE5qKE6IISLx9wht84kKyQ==}
     peerDependencies:
       react: '^18.3.1 '
 
@@ -5242,7 +5242,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@inseefr/lunatic@3.7.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@inseefr/lunatic@3.7.1(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@inseefr/trevas': 0.1.21
       '@inseefr/vtl-2.0-antlr-tools': 0.3.2

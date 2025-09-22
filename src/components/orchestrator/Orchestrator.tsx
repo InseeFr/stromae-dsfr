@@ -401,7 +401,8 @@ export function Orchestrator(props: OrchestratorProps) {
       contentRef.current.removeAttribute('tabindex')
     }
     resetControls()
-    // Persist data and stateData when page change in "collect" mode
+    // Persist data and stateData when page change in "collect" mode,
+    // except on end page since it's handled during questionnaire validation
     if (currentPageType !== PAGE_TYPE.END) {
       triggerDataAndStateUpdate()
     }

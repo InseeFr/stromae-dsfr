@@ -46,7 +46,8 @@ export function useStromaeNavigation({
           await validateQuestionnaire()
           setCurrentPageType(PAGE_TYPE.END)
         } catch {
-          /* empty */
+          /** We stay on the validation page if validation fails (network issue).
+           * No need to log th error since it's already handled by validation function. */
         }
         return
       case PAGE_TYPE.WELCOME:

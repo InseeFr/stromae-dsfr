@@ -29,12 +29,10 @@ describe('Use stromae navigation', () => {
   )
 
   test('go to next lunaticPage -> lunaticPage (not last page)', async () => {
-    const goNextWithControlsMock = (goNext: () => void) => goNext()
     const goNextLunaticMock = vi.fn()
 
     const { result } = renderHook(() =>
       useStromaeNavigation({
-        goNextWithControls: goNextWithControlsMock,
         goNextLunatic: goNextLunaticMock,
       }),
     )
@@ -52,13 +50,11 @@ describe('Use stromae navigation', () => {
   })
 
   test('go to next lunaticPage -> validationPage (last page)', async () => {
-    const goNextWithControlsMock = (goNext: () => void) => goNext()
     const goNextLunaticMock = vi.fn()
 
     const { result } = renderHook(() =>
       useStromaeNavigation({
         isLastPage: true,
-        goNextWithControls: goNextWithControlsMock,
         goNextLunatic: goNextLunaticMock,
       }),
     )

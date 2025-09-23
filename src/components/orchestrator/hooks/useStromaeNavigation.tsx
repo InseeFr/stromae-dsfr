@@ -12,7 +12,6 @@ type Params = {
   isFirstPage?: boolean
   isLastPage?: boolean
   initialCurrentPage?: PageType
-  goNextWithControls?: (goNext: () => void) => void
   goNextLunatic?: LunaticGoNextPage
   goPrevLunatic?: LunaticGoPreviousPage
   openValidationModal?: () => Promise<void>

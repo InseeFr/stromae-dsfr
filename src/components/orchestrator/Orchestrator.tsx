@@ -223,11 +223,11 @@ export function Orchestrator(props: OrchestratorProps) {
   useEvents(interrogation)
 
   /** For validating the questionnaire, it tries to put a `VALIDATED` stateData with the `endPage` */
-  const validateQuestionnaire = () => {
+  const validateQuestionnaire = async () => {
     if (mode === MODE_TYPE.COLLECT) {
       assert(interrogation.stateData !== undefined)
 
-      return props.updateDataAndStateData({
+      return await props.updateDataAndStateData({
         stateData: {
           ...interrogation.stateData,
           state: 'VALIDATED',

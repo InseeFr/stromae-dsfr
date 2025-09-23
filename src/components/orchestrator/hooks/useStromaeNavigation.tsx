@@ -42,13 +42,8 @@ export function useStromaeNavigation({
     switch (currentPageType) {
       case PAGE_TYPE.VALIDATION:
         await openValidationModal()
-        try {
-          await validateQuestionnaire()
-          setCurrentPageType(PAGE_TYPE.END)
-        } catch {
-          /** We stay on the validation page if validation fails (network issue).
-           * No need to log th error since it's already handled by validation function. */
-        }
+        await validateQuestionnaire()
+        setCurrentPageType(PAGE_TYPE.END)
         return
       case PAGE_TYPE.WELCOME:
         return setCurrentPageType(PAGE_TYPE.LUNATIC)

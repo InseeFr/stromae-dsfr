@@ -231,7 +231,7 @@ describe('Use stromae navigation', () => {
     expect(result.current.currentPageType).toBe(PAGE_TYPE.VALIDATION)
 
     await act(async () => {
-      await result.current.goNext() // attempt validation
+      await expect(result.current.goNext()).rejects.toThrow('validation failed') // attempt validation
     })
 
     // It should open the modal

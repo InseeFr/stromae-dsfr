@@ -10,7 +10,7 @@ import { ErrorType, computeErrorType, isSameErrors } from './utils'
 
 type useControlsProps = {
   compileControls: LunaticState['compileControls']
-  goNextPage: () => void
+  goNextPage: () => Promise<void>
   goPreviousPage: () => void
   goToPage: (
     page: Parameters<ReturnType<typeof useStromaeNavigation>['goToPage']>[0],

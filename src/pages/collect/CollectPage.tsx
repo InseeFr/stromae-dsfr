@@ -62,7 +62,7 @@ export const CollectPage = memo(function CollectPage() {
           })
         }
       })
-      .catch(() => {
+      .catch((error: Error) => {
         if (!params.isLogout) {
           showToast({
             severity: 'error',
@@ -70,6 +70,7 @@ export const CollectPage = memo(function CollectPage() {
             description:
               "Une erreur est survenue lors de l'enregistrement de vos modifications.",
           })
+          return Promise.reject(error)
         }
       })
 

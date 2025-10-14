@@ -89,7 +89,7 @@ export const translations: Translations<'fr'> = {
     'button cancel': 'Annuler',
     'button validate': "J'ai compris",
     content:
-      'Vos données seront enregistrées, vous allez être renvoyer vers le portail de réponse',
+      'Vos données seront enregistrées, vous allez être renvoyé vers le portail de réponse',
   },
   SequenceHeader: {
     'stepper state': ({ currentStep, stepCount }) =>

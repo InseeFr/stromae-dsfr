@@ -207,6 +207,11 @@ export function Orchestrator(props: OrchestratorProps) {
     initialInterrogation?.stateData?.date,
   )
 
+  const getCurrentArticulationState = () => {
+    // @ts-expect-error source has articulation
+    return getArticulationState(source, getData(false))
+  }
+
   const { interrogation, updateInterrogation } = useInterrogation(
     initialInterrogation,
     {
@@ -214,13 +219,12 @@ export function Orchestrator(props: OrchestratorProps) {
         if (!hasArticulation) {
           return { items: [] }
         }
-        // @ts-expect-error source has articulation
-        return getArticulationState(source, getData(false))
+        return getCurrentArticulationState()
       },
       getMultimode: getMultimode,
     },
   )
-  useEvents(interrogation)
+  useEvents(interrogation, getCurrentArticulationState)
 
   /** For validating the questionnaire, it tries to put a `VALIDATED` stateData with the `endPage` */
   const validateQuestionnaire = async () => {

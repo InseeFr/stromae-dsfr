@@ -1,3 +1,5 @@
+import type { getArticulationState } from '@inseefr/lunatic'
+
 import { usePostEvents } from '@/api/10-events'
 import {
   LeafStatesUpdatedEventType,
@@ -12,7 +14,10 @@ import { useCallbackOnValueChange } from './useCallbackOnValueChange.ts'
 /**
  * Trigger events when specific operation happens during interrogation
  */
-export function useEvents(interrogation: Interrogation) {
+export function useEvents(
+  interrogation: Interrogation,
+  getLeafStatesData: () => ReturnType<typeof getArticulationState>,
+) {
   // Disable events api if multimode is not enabled
   if (!hasMultimode()) {
     return
@@ -49,12 +54,22 @@ export function useEvents(interrogation: Interrogation) {
       if (!leafStates || !interrogation.id) {
         return
       }
+
+      // Inject cell data inside the leafStates
+      const data = getLeafStatesData()
+      const leafStatesWithCells = leafStates.map((leafState, index) => {
+        return {
+          ...leafState,
+          cells: data.items[index].cells,
+        }
+      })
+
       mutateAsync({
         data: {
           type: LeafStatesUpdatedEventType.LEAF_STATES_UPDATED,
           payload: {
             interrogationId: interrogation.id,
-            leafStates,
+            leafStates: leafStatesWithCells,
           },
         },
       })

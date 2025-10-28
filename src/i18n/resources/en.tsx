@@ -115,7 +115,7 @@ export const translations: Translations<'en'> = {
       return 'Proceed to the next step'
     },
     'button download data': 'Download data',
-    'button download articulation': 'Download articulation table',
+    'button download articulation': 'Download roundabout recap',
     'button expand': 'Expand view',
     'button previous title': 'Return to the previous step',
     'button previous label': 'Previous',

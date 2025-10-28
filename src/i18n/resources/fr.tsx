@@ -114,7 +114,8 @@ export const translations: Translations<'fr'> = {
       return "Passer à l'étape suivante"
     },
     'button download data': 'Télécharger les données',
-    'button download articulation': "Télécharger le tableau d'articulation",
+    'button download articulation':
+      'Télécharger le récapitulatif du rond-point',
 
     'button expand': 'Étendre la vue',
 

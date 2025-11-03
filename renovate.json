@@ -30,6 +30,17 @@
       "dependencyDashboardApproval": true
     },
     {
+      "matchPaths": ["package.json"],
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "lunatic",
+      "groupSlug": "lunatic",
+      "matchPackagePatterns": ["@codegouvfr/react-dsfr.*"],
+      "labels": ["dsfr"],
+      "bumpVersion": "minor",
+      "dependencyDashboardApproval": true
+    },
+    {
       "matchPaths": ["website/**"],
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],

@@ -33,6 +33,8 @@
       "matchPaths": ["package.json"],
       "matchDepTypes": ["dependencies"],
       "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dsfr",
+      "groupSlug": "dsfr",
       "matchPackagePatterns": ["@codegouvfr/react-dsfr.*"],
       "labels": ["DSFR"],
       "bumpVersion": "minor",

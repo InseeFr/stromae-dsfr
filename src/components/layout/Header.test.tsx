@@ -47,7 +47,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: true,
             pushEvent,
             setDefaultValues: () => {},
           }}
@@ -82,7 +82,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: true,
             pushEvent,
             setDefaultValues: () => {},
           }}
@@ -110,7 +110,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: true,
+            isTelemetryEnabled: false,
             pushEvent,
             setDefaultValues: () => {},
           }}
@@ -136,7 +136,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: true,
             pushEvent: vi.fn(),
             setDefaultValues: () => {},
           }}
@@ -165,7 +165,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: true,
             pushEvent: vi.fn(),
             setDefaultValues: () => {},
           }}
@@ -198,7 +198,7 @@ describe('Header', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: true,
             pushEvent: vi.fn(),
             setDefaultValues: () => {},
           }}

@@ -81,7 +81,7 @@ describe('Orchestrator', () => {
     renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent: () => {},
           setDefaultValues,
         }}
@@ -104,7 +104,7 @@ describe('Orchestrator', () => {
     renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent,
           setDefaultValues: () => {},
         }}
@@ -129,7 +129,7 @@ describe('Orchestrator', () => {
     const { getByText } = renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent,
           setDefaultValues: () => {},
         }}
@@ -149,7 +149,7 @@ describe('Orchestrator', () => {
     const { getByText } = renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent,
           setDefaultValues: () => {},
         }}
@@ -169,7 +169,7 @@ describe('Orchestrator', () => {
     const { getByText } = renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: true,
+          isTelemetryEnabled: false,
           pushEvent,
           setDefaultValues: () => {},
         }}
@@ -189,7 +189,7 @@ describe('Orchestrator', () => {
     const { getByText } = renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent,
           setDefaultValues: () => {},
         }}
@@ -215,7 +215,7 @@ describe('Orchestrator', () => {
     const { getByText } = renderWithRouter(
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent,
           setDefaultValues: () => {},
         }}

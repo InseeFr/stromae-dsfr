@@ -115,7 +115,7 @@ export function Orchestrator(props: OrchestratorProps) {
   const [isTelemetryInitialized, setIsTelemetryInitialized] =
     useState<boolean>(false)
   const {
-    isTelemetryDisabled,
+    isTelemetryEnabled,
     pushEvent,
     setDefaultValues,
     triggerBatchTelemetryCallback,
@@ -341,11 +341,11 @@ export function Orchestrator(props: OrchestratorProps) {
 
   // Telemetry initialization
   useEffect(() => {
-    if (!isTelemetryDisabled && mode === MODE_TYPE.COLLECT) {
+    if (isTelemetryEnabled && mode === MODE_TYPE.COLLECT) {
       setDefaultValues({ idInterrogation: initialInterrogation?.id })
       setIsTelemetryInitialized(true)
     }
-  }, [isTelemetryDisabled, mode, setDefaultValues, initialInterrogation?.id])
+  }, [isTelemetryEnabled, mode, setDefaultValues, initialInterrogation?.id])
 
   // Initialization
   useEffect(() => {

@@ -17,7 +17,7 @@ import type {
 import { computeDataMaxLength, computeInactivityDelay } from '@/utils/telemetry'
 
 type TelemetryContextType = {
-  isTelemetryDisabled: boolean
+  isTelemetryEnabled: boolean
   pushEvent: (e: TelemetryParadata) => void | Promise<boolean>
   setDefaultValues: (e: DefaultParadataValues) => void
   triggerBatchTelemetryCallback?: () => Promise<void>
@@ -25,7 +25,7 @@ type TelemetryContextType = {
 
 /** Mandatory values used as a context's last-resort fallback. */
 const defaultValues = {
-  isTelemetryDisabled: true,
+  isTelemetryEnabled: false,
   pushEvent: (_: TelemetryParadata) => {},
   setDefaultValues: (_: DefaultParadataValues) => {},
 }
@@ -48,6 +48,14 @@ export function useTelemetry() {
   return useContext(TelemetryContext)
 }
 
+export function computeIsTelemetryEnabled(): boolean {
+  const enabledEnv = import.meta.env.VITE_TELEMETRY_ENABLED
+  const disabledEnv = import.meta.env.VITE_TELEMETRY_DISABLED
+  if (enabledEnv) return enabledEnv === 'true'
+  if (disabledEnv) return disabledEnv !== 'true'
+  return false
+}
+
 /**
  * Initialize the telemetry context with a batch system.
  *
@@ -60,7 +68,7 @@ export function TelemetryProvider({
 }: Readonly<{
   children: React.ReactElement
 }>) {
-  const isTelemetryDisabled = import.meta.env.VITE_TELEMETRY_DISABLED === 'true'
+  const isTelemetryEnabled = computeIsTelemetryEnabled()
 
   const [defaultValues, setDefaultValues] = useState<DefaultParadataValues>({
     userAgent: navigator.userAgent,
@@ -100,12 +108,12 @@ export function TelemetryProvider({
 
   const telemetryContextValues = useMemo(
     () => ({
-      isTelemetryDisabled,
+      isTelemetryEnabled,
       pushEvent,
       setDefaultValues: updateDefaultValues,
       triggerBatchTelemetryCallback: triggerTimeoutEvent,
     }),
-    [isTelemetryDisabled, pushEvent, triggerTimeoutEvent, updateDefaultValues],
+    [isTelemetryEnabled, pushEvent, triggerTimeoutEvent, updateDefaultValues],
   )
 
   return (

@@ -48,7 +48,7 @@ export function useTelemetry() {
   return useContext(TelemetryContext)
 }
 
-function computeIsTelemetryEnabled(): boolean {
+export function computeIsTelemetryEnabled(): boolean {
   const enabledEnv = import.meta.env.VITE_TELEMETRY_ENABLED
   const disabledEnv = import.meta.env.VITE_TELEMETRY_DISABLED
   if (enabledEnv) return enabledEnv === 'true'

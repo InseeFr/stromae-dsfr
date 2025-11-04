@@ -200,7 +200,7 @@ describe('Header & Footer', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: false,
             pushEvent: vi.fn(),
             setDefaultValues: () => {},
           }}
@@ -229,7 +229,7 @@ describe('Header & Footer', () => {
       <OidcProvider>
         <TelemetryContext.Provider
           value={{
-            isTelemetryDisabled: false,
+            isTelemetryEnabled: false,
             pushEvent: vi.fn(),
             setDefaultValues: () => {},
           }}

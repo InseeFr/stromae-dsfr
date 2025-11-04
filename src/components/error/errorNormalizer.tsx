@@ -1,4 +1,5 @@
-import type { ReactNode } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
+
 import { AxiosError } from 'axios'
 
 import { declareComponentKeys, getTranslation } from '@/i18n'

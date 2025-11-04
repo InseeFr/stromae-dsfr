@@ -5,7 +5,7 @@ import { router } from '@/router/__mocks__'
 
 export const renderWithRouter = (component: React.ReactElement) => {
   return render(
-    // @ts-expect-error: we should have a better router mock
+    // @ts-ignore: we should have a better router mock
     <RouterProvider router={router} defaultComponent={() => component} />,
   )
 }

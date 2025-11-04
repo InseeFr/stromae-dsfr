@@ -33,7 +33,7 @@ export function Header() {
   const mode = useMode()
 
   const { label: serviceTitle, mainLogo } = useMetadataStore()
-  const { isTelemetryDisabled, pushEvent, triggerBatchTelemetryCallback } =
+  const { isTelemetryEnabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
 
   /**
@@ -57,7 +57,7 @@ export function Header() {
 
   const goToPortal = async () => {
     await executePreLogoutActions()
-    if (!isTelemetryDisabled) {
+    if (isTelemetryEnabled) {
       await pushEvent(
         computeExitEvent({
           source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
@@ -97,7 +97,7 @@ export function Header() {
                 : '',
               disabled: isCollectRoute,
               onClick:
-                isCollectRoute && !isTelemetryDisabled
+                isCollectRoute && isTelemetryEnabled
                   ? () => {
                       pushEvent(computeContactSupportEvent())
                     }

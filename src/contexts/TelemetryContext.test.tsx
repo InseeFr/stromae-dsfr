@@ -12,7 +12,7 @@ describe('Telemetry context', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent: mock,
           setDefaultValues: () => {},
         }}
@@ -35,7 +35,7 @@ describe('Telemetry context', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <TelemetryContext.Provider
         value={{
-          isTelemetryDisabled: false,
+          isTelemetryEnabled: true,
           pushEvent: () => {},
           setDefaultValues: mock,
         }}

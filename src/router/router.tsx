@@ -23,15 +23,15 @@ import { visualizeRoute } from '@/pages/visualize/route'
 // eslint-disable-next-line react-refresh/only-export-components
 const RootComponent = memo(() => {
   const { tokens } = useOidc()
-  const { isTelemetryDisabled, setDefaultValues } = useTelemetry()
+  const { isTelemetryEnabled, setDefaultValues } = useTelemetry()
 
   // Retrieve the OIDC's session id (different for each session of the user
   // agent used by the end-user which allows to identify distinct sessions)
   useEffect(() => {
-    if (!isTelemetryDisabled && tokens?.decodedIdToken.sid) {
+    if (isTelemetryEnabled && tokens?.decodedIdToken.sid) {
       setDefaultValues({ sid: tokens?.decodedIdToken.sid })
     }
-  }, [isTelemetryDisabled, tokens?.decodedIdToken.sid, setDefaultValues])
+  }, [isTelemetryEnabled, tokens?.decodedIdToken.sid, setDefaultValues])
 
   return (
     <div

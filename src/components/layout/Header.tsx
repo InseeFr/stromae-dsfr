@@ -18,8 +18,8 @@ import {
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
-import { decodeUrlSafeBase64 } from '@/utils/decodeUrlSafeBase64'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
+import { createSafeUrl, decodeUrlSafeBase64 } from '@/utils/url'
 
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
@@ -46,6 +46,11 @@ export function Header() {
   const surveyUnitLabel = decodeUrlSafeBase64(search?.surveyUnitLabel)
   const pathAssistance = decodeUrlSafeBase64(search?.pathAssistance)
 
+  const assistanceHref = createSafeUrl(
+    import.meta.env.VITE_PORTAIL_URL,
+    pathAssistance,
+  )
+
   const exitModal = useMemo(
     () =>
       createModal({
@@ -67,7 +72,10 @@ export function Header() {
         await triggerBatchTelemetryCallback()
       }
     }
-    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_EXIT_PATH}`
+    window.location.href = createSafeUrl(
+      import.meta.env.VITE_PORTAIL_URL,
+      import.meta.env.VITE_EXIT_PATH,
+    )
   }
 
   return (
@@ -92,9 +100,7 @@ export function Header() {
           {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {
-              href: collectPath
-                ? `${import.meta.env.VITE_PORTAIL_URL}${pathAssistance}`
-                : '',
+              href: collectPath ? assistanceHref : '',
               disabled: isCollectRoute,
               onClick:
                 isCollectRoute && isTelemetryEnabled

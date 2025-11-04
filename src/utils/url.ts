@@ -24,3 +24,15 @@ export function decodeUrlSafeBase64(
     return fallbackValue
   }
 }
+
+export function createSafeUrl(origin: string, path?: string): string {
+  if (!path) return origin
+
+  const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`
+  const fullUrl = `${normalizedOrigin}${normalizedPath}`
+  // check if url starts by origin
+  const originRegex = new RegExp(`^${normalizedOrigin}/.*`)
+
+  return originRegex.test(fullUrl) ? fullUrl : origin
+}

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
+- In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
+- In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
 
 ### Fixed
 

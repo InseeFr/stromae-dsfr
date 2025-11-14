@@ -43,7 +43,9 @@ export function Header() {
 
   const search = useSearch({ strict: false })
 
-  const surveyUnitLabel = decodeUrlSafeBase64(search?.surveyUnitLabel)
+  const surveyUnitCompositeName = decodeUrlSafeBase64(
+    search?.surveyUnitCompositeName,
+  )
   const pathAssistance = decodeUrlSafeBase64(search?.pathAssistance)
 
   const assistanceHref = createSafeUrl(
@@ -124,7 +126,7 @@ export function Header() {
                 } as const,
               ]),
         ]}
-        serviceTagline={surveyUnitLabel}
+        serviceTagline={surveyUnitCompositeName}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,

@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.2.3-rc.input-number-bug",
+  "version": "2.2.3-rc.0",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

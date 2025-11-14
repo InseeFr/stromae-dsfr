@@ -37,6 +37,7 @@ export const VisualizePage = memo(function VisualizePage() {
   return (
     <Orchestrator
       mode={MODE_TYPE.VISUALIZE}
+      isDownloadEnabled={true}
       metadata={metadata}
       source={source}
       initialInterrogation={interrogation}

@@ -36,6 +36,8 @@ export const CollectPage = memo(function CollectPage() {
 
   const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(interrogationId)
 
+  const isDownloadEnabled = import.meta.env.VITE_DOWNLOAD_DISABLED !== 'true'
+
   const updateDataAndStateData = (params: {
     stateData: StateData
     data: LunaticData['COLLECTED']
@@ -100,6 +102,7 @@ export const CollectPage = memo(function CollectPage() {
     <Orchestrator
       metadata={metadata}
       mode={MODE_TYPE.COLLECT}
+      isDownloadEnabled={isDownloadEnabled}
       source={source}
       initialInterrogation={interrogation}
       getReferentiel={getReferentiel}

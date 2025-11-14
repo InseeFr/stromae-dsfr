@@ -52,13 +52,16 @@ describe('Orchestrator', () => {
   const queryClient = new QueryClient()
   const OrchestratorTestWrapper = ({
     mode,
+    isDownloadEnabled,
   }: {
     mode: MODE_TYPE.COLLECT | MODE_TYPE.REVIEW | MODE_TYPE.VISUALIZE
+    isDownloadEnabled: boolean
   }) => (
     <QueryClientProvider client={queryClient}>
       <Orchestrator
         metadata={metadata}
         mode={mode}
+        isDownloadEnabled={isDownloadEnabled}
         initialInterrogation={interrogation}
         // @ts-expect-error: we should have a better lunatic mock
         source={source}
@@ -86,7 +89,10 @@ describe('Orchestrator', () => {
           setDefaultValues,
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -109,7 +115,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -134,7 +143,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.VISUALIZE}
+          isDownloadEnabled={true}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -154,7 +166,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.REVIEW} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.REVIEW}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -174,7 +189,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -194,7 +212,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -220,7 +241,10 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
+        <OrchestratorTestWrapper
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+        />
       </TelemetryContext.Provider>,
     )
 
@@ -244,7 +268,10 @@ describe('Orchestrator', () => {
     const user = userEvent.setup()
 
     const { getByText } = renderWithRouter(
-      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        isDownloadEnabled={false}
+      />,
     )
 
     act(() => getByText('Start').click())
@@ -258,5 +285,60 @@ describe('Orchestrator', () => {
 
     act(() => getByText('Continue').click())
     expect(document.title).not.toContain('*')
+  })
+
+  it('shows download button when enabled', async () => {
+    const user = userEvent.setup()
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        isDownloadEnabled={true}
+      />,
+    )
+
+    act(() => getByText('Start').click())
+    act(() => getByText('Continue').click())
+
+    const e = getByText('my-question')
+
+    await user.click(e)
+    await user.keyboard('f')
+
+    act(() => getByText('Continue').click())
+
+    expect(getByText('Download data')).toBeInTheDocument()
+  })
+
+  it('shows download button in visualize mode when enabled', async () => {
+    const user = userEvent.setup()
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.VISUALIZE}
+        isDownloadEnabled={true}
+      />,
+    )
+
+    act(() => getByText('Start').click())
+    act(() => getByText('Continue').click())
+
+    const e = getByText('my-question')
+
+    await user.click(e)
+    await user.keyboard('f')
+
+    act(() => getByText('Continue').click())
+
+    expect(getByText('Download data')).toBeInTheDocument()
+  })
+
+  it('hides download button when disabled', async () => {
+    const { getByText, queryByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        isDownloadEnabled={false}
+      />,
+    )
+    act(() => getByText('Start').click())
+    expect(queryByText('Download data')).toBeNull()
   })
 })

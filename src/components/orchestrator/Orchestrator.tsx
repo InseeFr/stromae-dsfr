@@ -76,6 +76,8 @@ export namespace OrchestratorProps {
     getReferentiel: LunaticGetReferentiel
     /** Interrogation metadata */
     metadata: Metadata
+    /** Indicates if the download button should be enabled */
+    isDownloadEnabled: boolean
   }
 
   export type Visualize = {
@@ -101,7 +103,7 @@ export namespace OrchestratorProps {
 }
 
 export function Orchestrator(props: OrchestratorProps) {
-  const { source, getReferentiel, mode, metadata } = props
+  const { source, getReferentiel, mode, isDownloadEnabled, metadata } = props
 
   const navigate = useNavigate()
 
@@ -457,6 +459,7 @@ export function Orchestrator(props: OrchestratorProps) {
           pagination={pagination}
           overview={overview}
           hasArticulation={hasArticulation}
+          isDownloadEnabled={isDownloadEnabled}
           isDirtyState={isDirtyState}
           isSequencePage={isSequencePage(components)}
           bottomContent={

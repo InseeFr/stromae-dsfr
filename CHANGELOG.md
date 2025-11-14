@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
+
 ## [1.5.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.5.1) - 2025-08-18
 
 ### Changed

@@ -9,7 +9,7 @@ import {
   getArticulationState,
   useLunatic,
 } from '@inseefr/lunatic'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import { assert } from 'tsafe/assert'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -18,6 +18,7 @@ import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
 import { usePrevious } from '@/hooks/usePrevious'
+import type { GenerateDepositProofParams } from '@/models/api'
 import type { Interrogation } from '@/models/interrogation'
 import type { InterrogationData } from '@/models/interrogationData'
 import type {
@@ -98,7 +99,7 @@ export namespace OrchestratorProps {
       isLogout: boolean
     }) => Promise<void>
     /** Allows user to download a deposit proof PDF */
-    getDepositProof: () => Promise<void>
+    getDepositProof: (params?: GenerateDepositProofParams) => Promise<void>
   }
 }
 
@@ -106,6 +107,10 @@ export function Orchestrator(props: OrchestratorProps) {
   const { source, getReferentiel, mode, isDownloadEnabled, metadata } = props
 
   const navigate = useNavigate()
+
+  const search = useSearch({ strict: false })
+
+  const encodedSurveyUnitCompositeName = search?.surveyUnitCompositeName
 
   const initialInterrogation = computeInterrogation(props.initialInterrogation)
 
@@ -438,7 +443,9 @@ export function Orchestrator(props: OrchestratorProps) {
       return
     }
     if (mode === MODE_TYPE.COLLECT) {
-      props.getDepositProof()
+      props.getDepositProof({
+        surveyUnitCompositeName: encodedSurveyUnitCompositeName,
+      })
       return
     }
   }

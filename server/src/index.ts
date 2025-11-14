@@ -28,7 +28,7 @@ app.get('/api/interrogations/:id', (c) => {
     id: c.req.param('id'),
     questionnaireId: c.req.param('id'),
     data: {
-      COLLECTED: data
+      COLLECTED: data,
     },
     stateData,
   })
@@ -36,7 +36,7 @@ app.get('/api/interrogations/:id', (c) => {
 
 app.patch('/api/interrogations/:id', async (c) => {
   const json = (await c.req.json()) as any
-  data = {...data, ...json.data}
+  data = { ...data, ...json.data }
   stateData = json.stateData
   return c.json({})
 })

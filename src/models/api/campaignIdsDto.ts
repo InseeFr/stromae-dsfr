@@ -6,4 +6,6 @@
  * OpenAPI spec version: 5.5.0
  */
 
-export type VariableValue = string | boolean | number
+export interface CampaignIdsDto {
+  id?: string
+}

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
+- In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
+
 ## [2.2.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.3) - 2025-11-14
 
 ### Fixed

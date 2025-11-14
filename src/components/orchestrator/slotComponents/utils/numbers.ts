@@ -8,13 +8,13 @@ export function getNumberSeparators() {
 
   // Format a small number to retrieve the decimal separator
   const decimalParts = formatter.formatToParts(0.1)
-  const decimalSeparator =
-    decimalParts.find((part) => part.type === 'decimal')?.value ?? '.' // Default to period if not found
+  const decimalPart = decimalParts.find((part) => part.type === 'decimal')
+  const decimalSeparator = decimalPart ? decimalPart.value : undefined
 
   // Format a thousand to retrieve the thousand separator
   const thousandParts = formatter.formatToParts(1000)
-  const thousandSeparator =
-    thousandParts.find((part) => part.type === 'group')?.value ?? ',' // Default to comma if not found
+  const groupPart = thousandParts.find((part) => part.type === 'group')
+  const thousandSeparator = groupPart ? groupPart.value : undefined
 
   return { decimalSeparator, thousandSeparator }
 }

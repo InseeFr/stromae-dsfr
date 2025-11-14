@@ -52,10 +52,10 @@ describe('Orchestrator', () => {
   const queryClient = new QueryClient()
   const OrchestratorTestWrapper = ({
     mode,
-    isDownloadEnabled,
+    isDownloadEnabled = false,
   }: {
     mode: MODE_TYPE.COLLECT | MODE_TYPE.REVIEW | MODE_TYPE.VISUALIZE
-    isDownloadEnabled: boolean
+    isDownloadEnabled?: boolean
   }) => (
     <QueryClientProvider client={queryClient}>
       <Orchestrator
@@ -89,10 +89,7 @@ describe('Orchestrator', () => {
           setDefaultValues,
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
       </TelemetryContext.Provider>,
     )
 
@@ -115,10 +112,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
       </TelemetryContext.Provider>,
     )
 
@@ -143,10 +137,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.VISUALIZE}
-          isDownloadEnabled={true}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />
       </TelemetryContext.Provider>,
     )
 
@@ -166,10 +157,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.REVIEW}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.REVIEW} />
       </TelemetryContext.Provider>,
     )
 
@@ -189,10 +177,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
       </TelemetryContext.Provider>,
     )
 
@@ -212,10 +197,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
       </TelemetryContext.Provider>,
     )
 
@@ -241,10 +223,7 @@ describe('Orchestrator', () => {
           setDefaultValues: () => {},
         }}
       >
-        <OrchestratorTestWrapper
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-        />
+        <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
       </TelemetryContext.Provider>,
     )
 
@@ -268,10 +247,7 @@ describe('Orchestrator', () => {
     const user = userEvent.setup()
 
     const { getByText } = renderWithRouter(
-      <OrchestratorTestWrapper
-        mode={MODE_TYPE.COLLECT}
-        isDownloadEnabled={false}
-      />,
+      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
     )
 
     act(() => getByText('Start').click())
@@ -309,13 +285,10 @@ describe('Orchestrator', () => {
     expect(getByText('Download data')).toBeInTheDocument()
   })
 
-  it('shows download button in visualize mode when enabled', async () => {
+  it('always shows download button in visualize mode', async () => {
     const user = userEvent.setup()
     const { getByText } = renderWithRouter(
-      <OrchestratorTestWrapper
-        mode={MODE_TYPE.VISUALIZE}
-        isDownloadEnabled={true}
-      />,
+      <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />,
     )
 
     act(() => getByText('Start').click())
@@ -333,10 +306,7 @@ describe('Orchestrator', () => {
 
   it('hides download button when disabled', async () => {
     const { getByText, queryByText } = renderWithRouter(
-      <OrchestratorTestWrapper
-        mode={MODE_TYPE.COLLECT}
-        isDownloadEnabled={false}
-      />,
+      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
     )
     act(() => getByText('Start').click())
     expect(queryByText('Download data')).toBeNull()

@@ -50,7 +50,6 @@ export const MarkdownLink: LunaticSlotComponents['MarkdownLink'] = (props) => {
           className={fr.cx('fr-tooltip', 'fr-placement')}
           id={`tooltip-${id}`}
           role="tooltip"
-          aria-hidden="true"
         >
           {tooltip}
         </span>

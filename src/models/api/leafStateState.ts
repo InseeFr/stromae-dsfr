@@ -17,5 +17,5 @@ export type LeafStateState =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LeafStateState = {
   COMPLETED: 'COMPLETED',
-  INIT: 'INIT'
+  INIT: 'INIT',
 } as const

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
 
+### Fixed
+
+- Fixed an issue where aria-hidden stayed true on hover for tooltips.
+
 ## [2.2.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.3) - 2025-11-14
 
 ### Fixed

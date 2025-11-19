@@ -36,7 +36,7 @@ export const CollectPage = memo(function CollectPage() {
 
   const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(interrogationId)
 
-  const isDownloadEnabled = import.meta.env.VITE_DOWNLOAD_DISABLED !== 'true'
+  const isDownloadEnabled = import.meta.env.VITE_DOWNLOAD_ENABLED === 'true'
 
   const updateDataAndStateData = (params: {
     stateData: StateData

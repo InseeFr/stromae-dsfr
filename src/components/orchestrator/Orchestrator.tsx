@@ -17,7 +17,6 @@ import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
-import { usePrevious } from '@/hooks/usePrevious'
 import type { Interrogation } from '@/models/interrogation'
 import type { InterrogationData } from '@/models/interrogationData'
 import type {
@@ -112,6 +111,9 @@ export function Orchestrator(props: OrchestratorProps) {
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
   useBeforeUnload(isDirtyState)
+
+  // Store pending changes when data could not be sent (if the user goes offline for example)
+  const [pendingChanges, setPendingChanges] = useState<Record<string, any>>({})
 
   // Allow to send telemetry events once interrogation id has been set
   const [isTelemetryInitialized, setIsTelemetryInitialized] =
@@ -276,9 +278,6 @@ export function Orchestrator(props: OrchestratorProps) {
   const currentPage =
     currentPageType === PAGE_TYPE.LUNATIC ? pageTag : currentPageType
 
-  const previousPage = usePrevious(currentPageType) ?? initialCurrentPage
-  const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
-
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
     const interrogation = updateInterrogation(
@@ -310,34 +309,42 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  const triggerDataAndStateUpdate = (isLogout: boolean = false) => {
+  const triggerDataAndStateUpdate = async (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       const changedData = getChangedData(true) as InterrogationData
       const interrogation = updateInterrogation(changedData, currentPage)
 
-      if (
-        !interrogation.stateData ||
-        (!hasDataChanged(changedData) &&
-          (currentPageType === PAGE_TYPE.LUNATIC
-            ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
-            : currentPage === previousPage))
-      ) {
-        // no change and we are still on the same page, no need to push anything
+      if (!interrogation.stateData) {
         setIsDirtyState(false)
         return
       }
 
-      props.updateDataAndStateData({
-        stateData: interrogation.stateData,
-        // we push only the new data, not the full data
-        // changedData.COLLECTED is defined since hasDataChanged checks it
-        data: trimCollectedData(changedData.COLLECTED!),
-        onSuccess: resetChangedData,
-        isLogout: isLogout,
-      })
-      setIsDirtyState(false)
-      // update date to show on end page message
-      setLastUpdateDate(interrogation.stateData?.date)
+      let dataToSend = { ...pendingChanges }
+
+      if (hasDataChanged(changedData) && changedData.COLLECTED) {
+        dataToSend = {
+          ...dataToSend,
+          ...changedData.COLLECTED,
+        }
+        setPendingChanges(dataToSend)
+      }
+
+      try {
+        await props.updateDataAndStateData({
+          stateData: interrogation.stateData,
+          data: trimCollectedData(dataToSend),
+          onSuccess: () => {
+            resetChangedData()
+            setIsDirtyState(false)
+            setLastUpdateDate(interrogation.stateData?.date)
+            setPendingChanges({})
+          },
+          isLogout: isLogout,
+        })
+      } catch (error) {
+        // If there is an error, to not reset anything
+        console.error('Failed to update data:', error)
+      }
     }
   }
 

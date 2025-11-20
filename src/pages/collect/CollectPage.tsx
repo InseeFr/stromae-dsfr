@@ -68,7 +68,6 @@ export const CollectPage = memo(function CollectPage() {
       })
       .catch((error: Error) => {
         if (!params.isLogout) {
-          console.log('error:', error)
           if (error.message === 'Network Error') {
             showToast({
               severity: 'error',

@@ -319,13 +319,15 @@ export function Orchestrator(props: OrchestratorProps) {
         return
       }
 
-      let dataToSend = { ...pendingChanges }
+      const dataToSend =
+        hasDataChanged(changedData) && changedData.COLLECTED
+          ? {
+              ...pendingChanges,
+              ...changedData.COLLECTED,
+            }
+          : { ...pendingChanges }
 
       if (hasDataChanged(changedData) && changedData.COLLECTED) {
-        dataToSend = {
-          ...dataToSend,
-          ...changedData.COLLECTED,
-        }
         setPendingChanges(dataToSend)
       }
 

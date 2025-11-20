@@ -19,7 +19,7 @@ import { CollectPage } from './CollectPage'
 
 const collectSearchParams = z.object({
   pathAssistance: z.string().optional(),
-  surveyUnitLabel: z.string().optional(),
+  surveyUnitCompositeName: z.string().optional(),
 })
 
 export const collectPath = '/interrogations/$interrogationId'

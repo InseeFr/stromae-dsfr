@@ -16,6 +16,7 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
         segments={[]}
       />
       <h2>{t('accessibility title')}</h2>
+      <h3>{t('declaration title')}</h3>
 
       {t('declaration content', {
         fullUrl: `${window.location.protocol}//${window.location.hostname}`,
@@ -24,13 +25,14 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
       <section>
         <h3>{t('conformity status title')}</h3>
         {t('conformity status description')}
-        <h4>{t('test results title')}</h4>
+        <h4 className="fr-mt-4w">{t('test results title')}</h4>
         {t('test results content')}
-        <h4>{t('non accessible content title')}</h4>
-        {t('non accessible content content')}
-        <h4>{t('disproportionate burden title')}</h4>
+        <h4 className="fr-mt-4w">{t('non accessible content title')}</h4>
+        <h5 className="fr-mt-2w">{t('non compliant content title')}</h5>
+        {t('non compliant content content')}
+        <h5 className="fr-mt-2w">{t('disproportionate burden title')}</h5>
         {t('disproportionate burden content')}
-        <h4>{t('non submitted content title')}</h4>
+        <h5 className="fr-mt-2w">{t('non submitted content title')}</h5>
         {t('non submitted content content')}
       </section>
 
@@ -38,17 +40,21 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
         <h3>{t('establishment title')}</h3>
         {t('establishment content')}
 
-        <h4>{t('technologies used title')}</h4>
+        <h4 className="fr-mt-4w">{t('technologies used title')}</h4>
         {t('technologies used content')}
 
-        <h4>{t('test environment title')}</h4>
+        <h4 className="fr-mt-4w">{t('test environment title')}</h4>
         {t('test environment content')}
 
-        <h4>{t('evaluation tools title')}</h4>
+        <h4 className="fr-mt-4w">{t('evaluation tools title')}</h4>
         {t('evaluation tools content')}
 
-        <h4>{t('evaluated pages title')}</h4>
-        {t('evaluated pages content')}
+        <h4 className="fr-mt-4w">{t('evaluated pages title')}</h4>
+        <h5 className="fr-mt-2w">{t('evaluated structured sample title')}</h5>
+        {t('evaluated structured sample content')}
+
+        <h5 className="fr-mt-2w">{t('evaluated random sample title')}</h5>
+        {t('evaluated random sample content')}
       </section>
 
       <section>
@@ -67,13 +73,15 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { i18n } = declareComponentKeys<
   | 'accessibility title'
+  | 'declaration title'
   | { K: 'declaration content'; R: JSX.Element; P: { fullUrl: string } }
   | 'conformity status title'
   | { K: 'conformity status description'; R: JSX.Element }
   | 'test results title'
   | { K: 'test results content'; R: JSX.Element }
   | 'non accessible content title'
-  | { K: 'non accessible content content'; R: JSX.Element }
+  | 'non compliant content title'
+  | { K: 'non compliant content content'; R: JSX.Element }
   | 'disproportionate burden title'
   | { K: 'disproportionate burden content'; R: JSX.Element }
   | 'non submitted content title'
@@ -88,6 +96,10 @@ const { i18n } = declareComponentKeys<
   | { K: 'evaluation tools content'; R: JSX.Element }
   | 'evaluated pages title'
   | { K: 'evaluated pages content'; R: JSX.Element }
+  | 'evaluated structured sample title'
+  | { K: 'evaluated structured sample content'; R: JSX.Element }
+  | 'evaluated random sample title'
+  | { K: 'evaluated random sample content'; R: JSX.Element }
   | 'feedback contact title'
   | { K: 'feedback contact content'; R: JSX.Element }
   | 'recourse title'

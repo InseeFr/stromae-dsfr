@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { PAGE_TYPE } from '@/constants/page'
 import type { Translations } from '@/i18n/types'
 
@@ -133,6 +134,7 @@ export const translations: Translations<'fr'> = {
   },
   AccessibilityPage: {
     'accessibility title': 'Accessibilité',
+    'declaration title': 'Déclaration d’accessibilité RGAA 4.1.2',
     'declaration content': ({ fullUrl }) => (
       <>
         <p>
@@ -145,45 +147,177 @@ export const translations: Translations<'fr'> = {
           À cette fin, elle met en œuvre la stratégie et les actions suivantes :
         </p>
         <ul>
-          <li>Schéma pluriannuel de mise en accessibilité 2022-2024 ;</li>
+          <li>
+            {' '}
+            <a
+              className="fr-link"
+              href="https://www.insee.fr/fr/information/7621795"
+              target="_blank"
+              title="Schéma pluriannuel de mise en accessibilité numérique de l’Insee 2023-2025 - ouvre une nouvelle fenêtre"
+            >
+              Schéma pluriannuel de mise en accessibilité numérique de l’Insee
+              2023-2025
+            </a>{' '}
+            ;
+          </li>
           <li>Plans d’actions 2023, 2024.</li>
         </ul>
         <p>Ces documents sont communicables à la demande.</p>
         <p>
           Cette déclaration d’accessibilité s’applique à{' '}
-          <a href={fullUrl}>{fullUrl}</a>.
+          <a className="fr-link" href={fullUrl}>
+            {fullUrl}
+          </a>
+          .
         </p>
       </>
     ),
     'conformity status title': 'État de conformité',
     'conformity status description': (
       <p>
-        Le site de réponse en ligne des enquêtes de l'Insee est non conforme
-        avec le référentiel général d’amélioration de l’accessibilité (RGAA),
-        version 4 en raison d'une absence d'audit de conformité en cours de
-        réalisation.
+        Le site web{' '}
+        <a
+          className="fr-link"
+          href="https://questionnaire-enquetes.stat-publique.fr"
+          target="_blank"
+          title="questionnaire-enquetes.stat-publique.fr - ouvre une nouvelle fenêtre"
+        >
+          questionnaire-enquetes.stat-publique.fr
+        </a>{' '}
+        est partiellement conforme avec le référentiel général d’amélioration de
+        l’accessibilité (RGAA), version 4.1.2, en raison des non-conformités et
+        des dérogations énumérées ci-dessous.
       </p>
     ),
     'test results title': 'Résultats des tests',
     'test results content': (
-      <p>
-        La présente déclaration sera mise à jour dès que les résultats de
-        l'audit de conformité seront connus.
-      </p>
+      <>
+        <p>
+          L’audit de conformité réalisé par{' '}
+          <a
+            className="fr-link"
+            href="https://questionnaire-enquetes.stat-publique.fr"
+            target="_blank"
+            title="https://koena.net/ - ouvre une nouvelle fenêtre"
+          >
+            Koena
+          </a>{' '}
+          révèle que :
+        </p>
+        <ul>
+          <li>
+            {' '}
+            71 % des critères RGAA sont respectés. Il s’agit du nombre de
+            critères pleinement respectés sur la totalité des pages de
+            l’échantillon. On parle aussi de taux de conformité global.
+          </li>
+          <li>
+            Le taux moyen de conformité du service en ligne s’élève à 80 %. Il
+            s’agit de la moyenne du score de conformité obtenu sur chacune des
+            pages de l’échantillon.
+          </li>
+          <li>
+            {' '}
+            <a
+              className="fr-link"
+              href="https://www.insee.fr/fr/information/7621795"
+              target="_blank"
+              title="Schéma pluriannuel de mise en accessibilité numérique de l’Insee 2023-2025 - ouvre une nouvelle fenêtre"
+            >
+              Accès à la grille d'audit RGAA TODO
+            </a>{' '}
+            ;
+          </li>
+        </ul>
+      </>
     ),
     'non accessible content title': 'Contenus non accessibles',
-    'non accessible content content': <p>Sans objet.</p>,
+    'non compliant content title': 'Non conformités',
+    'non compliant content content': (
+      <>
+        <p>
+          Nous listons ci-dessous l’ensemble des critères non-conformes. Pour le
+          détail, se reporter à la grille d’audit et au schéma pluriannuel pour
+          le plan d’amélioration continue.
+        </p>
+        <ul>
+          <li>
+            <span>5.3</span> — Pour chaque tableau de mise en forme, le contenu
+            linéarisé reste-t-il compréhensible ?
+          </li>
+          <li>
+            <span>6.1</span> — Chaque lien est-il explicite (hors cas
+            particuliers) ?
+          </li>
+          <li>
+            <span>7.3</span> — Chaque script est-il contrôlable par le clavier
+            et par tout dispositif de pointage (hors cas particuliers) ?
+          </li>
+          <li>
+            <span>7.4</span> — Pour chaque script qui initie un changement de
+            contexte, l'utilisateur est-il averti ou en a-t-il le contrôle ?
+          </li>
+          <li>
+            <span>7.5</span> — Dans chaque page web, les messages de statut
+            sont-ils correctement restitués par les technologies d'assistance ?
+          </li>
+          <li>
+            <span>8.6</span> — Pour chaque page web ayant un titre de page, ce
+            titre est-il pertinent ?
+          </li>
+          <li>
+            <span>10.8</span> — Pour chaque page web, les contenus cachés
+            ont-ils vocation à être ignorés par les technologies d'assistance ?
+          </li>
+          <li>
+            <span>11.2</span> — Chaque étiquette associée à un champ de
+            formulaire est-elle pertinente (hors cas particuliers) ?
+          </li>
+          <li>
+            <span>11.7</span> — Dans chaque formulaire, chaque légende associée
+            à un regroupement de champs de même nature est-elle pertinente ?
+          </li>
+          <li>
+            <span>11.10</span> — Dans chaque formulaire, le contrôle de saisie
+            est-il utilisé de manière pertinente (hors cas particuliers) ?
+          </li>
+          <li>
+            <span>12.3</span> — La page « plan du site » est-elle pertinente ?
+          </li>
+          <li>
+            <span>12.7</span> — Dans chaque page web, un lien d'évitement ou
+            d'accès rapide à la zone de contenu principal est-il présent (hors
+            cas particuliers) ?
+          </li>
+          <li>
+            <span>13.1</span> — Pour chaque page web, l'utilisateur a-t-il le
+            contrôle de chaque limite de temps modifiant le contenu (hors cas
+            particuliers) ?
+          </li>
+          <li>
+            <span>13.3</span> — Dans chaque page web, chaque document
+            bureautique en téléchargement possède-t-il, si nécessaire, une
+            version accessible (hors cas particuliers) ?
+          </li>
+          <li>
+            <span>13.1</span> — Dans chaque page web, les actions déclenchées au
+            moyen d'un dispositif de pointage sur un point unique de l'écran
+            peuvent-elles faire l'objet d'une annulation (hors cas particuliers)
+            ?
+          </li>
+        </ul>{' '}
+      </>
+    ),
     'disproportionate burden title': 'Dérogations pour charge disproportionnée',
-    'disproportionate burden content': <p>Sans objet.</p>,
+    'disproportionate burden content': <p>Aucune.</p>,
     'non submitted content title':
       'Contenus non soumis à l’obligation d’accessibilité',
-    'non submitted content content': <p>Sans objet.</p>,
+    'non submitted content content': (
+      <p>Aucun contenu soumis à exemption légale.</p>
+    ),
     'establishment title': 'Établissement de cette déclaration d’accessibilité',
     'establishment content': (
-      <p>
-        Cette déclaration a été établie le 9 juillet 2024 par le réseau
-        accessibilité numérique de l'Insee (Rani).
-      </p>
+      <p>Cette déclaration a été établie le 06/10/2025.</p>
     ),
     'technologies used title':
       'Technologies utilisées pour la réalisation du site',
@@ -191,23 +325,144 @@ export const translations: Translations<'fr'> = {
       <ul>
         <li>HTML5</li>
         <li>CSS</li>
-        <li>Javascript</li>
+        <li>Javascript TODO</li>
         <li>React</li>
       </ul>
     ),
     'test environment title': 'Environnement de test',
-    'test environment content': <p>Sans objet.</p>,
+    'test environment content': (
+      <>
+        <p>
+          Les tests des pages web ont été effectués avec les combinaisons de
+          navigateurs web et lecteurs d’écran suivants :
+        </p>
+        <div className="fr-table" data-fr-js-table="true">
+          <table data-fr-js-table-element="true">
+            <thead>
+              <tr>
+                <th scope="col">User Agent</th>
+                <th scope="col">Assistive Technology</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-fr-js-table-row="true">
+                <td>Firefox 142.0.1</td>
+                <td>NVDA 2025.3</td>
+              </tr>
+              <tr data-fr-js-table-row="true">
+                <td>Firefox 142.0.1</td>
+                <td>JAWS 2025.2508.120</td>
+              </tr>
+              <tr data-fr-js-table-row="true">
+                <td>Safari 26</td>
+                <td>VoiceOver</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </>
+    ),
     'evaluation tools title': 'Outils pour évaluer l’accessibilité',
-    'evaluation tools content': <p>Sans objet.</p>,
+    'evaluation tools content': (
+      <ul>
+        <li>Extension RGAA éditée par la DINUM pour Firefox</li>
+        <li>Inspecteur de code du navigateur (Firefox)</li>
+        <li>
+          Contrast-Finder et Color Contrast Analyser pour tester les contrastes
+          de couleurs.
+        </li>
+        <li>
+          Validateur du W3C :{' '}
+          <a
+            className="fr-link"
+            href="https://validator.w3.org/"
+            target="_blank"
+            title=" Validateur du W3C - ouvre une nouvelle fenêtre"
+          >
+            https://validator.w3.org/
+          </a>
+        </li>
+        <li>
+          Extension HeadingsMap pour Firefox, pour visualiser la structuration
+          par les titres.
+        </li>
+        <li>
+          Extension de navigateur Web Developer de Chris Pederick :{' '}
+          <a
+            className="fr-link"
+            href="https://chrispederick.com/work/web-developer/"
+            target="_blank"
+            title="Extension de navigateur Web Developer - ouvre une nouvelle fenêtre"
+          >
+            https://chrispederick.com/work/web-developer/
+          </a>
+        </li>
+        <li>
+          ARCtoolkit sur Chrome pour de nombreux critères :{' '}
+          <a
+            className="fr-link"
+            href="https://www.arc-toolkit.com/"
+            target="_blank"
+            title="ARCtoolkit - ouvre une nouvelle fenêtre"
+          >
+            https://www.arc-toolkit.com/
+          </a>
+        </li>
+        <li>
+          Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :{' '}
+          <a
+            className="fr-link"
+            href="https://pac.pdf-accessibility.org/en"
+            target="_blank"
+            title="Accessibilité PDF - ouvre une nouvelle fenêtre"
+          >
+            https://pac.pdf-accessibility.org/en
+          </a>
+        </li>
+      </ul>
+    ),
     'evaluated pages title':
       'Pages du site ayant fait l’objet de la vérification de conformité',
     'evaluated pages content': <p>Sans objet.</p>,
+    'evaluated structured sample title': 'Échantillon structuré',
+    'evaluated structured sample content': (
+      <ul>
+        <li>Accueil du questionnaire</li>
+        <li>I - Questionnaire contexte Entreprise</li>
+        <li>II - Questionnaire contexte ménage</li>
+        <li>III - Les habitants du logement</li>
+        <li>Temps de réponse</li>
+        <li>Commentaire</li>
+        <li>Envoi du questionnaire</li>
+        <li>Fin du questionnaire</li>
+      </ul>
+    ),
+    'evaluated random sample title': 'Échantillon pris au hasard',
+    'evaluated random sample content': (
+      <p>
+        <i>
+          Conformément au RGAA : « s’ajoutent des pages sélectionnées au hasard
+          représentant au moins 10 % des pages de l’échantillon décrit supra. »
+        </i>
+        Le présent service ne permettait pas de sélectionner des pages au
+        hasard. 100 % des étapes du questionnaire ont été évaluées.
+      </p>
+    ),
+
     'feedback contact title': 'Retour d’information et contact',
     'feedback contact content': (
       <p>
         Si vous n’arrivez pas à accéder à un contenu ou à un service, vous
         pouvez contacter l'assistance, pour être orienté vers une alternative
-        accessible ou obtenir le contenu sous une autre forme.
+        accessible ou obtenir le contenu sous une autre forme.{' '}
+        <a
+          className="fr-link"
+          href="https://www.insee.fr/fr/information/6438369"
+          target="_blank"
+          title="Nous contacter - ouvre une nouvelle fenêtre"
+        >
+          Nous contacter
+        </a>
       </p>
     ),
     'recourse title': 'Voies de recours',

@@ -122,6 +122,17 @@ export const translations: Translations<'fr'> = {
     'button previous title': "Revenir à l'étape précédente",
     'button previous label': 'Précédent',
   },
+  CollectPage: {
+    'toast save success title': 'Données sauvegardées avec succès !',
+    'toast save success description':
+      'Vos modifications ont été enregistrées et sauvegardées.',
+    'toast save error title': 'Erreur de sauvegarde',
+    'toast save error description':
+      "Une erreur est survenue lors de l'enregistrement de vos modifications.",
+    'toast save network error title': 'Erreur réseau',
+    'toast save network error description':
+      "Une erreur réseau est survenue, les données ne sont pas enregistrées. Ne fermez pas cette fenêtre pour qu'elles puissent être transmises à la reconnexion.",
+  },
   VTLDevTools: {
     'fab button': 'Console VTL',
     'clean error': 'Vider les erreurs',

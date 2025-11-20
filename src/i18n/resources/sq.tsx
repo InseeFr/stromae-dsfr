@@ -120,6 +120,16 @@ export const translations: Translations<'sq'> = {
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',
   },
+  CollectPage: {
+    'toast save success title': 'Të dhënat u ruajtën me sukses!',
+    'toast save success description': 'Të dhënat tuaja janë ruajtur me sukses.',
+    'toast save error title': 'Gabim gjatë ruajtjes',
+    'toast save error description':
+      'Ka ndodhur një gabim gjatë ruajtjes së të dhënave tuaja.',
+    'toast save network error title': 'Gabim rrjeti',
+    'toast save network error description':
+      'Ka ndodhur një gabim rrjeti, të dhënat nuk janë ruajtur. Mos e mbyllni këtë dritare që ato të mund të dërgohen kur të riktheheni.',
+  },
   VTLDevTools: {
     'fab button': 'Konsola VTL',
     'clean error': 'Pastro Gabimet',

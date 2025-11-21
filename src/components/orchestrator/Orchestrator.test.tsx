@@ -380,16 +380,15 @@ describe('Orchestrator', () => {
       </QueryClientProvider>,
     )
 
-    act(() => getByText('Start').click())
-    act(() => getByText('Continue').click())
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
 
-    const questionElement = getByText('my-question')
-    await user.click(questionElement)
+    await user.click(getByText('my-question'))
     await user.keyboard('test-input')
 
     expect(document.title).toContain('*')
 
-    act(() => getByText('Continue').click())
+    await user.click(getByText('Continue'))
 
     await waitFor(() => {
       expect(updateDataAndStateData).toHaveBeenCalledTimes(1)
@@ -448,21 +447,19 @@ describe('Orchestrator', () => {
       </QueryClientProvider>,
     )
 
-    act(() => getByText('Start').click())
-    act(() => getByText('Continue').click())
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
 
-    const questionElement = getByText('my-question')
-    await user.click(questionElement)
+    await user.click(getByText('my-question'))
     await user.keyboard('Maelle ending >>')
 
-    act(() => getByText('Continue').click())
+    await user.click(getByText('Continue'))
 
     await waitFor(() => {
       expect(updateDataAndStateData).toHaveBeenCalledTimes(1)
     })
 
-    const question2Element = getByText('my-question-2')
-    await user.click(question2Element)
+    await user.click(getByText('my-question-2'))
     await user.keyboard('Esquie goes weeeee')
 
     act(() => getByText('Continue').click())
@@ -487,5 +484,193 @@ describe('Orchestrator', () => {
     await waitFor(() => {
       expect(document.title).not.toContain('*')
     })
+  })
+
+  it('does not send duplicate data when both requests succeed with a timeout', async () => {
+    const user = userEvent.setup()
+    let callCount = 0
+
+    const updateDataAndStateData = vi.fn().mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(undefined), 1500)
+        })
+      }
+      if (callCount === 2) {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(undefined), 500)
+        })
+      }
+      return Promise.resolve()
+    })
+
+    const { getByText } = renderWithRouter(
+      <QueryClientProvider client={queryClient}>
+        <Orchestrator
+          metadata={metadata}
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+          initialInterrogation={interrogation}
+          // @ts-expect-error: we should have a better lunatic mock
+          source={sourceMultipleQuestion}
+          getReferentiel={() => {
+            return new Promise(() => [])
+          }}
+          updateDataAndStateData={updateDataAndStateData}
+          getDepositProof={() => {
+            return new Promise<void>(() => {})
+          }}
+        />
+      </QueryClientProvider>,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await user.click(getByText('Continue'))
+
+    // Trigger second save before first completes
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    await user.click(getByText('my-question-2'))
+    await user.keyboard('Esquie goes weeeee')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(
+      () => {
+        expect(updateDataAndStateData).toHaveBeenCalledTimes(2)
+      },
+      { timeout: 3000 },
+    )
+
+    const calls = updateDataAndStateData.mock.calls
+
+    expect(calls[0][0]).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          'my-question-input': {
+            COLLECTED: 'Maelle ending >>',
+          },
+        }),
+      }),
+    )
+
+    expect(calls[1][0]).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          'my-question-input': {
+            COLLECTED: 'Maelle ending >>',
+          },
+          'my-question-2-input': {
+            COLLECTED: 'Esquie goes weeeee',
+          },
+        }),
+      }),
+    )
+
+    const secondCallData = calls[1][0].data
+    const firstCallData = calls[0][0].data
+
+    expect(secondCallData).toHaveProperty('my-question-2-input')
+    expect(firstCallData).not.toHaveProperty('my-question-2-input')
+
+    await waitFor(
+      () => {
+        expect(document.title).not.toContain('*')
+      },
+      { timeout: 3000 },
+    )
+  })
+
+  it('retains data when multiple requests are made before first timeout completes', async () => {
+    const user = userEvent.setup()
+    let callCount = 0
+
+    const updateDataAndStateData = vi.fn().mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        // First call fails after 2s
+        return new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Network timeout')), 2000)
+        })
+      }
+      if (callCount === 2) {
+        // Second call succeeds immediately
+        return Promise.resolve()
+      }
+      return Promise.resolve()
+    })
+
+    const { getByText } = renderWithRouter(
+      <QueryClientProvider client={queryClient}>
+        <Orchestrator
+          metadata={metadata}
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+          initialInterrogation={interrogation}
+          // @ts-expect-error: we should have a better lunatic mock
+          source={sourceMultipleQuestion}
+          getReferentiel={() => {
+            return new Promise(() => [])
+          }}
+          updateDataAndStateData={updateDataAndStateData}
+          getDepositProof={() => {
+            return new Promise<void>(() => {})
+          }}
+        />
+      </QueryClientProvider>,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(() => {
+      expect(updateDataAndStateData).toHaveBeenCalledTimes(1)
+    })
+
+    await user.click(getByText('my-question-2'))
+    await user.keyboard('Esquie goes weeeee')
+
+    // Save before the first request times out
+    await user.click(getByText('Continue'))
+
+    // We ensure that both requests were made
+    await waitFor(
+      () => {
+        expect(updateDataAndStateData).toHaveBeenCalledTimes(2)
+      },
+      { timeout: 3000 },
+    )
+
+    expect(updateDataAndStateData).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          'my-question-input': {
+            COLLECTED: 'Maelle ending >>',
+          },
+          'my-question-2-input': {
+            COLLECTED: 'Esquie goes weeeee',
+          },
+        }),
+      }),
+    )
+
+    // As the second request succeeded, we should not be in a dirty state
+    await waitFor(
+      () => {
+        expect(document.title).not.toContain('*')
+      },
+      { timeout: 5000 },
+    )
   })
 })

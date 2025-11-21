@@ -42,6 +42,7 @@ import { useInterrogation } from './hooks/interrogation/useInterrogation'
 import { hasDataChanged } from './hooks/interrogation/utils'
 import { useControls } from './hooks/useControls'
 import { useEvents } from './hooks/useEvents'
+import useLocalStorage from './hooks/useLocalStorage'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
@@ -101,6 +102,11 @@ export namespace OrchestratorProps {
   }
 }
 
+export type PendingData = {
+  data: InterrogationData
+  stateData?: StateData
+}
+
 export function Orchestrator(props: OrchestratorProps) {
   const { source, getReferentiel, mode, isDownloadEnabled, metadata } = props
 
@@ -113,7 +119,12 @@ export function Orchestrator(props: OrchestratorProps) {
   useBeforeUnload(isDirtyState)
 
   // Store pending changes when data could not be sent (if the user goes offline for example)
-  const [pendingChanges, setPendingChanges] = useState<Record<string, any>>({})
+
+  const [pendingData, setPendingData, removeValue] =
+    useLocalStorage<PendingData>('pendingData', {
+      data: {},
+      stateData: undefined,
+    })
 
   // Allow to send telemetry events once interrogation id has been set
   const [isTelemetryInitialized, setIsTelemetryInitialized] =
@@ -311,7 +322,7 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const triggerDataAndStateUpdate = async (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
-      const changedData = getChangedData(true) as InterrogationData
+      const changedData = getChangedData(false) as InterrogationData
       const interrogation = updateInterrogation(changedData, currentPage)
 
       if (!interrogation.stateData) {
@@ -322,30 +333,32 @@ export function Orchestrator(props: OrchestratorProps) {
       const dataToSend =
         hasDataChanged(changedData) && changedData.COLLECTED
           ? {
-              ...pendingChanges,
+              ...(pendingData?.data || {}),
               ...changedData.COLLECTED,
             }
-          : { ...pendingChanges }
-
-      if (hasDataChanged(changedData) && changedData.COLLECTED) {
-        setPendingChanges(dataToSend)
-      }
+          : { ...(pendingData?.data || {}) }
 
       try {
         await props.updateDataAndStateData({
-          stateData: interrogation.stateData,
+          stateData: pendingData.stateData ?? interrogation.stateData,
           data: trimCollectedData(dataToSend),
           onSuccess: () => {
             resetChangedData()
             setIsDirtyState(false)
             setLastUpdateDate(interrogation.stateData?.date)
-            setPendingChanges({})
+            // Clear pending data from local storage on successful send
+            removeValue()
           },
           isLogout: isLogout,
         })
       } catch (error) {
-        // If there is an error, to not reset anything
         console.error('Failed to update data:', error)
+
+        // Store pending data to localStorage to try again later
+        setPendingData({
+          data: dataToSend,
+          stateData: interrogation.stateData,
+        })
       }
     }
   }

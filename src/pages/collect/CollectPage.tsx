@@ -68,19 +68,18 @@ export const CollectPage = memo(function CollectPage() {
       })
       .catch((error: Error) => {
         if (!params.isLogout) {
+          let title
+          let description
           if (error.message === 'Network Error') {
-            showToast({
-              severity: 'error',
-              title: t('toast save network error title'),
-              description: t('toast save network error description'),
-            })
-            return Promise.reject(error)
+            title = t('toast save network error title')
+            description = t('toast save network error description')
+          } else {
+            title = t('toast save error title')
+            description = t('toast save error description')
           }
-          showToast({
-            severity: 'error',
-            title: t('toast save error title'),
-            description: t('toast save error description'),
-          })
+
+          showToast({ severity: 'error', title, description })
+
           return Promise.reject(error)
         }
       })

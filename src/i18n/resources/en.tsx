@@ -120,6 +120,17 @@ export const translations: Translations<'en'> = {
     'button previous title': 'Return to the previous step',
     'button previous label': 'Previous',
   },
+  CollectPage: {
+    'toast save success title': 'Data saved successfully!',
+    'toast save success description':
+      'Your changes have been recorded and saved.',
+    'toast save error title': 'Save error',
+    'toast save error description':
+      'An error occurred while saving your changes.',
+    'toast save network error title': 'Network error',
+    'toast save network error description':
+      'A network error occurred, and the data was not saved. Do not close this window so that it can be transmitted upon reconnection.',
+  },
   VTLDevTools: {
     'fab button': 'Console VTL',
     'clean error': 'Clear Errors',

@@ -2,6 +2,7 @@ import { memo } from 'react'
 
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
 
+import accessibilityAuditReport from '@/assets/1-grille-RGAA-v2025-09-09-Questionnaire-enquêtes.pdf'
 import { Grid } from '@/components/Grid'
 import { declareComponentKeys, useTranslation } from '@/i18n'
 
@@ -23,10 +24,10 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
       })}
 
       <section>
-        <h3>{t('conformity status title')}</h3>
+        <h3 className="fr-mt-5w">{t('conformity status title')}</h3>
         {t('conformity status description')}
         <h4 className="fr-mt-4w">{t('test results title')}</h4>
-        {t('test results content')}
+        {t('test results content', { fileUrl: accessibilityAuditReport })}
         <h4 className="fr-mt-4w">{t('non accessible content title')}</h4>
         <h5 className="fr-mt-2w">{t('non compliant content title')}</h5>
         {t('non compliant content content')}
@@ -37,7 +38,7 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
       </section>
 
       <section>
-        <h3>{t('establishment title')}</h3>
+        <h3 className="fr-mt-5w">{t('establishment title')}</h3>
         {t('establishment content')}
 
         <h4 className="fr-mt-4w">{t('technologies used title')}</h4>
@@ -58,12 +59,12 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
       </section>
 
       <section>
-        <h3>{t('feedback contact title')}</h3>
+        <h3 className="fr-mt-5w">{t('feedback contact title')}</h3>
         {t('feedback contact content')}
       </section>
 
       <section>
-        <h3>{t('recourse title')}</h3>
+        <h3 className="fr-mt-5w">{t('recourse title')}</h3>
         {t('recourse content')}
       </section>
     </Grid>
@@ -78,7 +79,7 @@ const { i18n } = declareComponentKeys<
   | 'conformity status title'
   | { K: 'conformity status description'; R: JSX.Element }
   | 'test results title'
-  | { K: 'test results content'; R: JSX.Element }
+  | { K: 'test results content'; R: JSX.Element; P: { fileUrl: string } }
   | 'non accessible content title'
   | 'non compliant content title'
   | { K: 'non compliant content content'; R: JSX.Element }

@@ -144,25 +144,18 @@ export const translations: Translations<'fr'> = {
           11 février 2005.
         </p>
         <p>
-          À cette fin, elle met en œuvre la stratégie et les actions suivantes :
+          À cette fin, il met en œuvre un schéma pluriannuel présentant la
+          politique de l’Insee en matière d’accessibilité numérique ainsi qu’un{' '}
+          <a
+            className="fr-link"
+            href="https://www.insee.fr/fr/information/7621795"
+            target="_blank"
+            title="Schéma pluriannuel de mise en accessibilité numérique de l’Insee 2023-2025 - ouvre une nouvelle fenêtre"
+          >
+            schéma pluriannuel de mise en accessibilité numérique de l’Insee
+            2023-2025
+          </a>{' '}
         </p>
-        <ul>
-          <li>
-            {' '}
-            <a
-              className="fr-link"
-              href="https://www.insee.fr/fr/information/7621795"
-              target="_blank"
-              title="Schéma pluriannuel de mise en accessibilité numérique de l’Insee 2023-2025 - ouvre une nouvelle fenêtre"
-            >
-              Schéma pluriannuel de mise en accessibilité numérique de l’Insee
-              2023-2025
-            </a>{' '}
-            ;
-          </li>
-          <li>Plans d’actions 2023, 2024.</li>
-        </ul>
-        <p>Ces documents sont communicables à la demande.</p>
         <p>
           Cette déclaration d’accessibilité s’applique à{' '}
           <a className="fr-link" href={fullUrl}>
@@ -190,10 +183,11 @@ export const translations: Translations<'fr'> = {
       </p>
     ),
     'test results title': 'Résultats des tests',
-    'test results content': (
+
+    'test results content': ({ fileUrl }) => (
       <>
         <p>
-          L’audit de conformité réalisé par{' '}
+          L'audit de conformité réalisé par{' '}
           <a
             className="fr-link"
             href="https://questionnaire-enquetes.stat-publique.fr"
@@ -202,29 +196,29 @@ export const translations: Translations<'fr'> = {
           >
             Koena
           </a>{' '}
-          révèle que :
+          révèle que :
         </p>
         <ul>
           <li>
             {' '}
-            71 % des critères RGAA sont respectés. Il s’agit du nombre de
+            71 % des critères RGAA sont respectés. Il s'agit du nombre de
             critères pleinement respectés sur la totalité des pages de
-            l’échantillon. On parle aussi de taux de conformité global.
+            l'échantillon. On parle aussi de taux de conformité global.
           </li>
           <li>
-            Le taux moyen de conformité du service en ligne s’élève à 80 %. Il
-            s’agit de la moyenne du score de conformité obtenu sur chacune des
-            pages de l’échantillon.
+            Le taux moyen de conformité du service en ligne s'élève à 80 %. Il
+            s'agit de la moyenne du score de conformité obtenu sur chacune des
+            pages de l'échantillon.
           </li>
           <li>
             {' '}
             <a
               className="fr-link"
-              href="https://www.insee.fr/fr/information/7621795"
+              href={fileUrl}
               target="_blank"
-              title="Schéma pluriannuel de mise en accessibilité numérique de l’Insee 2023-2025 - ouvre une nouvelle fenêtre"
+              title="Grille d'audit RGAA - fichier téléchargeable - ouvre une nouvelle fenêtre"
             >
-              Accès à la grille d'audit RGAA TODO
+              Accès à la grille d'audit RGAA
             </a>{' '}
             ;
           </li>
@@ -325,7 +319,7 @@ export const translations: Translations<'fr'> = {
       <ul>
         <li>HTML5</li>
         <li>CSS</li>
-        <li>Javascript TODO</li>
+        <li>Javascript</li>
         <li>React</li>
       </ul>
     ),

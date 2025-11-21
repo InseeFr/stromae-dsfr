@@ -161,14 +161,22 @@ export const translations: Translations<'sq'> = {
       </p>
     ),
     'test results title': 'Rezultatet e testeve',
-    'test results content': (
+    'test results content': ({ fileUrl }) => (
       <p>
-        Kjo deklaratë do të përditësohet sapo të jenë të njohura rezultatet e
-        auditit të përputhshmërisë.
+        Auditi i përputhshmërisë me RGAA nuk është kryer ende. Kur të jetë
+        përfunduar, do të jetë i disponueshëm për shkarkim këtu:{' '}
+        <a
+          className="fr-link"
+          href={fileUrl}
+          target="_blank"
+          title="Download the RGAA audit grid - new window"
+        >
+          Shkarko tabelën e auditit RGAA
+        </a>{' '}
       </p>
     ),
     'non accessible content title': 'Përmbajtja jo e aksesueshme',
-    'non accessible content content': <p>Nuk ka objekt.</p>,
+    'non compliant content content': <p>Nuk ka objekt.</p>,
     'disproportionate burden title': 'Përjashtime për barrë të tepruar',
     'disproportionate burden content': <p>Nuk ka objekt.</p>,
     'non submitted content title':
@@ -247,6 +255,12 @@ export const translations: Translations<'sq'> = {
         </ul>
       </>
     ),
+    'declaration title': undefined,
+    'non compliant content title': undefined,
+    'evaluated structured sample title': undefined,
+    'evaluated random sample title': undefined,
+    'evaluated structured sample content': undefined,
+    'evaluated random sample content': undefined,
   },
   LegalsPage: {
     'legals title': 'Përmendjet Ligjore',

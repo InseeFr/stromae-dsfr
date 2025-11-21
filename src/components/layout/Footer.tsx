@@ -62,7 +62,7 @@ export function Footer() {
 
   return (
     <DSFRFooter
-      accessibility="non compliant"
+      accessibility="partially compliant"
       license={t('license')}
       homeLinkProps={{
         search: true,

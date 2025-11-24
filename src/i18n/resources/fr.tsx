@@ -1,4 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
+// This disable is necessary because French typography requires spaces before punctuation like :;!?«
 import { PAGE_TYPE } from '@/constants/page'
 import type { Translations } from '@/i18n/types'
 
@@ -15,6 +16,8 @@ export const translations: Translations<'fr'> = {
         >
           licence MIT
         </a>
+        {/*
+         */}
         , en s’appuyant sur le système de design de l'Etat disponible sous
         &nbsp;
         <a
@@ -22,7 +25,7 @@ export const translations: Translations<'fr'> = {
           title="licence etalab-2.0 - nouvelle fenêtre"
           target="_blank"
         >
-          licence etalab-2.0
+          &nbsp; licence etalab-2.0
         </a>
         .
       </>
@@ -163,6 +166,8 @@ export const translations: Translations<'fr'> = {
           <a className="fr-link" href={fullUrl}>
             {fullUrl}
           </a>
+          {/*
+           */}
           .
         </p>
       </>
@@ -178,8 +183,8 @@ export const translations: Translations<'fr'> = {
           title="questionnaire-enquetes.stat-publique.fr - ouvre une nouvelle fenêtre"
         >
           questionnaire-enquetes.stat-publique.fr
-        </a>{' '}
-        &nbsp; est partiellement conforme avec le référentiel général
+        </a>
+        &nbsp;est partiellement conforme avec le référentiel général
         d’amélioration de l’accessibilité (RGAA), version 4.1.2, en raison des
         non-conformités et des dérogations énumérées ci-dessous.
       </p>
@@ -198,7 +203,7 @@ export const translations: Translations<'fr'> = {
           >
             Koena
           </a>
-          &nbsp; révèle que :
+          &nbsp;révèle que :
         </p>
         <ul>
           <li>
@@ -220,6 +225,8 @@ export const translations: Translations<'fr'> = {
             >
               Accès à la grille d'audit RGAA
             </a>
+            {/*
+             */}
             ;
           </li>
         </ul>

@@ -17,7 +17,7 @@ type Props = {
 /**
  * Modal displayed at the start of the form (showed once per navigation)
  */
-export function SyncModal({ open }: Props) {
+export function SyncModal({ open }: Readonly<Props>) {
   const { t } = useTranslation({ SyncModal })
   const wasDisplayed = useRef(false)
 

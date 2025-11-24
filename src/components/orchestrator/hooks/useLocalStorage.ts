@@ -14,7 +14,7 @@ type UseLocalStorageOptions<T> = {
   initializeWithValue?: boolean
 }
 
-const IS_SERVER = typeof window === 'undefined'
+const IS_SERVER = typeof globalThis.window === 'undefined'
 
 /**
  * Hook for persisting state to localStorage.
@@ -80,7 +80,7 @@ export default function useLocalStorage<T>(
     }
 
     try {
-      const raw = window.localStorage.getItem(key)
+      const raw = globalThis.localStorage.getItem(key)
       return raw ? deserializer(raw) : initialValueToUse
     } catch (error) {
       console.warn(`Error reading localStorage key “${key}”:`, error)
@@ -112,13 +112,13 @@ export default function useLocalStorage<T>(
         const newValue = value instanceof Function ? value(readValue()) : value
 
         // Save to local storage
-        window.localStorage.setItem(key, serializer(newValue))
+        globalThis.localStorage.setItem(key, serializer(newValue))
 
         // Save state
         setStoredValue(newValue)
 
         // We dispatch a custom event so every similar useLocalStorage hook is notified
-        window.dispatchEvent(new StorageEvent('local-storage', { key }))
+        globalThis.dispatchEvent(new StorageEvent('local-storage', { key }))
       } catch (error) {
         console.warn(`Error setting localStorage key “${key}”:`, error)
       }
@@ -138,13 +138,13 @@ export default function useLocalStorage<T>(
       initialValue instanceof Function ? initialValue() : initialValue
 
     // Remove the key from local storage
-    window.localStorage.removeItem(key)
+    globalThis.localStorage.removeItem(key)
 
     // Save state with default value
     setStoredValue(defaultValue)
 
     // We dispatch a custom event so every similar useLocalStorage hook is notified
-    window.dispatchEvent(new StorageEvent('local-storage', { key }))
+    globalThis.dispatchEvent(new StorageEvent('local-storage', { key }))
   }, [key])
 
   useEffect(() => {

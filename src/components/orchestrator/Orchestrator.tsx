@@ -338,10 +338,10 @@ export function Orchestrator(props: OrchestratorProps) {
       const dataToSend =
         hasDataChanged(changedData) && changedData.COLLECTED
           ? {
-              ...(pendingData?.data || {}),
+              ...pendingData?.data,
               ...changedData.COLLECTED,
             }
-          : { ...(pendingData?.data || {}) }
+          : { ...pendingData?.data }
 
       try {
         await props.updateDataAndStateData({
@@ -356,7 +356,7 @@ export function Orchestrator(props: OrchestratorProps) {
             if (shouldSyncData(interrogation, pendingData)) {
               // Set a small timeout to ensure the modal is shown and read
               setTimeout(() => {
-                window.location.reload()
+                globalThis.location.reload()
               }, 3000)
             }
           },

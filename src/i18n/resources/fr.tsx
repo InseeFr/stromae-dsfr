@@ -7,7 +7,7 @@ export const translations: Translations<'fr'> = {
     license: (
       <>
         Ce site utilise les applications Insee 'Stromae' et 'Lunatic', qui sont
-        sous{' '}
+        sous &nbsp;
         <a
           title="licence MIT - nouvelle fenêtre"
           href="https://github.com/InseeFrLab/stromae-dsfr/blob/main/LICENSE"
@@ -15,7 +15,8 @@ export const translations: Translations<'fr'> = {
         >
           licence MIT
         </a>
-        , en s’appuyant sur le système de design de l'Etat disponible sous{' '}
+        , en s’appuyant sur le système de design de l'Etat disponible sous
+        &nbsp;
         <a
           href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
           title="licence etalab-2.0 - nouvelle fenêtre"
@@ -145,7 +146,8 @@ export const translations: Translations<'fr'> = {
         </p>
         <p>
           À cette fin, il met en œuvre un schéma pluriannuel présentant la
-          politique de l’Insee en matière d’accessibilité numérique ainsi qu’un{' '}
+          politique de l’Insee en matière d’accessibilité numérique ainsi
+          qu’un&nbsp;
           <a
             className="fr-link"
             href="https://www.insee.fr/fr/information/7621795"
@@ -154,10 +156,10 @@ export const translations: Translations<'fr'> = {
           >
             schéma pluriannuel de mise en accessibilité numérique de l’Insee
             2023-2025
-          </a>{' '}
+          </a>
         </p>
         <p>
-          Cette déclaration d’accessibilité s’applique à{' '}
+          Cette déclaration d’accessibilité s’applique à&nbsp;
           <a className="fr-link" href={fullUrl}>
             {fullUrl}
           </a>
@@ -168,7 +170,7 @@ export const translations: Translations<'fr'> = {
     'conformity status title': 'État de conformité',
     'conformity status description': (
       <p>
-        Le site web{' '}
+        Le site web&nbsp;
         <a
           className="fr-link"
           href="https://questionnaire-enquetes.stat-publique.fr"
@@ -177,9 +179,9 @@ export const translations: Translations<'fr'> = {
         >
           questionnaire-enquetes.stat-publique.fr
         </a>{' '}
-        est partiellement conforme avec le référentiel général d’amélioration de
-        l’accessibilité (RGAA), version 4.1.2, en raison des non-conformités et
-        des dérogations énumérées ci-dessous.
+        &nbsp; est partiellement conforme avec le référentiel général
+        d’amélioration de l’accessibilité (RGAA), version 4.1.2, en raison des
+        non-conformités et des dérogations énumérées ci-dessous.
       </p>
     ),
     'test results title': 'Résultats des tests',
@@ -187,7 +189,7 @@ export const translations: Translations<'fr'> = {
     'test results content': ({ fileUrl }) => (
       <>
         <p>
-          L'audit de conformité réalisé par{' '}
+          L'audit de conformité réalisé par&nbsp;
           <a
             className="fr-link"
             href="https://questionnaire-enquetes.stat-publique.fr"
@@ -195,12 +197,11 @@ export const translations: Translations<'fr'> = {
             title="https://koena.net/ - ouvre une nouvelle fenêtre"
           >
             Koena
-          </a>{' '}
-          révèle que :
+          </a>
+          &nbsp; révèle que :
         </p>
         <ul>
           <li>
-            {' '}
             71 % des critères RGAA sont respectés. Il s'agit du nombre de
             critères pleinement respectés sur la totalité des pages de
             l'échantillon. On parle aussi de taux de conformité global.
@@ -211,7 +212,6 @@ export const translations: Translations<'fr'> = {
             pages de l'échantillon.
           </li>
           <li>
-            {' '}
             <a
               className="fr-link"
               href={fileUrl}
@@ -219,7 +219,7 @@ export const translations: Translations<'fr'> = {
               title="Grille d'audit RGAA - fichier téléchargeable - ouvre une nouvelle fenêtre"
             >
               Accès à la grille d'audit RGAA
-            </a>{' '}
+            </a>
             ;
           </li>
         </ul>
@@ -299,7 +299,7 @@ export const translations: Translations<'fr'> = {
             peuvent-elles faire l'objet d'une annulation (hors cas particuliers)
             ?
           </li>
-        </ul>{' '}
+        </ul>
       </>
     ),
     'disproportionate burden title': 'Dérogations pour charge disproportionnée',
@@ -366,7 +366,7 @@ export const translations: Translations<'fr'> = {
           de couleurs.
         </li>
         <li>
-          Validateur du W3C :{' '}
+          Validateur du W3C :&nbsp;
           <a
             className="fr-link"
             href="https://validator.w3.org/"
@@ -381,7 +381,7 @@ export const translations: Translations<'fr'> = {
           par les titres.
         </li>
         <li>
-          Extension de navigateur Web Developer de Chris Pederick :{' '}
+          Extension de navigateur Web Developer de Chris Pederick :&nbsp;
           <a
             className="fr-link"
             href="https://chrispederick.com/work/web-developer/"
@@ -392,7 +392,7 @@ export const translations: Translations<'fr'> = {
           </a>
         </li>
         <li>
-          ARCtoolkit sur Chrome pour de nombreux critères :{' '}
+          ARCtoolkit sur Chrome pour de nombreux critères :&nbsp;
           <a
             className="fr-link"
             href="https://www.arc-toolkit.com/"
@@ -403,7 +403,7 @@ export const translations: Translations<'fr'> = {
           </a>
         </li>
         <li>
-          Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :{' '}
+          Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :&nbsp;
           <a
             className="fr-link"
             href="https://pac.pdf-accessibility.org/en"
@@ -438,7 +438,7 @@ export const translations: Translations<'fr'> = {
           Conformément au RGAA : « s’ajoutent des pages sélectionnées au hasard
           représentant au moins 10 % des pages de l’échantillon décrit supra. »
         </i>
-        Le présent service ne permettait pas de sélectionner des pages au
+        &nbsp; Le présent service ne permettait pas de sélectionner des pages au
         hasard. 100 % des étapes du questionnaire ont été évaluées.
       </p>
     ),
@@ -448,7 +448,7 @@ export const translations: Translations<'fr'> = {
       <p>
         Si vous n’arrivez pas à accéder à un contenu ou à un service, vous
         pouvez contacter l'assistance, pour être orienté vers une alternative
-        accessible ou obtenir le contenu sous une autre forme.{' '}
+        accessible ou obtenir le contenu sous une autre forme.&nbsp;
         <a
           className="fr-link"
           href="https://www.insee.fr/fr/information/6438369"
@@ -476,7 +476,7 @@ export const translations: Translations<'fr'> = {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Écrire un message au Défenseur des droits (via le formulaire de
+              Écrire un message au Défenseur des droits via le formulaire de
               contact
             </a>
           </li>
@@ -550,7 +550,8 @@ export const translations: Translations<'fr'> = {
     'editor information title': 'Informations éditeurs',
     'editor information content': (
       <>
-        Institut National de la Statistique et des Études Économiques CS 70058{' '}
+        Institut National de la Statistique et des Études Économiques CS 70058
+        &nbsp;
         <br />
         <br />
         88 avenue Verdier

@@ -376,62 +376,65 @@ export const translations: Translations<'fr'> = {
     ),
     'evaluation tools title': 'Outils pour évaluer l’accessibilité',
     'evaluation tools content': (
-      <ul>
-        <li>Extension RGAA éditée par la DINUM pour Firefox</li>
-        <li>Inspecteur de code du navigateur (Firefox)</li>
-        <li>
-          Contrast-Finder et Color Contrast Analyser pour tester les contrastes
-          de couleurs.
-        </li>
-        <li>
-          Validateur du W3C :&nbsp;
-          <a
-            className="fr-link"
-            href="https://validator.w3.org/"
-            target="_blank"
-            title=" Validateur du W3C - ouvre une nouvelle fenêtre"
-          >
-            https://validator.w3.org/
-          </a>
-        </li>
-        <li>
-          Extension HeadingsMap pour Firefox, pour visualiser la structuration
-          par les titres.
-        </li>
-        <li>
-          Extension de navigateur Web Developer de Chris Pederick :&nbsp;
-          <a
-            className="fr-link"
-            href="https://chrispederick.com/work/web-developer/"
-            target="_blank"
-            title="Extension de navigateur Web Developer - ouvre une nouvelle fenêtre"
-          >
-            https://chrispederick.com/work/web-developer/
-          </a>
-        </li>
-        <li>
-          ARCtoolkit sur Chrome pour de nombreux critères :&nbsp;
-          <a
-            className="fr-link"
-            href="https://www.tpgi.com/arc-platform/arc-toolkit/"
-            target="_blank"
-            title="ARCtoolkit - ouvre une nouvelle fenêtre"
-          >
-            https://www.tpgi.com/arc-platform/arc-toolkit/
-          </a>
-        </li>
-        <li>
-          Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :&nbsp;
-          <a
-            className="fr-link"
-            href="https://pac.pdf-accessibility.org/en"
-            target="_blank"
-            title="Accessibilité PDF - ouvre une nouvelle fenêtre"
-          >
-            https://pac.pdf-accessibility.org/en
-          </a>
-        </li>
-      </ul>
+      <>
+        <p>Les outils suivants ont été utilisés lors de l’évaluation :</p>
+        <ul>
+          <li>Extension RGAA éditée par la DINUM pour Firefox</li>
+          <li>Inspecteur de code du navigateur (Firefox)</li>
+          <li>
+            Contrast-Finder et Color Contrast Analyser pour tester les
+            contrastes de couleurs.
+          </li>
+          <li>
+            Validateur du W3C :&nbsp;
+            <a
+              className="fr-link"
+              href="https://validator.w3.org/"
+              target="_blank"
+              title=" Validateur du W3C - ouvre une nouvelle fenêtre"
+            >
+              https://validator.w3.org/
+            </a>
+          </li>
+          <li>
+            Extension HeadingsMap pour Firefox, pour visualiser la structuration
+            par les titres.
+          </li>
+          <li>
+            Extension de navigateur Web Developer de Chris Pederick :&nbsp;
+            <a
+              className="fr-link"
+              href="https://chrispederick.com/work/web-developer/"
+              target="_blank"
+              title="Extension de navigateur Web Developer - ouvre une nouvelle fenêtre"
+            >
+              https://chrispederick.com/work/web-developer/
+            </a>
+          </li>
+          <li>
+            ARCtoolkit sur Chrome pour de nombreux critères :&nbsp;
+            <a
+              className="fr-link"
+              href="https://www.tpgi.com/arc-platform/arc-toolkit/"
+              target="_blank"
+              title="ARCtoolkit - ouvre une nouvelle fenêtre"
+            >
+              https://www.tpgi.com/arc-platform/arc-toolkit/
+            </a>
+          </li>
+          <li>
+            Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :&nbsp;
+            <a
+              className="fr-link"
+              href="https://pac.pdf-accessibility.org/en"
+              target="_blank"
+              title="Accessibilité PDF - ouvre une nouvelle fenêtre"
+            >
+              https://pac.pdf-accessibility.org/en
+            </a>
+          </li>
+        </ul>
+      </>
     ),
     'evaluated pages title':
       'Pages du site ayant fait l’objet de la vérification de conformité',

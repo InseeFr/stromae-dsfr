@@ -164,7 +164,7 @@ export const translations: Translations<'en'> = {
     'test results content': ({ fileUrl }) => (
       <p>
         This statement will be updated as soon as the results of the compliance
-        audit are known.
+        audit are known.&nbsp;
         <a
           className="fr-link"
           href={fileUrl}

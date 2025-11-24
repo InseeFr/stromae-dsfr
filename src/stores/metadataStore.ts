@@ -17,9 +17,9 @@ const defaultState: Metadata = {
   },
   mainLogo: {
     label: {
-      fr: "Logo de l'insee",
-      en: 'INSEE Logo',
-      sq: 'Logoja e INSEE',
+      fr: 'INSEE - Accueil application de collecte Internet',
+      en: 'INSEE - Home page of the Internet collection application',
+      sq: 'INSEE - Faqja kryesore e aplikacionit të mbledhjes në internet',
     },
     url: logoInsee,
   },

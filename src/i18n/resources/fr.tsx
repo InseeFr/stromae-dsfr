@@ -63,6 +63,12 @@ export const translations: Translations<'fr'> = {
     content:
       'Vous avez déjà commencé à renseigner le questionnaire. Souhaitez-vous reprendre là où vous en étiez ou revenir à la première page ?',
   },
+  SyncModal: {
+    title: 'Synchronisation en cours',
+    'button go back': 'Fermer cette fenêtre',
+    content:
+      'Vous avez déjà commencé à renseigner le questionnaire, et vos données sont en cours de synchronisation. La page se rechargera automatiquement une fois la synchronisation terminée.',
+  },
   EndPage: {
     title: 'Nous vous remercions pour votre collaboration à cette enquête.',
     paragraph: ({ formattedDate }) =>

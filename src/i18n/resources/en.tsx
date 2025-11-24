@@ -64,6 +64,12 @@ export const translations: Translations<'en'> = {
     content:
       'You have already started filling out the questionnaire. Would you like to resume where you left off or return to the first page?',
   },
+  SyncModal: {
+    title: 'Sync in progress',
+    'button go back': 'Close this window',
+    content:
+      'You have already started filling out the questionnaire, and your data is being synchronized. The page will automatically reload once the synchronization is complete.',
+  },
   EndPage: {
     title: 'Thank you for your participation in this survey.',
     paragraph: ({ formattedDate }) =>

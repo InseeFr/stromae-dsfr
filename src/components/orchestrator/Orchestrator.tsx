@@ -34,6 +34,7 @@ import {
 import { dismissAllToasts } from '../Toast'
 import { SurveyContainer } from './SurveyContainer'
 import { EndPage } from './customPages/EndPage'
+import { SyncModal } from './customPages/SyncModal'
 import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
 import { WelcomeModal } from './customPages/WelcomeModal'
@@ -53,7 +54,11 @@ import { articulationToCsv } from './utils/articulationToCsv'
 import { computeLunaticComponents } from './utils/components'
 import { computeInterrogation, trimCollectedData } from './utils/data'
 import { downloadAsCsv, downloadAsJson } from './utils/downloadFile'
-import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
+import {
+  hasBeenSent,
+  shouldDisplayWelcomeModal,
+  shouldSyncData,
+} from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
 import { VTLDevTools } from './vtlDevTools/VTLDevtools'
@@ -348,6 +353,12 @@ export function Orchestrator(props: OrchestratorProps) {
             setLastUpdateDate(interrogation.stateData?.date)
             // Clear pending data from local storage on successful send
             removeValue()
+            if (shouldSyncData(interrogation, pendingData)) {
+              // Set a small timeout to ensure the modal is shown and read
+              setTimeout(() => {
+                window.location.reload()
+              }, 3000)
+            }
           },
           isLogout: isLogout,
         })
@@ -517,13 +528,17 @@ export function Orchestrator(props: OrchestratorProps) {
             {currentPageType === PAGE_TYPE.END && (
               <EndPage state={initialState} date={lastUpdateDate} />
             )}
+            <SyncModal open={shouldSyncData(interrogation, pendingData)} />
             <WelcomeModal
               goBack={() =>
                 initialCurrentPage
                   ? handleGoToPage({ page: initialCurrentPage })
                   : null
               }
-              open={shouldDisplayWelcomeModal(initialState, initialCurrentPage)}
+              open={
+                shouldDisplayWelcomeModal(initialState, initialCurrentPage) &&
+                !shouldSyncData(interrogation, pendingData)
+              }
             />
             <ValidationModal actionsRef={validationModalActionsRef} />
             {mode === MODE_TYPE.VISUALIZE && <VTLDevTools />}

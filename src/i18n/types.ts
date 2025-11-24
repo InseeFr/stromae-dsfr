@@ -20,6 +20,7 @@ export type ComponentKey =
   | import('@/components/orchestrator/customPages/ValidationPage').I18n
   | import('@/components/orchestrator/customPages/WelcomePage').I18n
   | import('@/components/orchestrator/customPages/WelcomeModal').I18n
+  | import('@/components/orchestrator/customPages/SyncModal').I18n
   | import('@/components/orchestrator/SequenceHeader').I18n
   | import('@/components/orchestrator/SurveyContainer').I18n
   | import('@/pages/collect/CollectPage').I18n

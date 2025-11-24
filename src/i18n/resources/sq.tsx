@@ -64,6 +64,12 @@ export const translations: Translations<'sq'> = {
     content:
       'Ju tashmë keni filluar të plotësoni pyetësorin. Dëshironi të vazhdoni aty ku keni mbetur apo të ktheheni në faqen e parë?',
   },
+  SyncModal: {
+    title: 'Sinkronizimi në proces',
+    'button go back': 'Mbyll këtë dritare',
+    content:
+      'Ju tashmë keni filluar të plotësoni pyetësorin, dhe të dhënat tuaja janë duke u sinkronizuar. Faqja do të rikarikohet automatikisht sapo të përfundojë sinkronizimi.',
+  },
   EndPage: {
     title: 'Ju falënderojmë për bashkëpunimin tuaj në këtë anketë.',
     paragraph: ({ formattedDate }) =>

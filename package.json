@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.2.4-rc.2",
+  "version": "2.2.4-rc.accessibility-page",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

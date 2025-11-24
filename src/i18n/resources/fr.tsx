@@ -185,8 +185,19 @@ export const translations: Translations<'fr'> = {
           questionnaire-enquetes.stat-publique.fr
         </a>
         &nbsp;est partiellement conforme avec le référentiel général
-        d’amélioration de l’accessibilité (RGAA), version 4.1.2, en raison des
-        non-conformités et des dérogations énumérées ci-dessous.
+        d’amélioration de l’accessibilité{' '}
+        <a
+          className="fr-link"
+          href="https://accessibilite.numerique.gouv.fr/"
+          target="_blank"
+          title="Référentiel général d’amélioration de l’accessibilité - ouvre une nouvelle fenêtre"
+        >
+          RGAA
+        </a>
+        {/*
+         */}
+        , version 4.1.2, en raison des non-conformités et des dérogations
+        énumérées ci-dessous.
       </p>
     ),
     'test results title': 'Résultats des tests',
@@ -225,9 +236,6 @@ export const translations: Translations<'fr'> = {
             >
               Accès à la grille d'audit RGAA
             </a>
-            {/*
-             */}
-            ;
           </li>
         </ul>
       </>
@@ -301,8 +309,8 @@ export const translations: Translations<'fr'> = {
             version accessible (hors cas particuliers) ?
           </li>
           <li>
-            <span>13.1</span> — Dans chaque page web, les actions déclenchées au
-            moyen d'un dispositif de pointage sur un point unique de l'écran
+            <span>13.11</span> — Dans chaque page web, les actions déclenchées
+            au moyen d'un dispositif de pointage sur un point unique de l'écran
             peuvent-elles faire l'objet d'une annulation (hors cas particuliers)
             ?
           </li>
@@ -323,12 +331,15 @@ export const translations: Translations<'fr'> = {
     'technologies used title':
       'Technologies utilisées pour la réalisation du site',
     'technologies used content': (
-      <ul>
-        <li>HTML5</li>
-        <li>CSS</li>
-        <li>Javascript</li>
-        <li>React</li>
-      </ul>
+      <>
+        <p>Les technologies suivantes sont utilisées sur le site web :</p>
+        <ul>
+          <li>HTML5</li>
+          <li>CSS</li>
+          <li>Javascript</li>
+          <li>React</li>
+        </ul>
+      </>
     ),
     'test environment title': 'Environnement de test',
     'test environment content': (
@@ -402,11 +413,11 @@ export const translations: Translations<'fr'> = {
           ARCtoolkit sur Chrome pour de nombreux critères :&nbsp;
           <a
             className="fr-link"
-            href="https://www.arc-toolkit.com/"
+            href="https://www.tpgi.com/arc-platform/arc-toolkit/"
             target="_blank"
             title="ARCtoolkit - ouvre une nouvelle fenêtre"
           >
-            https://www.arc-toolkit.com/
+            https://www.tpgi.com/arc-platform/arc-toolkit/
           </a>
         </li>
         <li>
@@ -479,6 +490,7 @@ export const translations: Translations<'fr'> = {
         <ul>
           <li>
             <a
+              className="fr-link"
               href="https://formulaire.defenseurdesdroits.fr"
               target="_blank"
               rel="noopener noreferrer"
@@ -489,6 +501,7 @@ export const translations: Translations<'fr'> = {
           </li>
           <li>
             <a
+              className="fr-link"
               href="https://www.defenseurdesdroits.fr/carte-des-delegues"
               target="_blank"
               rel="noopener noreferrer"

@@ -48,8 +48,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.6(react@18.3.1)
       oidc-spa:
-        specifier: ^6.8.2
-        version: 6.15.1(@types/react@18.3.26)(react@18.3.1)
+        specifier: 6.8.2
+        version: 6.8.2(@types/react@18.3.26)(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3423,8 +3423,8 @@ packages:
     resolution: {integrity: sha512-nK28WOo+QIjBkDduTINE4JkF/UJJKyf2EJxvJKfblDpyg0Q+pkOHNTL0Qwy6NP6FhE/EnzV73BxxqcJaXY9anw==}
     engines: {node: '>= 0.4'}
 
-  oidc-spa@6.15.1:
-    resolution: {integrity: sha512-fkbGidsmnaZ+iuOtAjJbzpsDCbiwQAaNc4DBWLSFnlRNCPvhHT8BitDYL/Ptp5/3RP/nZ9vZ8Ev6+nno0VWt7Q==}
+  oidc-spa@6.8.2:
+    resolution: {integrity: sha512-R27+BDg9RW/eI0uZLDnBC/BzKdhkPcOrLIyFwnwCLeL9D9oe+YGXt0LlxSHlgU1DQ3ElLEWNCCNQc9bjpb4oeg==}
     peerDependencies:
       '@types/react': '*'
       react: '*'
@@ -8290,7 +8290,7 @@ snapshots:
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
-  oidc-spa@6.15.1(@types/react@18.3.26)(react@18.3.1):
+  oidc-spa@6.8.2(@types/react@18.3.26)(react@18.3.1):
     optionalDependencies:
       '@types/react': 18.3.26
       react: 18.3.1

@@ -32,18 +32,7 @@ export function SyncModal({ open }: Readonly<Props>) {
   }, [open])
 
   return (
-    <modal.Component
-      title={t('title')}
-      buttons={[
-        {
-          doClosesModal: true,
-          children: t('button go back'),
-          onClick: modal.close,
-          nativeButtonProps: { 'data-testid': 'continue-button-sync-modal' },
-        },
-      ]}
-      concealingBackdrop={true}
-    >
+    <modal.Component title={t('title')} concealingBackdrop={true}>
       {t('content')}
     </modal.Component>
   )

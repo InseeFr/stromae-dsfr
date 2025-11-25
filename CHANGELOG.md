@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an issue where aria-hidden stayed true on hover for tooltips.
 
+## [2.2.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.4) - 2025-11-25
+
+### Fixed
+
+- Fixed an issue with authentication which prevented opening the app from a different domain in the same tab.
+
 ## [2.2.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.3) - 2025-11-14
 
 ### Fixed

@@ -10,6 +10,7 @@ on:
     types: [opened, synchronize, reopened]
     paths-ignore:
       - 'website/**'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -59,8 +60,8 @@ jobs:
   docker:
     needs: check_if_version_upgraded
     if: |
-      (github.event_name == 'push' || needs.check_if_version_upgraded.outputs.is_pre_release == 'true') && 
-      needs.check_if_version_upgraded.outputs.is_version_changed == 'true'
+      ((github.event_name == 'push' || needs.check_if_version_upgraded.outputs.is_pre_release == 'true') && 
+      needs.check_if_version_upgraded.outputs.is_version_changed == 'true') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -90,8 +91,8 @@ jobs:
     # We create release only if the version in the package.json have been upgraded and this CI is running against the main branch.
     # We allow branches with a PR open on main to publish pre-release (x.y.z-rc.u) but not actual releases.
     if: |
-      (github.event_name == 'push' || needs.check_if_version_upgraded.outputs.is_pre_release == 'true') && 
-      needs.check_if_version_upgraded.outputs.is_version_changed == 'true'
+      ((github.event_name == 'push' || needs.check_if_version_upgraded.outputs.is_pre_release == 'true') && 
+      needs.check_if_version_upgraded.outputs.is_version_changed == 'true') || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
         with:

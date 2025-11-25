@@ -1,11 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect } from 'vitest'
+import { expect, vi } from 'vitest'
 
 import { MODE_TYPE } from '@/constants/mode'
+import { PAGE_TYPE } from '@/constants/page'
 import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import { TelemetryContext } from '@/contexts/TelemetryContext'
+import type { PageType } from '@/models/page'
+import type { QuestionnaireState } from '@/models/questionnaireState'
 import { renderWithRouter } from '@/utils/tests'
 
 import { Orchestrator } from './Orchestrator'
@@ -119,6 +122,11 @@ describe('Orchestrator', () => {
       />
     </QueryClientProvider>
   )
+
+  beforeEach(() => {
+    localStorage.clear()
+    vi.clearAllMocks()
+  })
 
   it('sets idInterrogation as default value', async () => {
     const setDefaultValues = vi.fn()
@@ -587,24 +595,36 @@ describe('Orchestrator', () => {
     )
   })
 
-  it('retains data when multiple requests are made before first timeout completes', async () => {
-    const user = userEvent.setup()
-    let callCount = 0
-
+  it('should show syncModal when there is pending data to sync', async () => {
     const updateDataAndStateData = vi.fn().mockImplementation(() => {
-      callCount++
-      if (callCount === 1) {
-        // First call fails after 2s
-        return new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Network timeout')), 2000)
-        })
-      }
-      if (callCount === 2) {
-        // Second call succeeds immediately
-        return Promise.resolve()
-      }
       return Promise.resolve()
     })
+
+    const pendingData = {
+      data: {
+        'my-question-2-input': {
+          COLLECTED: 'Esquie goes weeeee',
+        },
+        'my-question-input': {
+          COLLECTED: 'Maelle ending >>',
+        },
+      },
+      stateData: {
+        state: 'INIT',
+        date: 0,
+        currentPage: '1',
+      },
+    }
+    localStorage.setItem('pendingData', JSON.stringify(pendingData))
+
+    const interrogationWithWelcomePage = {
+      ...interrogation,
+      stateData: {
+        state: 'INIT' as QuestionnaireState,
+        date: 0,
+        currentPage: PAGE_TYPE.WELCOME as PageType,
+      },
+    }
 
     const { getByText } = renderWithRouter(
       <QueryClientProvider client={queryClient}>
@@ -612,7 +632,7 @@ describe('Orchestrator', () => {
           metadata={metadata}
           mode={MODE_TYPE.COLLECT}
           isDownloadEnabled={false}
-          initialInterrogation={interrogation}
+          initialInterrogation={interrogationWithWelcomePage}
           // @ts-expect-error: we should have a better lunatic mock
           source={sourceMultipleQuestion}
           getReferentiel={() => {
@@ -626,51 +646,11 @@ describe('Orchestrator', () => {
       </QueryClientProvider>,
     )
 
-    await user.click(getByText('Start'))
-    await user.click(getByText('Continue'))
-
-    await user.click(getByText('my-question'))
-    await user.keyboard('Maelle ending >>')
-
-    await user.click(getByText('Continue'))
-
-    await waitFor(() => {
-      expect(updateDataAndStateData).toHaveBeenCalledTimes(1)
-    })
-
-    await user.click(getByText('my-question-2'))
-    await user.keyboard('Esquie goes weeeee')
-
-    // Save before the first request times out
-    await user.click(getByText('Continue'))
-
-    // We ensure that both requests were made
     await waitFor(
       () => {
-        expect(updateDataAndStateData).toHaveBeenCalledTimes(2)
+        expect(getByText('Sync in progress')).toBeInTheDocument()
       },
       { timeout: 3000 },
-    )
-
-    expect(updateDataAndStateData).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        data: expect.objectContaining({
-          'my-question-input': {
-            COLLECTED: 'Maelle ending >>',
-          },
-          'my-question-2-input': {
-            COLLECTED: 'Esquie goes weeeee',
-          },
-        }),
-      }),
-    )
-
-    // As the second request succeeded, we should not be in a dirty state
-    await waitFor(
-      () => {
-        expect(document.title).not.toContain('*')
-      },
-      { timeout: 5000 },
     )
   })
 })

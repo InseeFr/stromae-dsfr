@@ -8,9 +8,9 @@ import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
 import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import { TelemetryContext } from '@/contexts/TelemetryContext'
+import type { Interrogation } from '@/models/interrogation'
 import type { PageType } from '@/models/page'
 import type { QuestionnaireState } from '@/models/questionnaireState'
-import type { Interrogation } from '@/models/interrogation'
 import { renderWithRouter } from '@/utils/tests'
 
 import { Orchestrator } from './Orchestrator'
@@ -55,7 +55,7 @@ describe('Orchestrator', () => {
     objectives: 'my objectives',
     mainLogo: { label: 'logo label', url: '' },
   }
-  const source = {
+  const defaultSource = {
     componentType: 'Questionnaire',
     components: [
       {
@@ -132,10 +132,19 @@ describe('Orchestrator', () => {
     mode,
     isDownloadEnabled = false,
     initialInterrogation = defaultInterrogation,
+    source = defaultSource,
+    updateDataAndStateData = () => {
+      return new Promise<void>(() => {})
+    },
   }: {
     mode: MODE_TYPE.COLLECT | MODE_TYPE.REVIEW | MODE_TYPE.VISUALIZE
     isDownloadEnabled?: boolean
     initialInterrogation?: Interrogation
+    source?: unknown
+    updateDataAndStateData?: (params: {
+      data: Interrogation['data']
+      stateData: Interrogation['stateData']
+    }) => Promise<void>
   }) => (
     <QueryClientProvider client={queryClient}>
       <Orchestrator
@@ -148,9 +157,7 @@ describe('Orchestrator', () => {
         getReferentiel={() => {
           return new Promise(() => [])
         }}
-        updateDataAndStateData={() => {
-          return new Promise<void>(() => { })
-        }}
+        updateDataAndStateData={updateDataAndStateData}
         getDepositProof={mockGetDepositProof}
       />
     </QueryClientProvider>
@@ -168,7 +175,7 @@ describe('Orchestrator', () => {
       <TelemetryContext.Provider
         value={{
           isTelemetryEnabled: true,
-          pushEvent: () => { },
+          pushEvent: () => {},
           setDefaultValues,
         }}
       >
@@ -192,7 +199,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: true,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
@@ -217,7 +224,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: true,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />
@@ -237,7 +244,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: true,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.REVIEW} />
@@ -257,7 +264,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: false,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
@@ -277,7 +284,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: true,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
@@ -303,7 +310,7 @@ describe('Orchestrator', () => {
         value={{
           isTelemetryEnabled: true,
           pushEvent,
-          setDefaultValues: () => { },
+          setDefaultValues: () => {},
         }}
       >
         <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />
@@ -402,23 +409,11 @@ describe('Orchestrator', () => {
       .mockRejectedValue(new Error('Network error'))
 
     const { getByText } = renderWithRouter(
-      <QueryClientProvider client={queryClient}>
-        <Orchestrator
-          metadata={metadata}
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-          initialInterrogation={interrogation}
-          // @ts-expect-error: we should have a better lunatic mock
-          source={sourceMultipleQuestion}
-          getReferentiel={() => {
-            return new Promise(() => [])
-          }}
-          updateDataAndStateData={updateDataAndStateData}
-          getDepositProof={() => {
-            return new Promise<void>(() => {})
-          }}
-        />
-      </QueryClientProvider>,
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
     )
 
     await user.click(getByText('Start'))
@@ -469,23 +464,11 @@ describe('Orchestrator', () => {
     })
 
     const { getByText } = renderWithRouter(
-      <QueryClientProvider client={queryClient}>
-        <Orchestrator
-          metadata={metadata}
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-          initialInterrogation={interrogation}
-          // @ts-expect-error: we should have a better lunatic mock
-          source={sourceMultipleQuestion}
-          getReferentiel={() => {
-            return new Promise(() => [])
-          }}
-          updateDataAndStateData={updateDataAndStateData}
-          getDepositProof={() => {
-            return new Promise<void>(() => {})
-          }}
-        />
-      </QueryClientProvider>,
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
     )
 
     await user.click(getByText('Start'))
@@ -547,23 +530,11 @@ describe('Orchestrator', () => {
     })
 
     const { getByText } = renderWithRouter(
-      <QueryClientProvider client={queryClient}>
-        <Orchestrator
-          metadata={metadata}
-          mode={MODE_TYPE.COLLECT}
-          isDownloadEnabled={false}
-          initialInterrogation={interrogation}
-          // @ts-expect-error: we should have a better lunatic mock
-          source={sourceMultipleQuestion}
-          getReferentiel={() => {
-            return new Promise(() => [])
-          }}
-          updateDataAndStateData={updateDataAndStateData}
-          getDepositProof={() => {
-            return new Promise<void>(() => {})
-          }}
-        />
-      </QueryClientProvider>,
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
     )
 
     await user.click(getByText('Start'))
@@ -651,7 +622,7 @@ describe('Orchestrator', () => {
     localStorage.setItem('pendingData', JSON.stringify(pendingData))
 
     const interrogationWithWelcomePage = {
-      ...interrogation,
+      ...defaultInterrogation,
       stateData: {
         state: 'INIT' as QuestionnaireState,
         date: 0,
@@ -712,7 +683,7 @@ describe('Orchestrator', () => {
     localStorage.setItem('pendingData', JSON.stringify(pendingData))
 
     const interrogationWithWelcomePage = {
-      ...interrogation,
+      ...defaultInterrogation,
       stateData: {
         state: 'COMPLETED' as QuestionnaireState,
         date: 0,
@@ -747,7 +718,6 @@ describe('Orchestrator', () => {
       getByText('Thank you for your participation in this survey.'),
     ).toBeInTheDocument()
   })
-})
   it('calls getDepositProof with right params', async () => {
     // Set initial interrogation as validated on end page to directly enable download receipt
     const initialInterrogation: Interrogation = {

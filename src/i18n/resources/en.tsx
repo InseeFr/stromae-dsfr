@@ -148,6 +148,7 @@ export const translations: Translations<'en'> = {
   },
   AccessibilityPage: {
     'accessibility title': 'Accessibility',
+    'declaration title': 'Accessibility Statement RGAA 4.1.2',
     'declaration content': ({ fullUrl }) => (
       <>
         <p>
@@ -177,14 +178,23 @@ export const translations: Translations<'en'> = {
       </p>
     ),
     'test results title': 'Test Results',
-    'test results content': (
+    'test results content': ({ fileUrl }) => (
       <p>
         This statement will be updated as soon as the results of the compliance
-        audit are known.
+        audit are known.&nbsp;
+        <a
+          className="fr-link"
+          href={fileUrl}
+          target="_blank"
+          title="Download the RGAA audit grid - new window"
+        >
+          Download the RGAA audit grid
+        </a>{' '}
       </p>
     ),
     'non accessible content title': 'Non-Accessible Content',
-    'non accessible content content': <p>Not applicable.</p>,
+    'non compliant content title': 'Non-Compliance',
+    'non compliant content content': <p>Not applicable.</p>,
     'disproportionate burden title': 'Exemptions for Disproportionate Burden',
     'disproportionate burden content': <p>Not applicable.</p>,
     'non submitted content title':
@@ -213,6 +223,10 @@ export const translations: Translations<'en'> = {
     'evaluated pages title':
       'Pages of the Site That Have Been Verified for Conformity',
     'evaluated pages content': <p>Not applicable.</p>,
+    'evaluated structured sample title': 'Evaluated Structured Sample',
+    'evaluated structured sample content': <p>Not applicable.</p>,
+    'evaluated random sample title': 'Evaluated Random Sample',
+    'evaluated random sample content': <p>Not applicable.</p>,
     'feedback contact title': 'Feedback and Contact',
     'feedback contact content': (
       <p>

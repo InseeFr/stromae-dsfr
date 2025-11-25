@@ -13,6 +13,26 @@ import { renderWithRouter } from '@/utils/tests'
 
 import { Orchestrator } from './Orchestrator'
 
+// Needed to avoid TypeError: window.dsfr is not a function during test
+vi.mock('@codegouvfr/react-dsfr/Modal', () => ({
+  createModal: () => ({
+    open: vi.fn(),
+    close: vi.fn(),
+    Component: ({
+      children,
+      title,
+    }: {
+      children: React.ReactNode
+      title: string
+    }) => (
+      <div data-testid="modal" role="dialog" aria-label={title}>
+        <h2>{title}</h2>
+        {children}
+      </div>
+    ),
+  }),
+}))
+
 describe('Orchestrator', () => {
   const interrogation = {
     stateData: undefined,
@@ -652,5 +672,66 @@ describe('Orchestrator', () => {
       },
       { timeout: 3000 },
     )
+  })
+
+  it('should not sync pending data when the questionnaire is already validated', async () => {
+    const updateDataAndStateData = vi.fn().mockImplementation(() => {
+      return Promise.resolve()
+    })
+
+    // The questionnaire has already been completed by the user (on another device for example)
+    // In this case we should not sync the pending data stored in localStorage
+    const pendingData = {
+      data: {
+        'my-question-2-input': {
+          COLLECTED: 'Esquie goes weeeee',
+        },
+        'my-question-input': {
+          COLLECTED: 'Maelle ending >>',
+        },
+      },
+      stateData: {
+        state: 'INIT',
+        date: 0,
+        currentPage: '1',
+      },
+    }
+    localStorage.setItem('pendingData', JSON.stringify(pendingData))
+
+    const interrogationWithWelcomePage = {
+      ...interrogation,
+      stateData: {
+        state: 'COMPLETED' as QuestionnaireState,
+        date: 0,
+        currentPage: PAGE_TYPE.END as PageType,
+      },
+    }
+
+    const { getByText } = renderWithRouter(
+      <QueryClientProvider client={queryClient}>
+        <Orchestrator
+          metadata={metadata}
+          mode={MODE_TYPE.COLLECT}
+          isDownloadEnabled={false}
+          initialInterrogation={interrogationWithWelcomePage}
+          // @ts-expect-error: we should have a better lunatic mock
+          source={sourceMultipleQuestion}
+          getReferentiel={() => {
+            return new Promise(() => [])
+          }}
+          updateDataAndStateData={updateDataAndStateData}
+          getDepositProof={() => {
+            return new Promise<void>(() => {})
+          }}
+        />
+      </QueryClientProvider>,
+    )
+
+    await waitFor(() => {
+      expect(updateDataAndStateData).not.toHaveBeenCalled()
+    })
+    expect(
+      getByText('Thank you for your participation in this survey.'),
+    ).toBeInTheDocument()
   })
 })

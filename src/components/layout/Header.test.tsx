@@ -255,9 +255,9 @@ describe('Header & Footer', () => {
     expect(window.location.href).toContain('#')
   })
 
-  it('displays surveyUnitLabel when present in search params', async () => {
+  it('displays surveyUnit composite name when present in search params', async () => {
     vi.mocked(useSearch).mockReturnValue({
-      surveyUnitLabel: 'TXkgVGVzdCBMYWJlbA',
+      surveyUnitCompositeName: 'TXkgVGVzdCBMYWJlbA',
     })
 
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)

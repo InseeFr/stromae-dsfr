@@ -18,7 +18,7 @@ import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
 import { ReviewPage } from './ReviewPage'
 
 const reviewSearchParams = z.object({
-  surveyUnitLabel: z.string().optional(),
+  surveyUnitCompositeName: z.string().optional(),
 })
 
 export const reviewPath = '/review/interrogations/$interrogationId'

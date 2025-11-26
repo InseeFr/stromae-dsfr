@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "prConcurrentLimit": 15,
   "packageRules": [
     {
       "matchPaths": ["package.json"],
@@ -25,7 +26,29 @@
       "groupName": "lunatic",
       "groupSlug": "lunatic",
       "matchPackagePatterns": ["@inseefr/lunatic.*"],
-      "labels": ["lunatic"],
+      "labels": ["dependencies", "lunatic"],
+      "bumpVersion": "minor",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": ["package.json"],
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dsfr",
+      "groupSlug": "dsfr",
+      "matchPackagePatterns": ["@codegouvfr/react-dsfr.*"],
+      "labels": ["dependencies", "dsfr"],
+      "bumpVersion": "minor",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": ["package.json"],
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "oidc",
+      "groupSlug": "oidc",
+      "matchPackagePatterns": ["oidc-spa.*"],
+      "labels": ["dependencies", "oidc"],
       "bumpVersion": "minor",
       "dependencyDashboardApproval": true
     },

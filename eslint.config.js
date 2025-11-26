@@ -37,6 +37,14 @@ export default tseslint.config(
       ],
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/no-namespace': ['off'],
+      '@typescript-eslint/ban-ts-comment': [
+        'error',
+        {
+          'ts-ignore': 'allow-with-description',
+          'ts-expect-error': 'allow-with-description',
+          minimumDescriptionLength: 10,
+        },
+      ],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

@@ -7,6 +7,87 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
+- In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
+- In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
+
+### Fixed
+
+- Fixed an issue where aria-hidden stayed true on hover for tooltips.
+
+## [2.2.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.4) - 2025-11-25
+
+### Fixed
+
+- Fixed an issue with authentication which prevented opening the app from a different domain in the same tab.
+
+## [2.2.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.3) - 2025-11-14
+
+### Fixed
+
+- Fix a rare issue where thousand separator does not exist in user locale which made input number crash.
+
+## [2.2.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.2) - 2025-11-06
+
+## [2.2.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.1) - 2025-11-04
+
+## [2.2.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.0) - 2025-11-04
+
+## [2.1.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.1.3) - 2025-10-23
+
+### Fixed
+
+- Fixed a typo.
+
+## [2.1.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.1.2) - 2025-10-14
+
+### Build
+
+- Updated Docker base image.
+
+## [2.1.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.1.1) - 2025-10-09
+
+### Fixed
+
+- Block questionnaire validation when api call has failed.
+
+## [2.1.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.1.0) - 2025-09-22
+
+### Fixed
+
+- Fixed an issue on multimode.
+
+## [2.0.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.0.0) - 2025-09-18
+
+### Added
+
+- Multimode and articulation.
+- Allow to download articulation in visualization.
+
+### Changed
+
+- Display survey unit label in header.
+
+### Fixed
+
+- Use base64 encoded query params for collect & review pages.
+
+## [1.6.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.6.1) - 2025-09-05
+
+## [1.6.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.6.0) - 2025-09-02
+
+### Changed
+
+- INSEE logo has been updated.
+
+## [1.5.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.5.2) - 2025-08-25
+
+### Fixed
+
+- Textarea handle readonly attribute.
+
 ## [1.5.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/1.5.1) - 2025-08-18
 
 ### Changed

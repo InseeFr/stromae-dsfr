@@ -25,6 +25,7 @@ export function SurveyContainer(
     pagination: 'question' | 'sequence'
     overview: LunaticOverview
     hasArticulation: boolean
+    isDownloadEnabled: boolean
     isDirtyState?: boolean
     isSequencePage: boolean
     bottomContent: ReactNode
@@ -42,6 +43,7 @@ export function SurveyContainer(
     pagination,
     overview,
     hasArticulation,
+    isDownloadEnabled,
     isDirtyState = false,
     isSequencePage,
     bottomContent,
@@ -139,7 +141,7 @@ export function SurveyContainer(
               {t('button continue label', { currentPage })}
             </Button>
             {bottomContent}
-            {mode === MODE_TYPE.VISUALIZE && (
+            {(mode === MODE_TYPE.VISUALIZE || isDownloadEnabled) && (
               <div style={{ justifyContent: 'flex-end', textAlign: 'right' }}>
                 <Button
                   iconId="ri-download-2-line"

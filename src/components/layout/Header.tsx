@@ -18,8 +18,8 @@ import {
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
-import { decodeUrlSafeBase64 } from '@/utils/decodeUrlSafeBase64'
 import { computeContactSupportEvent, computeExitEvent } from '@/utils/telemetry'
+import { createSafeUrl, decodeUrlSafeBase64 } from '@/utils/url'
 
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
@@ -33,7 +33,7 @@ export function Header() {
   const mode = useMode()
 
   const { label: serviceTitle, mainLogo } = useMetadataStore()
-  const { isTelemetryDisabled, pushEvent, triggerBatchTelemetryCallback } =
+  const { isTelemetryEnabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
 
   /**
@@ -43,8 +43,15 @@ export function Header() {
 
   const search = useSearch({ strict: false })
 
-  const surveyUnitLabel = decodeUrlSafeBase64(search?.surveyUnitLabel)
+  const surveyUnitCompositeName = decodeUrlSafeBase64(
+    search?.surveyUnitCompositeName,
+  )
   const pathAssistance = decodeUrlSafeBase64(search?.pathAssistance)
+
+  const assistanceHref = createSafeUrl(
+    import.meta.env.VITE_PORTAIL_URL,
+    pathAssistance,
+  )
 
   const exitModal = useMemo(
     () =>
@@ -57,7 +64,7 @@ export function Header() {
 
   const goToPortal = async () => {
     await executePreLogoutActions()
-    if (!isTelemetryDisabled) {
+    if (isTelemetryEnabled) {
       await pushEvent(
         computeExitEvent({
           source: TELEMETRY_EVENT_EXIT_SOURCE.LOGOUT,
@@ -67,7 +74,10 @@ export function Header() {
         await triggerBatchTelemetryCallback()
       }
     }
-    window.location.href = `${import.meta.env.VITE_PORTAIL_URL}${import.meta.env.VITE_EXIT_PATH}`
+    window.location.href = createSafeUrl(
+      import.meta.env.VITE_PORTAIL_URL,
+      import.meta.env.VITE_EXIT_PATH,
+    )
   }
 
   return (
@@ -92,12 +102,10 @@ export function Header() {
           {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {
-              href: collectPath
-                ? `${import.meta.env.VITE_PORTAIL_URL}${pathAssistance}`
-                : '',
+              href: collectPath ? assistanceHref : '',
               disabled: isCollectRoute,
               onClick:
-                isCollectRoute && !isTelemetryDisabled
+                isCollectRoute && isTelemetryEnabled
                   ? () => {
                       pushEvent(computeContactSupportEvent())
                     }
@@ -118,7 +126,7 @@ export function Header() {
                 } as const,
               ]),
         ]}
-        serviceTagline={surveyUnitLabel}
+        serviceTagline={surveyUnitCompositeName}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedStringDetailed(mainLogo.label).str,

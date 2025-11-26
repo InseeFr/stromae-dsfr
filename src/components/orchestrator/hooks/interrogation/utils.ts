@@ -25,7 +25,6 @@ export function computeUpdatedData(
   return currentInterrogationData
 }
 
-
 /**
  * Retrieve the full data, merging the changes into the current data
  */

@@ -24,6 +24,7 @@ export const ReviewPage = memo(function ReviewPage() {
   return (
     <Orchestrator
       mode={MODE_TYPE.REVIEW}
+      isDownloadEnabled={false}
       metadata={metadata}
       source={source}
       initialInterrogation={interrogation}

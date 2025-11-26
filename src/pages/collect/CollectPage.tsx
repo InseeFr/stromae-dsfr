@@ -12,6 +12,7 @@ import {
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import { MODE_TYPE } from '@/constants/mode'
+import type { GenerateDepositProofParams } from '@/models/api'
 import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
 import type { StateData } from '@/models/stateData'
 
@@ -35,6 +36,8 @@ export const CollectPage = memo(function CollectPage() {
   )
 
   const queryKeyToInvalidate = getGetInterrogationByIdQueryKey(interrogationId)
+
+  const isDownloadEnabled = import.meta.env.VITE_DOWNLOAD_ENABLED === 'true'
 
   const updateDataAndStateData = (params: {
     stateData: StateData
@@ -74,9 +77,11 @@ export const CollectPage = memo(function CollectPage() {
         }
       })
 
-  const getDepositProof = () =>
+  const getDepositProof = (params?: GenerateDepositProofParams) =>
     queryClient
-      .ensureQueryData(getGenerateDepositProofQueryOptions(interrogationId))
+      .ensureQueryData(
+        getGenerateDepositProofQueryOptions(interrogationId, params),
+      )
       .then((response) => {
         const fileName =
           (response.headers['content-disposition']?.match(
@@ -100,6 +105,7 @@ export const CollectPage = memo(function CollectPage() {
     <Orchestrator
       metadata={metadata}
       mode={MODE_TYPE.COLLECT}
+      isDownloadEnabled={isDownloadEnabled}
       source={source}
       initialInterrogation={interrogation}
       getReferentiel={getReferentiel}

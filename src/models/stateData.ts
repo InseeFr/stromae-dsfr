@@ -10,9 +10,9 @@ export type StateData = {
   date: number
   currentPage: PageType
   leafStates?: {
-      state: LeafStateState
-      date: number
-    }[],
+    state: LeafStateState
+    date: number
+  }[]
 
   multimode?: {
     state: null | 'IS_MOVED' | 'IS_SPLIT'

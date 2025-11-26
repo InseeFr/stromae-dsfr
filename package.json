@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.2.5-rc.handle-pending-changes",
+  "version": "2.3.0-rc.handle-pending-changes",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

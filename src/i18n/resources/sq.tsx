@@ -64,6 +64,12 @@ export const translations: Translations<'sq'> = {
     content:
       'Ju tashmë keni filluar të plotësoni pyetësorin. Dëshironi të vazhdoni aty ku keni mbetur apo të ktheheni në faqen e parë?',
   },
+  SyncModal: {
+    title: 'Sinkronizimi në proces',
+    'button go back': 'Mbyll këtë dritare',
+    content:
+      'Ju tashmë keni filluar të plotësoni pyetësorin, dhe të dhënat tuaja janë duke u sinkronizuar. Faqja do të rikarikohet automatikisht sapo të përfundojë sinkronizimi.',
+  },
   EndPage: {
     title: 'Ju falënderojmë për bashkëpunimin tuaj në këtë anketë.',
     paragraph: ({ formattedDate }) =>
@@ -119,6 +125,16 @@ export const translations: Translations<'sq'> = {
     'button expand': 'Zgjero pamjen',
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',
+  },
+  CollectPage: {
+    'toast save success title': 'Të dhënat u ruajtën me sukses!',
+    'toast save success description': 'Të dhënat tuaja janë ruajtur me sukses.',
+    'toast save error title': 'Gabim gjatë ruajtjes',
+    'toast save error description':
+      'Ka ndodhur një gabim gjatë ruajtjes së të dhënave tuaja.',
+    'toast save network error title': 'Gabim rrjeti',
+    'toast save network error description':
+      'Ka ndodhur një gabim rrjeti, të dhënat nuk janë ruajtur. Mos e mbyllni këtë dritare që ato të mund të dërgohen kur të riktheheni.',
   },
   VTLDevTools: {
     'fab button': 'Konsola VTL',

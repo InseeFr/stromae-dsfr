@@ -20,8 +20,10 @@ export type ComponentKey =
   | import('@/components/orchestrator/customPages/ValidationPage').I18n
   | import('@/components/orchestrator/customPages/WelcomePage').I18n
   | import('@/components/orchestrator/customPages/WelcomeModal').I18n
+  | import('@/components/orchestrator/customPages/SyncModal').I18n
   | import('@/components/orchestrator/SequenceHeader').I18n
   | import('@/components/orchestrator/SurveyContainer').I18n
+  | import('@/pages/collect/CollectPage').I18n
   | import('@/components/orchestrator/vtlDevTools/VTLDevtools').I18n
   | import('@/pages/accessibility/AccessibilityPage').I18n
   | import('@/pages/legals/LegalsPage').I18n

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed an issue where aria-hidden stayed true on hover for tooltips.
+- Fixed an issue where collected data wasn't synced properly after going back online from offline mode.
 
 ## [2.2.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.4) - 2025-11-25
 

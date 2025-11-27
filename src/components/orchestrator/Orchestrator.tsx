@@ -17,7 +17,6 @@ import { PAGE_TYPE } from '@/constants/page'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
-import { usePrevious } from '@/hooks/usePrevious'
 import type { GenerateDepositProofParams } from '@/models/api'
 import type { Interrogation } from '@/models/interrogation'
 import type { InterrogationData } from '@/models/interrogationData'
@@ -36,6 +35,7 @@ import {
 import { dismissAllToasts } from '../Toast'
 import { SurveyContainer } from './SurveyContainer'
 import { EndPage } from './customPages/EndPage'
+import { SyncModal } from './customPages/SyncModal'
 import { ValidationModal } from './customPages/ValidationModal'
 import { ValidationPage } from './customPages/ValidationPage'
 import { WelcomeModal } from './customPages/WelcomeModal'
@@ -44,6 +44,7 @@ import { useInterrogation } from './hooks/interrogation/useInterrogation'
 import { hasDataChanged } from './hooks/interrogation/utils'
 import { useControls } from './hooks/useControls'
 import { useEvents } from './hooks/useEvents'
+import useLocalStorage from './hooks/useLocalStorage'
 import { usePushEventAfterInactivity } from './hooks/usePushEventAfterInactivity'
 import { useRefSync } from './hooks/useRefSync'
 import { useStromaeNavigation } from './hooks/useStromaeNavigation'
@@ -54,7 +55,11 @@ import { articulationToCsv } from './utils/articulationToCsv'
 import { computeLunaticComponents } from './utils/components'
 import { computeInterrogation, trimCollectedData } from './utils/data'
 import { downloadAsCsv, downloadAsJson } from './utils/downloadFile'
-import { hasBeenSent, shouldDisplayWelcomeModal } from './utils/orchestrator'
+import {
+  hasBeenSent,
+  shouldDisplayWelcomeModal,
+  shouldSyncData,
+} from './utils/orchestrator'
 import { scrollAndFocusToFirstError } from './utils/scrollAndFocusToFirstError'
 import { isSequencePage } from './utils/sequence'
 import { VTLDevTools } from './vtlDevTools/VTLDevtools'
@@ -103,6 +108,11 @@ export namespace OrchestratorProps {
   }
 }
 
+export type PendingData = {
+  data: InterrogationData
+  stateData?: StateData
+}
+
 export function Orchestrator(props: OrchestratorProps) {
   const { source, getReferentiel, mode, isDownloadEnabled, metadata } = props
 
@@ -117,6 +127,14 @@ export function Orchestrator(props: OrchestratorProps) {
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
   useBeforeUnload(isDirtyState)
+
+  // Store pending changes when data could not be sent (if the user goes offline for example)
+
+  const [pendingData, setPendingData, removeValue] =
+    useLocalStorage<PendingData>('pendingData', {
+      data: {},
+      stateData: undefined,
+    })
 
   // Allow to send telemetry events once interrogation id has been set
   const [isTelemetryInitialized, setIsTelemetryInitialized] =
@@ -281,9 +299,6 @@ export function Orchestrator(props: OrchestratorProps) {
   const currentPage =
     currentPageType === PAGE_TYPE.LUNATIC ? pageTag : currentPageType
 
-  const previousPage = usePrevious(currentPageType) ?? initialCurrentPage
-  const previousPageTag = usePrevious(pageTag) ?? initialCurrentPage
-
   /** Allows to download data for visualize  */
   const downloadAsJsonRef = useRefSync(() => {
     const interrogation = updateInterrogation(
@@ -315,34 +330,52 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  const triggerDataAndStateUpdate = (isLogout: boolean = false) => {
+  const triggerDataAndStateUpdate = async (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
-      const changedData = getChangedData(true) as InterrogationData
+      const changedData = getChangedData(false) as InterrogationData
       const interrogation = updateInterrogation(changedData, currentPage)
 
-      if (
-        !interrogation.stateData ||
-        (!hasDataChanged(changedData) &&
-          (currentPageType === PAGE_TYPE.LUNATIC
-            ? previousPage === PAGE_TYPE.LUNATIC && previousPageTag === pageTag
-            : currentPage === previousPage))
-      ) {
-        // no change and we are still on the same page, no need to push anything
+      if (!interrogation.stateData) {
         setIsDirtyState(false)
         return
       }
 
-      props.updateDataAndStateData({
-        stateData: interrogation.stateData,
-        // we push only the new data, not the full data
-        // changedData.COLLECTED is defined since hasDataChanged checks it
-        data: trimCollectedData(changedData.COLLECTED!),
-        onSuccess: resetChangedData,
-        isLogout: isLogout,
-      })
-      setIsDirtyState(false)
-      // update date to show on end page message
-      setLastUpdateDate(interrogation.stateData?.date)
+      const dataToSend =
+        hasDataChanged(changedData) && changedData.COLLECTED
+          ? {
+              ...pendingData?.data,
+              ...changedData.COLLECTED,
+            }
+          : { ...pendingData?.data }
+
+      try {
+        await props.updateDataAndStateData({
+          stateData: pendingData.stateData ?? interrogation.stateData,
+          data: trimCollectedData(dataToSend),
+          onSuccess: () => {
+            resetChangedData()
+            setIsDirtyState(false)
+            setLastUpdateDate(interrogation.stateData?.date)
+            // Clear pending data from local storage on successful send
+            removeValue()
+            if (shouldSyncData(interrogation, pendingData)) {
+              // Set a small timeout to ensure the modal is shown and read
+              setTimeout(() => {
+                globalThis.location.reload()
+              }, 3000)
+            }
+          },
+          isLogout: isLogout,
+        })
+      } catch (error) {
+        console.error('Failed to update data:', error)
+
+        // Store pending data to localStorage to try again later
+        setPendingData({
+          data: dataToSend,
+          stateData: interrogation.stateData,
+        })
+      }
     }
   }
 
@@ -502,13 +535,17 @@ export function Orchestrator(props: OrchestratorProps) {
             {currentPageType === PAGE_TYPE.END && (
               <EndPage state={initialState} date={lastUpdateDate} />
             )}
+            <SyncModal open={shouldSyncData(interrogation, pendingData)} />
             <WelcomeModal
               goBack={() =>
                 initialCurrentPage
                   ? handleGoToPage({ page: initialCurrentPage })
                   : null
               }
-              open={shouldDisplayWelcomeModal(initialState, initialCurrentPage)}
+              open={
+                shouldDisplayWelcomeModal(initialState, initialCurrentPage) &&
+                !shouldSyncData(interrogation, pendingData)
+              }
             />
             <ValidationModal actionsRef={validationModalActionsRef} />
             {mode === MODE_TYPE.VISUALIZE && <VTLDevTools />}

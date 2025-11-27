@@ -64,6 +64,12 @@ export const translations: Translations<'en'> = {
     content:
       'You have already started filling out the questionnaire. Would you like to resume where you left off or return to the first page?',
   },
+  SyncModal: {
+    title: 'Sync in progress',
+    'button go back': 'Close this window',
+    content:
+      'You have already started filling out the questionnaire, and your data is being synchronized. The page will automatically reload once the synchronization is complete.',
+  },
   EndPage: {
     title: 'Thank you for your participation in this survey.',
     paragraph: ({ formattedDate }) =>
@@ -119,6 +125,17 @@ export const translations: Translations<'en'> = {
     'button expand': 'Expand view',
     'button previous title': 'Return to the previous step',
     'button previous label': 'Previous',
+  },
+  CollectPage: {
+    'toast save success title': 'Data saved successfully!',
+    'toast save success description':
+      'Your changes have been recorded and saved.',
+    'toast save error title': 'Save error',
+    'toast save error description':
+      'An error occurred while saving your changes.',
+    'toast save network error title': 'Network error',
+    'toast save network error description':
+      'A network error occurred, and the data was not saved. Do not close this window so that it can be transmitted upon reconnection.',
   },
   VTLDevTools: {
     'fab button': 'Console VTL',

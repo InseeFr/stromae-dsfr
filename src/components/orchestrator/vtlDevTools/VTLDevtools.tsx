@@ -86,7 +86,10 @@ export const VTLDevTools = () => {
             <div className={fr.cx('fr-table__wrapper')}>
               <div className={fr.cx('fr-table__container')}>
                 <div className={fr.cx('fr-table__content')}>
-                  <table className={fr.cx('fr-cell--multiline')}>
+                  <table
+                    className={fr.cx('fr-cell--multiline')}
+                    role="presentation"
+                  >
                     <caption>{t('table title')}</caption>
                     <thead>
                       <tr>

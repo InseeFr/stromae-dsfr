@@ -50,6 +50,7 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
               <table
                 className={fr.cx('fr-cell--multiline')}
                 aria-describedby={label ? undefined : questionId}
+                role="presentation"
                 {...(hasErrors
                   ? {
                       'aria-invalid': true,

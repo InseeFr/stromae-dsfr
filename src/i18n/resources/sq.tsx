@@ -123,6 +123,7 @@ export const translations: Translations<'sq'> = {
     'button download data': 'Shkarko të dhënat',
     'button download articulation': 'Shkarko tabelën e artikulimit',
     'button expand': 'Zgjero pamjen',
+    'button collapse': 'Tkurr pamjen',
     'button previous title': 'Kthehu në hapin e mëparshëm',
     'button previous label': 'I mëparshmi',
   },

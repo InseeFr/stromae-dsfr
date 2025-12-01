@@ -128,7 +128,8 @@ export const translations: Translations<'fr'> = {
     'button download articulation':
       'Télécharger le récapitulatif du rond-point',
 
-    'button expand': 'Étendre la vue',
+    'button expand': "Étendre l'affichage",
+    'button collapse': "Réduire l'affichage",
 
     'button previous title': "Revenir à l'étape précédente",
     'button previous label': 'Précédent',

@@ -123,6 +123,7 @@ export const translations: Translations<'en'> = {
     'button download data': 'Download data',
     'button download articulation': 'Download roundabout recap',
     'button expand': 'Expand view',
+    'button collapse': 'Collapse view',
     'button previous title': 'Return to the previous step',
     'button previous label': 'Previous',
   },

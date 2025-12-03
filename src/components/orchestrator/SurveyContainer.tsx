@@ -108,7 +108,10 @@ export function SurveyContainer(
                   }
                   priority="tertiary"
                   onClick={() => setIsLayoutExpanded((expanded) => !expanded)}
-                  title={t('button expand')}
+                  title={
+                    isLayoutExpanded ? t('button collapse') : t('button expand')
+                  }
+                  aria-pressed={isLayoutExpanded}
                 />
               </div>
             )}
@@ -175,6 +178,7 @@ const { i18n } = declareComponentKeys<
   | 'button previous title'
   | 'button previous label'
   | 'button expand'
+  | 'button collapse'
   | {
       K: 'button continue title'
       P: { currentPage: InternalPageType }

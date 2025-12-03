@@ -1,5 +1,4 @@
-import { useId } from 'react'
-import React from 'react'
+import React, { useId } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Alert from '@codegouvfr/react-dsfr/Alert'
@@ -58,7 +57,7 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
               <table
                 className={fr.cx('fr-cell--multiline')}
                 aria-describedby={label ? undefined : questionId}
-                {...(!hasHeader ? { role: 'presentation' } : {})}
+                {...(hasHeader ? {} : { role: 'presentation' })}
                 {...(hasErrors
                   ? {
                       'aria-invalid': true,

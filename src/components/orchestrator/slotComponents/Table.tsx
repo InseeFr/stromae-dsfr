@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import React from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Alert from '@codegouvfr/react-dsfr/Alert'
@@ -17,6 +18,13 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
     //TODO throw and handle globaly errors in an alert with a condition to avoid to display alert in prod
     console.error('Only declaration in Question are displayed')
   }
+
+  // Since the only way to detect if the table is a table with MCQ with code list is that there is no header
+  // We check if one of the children (usually the first one) has a header prop defined
+  const hasHeader = React.Children.toArray(children).some(
+    (child) =>
+      React.isValidElement(child) && typeof child.props.header !== 'undefined',
+  )
 
   const hasErrors = errors && errors.length > 0
 
@@ -50,7 +58,7 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
               <table
                 className={fr.cx('fr-cell--multiline')}
                 aria-describedby={label ? undefined : questionId}
-                role="presentation"
+                {...(!hasHeader ? { role: 'presentation' } : {})}
                 {...(hasErrors
                   ? {
                       'aria-invalid': true,

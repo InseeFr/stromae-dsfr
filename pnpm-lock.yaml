@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@codegouvfr/react-dsfr':
         specifier: ^1.13.6
-        version: 1.17.0
+        version: 1.29.0
       '@emotion/react':
         specifier: ^11.13.3
         version: 11.14.0(@types/react@18.3.26)(react@18.3.1)
@@ -364,8 +364,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@codegouvfr/react-dsfr@1.17.0':
-    resolution: {integrity: sha512-zYluHhGRD39ckZvQFgK8hSeo76TbxPtuot+I6N66vC6XXkILvv0llbIvezkxv3xlz4J8fvq4Ou5Hngt5EWtpeg==}
+  '@codegouvfr/react-dsfr@1.29.0':
+    resolution: {integrity: sha512-3kK6W8tOxkUN+2yufEgikg6HNXQkF1YSJNB2imBCyDo8Z/N7zK38XAygXXmeY3+0d8x3JZ/Q+wzv73pG1k3cbA==}
     hasBin: true
     peerDependencies:
       '@gouvfr/dsfr-chart': ^1.0.0
@@ -4775,7 +4775,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@codegouvfr/react-dsfr@1.17.0':
+  '@codegouvfr/react-dsfr@1.29.0':
     dependencies:
       tsafe: 1.8.12
       yargs-parser: 21.1.1

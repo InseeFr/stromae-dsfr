@@ -746,4 +746,78 @@ describe('Orchestrator', () => {
       surveyUnitCompositeName: 'RnJhbsOnYWlz',
     })
   })
+
+  it('has proper label when expanding/collapsing layout', async () => {
+    const user = userEvent.setup()
+
+    const sourceWithSequencePagination = {
+      componentType: 'Questionnaire',
+      components: [
+        {
+          componentType: 'Sequence',
+          page: '1',
+          id: 's1',
+          label: [{ type: 'VTL', value: '"Ma séquence"' }],
+        },
+        {
+          componentType: 'Question',
+          page: '2',
+          id: 'q1',
+          components: [
+            {
+              componentType: 'Input',
+              page: '2',
+              label: { value: 'my-question', type: 'TXT' },
+              id: 'i1',
+              response: { name: 'my-question-input' },
+            },
+          ],
+        },
+        {
+          componentType: 'Question',
+          page: '3',
+          id: 'q2',
+          components: [
+            {
+              componentType: 'Input',
+              page: '3',
+              label: { value: 'my-question-2', type: 'TXT' },
+              id: 'i2',
+              response: { name: 'my-question-2-input' },
+            },
+          ],
+        },
+      ],
+      variables: [],
+      maxPage: '3',
+      pagination: 'sequence' as const,
+    }
+
+    const interrogationWithLunaticPage = {
+      ...defaultInterrogation,
+      stateData: {
+        state: 'INIT' as QuestionnaireState,
+        date: 0,
+        currentPage: '1' as PageType,
+      },
+    }
+
+    const { getByText, getByRole } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceWithSequencePagination}
+        initialInterrogation={interrogationWithLunaticPage}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    const collapseButton = getByRole('button', { name: 'Collapse view' })
+    expect(collapseButton).toBeInTheDocument()
+    expect(collapseButton).toHaveAttribute('aria-pressed', 'true')
+
+    await user.click(collapseButton)
+    const expandButton = getByRole('button', { name: 'Expand view' })
+    expect(expandButton).toBeInTheDocument()
+    expect(expandButton).toHaveAttribute('aria-pressed', 'false')
+  })
 })

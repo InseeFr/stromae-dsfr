@@ -366,7 +366,7 @@ export const translations: Translations<'fr'> = {
           navigateurs web et lecteurs d’écran suivants :
         </p>
         <div className="fr-table" data-fr-js-table="true">
-          <table data-fr-js-table-element="true" role="presentation">
+          <table data-fr-js-table-element="true">
             <thead>
               <tr>
                 <th scope="col">User Agent</th>

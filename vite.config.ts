@@ -7,6 +7,8 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const isStorybook = process.env.STORYBOOK === 'true'
+
   return {
     base: env.VITE_BASE_PATH || '/',
     plugins: [
@@ -16,9 +18,11 @@ export default defineConfig(({ mode }) => {
           './tsconfig.json', // To avoid tsconfigPaths read website tsconfig path
         ],
       }),
-      oidcSpa({
-        enableTokenExfiltrationDefense: true,
-      }),
+      // disable oidc-spa for Storybook, else it can't build storybook due to oidc-spa issue
+      !isStorybook &&
+        oidcSpa({
+          enableTokenExfiltrationDefense: true,
+        }),
       viteEnvs({
         computedEnv: async () => {
           const path = await import('path')

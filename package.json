@@ -20,7 +20,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "cross-env STORYBOOK=true storybook build",
     "prestorybook": "react-dsfr update-icons",
     "prebuild-storybook": "react-dsfr update-icons"
   },
@@ -73,6 +73,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.1.2",
+    "cross-env": "^10.1.0",
     "dotenv-flow": "^4.1.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc-d48603a5-20240813",

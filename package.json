@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.3.1-rc.expand-collapse-button",
+  "version": "2.4.0-rc-oidc-spa-v8.0",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

@@ -9,4 +9,5 @@
 export type QuestionnaireEventPayload = {
   /** Unique identifier for the interrogation */
   interrogationId: string
+  pageTag?: string
 }

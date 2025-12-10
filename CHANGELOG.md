@@ -7,17 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.1) - 2025-12-10
+
+### Added
+
+- Added cells data on leaf state update events
+
+### Fixed
+
+- Fixed an issue where collected data wasn't synced properly after going back online from offline mode.
+- Fixed an accessibility issue with footer (alt attribute)
+- Fixed an accessibility issue with collapse/expand buttons.
+- Fixed an issue where user is block because of self cleaning variable
+
+## [2.3.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.0) - 2025-11-26
+
 ### Added
 
 - Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
 - In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
 - In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
+- Update static page of accessibility
 
 ### Fixed
 
+- Fixed authentication by downgrading `oidc-spa` (cross-domain issues) (already done in 2.2.4 but it must be a minor version, not a patch)
 - Fixed an issue where aria-hidden stayed true on hover for tooltips.
-- Fixed an issue where collected data wasn't synced properly after going back online from offline mode.
-- Fixed an accessibility issue with collapse/expand buttons.
 
 ## [2.2.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.4) - 2025-11-25
 

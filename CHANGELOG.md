@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed an accessibility issue with layout tables being incorrectly announced by screen readers. (Added `role="presentation"` to presentational tables.)
+
 ## [2.3.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.1) - 2025-12-10
 
 ### Added

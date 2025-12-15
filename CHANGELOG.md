@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.3.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.3) - 2025-12-15
 
 ### Fixed
 
 - Fixed an accessibility issue with layout tables being incorrectly announced by screen readers. (Added `role="presentation"` to presentational tables.)
+
+## [2.3.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.2) - 2025-12-10
+
+- Updated docker base image
 
 ## [2.3.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.1) - 2025-12-10
 

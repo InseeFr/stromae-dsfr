@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.3.1-rc.mcq-table-role",
+  "version": "2.3.2",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

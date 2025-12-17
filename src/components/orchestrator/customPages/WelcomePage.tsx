@@ -45,14 +45,16 @@ function renderMetadataContents(contents: Contents[] | undefined) {
 }
 
 /** Page displayed when the user first arrives on the orchestrator */
-export function WelcomePage(props: Readonly<{ metadata: Metadata }>) {
+export function WelcomePage(
+  props: Readonly<{ metadata: Metadata; questionnaireLabel: string }>,
+) {
   const { t } = useTranslation({ WelcomePage })
-  const { metadata } = props
+  const { metadata, questionnaireLabel } = props
   const { resolveLocalizedString } = useResolveLocalizedString({
     labelWhenMismatchingLanguage: true,
   })
 
-  useDocumentTitle(t('document title'), metadata.label)
+  useDocumentTitle(t('document title'), questionnaireLabel)
 
   return (
     <div className={fr.cx('fr-my-4w')}>

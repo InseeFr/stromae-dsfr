@@ -3,12 +3,7 @@ import { type ReactNode, useEffect } from 'react'
 import { decode } from 'he'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import type { LocalizedString } from '@/i18n'
-
-export function useDocumentTitle(
-  title: string,
-  questionnaireLabel?: LocalizedString,
-) {
+export function useDocumentTitle(title: string, questionnaireLabel?: string) {
   useEffect(() => {
     const fullTitle = questionnaireLabel
       ? `${questionnaireLabel} - ${title}`

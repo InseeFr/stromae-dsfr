@@ -3,16 +3,23 @@ import { type ReactNode, useEffect } from 'react'
 import { decode } from 'he'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-export function useDocumentTitle(title: string) {
-  useEffect(() => {
-    const prevTitle = document.title
+import type { LocalizedString } from '@/i18n'
 
-    document.title = title
+export function useDocumentTitle(
+  title: string,
+  questionnaireLabel?: LocalizedString,
+) {
+  useEffect(() => {
+    const fullTitle = questionnaireLabel
+      ? `${questionnaireLabel} - ${title}`
+      : title
+    const prevTitle = document.title
+    document.title = fullTitle
 
     return () => {
       document.title = prevTitle
     }
-  }, [title])
+  }, [title, questionnaireLabel])
 }
 
 export function useSequenceTitle(

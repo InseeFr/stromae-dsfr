@@ -52,7 +52,7 @@ export function WelcomePage(props: Readonly<{ metadata: Metadata }>) {
     labelWhenMismatchingLanguage: true,
   })
 
-  useDocumentTitle(t('document title'))
+  useDocumentTitle(t('document title'), metadata.label)
 
   return (
     <div className={fr.cx('fr-my-4w')}>

@@ -39,6 +39,7 @@ describe('WelcomePage', () => {
           ],
           mainLogo: { label: '', url: '' },
         }}
+        questionnaireLabel="Mon enquête"
       />,
     )
 

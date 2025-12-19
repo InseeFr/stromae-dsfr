@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.3.3",
+  "version": "2.3.4-rc.questionnaire-name",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

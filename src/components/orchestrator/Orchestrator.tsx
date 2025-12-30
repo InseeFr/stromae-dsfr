@@ -187,6 +187,7 @@ export function Orchestrator(props: OrchestratorProps) {
   const initialState = initialInterrogation?.stateData?.state
   const pagination = source.pagination ?? 'question'
   const hasArticulation = source.articulation !== undefined
+  const questionnaireLabel = source.label?.value ?? ''
 
   const lunaticLogger = useMemo(
     () =>
@@ -313,7 +314,7 @@ export function Orchestrator(props: OrchestratorProps) {
     downloadAsJson<Interrogation>({
       dataToDownload: interrogation,
       //The label of source is not dynamic
-      filename: `${source.label?.value}-${new Date().toLocaleDateString()}`,
+      filename: `${questionnaireLabel}-${new Date().toLocaleDateString()}`,
     })
   })
 
@@ -330,7 +331,7 @@ export function Orchestrator(props: OrchestratorProps) {
     downloadAsCsv({
       dataToDownload: articulationToCsv(articulationState.items),
       //The label of source is not dynamic
-      filename: `${source.label?.value}-articulation-${new Date().toLocaleDateString()}`,
+      filename: `${questionnaireLabel}-articulation-${new Date().toLocaleDateString()}`,
     })
   })
 
@@ -524,7 +525,10 @@ export function Orchestrator(props: OrchestratorProps) {
         >
           <div ref={contentRef} className={fr.cx('fr-mb-4v')}>
             {currentPageType === PAGE_TYPE.WELCOME && (
-              <WelcomePage metadata={metadata} />
+              <WelcomePage
+                metadata={metadata}
+                questionnaireLabel={questionnaireLabel}
+              />
             )}
             {currentPageType === PAGE_TYPE.LUNATIC && (
               <LunaticComponents

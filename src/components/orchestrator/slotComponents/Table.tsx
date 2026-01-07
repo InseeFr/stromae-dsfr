@@ -1,10 +1,20 @@
-import React, { useId } from 'react'
+import React, { createContext, useContext, useId } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Alert from '@codegouvfr/react-dsfr/Alert'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 
 import { useQuestionId } from './Question'
+
+// Context to track the first cell ID and whether to use row labeling
+const RowContext = createContext<{
+  firstCellId?: string
+  cellIndex: number
+  useRowLabeling: boolean
+}>({
+  cellIndex: 0,
+  useRowLabeling: false,
+})
 
 export const Table: LunaticSlotComponents['Table'] = (props) => {
   const { children, errors, declarations, label } = props
@@ -21,8 +31,7 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
   // Since the only way to detect if the table is a table with MCQ with code list is that there is no header
   // We check if one of the children (usually the first one) has a header prop defined
   const hasHeader = React.Children.toArray(children).some(
-    (child) =>
-      React.isValidElement(child) && typeof child.props.header !== 'undefined',
+    (child) => React.isValidElement(child) && child.props.header !== undefined,
   )
 
   const hasErrors = errors && errors.length > 0
@@ -66,7 +75,11 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
                   : {})}
               >
                 {label && <caption>{label}</caption>}
-                {children}
+                <RowContext.Provider
+                  value={{ cellIndex: 0, useRowLabeling: !hasHeader }}
+                >
+                  {children}
+                </RowContext.Provider>
               </table>
             </div>
           </div>
@@ -78,15 +91,45 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
 
 export const Tr: LunaticSlotComponents['Tr'] = (props) => {
   const { children, className } = props
+  const rowId = useId()
+  const { useRowLabeling } = useContext(RowContext)
+
   const rowHasErrors = className
     ? ['lunatic-row-has-error'].includes(className)
     : false
   const rowDisplayError = className
     ? ['lunatic-errors'].includes(className)
     : false
-  //TODO To improve accessibilité we should add aria-labelledBy and "aria-errormessage" but we can't with this component structure
+
+  const firstCellId = `${rowId}-label`
+
+  // Only apply row labeling for tables without headers
+  const labelledChildren = useRowLabeling
+    ? (() => {
+        let cellIndex = 0
+        return React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            const currentIndex = cellIndex++
+            return (
+              <RowContext.Provider
+                value={{
+                  firstCellId,
+                  cellIndex: currentIndex,
+                  useRowLabeling: true,
+                }}
+              >
+                {child}
+              </RowContext.Provider>
+            )
+          }
+          return child
+        })
+      })()
+    : children
+
   return (
     <tr
+      {...(useRowLabeling ? { 'aria-labelledby': firstCellId } : {})}
       {...(rowHasErrors ? { 'aria-invalid': true } : {})}
       style={
         rowDisplayError
@@ -96,15 +139,26 @@ export const Tr: LunaticSlotComponents['Tr'] = (props) => {
           : {}
       }
     >
-      {children}
+      {labelledChildren}
     </tr>
   )
 }
 
 export const Td: LunaticSlotComponents['Td'] = (props) => {
-  const { children, colSpan, rowSpan } = props
+  const { children, colSpan, rowSpan } = props as any
+
+  const { firstCellId, cellIndex, useRowLabeling } = useContext(RowContext)
+
+  // Only add id to first cell if row labeling is enabled (no header)
+  const id = useRowLabeling && cellIndex === 0 ? firstCellId : undefined
+
   return (
-    <td className={fr.cx('fr-text--md')} colSpan={colSpan} rowSpan={rowSpan}>
+    <td
+      className={fr.cx('fr-text--md')}
+      colSpan={colSpan}
+      rowSpan={rowSpan}
+      {...(id ? { id } : {})}
+    >
       {children}
     </td>
   )

@@ -199,8 +199,8 @@ importers:
         specifier: ^4.6.1
         version: 4.6.2
       vite-tsconfig-paths:
-        specifier: ^5.0.1
-        version: 5.1.4(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(sass@1.77.8)(tsx@4.21.0)(yaml@2.8.2))
+        specifier: ^6.0.0
+        version: 6.0.4(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(sass@1.77.8)(tsx@4.21.0)(yaml@2.8.2))
       vitest:
         specifier: ^2.1.2
         version: 2.1.9(@types/node@24.10.9)(jsdom@27.4.0)(sass@1.77.8)
@@ -4713,8 +4713,8 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-tsconfig-paths@5.1.4:
-    resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
+  vite-tsconfig-paths@6.0.4:
+    resolution: {integrity: sha512-iIsEJ+ek5KqRTK17pmxtgIxXtqr3qDdE6OxrP9mVeGhVDNXRJTKN/l9oMbujTQNzMLe6XZ8qmpztfbkPu2TiFQ==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -8352,7 +8352,7 @@ snapshots:
   istanbul-lib-source-maps@5.0.6:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
-      debug: 4.4.1
+      debug: 4.4.3
       istanbul-lib-coverage: 3.2.2
     transitivePeerDependencies:
       - supports-color
@@ -10016,7 +10016,7 @@ snapshots:
   vite-node@2.1.9(@types/node@24.10.9)(sass@1.77.8):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.1
+      debug: 4.4.3
       es-module-lexer: 1.6.0
       pathe: 1.1.2
       vite: 5.4.21(@types/node@24.10.9)(sass@1.77.8)
@@ -10031,9 +10031,9 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.1.4(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(sass@1.77.8)(tsx@4.21.0)(yaml@2.8.2)):
+  vite-tsconfig-paths@6.0.4(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(sass@1.77.8)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
-      debug: 4.4.1
+      debug: 4.4.3
       globrex: 0.1.2
       tsconfck: 3.1.4(typescript@5.9.3)
     optionalDependencies:

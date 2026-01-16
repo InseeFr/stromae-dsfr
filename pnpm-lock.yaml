@@ -48,8 +48,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.6(react@18.3.1)
       oidc-spa:
-        specifier: 6.8.2
-        version: 6.8.2(@types/react@18.3.27)(react@18.3.1)
+        specifier: 9.1.3
+        version: 9.1.3(@tanstack/react-router@1.134.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.27)(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3810,15 +3810,33 @@ packages:
     resolution: {integrity: sha512-nK28WOo+QIjBkDduTINE4JkF/UJJKyf2EJxvJKfblDpyg0Q+pkOHNTL0Qwy6NP6FhE/EnzV73BxxqcJaXY9anw==}
     engines: {node: '>= 0.4'}
 
-  oidc-spa@6.8.2:
-    resolution: {integrity: sha512-R27+BDg9RW/eI0uZLDnBC/BzKdhkPcOrLIyFwnwCLeL9D9oe+YGXt0LlxSHlgU1DQ3ElLEWNCCNQc9bjpb4oeg==}
+  oidc-spa@9.1.3:
+    resolution: {integrity: sha512-9DM5QZbpxRvj3sORSy1MuMDMSJC+1e4/d9jN6Pf/NeZTpLR3rew+32oPaGi04u38skS/0oPb3LKvl7wsmvI7mQ==}
     peerDependencies:
+      '@angular/common': '*'
+      '@angular/core': '*'
+      '@angular/router': '*'
+      '@tanstack/react-router': '*'
+      '@tanstack/react-start': '*'
       '@types/react': '*'
       react: '*'
+      rxjs: '*'
     peerDependenciesMeta:
+      '@angular/common':
+        optional: true
+      '@angular/core':
+        optional: true
+      '@angular/router':
+        optional: true
+      '@tanstack/react-router':
+        optional: true
+      '@tanstack/react-start':
+        optional: true
       '@types/react':
         optional: true
       react:
+        optional: true
+      rxjs:
         optional: true
 
   onetime@5.1.2:
@@ -8964,8 +8982,9 @@ snapshots:
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
-  oidc-spa@6.8.2(@types/react@18.3.27)(react@18.3.1):
+  oidc-spa@9.1.3(@tanstack/react-router@1.134.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.27)(react@18.3.1):
     optionalDependencies:
+      '@tanstack/react-router': 1.134.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/react': 18.3.27
       react: 18.3.1
 

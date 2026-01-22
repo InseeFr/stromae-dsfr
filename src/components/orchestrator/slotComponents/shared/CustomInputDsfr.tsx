@@ -1,9 +1,10 @@
-import { forwardRef } from 'react'
+import type { Ref } from 'react'
 
 import { Input, type InputProps } from '@codegouvfr/react-dsfr/Input'
 
 export type CustomInputProps = InputProps['nativeInputProps'] & {
   dsfrProps: Omit<InputProps.RegularInput, 'nativeInputProps'>
+  ref?: Ref<HTMLInputElement>
 }
 
 /**
@@ -12,26 +13,24 @@ export type CustomInputProps = InputProps['nativeInputProps'] & {
  * Therefore, these props need to be at the root level.
  * See: https://s-yadav.github.io/react-number-format/docs/quirks#notes-and-quirks
  */
-export const CustomInputDsfr = forwardRef<HTMLInputElement, CustomInputProps>(
-  (props, ref) => {
-    const { dsfrProps, ...restProps } = props
-    return (
-      <Input
-        {...dsfrProps}
-        ref={ref}
-        nativeInputProps={{
-          style: {
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          },
-          title: restProps.value?.toString() ?? '',
-          onBlur: (e) => {
-            e.target.setSelectionRange(0, 0)
-          },
-          ...restProps,
-        }}
-      />
-    )
-  },
-)
+export const CustomInputDsfr = (props: CustomInputProps) => {
+  const { dsfrProps, ref, ...restProps } = props
+  return (
+    <Input
+      {...dsfrProps}
+      ref={ref}
+      nativeInputProps={{
+        style: {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        },
+        title: restProps.value?.toString() ?? '',
+        onBlur: (e) => {
+          e.target.setSelectionRange(0, 0)
+        },
+        ...restProps,
+      }}
+    />
+  )
+}

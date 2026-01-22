@@ -10,6 +10,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrade React to v19
+## [2.3.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.5) - 2026-01-16
+
+### Build
+
+- Switch node 20 to node 24
+- Upgrade gh-actions version
+
+### Fixed
+
+- Fixed CVEs on devDependencies (orval)
+
+## [2.3.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.4) - 2025-12-30
+
+### Changed
+
+- Browser tab title now dynamically updates based on the questionnaire name for better user orientation.
+- Some improvments for Lunatic Suggeter (bump Lunatic to [3.7.6](https://github.com/InseeFr/Lunatic/releases/tag/3.7.6))
 
 ## [2.3.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.3) - 2025-12-15
 

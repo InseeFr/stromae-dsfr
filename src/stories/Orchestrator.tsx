@@ -31,7 +31,7 @@ export type OrchestratorProps = {
 const onLogChange: LunaticChangesHandler = (params) =>
   console.log('onChange', params)
 
-export const Orchestrator: (props: OrchestratorProps) => JSX.Element = ({
+export const Orchestrator: (props: OrchestratorProps) => React.JSX.Element = ({
   source,
   data,
   activeControls = true,

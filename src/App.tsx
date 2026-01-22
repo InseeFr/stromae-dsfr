@@ -19,7 +19,7 @@ startReactDsfr({
 
 declare module '@codegouvfr/react-dsfr/spa' {
   interface RegisterLink {
-    Link: (props: LinkProps) => JSX.Element
+    Link: (props: LinkProps) => React.JSX.Element
   }
 }
 

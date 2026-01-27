@@ -7,6 +7,7 @@ import {
   RouterProvider,
   createRouter,
 } from '@tanstack/react-router'
+import './libs/i18n'
 
 import { TelemetryProvider } from '@/contexts/TelemetryContext'
 import { OidcProvider } from '@/oidc'

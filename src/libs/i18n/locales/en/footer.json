@@ -1,3 +1,14 @@
 {
-  "license": "This site uses Insee's Stromae and Lunatic applications, which are under the MIT license, based on the State's design system available under the etalab-2.0 license."
+  "license": "This site uses Insee's Stromae and Lunatic applications, which are under the MIT license, based on the State's design system available under the etalab-2.0 license.",
+  "navigationAssistance": {
+    "title": "Navigation assistance",
+    "content": "The Previous and Continue buttons allow navigation through the questionnaire. Responses are saved automatically until submission."
+  },
+  "securityPage": {
+    "title": "Security",
+    "content": "The site {{fullUrl}} has been subject to an approval decision for information system security."
+  },
+  "siteMap": {
+    "title": "Site Map"
+  }
 }

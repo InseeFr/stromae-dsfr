@@ -1,6 +1,6 @@
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
 
-import { declareComponentKeys, useTranslation } from '@/i18n'
+import { useTranslation } from 'react-i18next'
 
 export type Props = {
   modal: ReturnType<typeof createModal>
@@ -12,19 +12,19 @@ export type Props = {
  * that their anwers will be saved
  */
 export function ExitModal({ modal, navigatePortal }: Readonly<Props>) {
-  const { t } = useTranslation({ ExitModal })
+  const { t } = useTranslation()
 
   return (
     <modal.Component
-      title={t('title')}
+      title={t('exitModal.title')}
       buttons={[
         {
           doClosesModal: true,
-          children: t('button cancel'),
+          children: t('exitModal.buttonCancel'),
         },
         {
           doClosesModal: true,
-          children: t('button validate'),
+          children: t('exitModal.buttonValidate'),
           onClick: navigatePortal,
         },
       ]}
@@ -34,9 +34,3 @@ export function ExitModal({ modal, navigatePortal }: Readonly<Props>) {
     </modal.Component>
   )
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  'title' | 'button cancel' | 'button validate' | 'content'
->()({ ExitModal })
-
-export type I18n = typeof i18n

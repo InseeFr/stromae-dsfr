@@ -1,0 +1,6 @@
+{
+  "title": "Nous vous remercions pour votre collaboration à cette enquête.",
+  "paragraphWithDate": "Vos réponses ont été envoyées le {{formattedDate}}.",
+  "paragraphWithoutDate": "Vos réponses ont été envoyées.",
+  "documentTitle": "Fin du questionnaire"
+}

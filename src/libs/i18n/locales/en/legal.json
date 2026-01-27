@@ -1,0 +1,30 @@
+{
+  "legalPage": {
+    "legalsTitle": "Legal Mentions",
+    "serviceTitle": "Service Presentation",
+    "serviceContent": "The online response service is intended for households and businesses surveyed as part of a public statistics survey. Users can interrupt and resume completion without losing entered information.",
+    "surveyLegalsTermsTitle": "Legal Terms of the Survey",
+    "surveyLegalsTermsContent": "It is listed on the promotion portal of this survey.",
+    "cookiesTitle": "Cookie Management",
+    "cookiesContent": "This portal does not use any cookies requiring user consent.",
+    "sessionTitle": "Session",
+    "sessionContent": "A session is established after identification and interrupted after 15 minutes of inactivity.",
+    "copyrightTitle": "Copyright",
+    "copyrightContent": "Any reproduction other than for strictly private use is prohibited.",
+    "editorInformationTitle": "Publisher Information",
+    "designProductionTitle": "Design and development",
+    "designProductionContent": "National Service of Computer Development of Lille",
+    "personalDataTitle": "Personal Data"
+  },
+  "navigationAssistance": {
+    "title": "Navigation assistance",
+    "content": "The Previous and Continue buttons allow navigation through the questionnaire. Responses are saved automatically until submission."
+  },
+  "securityPage": {
+    "title": "Security",
+    "content": "The site {{fullUrl}} has been subject to an approval decision for information system security."
+  },
+  "siteMap": {
+    "title": "Site Map"
+  }
+}

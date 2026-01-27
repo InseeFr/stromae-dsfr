@@ -1,0 +1,19 @@
+{
+  "redirectPortal": "Return to portal",
+  "redirectVisualizeForm": "Return to the visualization form",
+  "redirectHome": "Return to the homepage",
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "The page you are looking for cannot be found.",
+    "paragraph": "Check the address or return to the homepage."
+  },
+  "connectionError": {
+    "title": "Connection error",
+    "subtitle": "An error occurred while connecting to the server.",
+    "paragraph": "Check your Internet connection and try again."
+  },
+  "validationError": {
+    "title": "Validation Error",
+    "subtitle": "{{name}}'s file is not valid."
+  }
+}

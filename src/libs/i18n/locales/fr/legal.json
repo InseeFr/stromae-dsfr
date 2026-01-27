@@ -1,0 +1,30 @@
+{
+  "legalPage": {
+    "legalsTitle": "Mentions légales",
+    "serviceTitle": "Présentation du service",
+    "serviceContent": "Le service de réponse en ligne est destiné aux ménages et entreprises interrogés dans le cadre d'une enquête de la statistique publique.",
+    "surveyLegalsTermsTitle": "Cadre juridique de l'enquête",
+    "surveyLegalsTermsContent": "Il figure sur le portail de promotion de cette enquête.",
+    "cookiesTitle": "Gestion des cookies",
+    "cookiesContent": "Ce portail n’utilise aucun cookie nécessitant un consentement des usagers.",
+    "sessionTitle": "Session",
+    "sessionContent": "Une session est établie après identification. Elle est interrompue après 15 minutes d’inactivité.",
+    "copyrightTitle": "Copyright",
+    "copyrightContent": "Toute reproduction pour un usage autre que strictement privé est interdite.",
+    "editorInformationTitle": "Informations éditeurs",
+    "designProductionTitle": "Conception et réalisation",
+    "designProductionContent": "Service National de Développement Informatique de Lille",
+    "personalDataTitle": "Données nominatives"
+  },
+  "navigationAssistance": {
+    "title": "Aide à la navigation",
+    "content": "Les boutons Précédent et Continuer permettent de naviguer dans le questionnaire. Les réponses sont enregistrées automatiquement jusqu’à l’envoi final."
+  },
+  "securityPage": {
+    "title": "Sécurité",
+    "content": "Le site {{fullUrl}} a fait l'objet d'une décision d'homologation de sécurité."
+  },
+  "siteMap": {
+    "title": "Plan du site"
+  }
+}

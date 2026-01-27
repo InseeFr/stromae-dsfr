@@ -1,0 +1,19 @@
+{
+  "redirectPortal": "Retourner sur le portail",
+  "redirectVisualizeForm": "Retourner au formulaire de visualisation",
+  "redirectHome": "Retourner à la page d'accueil",
+  "notFound": {
+    "title": "Page non trouvée",
+    "subtitle": "La page que vous cherchez est introuvable.",
+    "paragraph": "Vérifiez l’adresse ou retournez à la page d’accueil."
+  },
+  "connectionError": {
+    "title": "Erreur de connexion",
+    "subtitle": "Une erreur s'est produite lors de la connexion au serveur.",
+    "paragraph": "Vérifiez votre connexion Internet."
+  },
+  "validationError": {
+    "title": "Erreur de validation",
+    "subtitle": "Le fichier de {{name}} n'est pas valide."
+  }
+}

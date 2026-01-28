@@ -120,7 +120,7 @@ export function Header() {
             ]),
         ]}
         serviceTagline={surveyUnitCompositeName}
-        serviceTitle={t('legal.legalPage.serviceTitle')}
+        serviceTitle={t('legal.serviceTitle')}
         operatorLogo={{
           alt: resolveLocalizedString(mainLogo.label),
           imgUrl: mainLogo.url,

@@ -1,5 +1,4 @@
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-
 import { useTranslation } from 'react-i18next'
 
 export type Props = {
@@ -20,17 +19,17 @@ export function ExitModal({ modal, navigatePortal }: Readonly<Props>) {
       buttons={[
         {
           doClosesModal: true,
-          children: t('exitModal.buttonCancel'),
+          children: t('collectPage.exitModal.buttonCancel'),
         },
         {
           doClosesModal: true,
-          children: t('exitModal.buttonValidate'),
+          children: t('collectPage.exitModal.buttonValidate'),
           onClick: navigatePortal,
         },
       ]}
       concealingBackdrop={true}
     >
-      {t('content')}
+      {t('collectPage.exitModal.description')}
     </modal.Component>
   )
 }

@@ -36,7 +36,7 @@
     "tableHeaderPage": "Page"
   },
   "visualize": {
-    "formTitle": "Survey preview.",
+    "title": "Survey preview.",
     "sourceFileTitle": "Survey source file.",
     "metadataFileTitle": "Survey metadata file.",
     "dataFileTitle": "Survey data file.",

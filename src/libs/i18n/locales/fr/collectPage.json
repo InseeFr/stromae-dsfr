@@ -36,7 +36,7 @@
     "tableHeaderPage": "Page"
   },
   "visualize": {
-    "formTitle": "Prévisualisation d'enquête.",
+    "title": "Prévisualisation d'enquête.",
     "sourceFileTitle": "Fichier source de l'enquête.",
     "metadataFileTitle": "Fichier de métadonnées de l'enquête.",
     "dataFileTitle": "Fichier de données de l'enquête.",

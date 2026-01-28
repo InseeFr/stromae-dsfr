@@ -2,10 +2,10 @@ import { type PropsWithChildren, type ReactNode, useState } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
+import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
-import { useTranslation } from 'react-i18next'
 import type { LunaticOverview } from '@/models/lunaticType'
 import type { InternalPageType } from '@/models/page'
 
@@ -109,7 +109,9 @@ export function SurveyContainer(
                   priority="tertiary"
                   onClick={() => setIsLayoutExpanded((expanded) => !expanded)}
                   title={
-                    isLayoutExpanded ? t('collectPage.collapse') : t('collectPage.expand')
+                    isLayoutExpanded
+                      ? t('collectPage.collapse')
+                      : t('collectPage.expand')
                   }
                   aria-pressed={isLayoutExpanded}
                 />
@@ -133,7 +135,11 @@ export function SurveyContainer(
             {children}
             <Button
               priority="primary"
-              title={t('button continue title', { currentPage })}
+              title={
+                currentPage === PAGE_TYPE.END
+                  ? t('collectPage.continueTitleEnd')
+                  : t('collectPage.continueTitleDefault')
+              }
               id="continue-button"
               onClick={
                 currentPage === PAGE_TYPE.END
@@ -141,7 +147,13 @@ export function SurveyContainer(
                   : handleNextClick
               }
             >
-              {t('button continue label', { currentPage })}
+              {t(
+                currentPage === PAGE_TYPE.END
+                  ? 'collectPage.continueEnd'
+                  : currentPage === PAGE_TYPE.WELCOME
+                    ? 'collectPage.continueWelcome'
+                    : 'collectPage.continueLunatic',
+              )}
             </Button>
             {bottomContent}
             {(mode === MODE_TYPE.VISUALIZE || isDownloadEnabled) && (
@@ -150,18 +162,18 @@ export function SurveyContainer(
                   iconId="ri-download-2-line"
                   priority="tertiary no outline"
                   onClick={handleDownloadData}
-                  title={t('button download data')}
+                  title={t('collectPage.downloadData')}
                 >
-                  {t('button download data')}
+                  {t('collectPage.downloadData')}
                 </Button>
                 {hasArticulation && (
                   <Button
                     iconId="ri-download-2-line"
                     priority="tertiary no outline"
                     onClick={handleDownloadArticulation}
-                    title={t('button download articulation')}
+                    title={t('collectPage.downloadArticulation')}
                   >
-                    {t('button download articulation')}
+                    {t('collectPage.downloadArticulation')}
                   </Button>
                 )}
               </div>
@@ -172,4 +184,3 @@ export function SurveyContainer(
     </>
   )
 }
-

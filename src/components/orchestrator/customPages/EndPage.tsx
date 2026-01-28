@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr'
+import { useTranslation } from 'react-i18next'
 
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { useTranslation } from 'react-i18next'
 import type { StateData } from '@/models/stateData'
 
 /**
@@ -26,9 +26,9 @@ export function EndPage({
     <div className={fr.cx('fr-my-4w')}>
       <h1>{t('endPage.title')}</h1>
       <p>
-        {t('endPage.paragraph', {
-          formattedDate: isDateStillValid ? formattedDate : undefined,
-        })}
+        {formattedDate && isDateStillValid
+          ? t('endPage.paragraphWithDate', { formattedDate })
+          : t('endPage.paragraphWithoutDate')}
       </p>
     </div>
   )

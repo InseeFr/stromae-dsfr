@@ -1,0 +1,90 @@
+{
+  "title": "Accessibility",
+  "declarationTitle": "Accessibility Statement RGAA 4.1.2",
+  "declaration": {
+    "paragraph1": "Insee is committed to making its websites, intranet, extranet, and its software accessible (and its mobile applications and digital urban furniture) in accordance with Article 47 of Law No. 2005-102 of February 11, 2005.",
+    "paragraph2": "To this end, it implements the following strategy and actions:",
+    "actions": [
+      "Multi-year accessibility plan 2022-2024;",
+      "Action plans for 2023, 2024."
+    ],
+    "paragraph3": "These documents are available upon request.",
+    "paragraph4Prefix": "This accessibility statement applies to",
+    "paragraph4Suffix": "."
+  },
+  "conformityStatus": {
+    "title": "Conformity Status",
+    "description": "The Insee online survey response site is not compliant with the general accessibility improvement reference (RGAA), version 4 due to a lack of an ongoing compliance audit."
+  },
+  "testResults": {
+    "title": "Test Results",
+    "contentPrefix": "This statement will be updated as soon as the results of the compliance audit are known.",
+    "linkText": "Download the RGAA audit grid",
+    "linkTitle": "Download the RGAA audit grid - new window"
+  },
+  "nonAccessibleContent": {
+    "title": "Non-Accessible Content",
+    "nonCompliantTitle": "Non-Compliance",
+    "nonCompliantContent": "Not applicable."
+  },
+  "disproportionateBurden": {
+    "title": "Exemptions for Disproportionate Burden",
+    "content": "Not applicable."
+  },
+  "nonSubmittedContent": {
+    "title": "Content Not Subject to Accessibility Obligation",
+    "content": "Not applicable."
+  },
+  "establishment": {
+    "title": "Establishment of this Accessibility Statement",
+    "content": "This statement was established on July 9, 2024, by the Insee Digital Accessibility Network (Rani)."
+  },
+  "technologiesUsed": {
+    "title": "Technologies Used for the Site Development",
+    "list": ["HTML5", "CSS", "Javascript", "React"]
+  },
+  "testEnvironment": {
+    "title": "Test Environment",
+    "content": "Not applicable."
+  },
+  "evaluationTools": {
+    "title": "Accessibility Evaluation Tools",
+    "content": "Not applicable."
+  },
+  "evaluatedPages": {
+    "title": "Pages of the Site That Have Been Verified for Conformity",
+    "content": "Not applicable.",
+    "structuredSampleTitle": "Evaluated Structured Sample",
+    "structuredSampleContent": "Not applicable.",
+    "randomSampleTitle": "Evaluated Random Sample",
+    "randomSampleContent": "Not applicable."
+  },
+  "feedbackContact": {
+    "title": "Feedback and Contact",
+    "contentPrefix": "If you are unable to access content or a service, you can contact support to be directed to an accessible alternative or to obtain the content in another form.",
+    "linkText": "Contact us",
+    "linkUrl": "https://www.insee.fr/fr/information/6438369",
+    "linkTitle": "Contact us - opens a new window"
+  },
+  "recourse": {
+    "title": "Recourse",
+    "intro": "If you notice an accessibility defect preventing you from accessing content or a functionality of the site, you can report it and if you do not receive a response, you are entitled to send your complaints or a request to the Defender of Rights.",
+    "links": [
+      {
+        "text": "Write a message to the Defender of Rights (via the contact form)",
+        "url": "https://formulaire.defenseurdesdroits.fr"
+      },
+      {
+        "text": "Contact the Defender of Rights delegate in your region",
+        "url": "https://www.defenseurdesdroits.fr/carte-des-delegues"
+      }
+    ],
+    "mailPrefix": "Send a letter by mail (free, no stamp required) to the following address:",
+    "mailAddress": [
+      "Défenseur des droits",
+      "Libre réponse 71120",
+      "75342 Paris CEDEX 07"
+    ],
+    "phone": "Contact the Defender of Rights by phone: 09 69 39 00 00."
+  }
+}

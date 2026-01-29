@@ -1,0 +1,59 @@
+{
+  "continueWelcome": "Start",
+  "continueLunatic": "Continue",
+  "continueEnd": "Download the receipt",
+  "continueValidation": "Submit my responses",
+  "continueTitleDefault": "Proceed to the next step",
+  "continueTitleEnd": "Download the acknowledgment of receipt",
+  "downloadData": "Download data",
+  "downloadArticulation": "Download roundabout recap",
+  "expand": "Expand view",
+  "collapse": "Collapse view",
+  "previousTitle": "Return to the previous step",
+  "previousLabel": "Previous",
+  "stepperState": "Step {{currentStep}} of {{stepCount}}",
+  "exitModal": {
+    "title": "Do you want to leave the questionnaire?",
+    "buttonCancel": "Cancel",
+    "buttonValidate": "I understand",
+    "content": "If you leave the questionnaire, your responses will be saved. You can return to the questionnaire at any time to complete or finalize it."
+  },
+  "toast": {
+    "toastSaveSuccessTitle": "Data saved successfully!",
+    "toastSaveSuccessDescription": "Your changes have been recorded and saved.",
+    "toastSaveErrorTitle": "Save error",
+    "toastSaveErrorDescription": "An error occurred while saving your changes.",
+    "toastSaveNetworkErrorTitle": "Network error",
+    "toastSaveNetworkErrorDescription": "A network error occurred, and the data was not saved. Do not close this window so that it can be transmitted upon reconnection."
+  },
+  "VtlDevTools": {
+    "fabButton": "Console VTL",
+    "cleanError": "Clear Errors",
+    "tableTitle": "VTL Runtime Error List",
+    "tableHeaderExpression": "Expression",
+    "tableHeaderBindings": "Bindings",
+    "tableHeaderMessage": "Error Message",
+    "tableHeaderPage": "Page"
+  },
+  "visualize": {
+    "title": "Survey preview.",
+    "sourceFileTitle": "Survey source file.",
+    "metadataFileTitle": "Survey metadata file.",
+    "dataFileTitle": "Survey data file.",
+    "sourceFileError": "You must provide at least one source file URI",
+    "sourceLabel": "Source URI.",
+    "metadataLabel": "Metadata URI",
+    "dataLabel": "Data URI.",
+    "hintText": "a valid url",
+    "stateRelatedMessage": "Validation or error explanation text",
+    "submitButton": "Preview the questionnaire"
+  },
+  "selectNomenclature": {
+    "title": "Suggestion references.",
+    "description": "Add new suggestion references. To be used, they must also appear in the suggesters section of the source file.",
+    "addButton": "Add a new reference",
+    "nameLabel": "Name",
+    "uriLabel": "Uri",
+    "deleteButtonTitle": "Delete"
+  }
+}

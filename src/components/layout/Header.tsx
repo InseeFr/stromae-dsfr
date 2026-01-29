@@ -10,11 +10,8 @@ import { TELEMETRY_EVENT_EXIT_SOURCE } from '@/constants/telemetry'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { executePreLogoutActions } from '@/hooks/prelogout'
 import { useMode } from '@/hooks/useMode'
-import {
-  declareComponentKeys,
-  useResolveLocalizedString,
-  useTranslation,
-} from '@/i18n'
+import { useTranslation } from 'react-i18next'
+import { resolveLocalizedString } from '@/libs/i18n/utils'
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
@@ -24,15 +21,11 @@ import { createSafeUrl, decodeUrlSafeBase64 } from '@/utils/url'
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
 export function Header() {
-  const { t } = useTranslation({ Header })
+  const { t } = useTranslation()
   const { isUserLoggedIn } = useOidc()
-  const { resolveLocalizedString, resolveLocalizedStringDetailed } =
-    useResolveLocalizedString({
-      labelWhenMismatchingLanguage: true,
-    })
   const mode = useMode()
 
-  const { label: serviceTitle, mainLogo } = useMetadataStore()
+  const { mainLogo } = useMetadataStore()
   const { isTelemetryEnabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
 
@@ -92,7 +85,7 @@ export function Header() {
         }
         homeLinkProps={{
           search: true,
-          title: t('home link title'),
+          title: t('header.homeLinkTitle'),
           // needs a href to prevent the default redirection to the homepage.
           // we assume it is a link pointing to the current url
           href: '#',
@@ -107,29 +100,29 @@ export function Header() {
               onClick:
                 isCollectRoute && isTelemetryEnabled
                   ? () => {
-                      pushEvent(computeContactSupportEvent())
-                    }
+                    pushEvent(computeContactSupportEvent())
+                  }
                   : undefined,
             },
-            text: t('quick access support'),
+            text: t('header.quickAccessSupport'),
           },
           ...(!isUserLoggedIn
             ? []
             : [
-                {
-                  iconId: 'ri-account-box-line',
-                  buttonProps: {
-                    onClick: exitModal?.open,
-                    disabled: !isCollectRoute,
-                  },
-                  text: t('quick access portal'),
-                } as const,
-              ]),
+              {
+                iconId: 'ri-account-box-line',
+                buttonProps: {
+                  onClick: exitModal?.open,
+                  disabled: !isCollectRoute,
+                },
+                text: t('header.quickAccessPortal'),
+              } as const,
+            ]),
         ]}
         serviceTagline={surveyUnitCompositeName}
-        serviceTitle={resolveLocalizedString(serviceTitle)}
+        serviceTitle={t('legal.serviceTitle')}
         operatorLogo={{
-          alt: resolveLocalizedStringDetailed(mainLogo.label).str,
+          alt: resolveLocalizedString(mainLogo.label),
           imgUrl: mainLogo.url,
           orientation: 'horizontal',
         }}
@@ -138,13 +131,3 @@ export function Header() {
     </>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'home link title'
-  | 'quick access support'
-  | 'quick access logout'
-  | 'quick access portal'
->()({ Header })
-
-export type I18n = typeof i18n

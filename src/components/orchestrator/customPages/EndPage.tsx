@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr'
+import { useTranslation } from 'react-i18next'
 
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { StateData } from '@/models/stateData'
 
 /**
@@ -16,33 +16,20 @@ export function EndPage({
   date?: number
   state?: StateData['state']
 }>) {
-  const { t } = useTranslation({ EndPage })
+  const { t } = useTranslation()
   const formattedDate = date ? new Date(date).toLocaleString() : undefined
   const isDateStillValid = state !== 'TOEXTRACT' && state !== 'EXTRACTED'
 
-  useDocumentTitle(t('document title'))
+  useDocumentTitle(t('endPage.title'))
 
   return (
     <div className={fr.cx('fr-my-4w')}>
-      <h1>{t('title')}</h1>
+      <h1>{t('endPage.title')}</h1>
       <p>
-        {t('paragraph', {
-          formattedDate: isDateStillValid ? formattedDate : undefined,
-        })}
+        {formattedDate && isDateStillValid
+          ? t('endPage.paragraphWithDate', { formattedDate })
+          : t('endPage.paragraphWithoutDate')}
       </p>
     </div>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'title'
-  | {
-      K: 'paragraph'
-      P: { formattedDate?: string }
-      R: string
-    }
-  | 'document title'
->()({ EndPage })
-
-export type I18n = typeof i18n

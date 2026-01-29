@@ -1,0 +1,16 @@
+{
+  "title": "Bienvenue sur le questionnaire de votre enquête",
+  "paragraph": "Cette enquête permet de connaître plus d'informations sur le domaine concerné",
+  "documentTitle": "Accueil du questionnaire",
+  "welcomeModal": {
+    "title": "Bienvenue",
+    "buttonFirstPage": "Revenir à la première page",
+    "buttonGoBack": "Reprendre là où j'en étais",
+    "content": "Vous avez déjà commencé à renseigner le questionnaire. Souhaitez-vous reprendre là où vous en étiez ou revenir à la première page ?"
+  },
+  "syncModal": {
+    "title": "Synchronisation en cours",
+    "buttonGoBack": "Fermer cette fenêtre",
+    "content": "Vous avez déjà commencé à renseigner le questionnaire, et vos données sont en cours de synchronisation. La page se rechargera automatiquement une fois la synchronisation terminée."
+  }
+}

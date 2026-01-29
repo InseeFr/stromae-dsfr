@@ -1,0 +1,17 @@
+{
+  "license": "This site uses Insee's Stromae and Lunatic applications, which are under the MIT license, based on the State's design system available under the etalab-2.0 license.",
+  "navigationAssistance": {
+    "title": "Navigation assistance",
+    "content1": "The \"Previous\" and \"Continue\" buttons allow you to navigate through the questionnaire.",
+    "content2": "Your responses are saved each time you change the page but are not transmitted. As long as you have not submitted it, you can return to the questionnaire at any time to complete or finalize it.",
+    "content3": "The \"Submit my responses\" button, accessible at the end of the questionnaire, allows you to send your completed questionnaire to our services and download your receipt."
+  },
+  "securityPage": {
+    "title": "Security",
+    "contentPrefix": "The site",
+    "contentSuffix": "has been subject to an approval decision issued by the approval authority on behalf of the qualified authority for information system security."
+  },
+  "siteMap": {
+    "title": "Site Map"
+  }
+}

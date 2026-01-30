@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrade React to v19
+- Upgrade Lunatic from 3.7.6 to [3.10.0](https://github.com/InseeFr/Lunatic/blob/3.0/CHANGELOG.md#3100---2026-01-27)
 
 ## [2.3.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.5) - 2026-01-16
 

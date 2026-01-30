@@ -94,7 +94,7 @@ describe('CheckboxGroup Component', () => {
         orientation: 'vertical',
         'aria-labelledby': undefined,
       },
-      {},
+      undefined,
     )
   })
 
@@ -140,7 +140,7 @@ describe('CheckboxGroup Component', () => {
         state: 'error',
         stateRelatedMessage: 'Error message',
       }),
-      {},
+      undefined,
     )
   })
 })

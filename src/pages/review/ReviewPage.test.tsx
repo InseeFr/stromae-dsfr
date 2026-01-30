@@ -57,7 +57,7 @@ describe('ReviewPage', () => {
         initialInterrogation: mockLoaderResults.interrogation,
         getReferentiel: expect.any(Function),
       }),
-      {},
+      undefined,
     )
   })
 

@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.4.0-rc.lunatic-3-9-0.0",
+  "version": "2.4.0",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

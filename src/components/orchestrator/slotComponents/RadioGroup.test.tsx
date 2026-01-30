@@ -88,7 +88,7 @@ describe('RadioGroup Component', () => {
         disabled: undefined,
         'aria-labelledby': undefined,
       },
-      {},
+      undefined,
     )
   })
 
@@ -134,7 +134,7 @@ describe('RadioGroup Component', () => {
         state: 'error',
         stateRelatedMessage: 'Error message',
       }),
-      {},
+      undefined,
     )
   })
 })

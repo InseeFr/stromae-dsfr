@@ -20,11 +20,13 @@ export const Table: LunaticSlotComponents['Table'] = (props) => {
 
   // Since the only way to detect if the table is a table with MCQ with code list is that there is no header
   // We check if one of the children (usually the first one) has a header prop defined
-  const hasHeader = React.Children.toArray(children).some(
-    (child) =>
-      React.isValidElement(child) && typeof child.props.header !== 'undefined',
-  )
 
+  const hasHeader = React.Children.toArray(children).some((child) => {
+    if (React.isValidElement(child)) {
+      return typeof (child.props as any).header !== 'undefined'
+    }
+    return false
+  })
   const hasErrors = errors && errors.length > 0
 
   return (

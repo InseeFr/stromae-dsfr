@@ -18,8 +18,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react@19.2.4)
       '@inseefr/lunatic':
-        specifier: ^3.7.6
-        version: 3.9.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^3.10.0
+        version: 3.10.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@mui/material':
         specifier: ^5.18.0
         version: 5.18.0(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1022,10 +1022,10 @@ packages:
     resolution: {integrity: sha512-q3FnXqiQkSrC7HuLn3u+cMMmAHUvIRFdLCbBSnJCuJPWa+OYoA8gDgtw9KXGkOklwxToXEwmjRBIfeQDoCxt2w==}
     engines: {node: '>=16.0.0'}
 
-  '@inseefr/lunatic@3.9.0':
-    resolution: {integrity: sha512-bfC7Cqbmm7jG6DuI2XoFI3biZ+AaCZjz4WFqLOM9gT/Yza1EnF6qOsqNORKPkmLIG39wNlSJPnfQyC99WunhaA==}
+  '@inseefr/lunatic@3.10.0':
+    resolution: {integrity: sha512-Sf5oA/OTSXRFxnczvNVBRFn2lvdIS2KonOFyT8NpV9qj/HECQ5WB6xpKrq4bzhkbUBYMR8p95xQzBmoeW08ZxA==}
     peerDependencies:
-      react: '^18.3.1 '
+      react: ^19.2.3
 
   '@inseefr/trevas@0.1.21':
     resolution: {integrity: sha512-k6FSuN62a7VKL1CJKSyEWneS7q2YsPGbNHjA1s7GS8jCGhw3r3ZPyZE1H7+fyBfsUx3rbK2/bqb14oINd8t/3Q==}
@@ -5613,7 +5613,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@inseefr/lunatic@3.9.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@inseefr/lunatic@3.10.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@inseefr/trevas': 0.1.21
       '@inseefr/vtl-2.0-antlr-tools': 0.3.2

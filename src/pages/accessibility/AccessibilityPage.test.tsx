@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+
+import { renderWithi18n } from '@/utils/tests'
 
 import { AccessibilityPage } from './AccessibilityPage'
 
@@ -14,30 +16,28 @@ vi.mock('@codegouvfr/react-dsfr/Breadcrumb', () => ({
   ),
 }))
 
-vi.mock('i18nifty')
-
 describe('AccessibilityPage', () => {
   it('render with correct elements', () => {
-    const { getByText } = render(<AccessibilityPage />)
+    const { getByText } = renderWithi18n(<AccessibilityPage />)
 
-    const title = screen.getAllByText('accessibility title')
+    const title = screen.getAllByText('Accessibility')
     expect(title).toHaveLength(2)
 
-    expect(getByText(`conformity status title`)).toBeInTheDocument()
+    expect(getByText(`Conformity Status`)).toBeInTheDocument()
 
-    expect(getByText(`feedback contact title`)).toBeInTheDocument()
+    expect(getByText(`Feedback and Contact`)).toBeInTheDocument()
 
-    expect(getByText(`recourse title`)).toBeInTheDocument()
+    expect(getByText(`Recourse`)).toBeInTheDocument()
   })
 
   it('should render a breadcrumb', () => {
-    render(<AccessibilityPage />)
+    renderWithi18n(<AccessibilityPage />)
     const breadcrumb = screen.getByTestId('breadcrumb')
     expect(breadcrumb).toBeInTheDocument()
   })
 
   it('should render exactly four sections', () => {
-    render(<AccessibilityPage />)
+    renderWithi18n(<AccessibilityPage />)
     const sections = document.querySelectorAll('section')
     expect(sections).toHaveLength(4)
   })

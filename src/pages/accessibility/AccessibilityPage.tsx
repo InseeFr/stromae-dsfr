@@ -1,110 +1,283 @@
 import { memo } from 'react'
 
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 import accessibilityAuditReport from '@/assets/1-grille-RGAA-v2025-09-09-Questionnaire-enquêtes.pdf'
 import { Grid } from '@/components/Grid'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export const AccessibilityPage = memo(function AccessibilityPage() {
-  const { t } = useTranslation({ AccessibilityPage })
+  const { t } = useTranslation()
+  const fullUrl = `${window.location.protocol}//${window.location.hostname}`
+
+  // Helper function to safely get array from translation
+  const getArray = (key: string): any[] => {
+    const result = t(key, { returnObjects: true })
+    return Array.isArray(result) ? result : []
+  }
 
   return (
     <Grid>
       <Breadcrumb
-        currentPageLabel={t('accessibility title')}
+        currentPageLabel={t('accessibility.title')}
         homeLinkProps={{}}
         segments={[]}
       />
-      <h2>{t('accessibility title')}</h2>
-      <h3>{t('declaration title')}</h3>
+      <h2>{t('accessibility.title')}</h2>
+      <h3>{t('accessibility.declarationTitle')}</h3>
 
-      {t('declaration content', {
-        fullUrl: `${window.location.protocol}//${window.location.hostname}`,
-      })}
+      <p>{t('accessibility.declaration.paragraph1')}</p>
+      <p>
+        {t('accessibility.declaration.paragraph2Prefix')}{' '}
+        <a
+          className="fr-link"
+          href={t('accessibility.declaration.paragraph2LinkUrl')}
+          target="_blank"
+          title={t('accessibility.declaration.paragraph2LinkTitle')}
+        >
+          {t('accessibility.declaration.paragraph2LinkText')}
+        </a>
+      </p>
+      <p>
+        {t('accessibility.declaration.paragraph3Prefix')}{' '}
+        <a className="fr-link" href={fullUrl}>
+          {fullUrl}
+        </a>
+        {t('accessibility.declaration.paragraph3Suffix')}
+      </p>
 
       <section>
-        <h3 className="fr-mt-5w">{t('conformity status title')}</h3>
-        {t('conformity status description')}
-        <h4 className="fr-mt-4w">{t('test results title')}</h4>
-        {t('test results content', { fileUrl: accessibilityAuditReport })}
-        <h4 className="fr-mt-4w">{t('non accessible content title')}</h4>
-        <h5 className="fr-mt-2w">{t('non compliant content title')}</h5>
-        {t('non compliant content content')}
-        <h5 className="fr-mt-2w">{t('disproportionate burden title')}</h5>
-        {t('disproportionate burden content')}
-        <h5 className="fr-mt-2w">{t('non submitted content title')}</h5>
-        {t('non submitted content content')}
+        <h3 className="fr-mt-5w">
+          {t('accessibility.conformityStatus.title')}
+        </h3>
+        <p>
+          {t('accessibility.conformityStatus.prefix')}{' '}
+          <a
+            className="fr-link"
+            href={t('accessibility.conformityStatus.linkUrl')}
+            target="_blank"
+            title={t('accessibility.conformityStatus.linkTitle')}
+          >
+            {t('accessibility.conformityStatus.linkText')}
+          </a>{' '}
+          {t('accessibility.conformityStatus.middle')}{' '}
+          <a
+            className="fr-link"
+            href={t('accessibility.conformityStatus.rgaaLinkUrl')}
+            target="_blank"
+            title={t('accessibility.conformityStatus.rgaaLinkTitle')}
+          >
+            {t('accessibility.conformityStatus.rgaaLinkText')}
+          </a>
+          {t('accessibility.conformityStatus.suffix')}
+        </p>
+
+        <h4 className="fr-mt-4w">{t('accessibility.testResults.title')}</h4>
+        <p>
+          {t('accessibility.testResults.introPrefix')}{' '}
+          <a
+            className="fr-link"
+            href={t('accessibility.testResults.koenaLinkUrl')}
+            target="_blank"
+            title={t('accessibility.testResults.koenaLinkTitle')}
+          >
+            {t('accessibility.testResults.koenaLinkText')}
+          </a>{' '}
+          {t('accessibility.testResults.introSuffix')}
+        </p>
+        <ul>
+          <li>{t('accessibility.testResults.criterion1')}</li>
+          <li>{t('accessibility.testResults.criterion2')}</li>
+          <li>
+            <a
+              className="fr-link"
+              href={accessibilityAuditReport}
+              target="_blank"
+              title={t('accessibility.testResults.auditGridLinkTitle')}
+            >
+              {t('accessibility.testResults.auditGridLinkText')}
+            </a>
+          </li>
+        </ul>
+
+        <h4 className="fr-mt-4w">
+          {t('accessibility.nonAccessibleContent.title')}
+        </h4>
+        <h5 className="fr-mt-2w">
+          {t('accessibility.nonAccessibleContent.nonCompliantTitle')}
+        </h5>
+        <p>{t('accessibility.nonAccessibleContent.nonCompliantIntro')}</p>
+        <ul>
+          {getArray('accessibility.nonAccessibleContent.criteria').map(
+            (criterion: string, index: number) => (
+              <li key={index}>
+                <span>{criterion.split(' — ')[0]}</span> —{' '}
+                {criterion.split(' — ')[1]}
+              </li>
+            ),
+          )}
+        </ul>
+
+        <h5 className="fr-mt-2w">
+          {t('accessibility.disproportionateBurden.title')}
+        </h5>
+        <p>{t('accessibility.disproportionateBurden.content')}</p>
+
+        <h5 className="fr-mt-2w">
+          {t('accessibility.nonSubmittedContent.title')}
+        </h5>
+        <p>{t('accessibility.nonSubmittedContent.content')}</p>
       </section>
 
       <section>
-        <h3 className="fr-mt-5w">{t('establishment title')}</h3>
-        {t('establishment content')}
+        <h3 className="fr-mt-5w">{t('accessibility.establishment.title')}</h3>
+        <p>{t('accessibility.establishment.content')}</p>
 
-        <h4 className="fr-mt-4w">{t('technologies used title')}</h4>
-        {t('technologies used content')}
+        <h4 className="fr-mt-4w">
+          {t('accessibility.technologiesUsed.title')}
+        </h4>
+        <p>{t('accessibility.technologiesUsed.intro')}</p>
+        <ul>
+          {getArray('accessibility.technologiesUsed.list').map(
+            (tech: string, index: number) => (
+              <li key={index}>{tech}</li>
+            ),
+          )}
+        </ul>
 
-        <h4 className="fr-mt-4w">{t('test environment title')}</h4>
-        {t('test environment content')}
+        <h4 className="fr-mt-4w">{t('accessibility.testEnvironment.title')}</h4>
+        <p>{t('accessibility.testEnvironment.intro')}</p>
+        <div className="fr-table" data-fr-js-table="true">
+          <table data-fr-js-table-element="true">
+            <thead>
+              <tr>
+                <th scope="col">
+                  {t('accessibility.testEnvironment.tableHeaders.userAgent')}
+                </th>
+                <th scope="col">
+                  {t(
+                    'accessibility.testEnvironment.tableHeaders.assistiveTech',
+                  )}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {getArray('accessibility.testEnvironment.combinations').map(
+                (
+                  combo: { userAgent: string; assistiveTech: string },
+                  index: number,
+                ) => (
+                  <tr key={index} data-fr-js-table-row="true">
+                    <td>{combo.userAgent}</td>
+                    <td>{combo.assistiveTech}</td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </div>
 
-        <h4 className="fr-mt-4w">{t('evaluation tools title')}</h4>
-        {t('evaluation tools content')}
+        <h4 className="fr-mt-4w">{t('accessibility.evaluationTools.title')}</h4>
+        <p>{t('accessibility.evaluationTools.intro')}</p>
+        <ul>
+          {getArray('accessibility.evaluationTools.tools').map(
+            (
+              tool:
+                | string
+                | {
+                    text: string
+                    linkText: string
+                    linkUrl: string
+                    linkTitle: string
+                  },
+              index: number,
+            ) => (
+              <li key={index}>
+                {typeof tool === 'string' ? (
+                  tool
+                ) : (
+                  <>
+                    {tool.text}{' '}
+                    <a
+                      className="fr-link"
+                      href={tool.linkUrl}
+                      target="_blank"
+                      title={tool.linkTitle}
+                    >
+                      {tool.linkText}
+                    </a>
+                  </>
+                )}
+              </li>
+            ),
+          )}
+        </ul>
 
-        <h4 className="fr-mt-4w">{t('evaluated pages title')}</h4>
-        <h5 className="fr-mt-2w">{t('evaluated structured sample title')}</h5>
-        {t('evaluated structured sample content')}
+        <h4 className="fr-mt-4w">{t('accessibility.evaluatedPages.title')}</h4>
+        <p>{t('accessibility.evaluatedPages.content')}</p>
+        <h5 className="fr-mt-2w">
+          {t('accessibility.evaluatedPages.structuredSampleTitle')}
+        </h5>
+        <ul>
+          {getArray('accessibility.evaluatedPages.structuredSamplePages').map(
+            (page: string, index: number) => (
+              <li key={index}>{page}</li>
+            ),
+          )}
+        </ul>
 
-        <h5 className="fr-mt-2w">{t('evaluated random sample title')}</h5>
-        {t('evaluated random sample content')}
+        <h5 className="fr-mt-2w">
+          {t('accessibility.evaluatedPages.randomSampleTitle')}
+        </h5>
+        <p>
+          <i>{t('accessibility.evaluatedPages.randomSampleContent')}</i>
+        </p>
       </section>
 
       <section>
-        <h3 className="fr-mt-5w">{t('feedback contact title')}</h3>
-        {t('feedback contact content')}
+        <h3 className="fr-mt-5w">{t('accessibility.feedbackContact.title')}</h3>
+        <p>
+          {t('accessibility.feedbackContact.contentPrefix')}{' '}
+          <a
+            className="fr-link"
+            href={t('accessibility.feedbackContact.linkUrl')}
+            target="_blank"
+            title={t('accessibility.feedbackContact.linkTitle')}
+          >
+            {t('accessibility.feedbackContact.linkText')}
+          </a>
+        </p>
       </section>
 
       <section>
-        <h3 className="fr-mt-5w">{t('recourse title')}</h3>
-        {t('recourse content')}
+        <h3 className="fr-mt-5w">{t('accessibility.recourse.title')}</h3>
+        <p>{t('accessibility.recourse.intro')}</p>
+        <ul>
+          {getArray('accessibility.recourse.links').map(
+            (link: { text: string; url: string }, index: number) => (
+              <li key={index}>
+                <a
+                  className="fr-link"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ),
+          )}
+          <li>
+            {t('accessibility.recourse.mailPrefix')}
+            {getArray('accessibility.recourse.mailAddress').map(
+              (line: string, index: number) => (
+                <div key={index}>{line}</div>
+              ),
+            )}
+          </li>
+          <li>{t('accessibility.recourse.phone')}</li>
+        </ul>
       </section>
     </Grid>
   )
 })
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'accessibility title'
-  | 'declaration title'
-  | { K: 'declaration content'; R: React.JSX.Element; P: { fullUrl: string } }
-  | 'conformity status title'
-  | { K: 'conformity status description'; R: React.JSX.Element }
-  | 'test results title'
-  | { K: 'test results content'; R: React.JSX.Element; P: { fileUrl: string } }
-  | 'non accessible content title'
-  | 'non compliant content title'
-  | { K: 'non compliant content content'; R: React.JSX.Element }
-  | 'disproportionate burden title'
-  | { K: 'disproportionate burden content'; R: React.JSX.Element }
-  | 'non submitted content title'
-  | { K: 'non submitted content content'; R: React.JSX.Element }
-  | 'establishment title'
-  | { K: 'establishment content'; R: React.JSX.Element }
-  | 'technologies used title'
-  | { K: 'technologies used content'; R: React.JSX.Element }
-  | 'test environment title'
-  | { K: 'test environment content'; R: React.JSX.Element }
-  | 'evaluation tools title'
-  | { K: 'evaluation tools content'; R: React.JSX.Element }
-  | 'evaluated pages title'
-  | { K: 'evaluated pages content'; R: React.JSX.Element }
-  | 'evaluated structured sample title'
-  | { K: 'evaluated structured sample content'; R: React.JSX.Element }
-  | 'evaluated random sample title'
-  | { K: 'evaluated random sample content'; R: React.JSX.Element }
-  | 'feedback contact title'
-  | { K: 'feedback contact content'; R: React.JSX.Element }
-  | 'recourse title'
-  | { K: 'recourse content'; R: React.JSX.Element }
->()({ AccessibilityPage })
-
-export type I18n = typeof i18n

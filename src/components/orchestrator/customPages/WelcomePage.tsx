@@ -1,13 +1,10 @@
 import { Fragment } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
+import { useTranslation } from 'react-i18next'
 
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import {
-  declareComponentKeys,
-  useResolveLocalizedString,
-  useTranslation,
-} from '@/i18n'
+import { resolveLocalizedString } from '@/libs/i18n/utils'
 import type { Contents, Metadata } from '@/models/metadata'
 
 function renderMetadataContents(contents: Contents[] | undefined) {
@@ -48,17 +45,14 @@ function renderMetadataContents(contents: Contents[] | undefined) {
 export function WelcomePage(
   props: Readonly<{ metadata: Metadata; questionnaireLabel: string }>,
 ) {
-  const { t } = useTranslation({ WelcomePage })
+  const { t } = useTranslation()
   const { metadata, questionnaireLabel } = props
-  const { resolveLocalizedString } = useResolveLocalizedString({
-    labelWhenMismatchingLanguage: true,
-  })
 
   useDocumentTitle(t('document title'), questionnaireLabel)
 
   return (
     <div className={fr.cx('fr-my-4w')}>
-      <h1>{t('title')}</h1>
+      <h1>{t('welcome.title')}</h1>
       <p className={fr.cx('fr-text--lead')}>
         {resolveLocalizedString(metadata.objectives)}
       </p>
@@ -67,10 +61,3 @@ export function WelcomePage(
     </div>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  'title' | 'paragraph' | 'document title'
->()({ WelcomePage })
-
-export type I18n = typeof i18n

@@ -1,51 +1,52 @@
-import { render } from '@testing-library/react'
 import { expect } from 'vitest'
 
-import { EndPage } from './EndPage'
+import { renderWithi18n } from '@/utils/tests'
 
-vi.mock('i18nifty')
+import { EndPage } from './EndPage'
 
 describe('EndPage', () => {
   it('displays date at which answers have been sent', async () => {
     const date = 1728289634098
-    const formattedDate = { formattedDate: new Date(date).toLocaleString() }
+    const formattedDate = new Date(date).toLocaleString()
 
-    const { getByText } = render(<EndPage date={date} />)
+    const { getByText } = renderWithi18n(<EndPage date={date} />)
 
     expect(
-      getByText(`paragraph ${JSON.stringify(formattedDate)}`),
+      getByText(`Your responses were sent on ${formattedDate}.`),
     ).toBeInTheDocument()
   })
 
   it('displays no date if no date has been provided', async () => {
-    const formattedDate = { formattedDate: undefined }
+    const { getByText } = renderWithi18n(<EndPage />)
 
-    const { getByText } = render(<EndPage />)
-
-    expect(
-      getByText(`paragraph ${JSON.stringify(formattedDate)}`),
-    ).toBeInTheDocument()
+    expect(getByText(`Your responses were sent.`)).toBeInTheDocument()
   })
 
   it('does not display date if data have been flagged for extraction', async () => {
     const date = 1728289634098
     const formattedDate = { formattedDate: undefined }
 
-    const { getByText } = render(<EndPage date={date} state={'TOEXTRACT'} />)
+    const { getByText, queryByText } = renderWithi18n(
+      <EndPage date={date} state={'TOEXTRACT'} />,
+    )
 
-    expect(
-      getByText(`paragraph ${JSON.stringify(formattedDate)}`),
-    ).toBeInTheDocument()
+    expect(getByText(`Your responses were sent.`)).toBeInTheDocument()
+
+    expect(queryByText(`${formattedDate}`)).not.toBeInTheDocument()
   })
 
   it('does not display date if data have been extracted', async () => {
     const date = 1728289634098
     const formattedDate = { formattedDate: undefined }
 
-    const { getByText } = render(<EndPage date={date} state={'EXTRACTED'} />)
+    const { getByText, queryByText } = renderWithi18n(
+      <EndPage date={date} state={'EXTRACTED'} />,
+    )
+
+    expect(getByText(`Your responses were sent.`)).toBeInTheDocument()
 
     expect(
-      getByText(`paragraph ${JSON.stringify(formattedDate)}`),
-    ).toBeInTheDocument()
+      queryByText(`${JSON.stringify(formattedDate)}`),
+    ).not.toBeInTheDocument()
   })
 })

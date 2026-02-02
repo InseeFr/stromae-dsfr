@@ -1,0 +1,17 @@
+{
+  "license": "Ce site utilise les applications Insee Stromae et Lunatic, qui sont sous licence MIT, en s’appuyant sur le système de design de l'État disponible sous licence etalab-2.0.",
+  "navigationAssistance": {
+    "title": "Aide à la navigation",
+    "content1": "Les boutons « Précédent » et « Continuer » vous permettent de naviguer dans le questionnaire.",
+    "content2": "Vos réponses sont enregistrées à chaque fois que vous changez de page mais ne sont pas transmises. Tant que vous ne l'avez pas transmis, vous pouvez revenir sur le questionnaire à tout moment, pour le compléter ou le finaliser.",
+    "content3": "Le bouton « Envoyer mes réponses », accessible à la fin du questionnaire, vous permet de transmettre votre questionnaire renseigné à nos services et de télécharger votre accusé de réception."
+  },
+  "securityPage": {
+    "title": "Sécurité",
+    "contentPrefix": "Le site",
+    "contentSuffix": "a fait l'objet d'une décision d'homologation prononcée par l'autorité d'homologation pour le compte de l'autorité qualifiée de la sécurité du système d'information."
+  },
+  "siteMap": {
+    "title": "Plan du site"
+  }
+}

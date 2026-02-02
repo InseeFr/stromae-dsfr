@@ -1,10 +1,9 @@
 import type { ReactNode } from 'react'
 
 import { AxiosError } from 'axios'
+import i18n from 'i18next'
 
-import { declareComponentKeys, getTranslation } from '@/i18n'
-
-import { type ZodErrorName, ZodErrorWithName } from './ZodErrorWithName'
+import { ZodErrorWithName } from './ZodErrorWithName'
 import { NotFoundError } from './notFoundError'
 
 type ErrorNormalized = {
@@ -14,14 +13,14 @@ type ErrorNormalized = {
   code?: number
 }
 
-const { t } = getTranslation('errorNormalizer')
-
 export function errorNormalizer(error: unknown): ErrorNormalized {
+  const t = i18n.t
+
   if (error instanceof NotFoundError) {
     return {
-      title: t('notFound.title'),
-      subtitle: t('notFound.subtitle'),
-      paragraph: t('notFound.paragraph'),
+      title: t('error.notFound.title'),
+      subtitle: t('error.notFound.subtitle'),
+      paragraph: t('error.notFound.paragraph'),
       code: 404,
     }
   }
@@ -29,53 +28,53 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
   if (error instanceof AxiosError) {
     if (!error.response) {
       return {
-        title: t('connectionError.title'),
-        subtitle: t('connectionError.subtitle'),
-        paragraph: t('connectionError.paragraph'),
+        title: t('error.connectionError.title'),
+        subtitle: t('error.connectionError.subtitle'),
+        paragraph: t('error.connectionError.paragraph'),
       }
     }
     const status = error.response.status
     switch (status) {
       case 404:
         return {
-          title: t('resourceNotFound.title'),
-          subtitle: t('resourceNotFound.subtitle'),
-          paragraph: t('resourceNotFound.paragraph'),
+          title: t('error.resourceNotFound.title'),
+          subtitle: t('error.resourceNotFound.subtitle'),
+          paragraph: t('error.resourceNotFound.paragraph'),
           code: status,
         }
       case 401:
         return {
-          title: t('unauthorized.title'),
-          subtitle: t('unauthorized.subtitle'),
-          paragraph: t('unauthorized.paragraph'),
+          title: t('error.unauthorized.title'),
+          subtitle: t('error.unauthorized.subtitle'),
+          paragraph: t('error.unauthorized.paragraph'),
           code: status,
         }
       case 403:
         return {
-          title: t('forbidden.title'),
-          subtitle: t('forbidden.subtitle'),
-          paragraph: t('forbidden.paragraph'),
+          title: t('error.forbidden.title'),
+          subtitle: t('error.forbidden.subtitle'),
+          paragraph: t('error.forbidden.paragraph'),
           code: status,
         }
       case 400:
         return {
-          title: t('badRequest.title'),
-          subtitle: t('badRequest.subtitle'),
-          paragraph: t('badRequest.paragraph'),
+          title: t('error.badRequest.title'),
+          subtitle: t('error.badRequest.subtitle'),
+          paragraph: t('error.badRequest.paragraph'),
           code: status,
         }
       case 500:
         return {
-          title: t('serverError.title'),
-          subtitle: t('serverError.subtitle'),
-          paragraph: t('serverError.paragraph'),
+          title: t('error.serverError.title'),
+          subtitle: t('error.serverError.subtitle'),
+          paragraph: t('error.serverError.paragraph'),
           code: status,
         }
       default:
         return {
-          title: t('unhandledError.title'),
-          subtitle: t('unhandledError.subtitle'),
-          paragraph: t('unhandledError.paragraph'),
+          title: t('error.unhandledError.title'),
+          subtitle: t('error.unhandledError.subtitle'),
+          paragraph: t('error.unhandledError.paragraph'),
           code: status,
         }
     }
@@ -83,8 +82,8 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
 
   if (error instanceof ZodErrorWithName) {
     return {
-      title: t('validationError.title'),
-      subtitle: t('validationError.subtitle', { name: error.name }),
+      title: t('error.validationError.title'),
+      subtitle: t('error.validationError.subtitle', { name: error.name }),
       paragraph: (
         <ul>
           {error.errors.map((e, index) => (
@@ -97,32 +96,8 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
     }
   }
   return {
-    title: t('unknownError.title'),
-    subtitle: t('unknownError.subtitle'),
-    paragraph: t('unknownError.paragraph'),
+    title: t('error.unknownError.title'),
+    subtitle: t('error.unknownError.subtitle'),
+    paragraph: t('error.unknownError.paragraph'),
   }
 }
-
-type GenerateKeys<BaseKey extends string> =
-  `${BaseKey}.${Exclude<keyof ErrorNormalized, 'code'>}`
-
-type ValidationError =
-  | 'validationError.title'
-  | { K: 'validationError.subtitle'; P: { name: ZodErrorName }; R: string }
-
-type AllErrorKeys =
-  | GenerateKeys<'notFound'>
-  | GenerateKeys<'connectionError'>
-  | GenerateKeys<'resourceNotFound'>
-  | GenerateKeys<'unauthorized'>
-  | GenerateKeys<'forbidden'>
-  | GenerateKeys<'badRequest'>
-  | GenerateKeys<'serverError'>
-  | GenerateKeys<'unhandledError'>
-  | GenerateKeys<'unknownError'>
-  | ValidationError
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<AllErrorKeys>()('errorNormalizer')
-
-export type I18n = typeof i18n

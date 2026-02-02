@@ -5,14 +5,12 @@ import Button from '@codegouvfr/react-dsfr/Button'
 import { VTLExpressionError, VTLInterpretationError } from '@inseefr/lunatic'
 import Badge from '@mui/material/Badge'
 import Fab from '@mui/material/Fab'
-import { declareComponentKeys } from 'i18nifty'
-
-import { useTranslation } from '@/i18n'
+import { useTranslation } from 'react-i18next'
 
 import { useLoggerErrors } from './VTLErrorStore'
 
 export const VTLDevTools = () => {
-  const { t } = useTranslation({ VTLDevTools })
+  const { t } = useTranslation()
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -29,7 +27,7 @@ export const VTLDevTools = () => {
       >
         <Badge badgeContent={errors.length} color="error">
           <Fab variant="extended" onClick={togglePanel}>
-            {t('fab button')}
+            {t('collectPage.VtlDevTools.fabButton')}
           </Fab>
         </Badge>
       </div>
@@ -72,7 +70,7 @@ export const VTLDevTools = () => {
             )}
           >
             <div className={fr.cx('fr-table__header')}>
-              <h3>{t('table title')}</h3>
+              <h3>{t('collectPage.VtlDevTools.tableTitle')}</h3>
 
               <Button
                 iconId="fr-icon-delete-line"
@@ -87,13 +85,21 @@ export const VTLDevTools = () => {
               <div className={fr.cx('fr-table__container')}>
                 <div className={fr.cx('fr-table__content')}>
                   <table className={fr.cx('fr-cell--multiline')}>
-                    <caption>{t('table title')}</caption>
+                    <caption>{t('collectPage.VtlDevTools.tableTitle')}</caption>
                     <thead>
                       <tr>
-                        <th scope="col">{t('table header expression')}</th>
-                        <th scope="col">{t('table header bindings')}</th>
-                        <th scope="col">{t('table header message')}</th>
-                        <th scope="col">{t('table header page')}</th>
+                        <th scope="col">
+                          {t('collectPage.VtlDevTools.tableHeaderExpression')}
+                        </th>
+                        <th scope="col">
+                          {t('collectPage.VtlDevTools.tableHeaderBindings')}
+                        </th>
+                        <th scope="col">
+                          {t('collectPage.VtlDevTools.tableHeaderMessage')}
+                        </th>
+                        <th scope="col">
+                          {t('collectPage.VtlDevTools.tableHeaderPage')}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -120,19 +126,6 @@ export const VTLDevTools = () => {
     </>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'table title'
-  | 'fab button'
-  | 'clean error'
-  | 'table header bindings'
-  | 'table header message'
-  | 'table header page'
-  | 'table header expression'
->()({ VTLDevTools })
-
-export type I18n = typeof i18n
 
 const hasBindings = (
   error: VTLExpressionError,

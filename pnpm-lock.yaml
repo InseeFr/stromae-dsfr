@@ -18,8 +18,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react@19.2.4)
       '@inseefr/lunatic':
-        specifier: ^3.10.0
-        version: 3.10.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^3.11.0
+        version: 3.11.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@mui/material':
         specifier: ^5.18.0
         version: 5.18.0(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1022,8 +1022,8 @@ packages:
     resolution: {integrity: sha512-q3FnXqiQkSrC7HuLn3u+cMMmAHUvIRFdLCbBSnJCuJPWa+OYoA8gDgtw9KXGkOklwxToXEwmjRBIfeQDoCxt2w==}
     engines: {node: '>=16.0.0'}
 
-  '@inseefr/lunatic@3.10.0':
-    resolution: {integrity: sha512-Sf5oA/OTSXRFxnczvNVBRFn2lvdIS2KonOFyT8NpV9qj/HECQ5WB6xpKrq4bzhkbUBYMR8p95xQzBmoeW08ZxA==}
+  '@inseefr/lunatic@3.11.0':
+    resolution: {integrity: sha512-N2AqK7MFbOMa5Q5ZGaVhv9vIhqe4GdY332MW1KDQoJ52boNjjzdR6TUANFPpvnmythtqU6zi7eeZDmKHUAsxTQ==}
     peerDependencies:
       react: ^19.2.3
 
@@ -5613,7 +5613,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@inseefr/lunatic@3.10.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@inseefr/lunatic@3.11.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@inseefr/trevas': 0.1.21
       '@inseefr/vtl-2.0-antlr-tools': 0.3.2
@@ -5743,7 +5743,7 @@ snapshots:
 
   '@mui/private-theming@5.17.1(@types/react@19.2.10)(react@19.2.4)':
     dependencies:
-      '@babel/runtime': 7.28.4
+      '@babel/runtime': 7.28.6
       '@mui/utils': 5.17.1(@types/react@19.2.10)(react@19.2.4)
       prop-types: 15.8.1
       react: 19.2.4
@@ -5752,7 +5752,7 @@ snapshots:
 
   '@mui/styled-engine@5.18.0(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.10)(react@19.2.4))(@types/react@19.2.10)(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@babel/runtime': 7.28.4
+      '@babel/runtime': 7.28.6
       '@emotion/cache': 11.14.0
       '@emotion/serialize': 1.3.3
       csstype: 3.2.3

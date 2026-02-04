@@ -1,0 +1,59 @@
+{
+  "continueWelcome": "Commencer",
+  "continueLunatic": "Continuer",
+  "continueEnd": "Télécharger l'accusé de réception",
+  "continueValidation": "Envoyer mes réponses",
+  "continueTitleDefault": "Passer à l'étape suivante",
+  "continueTitleEnd": "Télécharger l'accusé de réception",
+  "downloadData": "Télécharger les données",
+  "downloadArticulation": "Télécharger le récapitulatif du rond-point",
+  "expand": "Étendre l'affichage",
+  "collapse": "Réduire l'affichage",
+  "previousTitle": "Revenir à l'étape précédente",
+  "previousLabel": "Précédent",
+  "stepperState": "Étape {{currentStep}} sur {{stepCount}}",
+  "exitModal": {
+    "title": "Voulez-vous quitter le questionnaire ?",
+    "buttonCancel": "Annuler",
+    "buttonValidate": "J'ai compris",
+    "content": "Vos données seront enregistrées, vous allez être renvoyé vers le portail de réponse"
+  },
+  "toast": {
+    "toastSaveSuccessTitle": "Données sauvegardées avec succès !",
+    "toastSaveSuccessDescription": "Vos modifications ont été enregistrées et sauvegardées.",
+    "toastSaveErrorTitle": "Erreur de sauvegarde",
+    "toastSaveErrorDescription": "Une erreur est survenue lors de l'enregistrement de vos modifications.",
+    "toastSaveNetworkErrorTitle": "Erreur réseau",
+    "toastSaveNetworkErrorDescription": "Une erreur réseau est survenue, les données ne sont pas enregistrées. Ne fermez pas cette fenêtre pour qu'elles puissent être transmises à la reconnexion."
+  },
+  "VtlDevTools": {
+    "fabButton": "Console VTL",
+    "cleanError": "Vider les erreurs",
+    "tableTitle": "Liste des erreurs d'exécution VTL",
+    "tableHeaderExpression": "Expression",
+    "tableHeaderBindings": "Bindings",
+    "tableHeaderMessage": "Message d'erreur",
+    "tableHeaderPage": "Page"
+  },
+  "visualize": {
+    "title": "Prévisualisation d'enquête.",
+    "sourceFileTitle": "Fichier source de l'enquête.",
+    "metadataFileTitle": "Fichier de métadonnées de l'enquête.",
+    "dataFileTitle": "Fichier de données de l'enquête.",
+    "sourceFileError": "Vous devez au moins fournir un URI de fichier source",
+    "sourceLabel": "Uri Source.",
+    "metadataLabel": "Uri metadata",
+    "dataLabel": "Uri Data.",
+    "hintText": "une url valide",
+    "stateRelatedMessage": "Texte de validation ou d'explication de l'erreur",
+    "submitButton": "Visualiser le questionnaire"
+  },
+  "selectNomenclature": {
+    "title": "Référentiels de suggestion.",
+    "description": "Ajouter de nouveaux référentiels de suggestion. Pour être utilisés, ils devront aussi figurer dans la section suggesters du fichier source.",
+    "addButton": "Ajouter un nouveau référentiel",
+    "nameLabel": "Nom",
+    "uriLabel": "Uri",
+    "deleteButtonTitle": "Supprimer"
+  }
+}

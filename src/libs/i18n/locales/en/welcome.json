@@ -1,0 +1,16 @@
+{
+  "title": "Welcome to your survey questionnaire",
+  "paragraph": "This survey allows us to gather more information on the relevant field",
+  "documentTitle": "Questionnaire homepage",
+  "welcomeModal": {
+    "title": "Welcome",
+    "buttonFirstPage": "Return to the first page",
+    "buttonGoBack": "Resume where I left off",
+    "content": "You have already started filling out the questionnaire. Would you like to resume where you left off or return to the first page?"
+  },
+  "syncModal": {
+    "title": "Sync in progress",
+    "buttonGoBack": "Close this window",
+    "content": "You have already started filling out the questionnaire, and your data is being synchronized. The page will automatically reload once the synchronization is complete."
+  }
+}

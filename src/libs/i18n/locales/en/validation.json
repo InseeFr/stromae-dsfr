@@ -1,0 +1,11 @@
+{
+  "title": "You have reached the end of the questionnaire",
+  "paragraph": "Once submitted, you will not be able to modify your responses, and you can download a receipt.",
+  "documentTitle": "Sending the questionnaire",
+  "validationModal": {
+    "title": "Do you want to submit your responses",
+    "buttonCancel": "Cancel",
+    "buttonValidate": "Submit my responses",
+    "content": "You are about to submit your responses to the questionnaire. After submission, you will not be able to modify your responses."
+  }
+}

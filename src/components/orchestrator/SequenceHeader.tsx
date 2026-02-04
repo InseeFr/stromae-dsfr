@@ -1,8 +1,8 @@
 import { type FrCxArg, fr } from '@codegouvfr/react-dsfr'
 import { MDLabel } from '@inseefr/lunatic'
+import { useTranslation } from 'react-i18next'
 
 import { useSequenceTitle } from '@/hooks/useDocumentTitle'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { LunaticOverview } from '@/models/lunaticType'
 
 import { MarkdownLink } from './slotComponents/MarkdownLink'
@@ -16,7 +16,7 @@ type SequenceHeaderProps = {
 export function SequenceHeader(props: SequenceHeaderProps) {
   const { overview, pagination, isDirtyState = false } = props
 
-  const { t } = useTranslation('SequenceHeader')
+  const { t } = useTranslation()
   const currentSequenceIndex = overview.findIndex(
     (sequence) => sequence.current,
   )
@@ -48,7 +48,7 @@ export function SequenceHeader(props: SequenceHeaderProps) {
       <h2 className={fr.cx('fr-stepper__title', 'fr-mb-0')}>
         {currentSequence.label}
         <span className={fr.cx('fr-stepper__state')}>
-          {t('stepper state', { currentStep, stepCount })}
+          {t('collectPage.stepperState', { currentStep, stepCount })}
         </span>
       </h2>
       {currentSequence.description && (
@@ -67,12 +67,3 @@ export function SequenceHeader(props: SequenceHeaderProps) {
     </div>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<{
-  K: 'stepper state'
-  P: { currentStep: number; stepCount: number }
-  R: string
-}>()({ SequenceHeader })
-
-export type I18n = typeof i18n

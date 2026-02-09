@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.2) - 2026-02-09
+
+### Changed
+
+- Upgrade Lunatic from 3.11.0 to [3.11.1](https://github.com/InseeFr/Lunatic/blob/3.0/CHANGELOG.md#3111---2026-02-09)
+
 ## [2.4.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.1) - 2026-02-02
 
 ### Changed

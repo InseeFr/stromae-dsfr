@@ -52,7 +52,7 @@ export function WelcomeModal({ goBack, open }: Props) {
       ]}
       concealingBackdrop={true}
     >
-      {t('content')}
+      {t('welcome.welcomeModal.content')}
     </modal.Component>
   )
 }

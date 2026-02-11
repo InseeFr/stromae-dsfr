@@ -17,9 +17,9 @@ type Props = {
 }
 
 const REDIRECT_KEY_MAP = {
-  home: 'redirectHome',
-  portal: 'redirectPortal',
-  visualizeForm: 'redirectVisualizeForm',
+  home: 'error.redirectHome',
+  portal: 'error.redirectPortal',
+  visualizeForm: 'error.redirectVisualizeForm',
 } as const satisfies Record<NonNullable<Props['redirectTo']>, string>
 
 export function ErrorComponent(props: Props) {

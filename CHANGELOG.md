@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Switched i18n library from i18nifty to i18next.
+- Updated React DSFR from v1.13.6 to v1.31.1.
 
 ## [2.4.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.2) - 2026-02-09
 

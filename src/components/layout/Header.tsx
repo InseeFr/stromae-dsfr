@@ -25,7 +25,7 @@ export function Header() {
   const { isUserLoggedIn } = useOidc()
   const mode = useMode()
 
-  const { mainLogo } = useMetadataStore()
+  const { label: serviceTitle, mainLogo } = useMetadataStore()
   const { isTelemetryEnabled, pushEvent, triggerBatchTelemetryCallback } =
     useTelemetry()
 
@@ -120,7 +120,7 @@ export function Header() {
               ]),
         ]}
         serviceTagline={surveyUnitCompositeName}
-        serviceTitle={t('legal.serviceTitle')}
+        serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
           alt: resolveLocalizedString(mainLogo.label),
           imgUrl: mainLogo.url,

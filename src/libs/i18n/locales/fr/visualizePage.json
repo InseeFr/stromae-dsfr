@@ -1,0 +1,21 @@
+{
+  "title": "Prévisualisation d'enquête.",
+  "sourceFileTitle": "Fichier source de l'enquête.",
+  "metadataFileTitle": "Fichier de métadonnées de l'enquête.",
+  "dataFileTitle": "Fichier de données de l'enquête.",
+  "sourceFileError": "Vous devez au moins fournir un URI de fichier source",
+  "sourceLabel": "Uri Source.",
+  "metadataLabel": "Uri metadata",
+  "dataLabel": "Uri Data.",
+  "hintText": "une url valide",
+  "stateRelatedMessage": "Texte de validation ou d'explication de l'erreur",
+  "submitButton": "Visualiser le questionnaire",
+  "selectNomenclature": {
+    "title": "Référentiels de suggestion.",
+    "description": "Ajouter de nouveaux référentiels de suggestion. Pour être utilisés, ils devront aussi figurer dans la section suggesters du fichier source.",
+    "addButton": "Ajouter un nouveau référentiel",
+    "nameLabel": "Nom",
+    "uriLabel": "Uri",
+    "deleteButtonTitle": "Supprimer"
+  }
+}

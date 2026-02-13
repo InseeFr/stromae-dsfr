@@ -1,0 +1,21 @@
+{
+  "title": "Survey preview.",
+  "sourceFileTitle": "Survey source file.",
+  "metadataFileTitle": "Survey metadata file.",
+  "dataFileTitle": "Survey data file.",
+  "sourceFileError": "You must provide at least one source file URI",
+  "sourceLabel": "Source URI.",
+  "metadataLabel": "Metadata URI",
+  "dataLabel": "Data URI.",
+  "hintText": "a valid url",
+  "stateRelatedMessage": "Validation or error explanation text",
+  "submitButton": "Preview the questionnaire",
+  "selectNomenclature": {
+    "title": "Suggestion references.",
+    "description": "Add new suggestion references. To be used, they must also appear in the suggesters section of the source file.",
+    "addButton": "Add a new reference",
+    "nameLabel": "Name",
+    "uriLabel": "Uri",
+    "deleteButtonTitle": "Delete"
+  }
+}

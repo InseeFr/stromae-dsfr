@@ -6,6 +6,7 @@ import footer from './footer.json'
 import header from './header.json'
 import legal from './legal.json'
 import validation from './validation.json'
+import visualizePage from './visualizePage.json'
 import welcome from './welcome.json'
 
 export const translation = {
@@ -17,5 +18,6 @@ export const translation = {
   header,
   legal,
   validation,
+  visualizePage,
   welcome,
 }

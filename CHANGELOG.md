@@ -7,11 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.2) - 2026-02-09
+
+### Changed
+
+- Upgrade Lunatic from 3.11.0 to [3.11.1](https://github.com/InseeFr/Lunatic/blob/3.0/CHANGELOG.md#3111---2026-02-09)
+
+## [2.4.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.1) - 2026-02-02
+
+### Changed
+
+- Upgrade Lunatic from 3.10.0 to [3.11.0](https://github.com/InseeFr/Lunatic/blob/3.0/CHANGELOG.md#3110---2026-02-02)
+
+## [2.4.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.0) - 2026-01-30
+
+### Changed
+
+- Upgrade React to v19
+- Upgrade Lunatic from 3.7.6 to [3.10.0](https://github.com/InseeFr/Lunatic/blob/3.0/CHANGELOG.md#3100---2026-01-27)
+
+## [2.3.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.5) - 2026-01-16
+
+### Build
+
+- Switch node 20 to node 24
+- Upgrade gh-actions version
+
+### Fixed
+
+- Fixed CVEs on devDependencies (orval)
+
+## [2.3.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.4) - 2025-12-30
+
+### Changed
+
+- Browser tab title now dynamically updates based on the questionnaire name for better user orientation.
+- Some improvments for Lunatic Suggeter (bump Lunatic to [3.7.6](https://github.com/InseeFr/Lunatic/releases/tag/3.7.6))
+
+## [2.3.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.3) - 2025-12-15
+
+### Fixed
+
+- Fixed an accessibility issue with layout tables being incorrectly announced by screen readers. (Added `role="presentation"` to presentational tables.)
+
+## [2.3.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.2) - 2025-12-10
+
+- Updated docker base image
+
+## [2.3.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.1) - 2025-12-10
+
+### Added
+
+- Added cells data on leaf state update events
+
+### Fixed
+
+- Fixed an issue where collected data wasn't synced properly after going back online from offline mode.
+- Fixed an accessibility issue with footer (alt attribute)
+- Fixed an accessibility issue with collapse/expand buttons.
+- Fixed an issue where user is block because of self cleaning variable
+
+## [2.3.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.3.0) - 2025-11-26
+
 ### Added
 
 - Added an environment variable to download data in collect mode (enabled in test/review builds, disabled in production).
 - In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
 - In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
+- Update static page of accessibility
 
 ### Changed
 
@@ -19,9 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed authentication by downgrading `oidc-spa` (cross-domain issues) (already done in 2.2.4 but it must be a minor version, not a patch)
 - Fixed an issue where aria-hidden stayed true on hover for tooltips.
-- Fixed an issue where collected data wasn't synced properly after going back online from offline mode.
-- Fixed an accessibility issue with collapse/expand buttons.
 
 ## [2.2.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.2.4) - 2025-11-25
 

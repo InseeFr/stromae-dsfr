@@ -120,8 +120,10 @@ export function Footer() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<{ K: 'license'; R: JSX.Element }>()({
-  Footer,
-})
+const { i18n } = declareComponentKeys<{ K: 'license'; R: React.JSX.Element }>()(
+  {
+    Footer,
+  },
+)
 
 export type I18n = typeof i18n

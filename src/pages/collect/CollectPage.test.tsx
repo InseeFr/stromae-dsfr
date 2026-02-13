@@ -53,7 +53,7 @@ describe('CollectPage', () => {
         updateDataAndStateData: expect.any(Function),
         getDepositProof: expect.any(Function),
       }),
-      {},
+      undefined,
     )
   })
 })

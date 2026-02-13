@@ -75,36 +75,36 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
 const { i18n } = declareComponentKeys<
   | 'accessibility title'
   | 'declaration title'
-  | { K: 'declaration content'; R: JSX.Element; P: { fullUrl: string } }
+  | { K: 'declaration content'; R: React.JSX.Element; P: { fullUrl: string } }
   | 'conformity status title'
-  | { K: 'conformity status description'; R: JSX.Element }
+  | { K: 'conformity status description'; R: React.JSX.Element }
   | 'test results title'
-  | { K: 'test results content'; R: JSX.Element; P: { fileUrl: string } }
+  | { K: 'test results content'; R: React.JSX.Element; P: { fileUrl: string } }
   | 'non accessible content title'
   | 'non compliant content title'
-  | { K: 'non compliant content content'; R: JSX.Element }
+  | { K: 'non compliant content content'; R: React.JSX.Element }
   | 'disproportionate burden title'
-  | { K: 'disproportionate burden content'; R: JSX.Element }
+  | { K: 'disproportionate burden content'; R: React.JSX.Element }
   | 'non submitted content title'
-  | { K: 'non submitted content content'; R: JSX.Element }
+  | { K: 'non submitted content content'; R: React.JSX.Element }
   | 'establishment title'
-  | { K: 'establishment content'; R: JSX.Element }
+  | { K: 'establishment content'; R: React.JSX.Element }
   | 'technologies used title'
-  | { K: 'technologies used content'; R: JSX.Element }
+  | { K: 'technologies used content'; R: React.JSX.Element }
   | 'test environment title'
-  | { K: 'test environment content'; R: JSX.Element }
+  | { K: 'test environment content'; R: React.JSX.Element }
   | 'evaluation tools title'
-  | { K: 'evaluation tools content'; R: JSX.Element }
+  | { K: 'evaluation tools content'; R: React.JSX.Element }
   | 'evaluated pages title'
-  | { K: 'evaluated pages content'; R: JSX.Element }
+  | { K: 'evaluated pages content'; R: React.JSX.Element }
   | 'evaluated structured sample title'
-  | { K: 'evaluated structured sample content'; R: JSX.Element }
+  | { K: 'evaluated structured sample content'; R: React.JSX.Element }
   | 'evaluated random sample title'
-  | { K: 'evaluated random sample content'; R: JSX.Element }
+  | { K: 'evaluated random sample content'; R: React.JSX.Element }
   | 'feedback contact title'
-  | { K: 'feedback contact content'; R: JSX.Element }
+  | { K: 'feedback contact content'; R: React.JSX.Element }
   | 'recourse title'
-  | { K: 'recourse content'; R: JSX.Element }
+  | { K: 'recourse content'; R: React.JSX.Element }
 >()({ AccessibilityPage })
 
 export type I18n = typeof i18n

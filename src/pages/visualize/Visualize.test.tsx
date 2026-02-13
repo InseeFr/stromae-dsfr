@@ -59,6 +59,8 @@ describe('VisualizePage', () => {
 
     render(<VisualizePage />)
 
+    // React 19 no longer accept legacy context ie. User({children}, context)
+    // so the second params is now always undefined
     expect(Orchestrator).toHaveBeenCalledWith(
       expect.objectContaining({
         mode: 'visualize',
@@ -67,7 +69,7 @@ describe('VisualizePage', () => {
         initialInterrogation: mockLoaderResults.interrogation,
         getReferentiel: expect.any(Function),
       }),
-      expect.anything(),
+      undefined,
     )
   })
 

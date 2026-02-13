@@ -9,7 +9,6 @@ import {
 } from '@tanstack/react-router'
 
 import { TelemetryProvider } from '@/contexts/TelemetryContext'
-import { OidcProvider } from '@/oidc'
 import { routeTree } from '@/router/router'
 
 startReactDsfr({
@@ -51,14 +50,12 @@ export function App() {
   return (
     <MuiDsfrThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <OidcProvider>
-          <TelemetryProvider>
-            <RouterProvider
-              router={router}
-              basepath={import.meta.env.VITE_BASE_PATH}
-            />
-          </TelemetryProvider>
-        </OidcProvider>
+        <TelemetryProvider>
+          <RouterProvider
+            router={router}
+            basepath={import.meta.env.VITE_BASE_PATH}
+          />
+        </TelemetryProvider>
       </QueryClientProvider>
     </MuiDsfrThemeProvider>
   )

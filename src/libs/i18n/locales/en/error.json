@@ -12,11 +12,7 @@
     "subtitle": "An error occurred while connecting to the server.",
     "paragraph": "Check your Internet connection and try again."
   },
-  "validationError": {
-    "title": "Validation Error",
-    "subtitle": "{{name}}'s file is not valid."
-  },
-  "ressourceNotFound": {
+  "resourceNotFound": {
     "title": "Resource not found",
     "subtitle": "The resource you are looking for cannot be found on the server.",
     "paragraph": "Please check the URL you entered or contact the site administrator for assistance."
@@ -50,5 +46,9 @@
     "title": "Unknown error",
     "subtitle": "An unexpected error occurred.",
     "paragraph": "Please try again later or contact the site administrator for assistance."
+  },
+  "validationError": {
+    "title": "Validation Error",
+    "subtitle": "{{name}}'s file is not valid."
   }
 }

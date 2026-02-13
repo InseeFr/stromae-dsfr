@@ -48,7 +48,7 @@ export function WelcomePage(
   const { t } = useTranslation()
   const { metadata, questionnaireLabel } = props
 
-  useDocumentTitle(t('document title'), questionnaireLabel)
+  useDocumentTitle(t('welcome.documentTitle'), questionnaireLabel)
 
   return (
     <div className={fr.cx('fr-my-4w')}>

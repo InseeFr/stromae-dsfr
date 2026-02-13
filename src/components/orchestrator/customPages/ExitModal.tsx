@@ -15,7 +15,7 @@ export function ExitModal({ modal, navigatePortal }: Readonly<Props>) {
 
   return (
     <modal.Component
-      title={t('exitModal.title')}
+      title={t('collectPage.exitModal.title')}
       buttons={[
         {
           doClosesModal: true,
@@ -29,7 +29,7 @@ export function ExitModal({ modal, navigatePortal }: Readonly<Props>) {
       ]}
       concealingBackdrop={true}
     >
-      {t('collectPage.exitModal.description')}
+      {t('collectPage.exitModal.content')}
     </modal.Component>
   )
 }

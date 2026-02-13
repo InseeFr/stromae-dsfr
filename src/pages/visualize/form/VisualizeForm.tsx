@@ -52,45 +52,37 @@ export function VisualizeForm() {
       <Grid>
         <FormProvider {...methods}>
           <form onSubmit={onSubmit}>
-            <h1>{t('collectPage.visualize.title')}</h1>
-            <h2>{t('collectPage.visualize.sourceFileTitle')}</h2>
+            <h1>{t('visualizePage.title')}</h1>
+            <h2>{t('visualizePage.sourceFileTitle')}</h2>
             <Input
               nativeInputProps={{
                 ...register('source', {
-                  required: t(
-                    'collectPage.visualize.sourceFileError',
-                  ) as string,
+                  required: t('visualizePage.sourceFileError') as string,
                 }),
               }}
-              hintText={t('collectPage.visualize.hintText')}
-              label={t('collectPage.visualize.sourceLabel')}
+              hintText={t('visualizePage.hintText')}
+              label={t('visualizePage.sourceLabel')}
               state={errors.source ? 'error' : 'default'}
               stateRelatedMessage={errors.source?.message}
             />
-            <h2>{t('collectPage.visualize.metadataFileTitle')}</h2>
+            <h2>{t('visualizePage.metadataFileTitle')}</h2>
             <Input
               nativeInputProps={{ ...register('metadata') }}
-              label={t('collectPage.visualize.metadataLabel')}
-              hintText={t('collectPage.visualize.hintText')}
+              label={t('visualizePage.metadataLabel')}
+              hintText={t('visualizePage.hintText')}
               state="default"
-              stateRelatedMessage={t(
-                'collectPage.visualize.stateRelatedMessage',
-              )}
+              stateRelatedMessage={t('visualizePage.stateRelatedMessage')}
             />
-            <h2>{t('collectPage.visualize.dataFileTitle')}</h2>
+            <h2>{t('visualizePage.dataFileTitle')}</h2>
             <Input
               nativeInputProps={{ ...register('data') }}
-              hintText={t('collectPage.visualize.hintText')}
-              label={t('collectPage.visualize.dataLabel')}
+              hintText={t('visualizePage.hintText')}
+              label={t('visualizePage.dataLabel')}
               state="default"
-              stateRelatedMessage={t(
-                'collectPage.visualize.stateRelatedMessage',
-              )}
+              stateRelatedMessage={t('visualizePage.stateRelatedMessage')}
             />
             <SelectNomenclatures />
-            <Button type="submit">
-              {t('collectPage.visualize.submitButton')}
-            </Button>
+            <Button type="submit">{t('visualizePage.submitButton')}</Button>
           </form>
         </FormProvider>
       </Grid>

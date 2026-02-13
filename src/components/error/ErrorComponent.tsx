@@ -68,7 +68,7 @@ export function ErrorComponent(props: Props) {
                 }
               })()}
             >
-              {t(redirectKey)}
+              {redirectKey ? t(redirectKey) : ''}
             </Button>
           )}
         </div>

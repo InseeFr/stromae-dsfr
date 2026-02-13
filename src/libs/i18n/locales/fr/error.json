@@ -1,0 +1,54 @@
+{
+  "redirectPortal": "Retourner sur le portail",
+  "redirectVisualizeForm": "Retourner au formulaire de visualisation",
+  "redirectHome": "Retourner à la page d'accueil",
+  "notFound": {
+    "title": "Page non trouvée",
+    "subtitle": "La page que vous cherchez est introuvable. Excusez-nous pour la gêne occasionnée.",
+    "paragraph": "Si vous avez tapé l'adresse web dans le navigateur, vérifiez qu'elle est correcte. La page n'est peut-être plus disponible. Dans ce cas, pour continuer votre visite vous pouvez retourner sur la page d'accueil. Sinon contactez-nous pour que l'on puisse vous aider."
+  },
+  "connectionError": {
+    "title": "Erreur de connexion",
+    "subtitle": "Une erreur s'est produite lors de la connexion au serveur.",
+    "paragraph": "Veuillez vérifier votre connexion Internet et réessayer. Si le problème persiste, veuillez contacter votre fournisseur de services Internet ou l'administrateur du site pour obtenir de l'aide."
+  },
+  "resourceNotFound": {
+    "title": "Ressource non trouvée",
+    "subtitle": "La ressource que vous cherchez est introuvable sur le serveur.",
+    "paragraph": "Veuillez vérifier l'URL que vous avez saisie ou contactez l'assistance pour obtenir de l'aide."
+  },
+  "unauthorized": {
+    "title": "Non autorisé",
+    "subtitle": "Vous n'avez pas l'autorisation d'accéder à cette ressource.",
+    "paragraph": "Veuillez vous connecter avec les informations appropriées ou contacter l'assistance pour obtenir de l'aide."
+  },
+  "forbidden": {
+    "title": "Accès refusé",
+    "subtitle": "Vous n'êtes pas autorisé à accéder à cette ressource.",
+    "paragraph": "Veuillez contacter l'assistance pour obtenir de l'aide."
+  },
+  "badRequest": {
+    "title": "Requête incorrecte",
+    "subtitle": "La requête que vous avez envoyée est incorrecte ou malformée.",
+    "paragraph": "Veuillez vérifier les données que vous avez envoyées et réessayer."
+  },
+  "serverError": {
+    "title": "Erreur interne du serveur",
+    "subtitle": "Une erreur est survenue du côté du serveur. Veuillez réessayer ultérieurement.",
+    "paragraph": "Si le problème persiste, veuillez contacter l'assistance pour obtenir de l'aide."
+  },
+  "unhandledError": {
+    "title": "Erreur non gérée",
+    "subtitle": "Une erreur s'est produite lors de la requête.",
+    "paragraph": "Veuillez réessayer ultérieurement ou contacter l'administrateur du site pour obtenir de l'aide."
+  },
+  "unknownError": {
+    "title": "Erreur inconnue",
+    "subtitle": "Une erreur inattendue s'est produite.",
+    "paragraph": "Veuillez réessayer ultérieurement ou contacter l'administrateur du site pour obtenir de l'aide."
+  },
+  "validationError": {
+    "title": "Erreur de validation",
+    "subtitle": "Le fichier de {{name}} n'est pas valide."
+  }
+}

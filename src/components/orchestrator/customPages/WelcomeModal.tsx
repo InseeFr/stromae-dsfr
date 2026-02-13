@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-
-import { declareComponentKeys, useTranslation } from '@/i18n'
+import { useTranslation } from 'react-i18next'
 
 const modal = createModal({
   id: 'welcomeModal',
@@ -20,7 +19,7 @@ type Props = {
  * Modal displayed at the start of the form (showed once per navigation)
  */
 export function WelcomeModal({ goBack, open }: Props) {
-  const { t } = useTranslation({ WelcomeModal })
+  const { t } = useTranslation()
   const wasDisplayed = useRef(false)
 
   useEffect(() => {
@@ -35,32 +34,25 @@ export function WelcomeModal({ goBack, open }: Props) {
 
   return (
     <modal.Component
-      title={t('title')}
+      title={t('welcome.welcomeModal.title')}
       buttons={[
         {
           doClosesModal: true,
-          children: t('button first page'),
+          children: t('welcome.welcomeModal.buttonFirstPage'),
           nativeButtonProps: {
             'data-testid': 'back-to-start-button-welcome-modal',
           },
         },
         {
           doClosesModal: true,
-          children: t('button go back'),
+          children: t('welcome.welcomeModal.buttonGoBack'),
           onClick: goBack,
           nativeButtonProps: { 'data-testid': 'continue-button-welcome-modal' },
         },
       ]}
       concealingBackdrop={true}
     >
-      {t('content')}
+      {t('welcome.welcomeModal.content')}
     </modal.Component>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  'title' | 'button first page' | 'button go back' | 'content'
->()({ WelcomeModal })
-
-export type I18n = typeof i18n

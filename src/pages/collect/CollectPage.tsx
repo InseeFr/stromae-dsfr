@@ -2,6 +2,7 @@ import { memo, useCallback } from 'react'
 
 import type { LunaticData } from '@inseefr/lunatic'
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 
 import { getGetNomenclatureByIdQueryOptions } from '@/api/04-nomenclatures'
 import {
@@ -12,7 +13,6 @@ import {
 import { showToast } from '@/components/Toast'
 import { Orchestrator } from '@/components/orchestrator/Orchestrator'
 import { MODE_TYPE } from '@/constants/mode'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { GenerateDepositProofParams } from '@/models/api'
 import type { LunaticGetReferentiel, Nomenclature } from '@/models/lunaticType'
 import type { StateData } from '@/models/stateData'
@@ -24,7 +24,7 @@ export const CollectPage = memo(function CollectPage() {
 
   const queryClient = useQueryClient()
 
-  const { t } = useTranslation({ CollectPage })
+  const { t } = useTranslation()
 
   const loaderResults = collectRoute.useLoaderData()
 
@@ -62,8 +62,8 @@ export const CollectPage = memo(function CollectPage() {
         if (params.data && !params.isLogout) {
           showToast({
             severity: 'success',
-            description: t('toast save success description'),
-            title: t('toast save success title'),
+            description: t('collectPage.toast.toastSaveSuccessDescription'),
+            title: t('collectPage.toast.toastSaveSuccessTitle'),
           })
         }
       })
@@ -72,11 +72,13 @@ export const CollectPage = memo(function CollectPage() {
           let title
           let description
           if (error.message === 'Network Error') {
-            title = t('toast save network error title')
-            description = t('toast save network error description')
+            title = t('collectPage.toast.toastSaveNetworkErrorTitle')
+            description = t(
+              'collectPage.toast.toastSaveNetworkErrorDescription',
+            )
           } else {
-            title = t('toast save error title')
-            description = t('toast save error description')
+            title = t('collectPage.toast.toastSaveErrorTitle')
+            description = t('collectPage.toast.toastSaveErrorDescription')
           }
 
           showToast({ severity: 'error', title, description })
@@ -122,15 +124,3 @@ export const CollectPage = memo(function CollectPage() {
     />
   )
 })
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'toast save success title'
-  | 'toast save success description'
-  | 'toast save error title'
-  | 'toast save error description'
-  | 'toast save network error title'
-  | 'toast save network error description'
->()({ CollectPage })
-
-export type I18n = typeof i18n

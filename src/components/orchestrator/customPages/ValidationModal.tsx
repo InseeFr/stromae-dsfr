@@ -1,9 +1,8 @@
 import { type MutableRefObject, useEffect, useId, useState } from 'react'
 
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
+import { useTranslation } from 'react-i18next'
 import { assert } from 'tsafe/assert'
-
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export type Props = {
   actionsRef: MutableRefObject<{
@@ -18,7 +17,7 @@ export type Props = {
 export function ValidationModal({ actionsRef }: Props) {
   const id = useId()
 
-  const { t } = useTranslation({ ValidationModal })
+  const { t } = useTranslation()
   const [modal] = useState(() =>
     createModal({
       id: `validationModal-${id}`,
@@ -44,18 +43,18 @@ export function ValidationModal({ actionsRef }: Props) {
 
   return (
     <modal.Component
-      title={t('title')}
+      title={t('validation.validationModal.title')}
       buttons={[
         {
           doClosesModal: true, //Default true, clicking a button close the modal.
-          children: t('button cancel'),
+          children: t('validation.validationModal.buttonCancel'),
           nativeButtonProps: {
             'data-testid': 'cancel-button-validation-modal',
           },
         },
         {
           doClosesModal: true,
-          children: t('button validate'),
+          children: t('validation.validationModal.buttonValidate'),
           onClick: () => {
             assert(openState !== undefined)
             openState.resolve()
@@ -68,13 +67,7 @@ export function ValidationModal({ actionsRef }: Props) {
       ]}
       concealingBackdrop={true}
     >
-      {t('content')}
+      {t('validation.validationModal.content')}
     </modal.Component>
   )
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  'title' | 'button cancel' | 'button validate' | 'content'
->()({ ValidationModal })
-
-export type I18n = typeof i18n

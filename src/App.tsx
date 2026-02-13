@@ -12,6 +12,8 @@ import { TelemetryProvider } from '@/contexts/TelemetryContext'
 import { OidcProvider } from '@/oidc'
 import { routeTree } from '@/router/router'
 
+import './libs/i18n'
+
 startReactDsfr({
   defaultColorScheme: 'system',
   Link,

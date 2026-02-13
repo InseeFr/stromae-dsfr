@@ -1,0 +1,54 @@
+{
+  "redirectPortal": "Return to portal",
+  "redirectVisualizeForm": "Return to the visualization form",
+  "redirectHome": "Return to the homepage",
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "The page you are looking for cannot be found.",
+    "paragraph": "Check the address or return to the homepage."
+  },
+  "connectionError": {
+    "title": "Connection error",
+    "subtitle": "An error occurred while connecting to the server.",
+    "paragraph": "Check your Internet connection and try again."
+  },
+  "resourceNotFound": {
+    "title": "Resource not found",
+    "subtitle": "The resource you are looking for cannot be found on the server.",
+    "paragraph": "Please check the URL you entered or contact the site administrator for assistance."
+  },
+  "unauthorized": {
+    "title": "Unauthorized",
+    "subtitle": "You do not have permission to access this resource.",
+    "paragraph": "Please log in and try again."
+  },
+  "forbidden": {
+    "title": "Access denied",
+    "subtitle": "You are not authorized to access this resource.",
+    "paragraph": "Please contact the site administrator for assistance."
+  },
+  "badRequest": {
+    "title": "Bad request",
+    "subtitle": "The request you sent is incorrect or malformed.",
+    "paragraph": "Please check the data you sent and try again."
+  },
+  "serverError": {
+    "title": "Internal server error",
+    "subtitle": "An error occurred on the server side. Please try again later.",
+    "paragraph": "If the problem persists, please contact the site administrator for assistance."
+  },
+  "unhandledError": {
+    "title": "Unhandled error",
+    "subtitle": "An error occurred during the request.",
+    "paragraph": "Please try again later or contact the site administrator for assistance."
+  },
+  "unknownError": {
+    "title": "Unknown error",
+    "subtitle": "An unexpected error occurred.",
+    "paragraph": "Please try again later or contact the site administrator for assistance."
+  },
+  "validationError": {
+    "title": "Validation Error",
+    "subtitle": "{{name}}'s file is not valid."
+  }
+}

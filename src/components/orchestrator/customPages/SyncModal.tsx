@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-
-import { declareComponentKeys, useTranslation } from '@/i18n'
+import { useTranslation } from 'react-i18next'
 
 const modal = createModal({
   id: 'syncModal',
@@ -18,7 +17,7 @@ type Props = {
  * Modal displayed at the start of the form (showed once per navigation)
  */
 export function SyncModal({ open }: Readonly<Props>) {
-  const { t } = useTranslation({ SyncModal })
+  const { t } = useTranslation()
   const wasDisplayed = useRef(false)
 
   useEffect(() => {
@@ -32,15 +31,11 @@ export function SyncModal({ open }: Readonly<Props>) {
   }, [open])
 
   return (
-    <modal.Component title={t('title')} concealingBackdrop={true}>
-      {t('content')}
+    <modal.Component
+      title={t('welcome.syncModal.title')}
+      concealingBackdrop={true}
+    >
+      {t('welcome.syncModal.content')}
     </modal.Component>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<'title' | 'button go back' | 'content'>()(
-  { SyncModal },
-)
-
-export type I18n = typeof i18n

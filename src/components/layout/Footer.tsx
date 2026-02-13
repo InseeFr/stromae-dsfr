@@ -1,46 +1,21 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
+import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { useMode } from '@/hooks/useMode'
-import {
-  declareComponentKeys,
-  useResolveLocalizedString,
-  useTranslation,
-} from '@/i18n'
+import { resolveLocalizedString } from '@/libs/i18n/utils'
 import type { Logo } from '@/models/metadata'
-import { NavigationAssistancePage } from '@/pages/navigationAssistance/NavigationAssistancePage'
-import { SecurityPage } from '@/pages/security/SecurityPage'
 import { useMetadataStore } from '@/stores/useMetadataStore'
 
-import { Header } from './Header'
-
-const transformLogo = (
-  logo: Logo,
-  resolveLocalizedString: ReturnType<
-    typeof useResolveLocalizedString
-  >['resolveLocalizedStringDetailed'],
-) => ({
-  alt: resolveLocalizedString(logo.label).str,
+const transformLogo = (logo: Logo) => ({
+  alt: resolveLocalizedString(logo.label),
   imgUrl: logo.url,
 })
 
+//TODO : alt logo
 export function Footer() {
-  const { t } = useTranslation({
-    Footer,
-  })
-  const { resolveLocalizedStringDetailed } = useResolveLocalizedString({
-    labelWhenMismatchingLanguage: true,
-  })
-  const { t: t_Header } = useTranslation({ Header })
-  const { t: t_NavigationAssistancePage } = useTranslation({
-    NavigationAssistancePage,
-  })
-
-  const { t: t_SecurityPage } = useTranslation({
-    SecurityPage,
-  })
-
+  const { t } = useTranslation()
   const { mainLogo, secondariesLogo } = useMetadataStore()
 
   const mode = useMode()
@@ -48,10 +23,8 @@ export function Footer() {
 
   const partnersLogos = secondariesLogo
     ? {
-        main: transformLogo(secondariesLogo[0], resolveLocalizedStringDetailed),
-        sub: secondariesLogo
-          .slice(1)
-          .map((logo) => transformLogo(logo, resolveLocalizedStringDetailed)),
+        main: transformLogo(secondariesLogo[0]),
+        sub: secondariesLogo.slice(1).map((logo) => transformLogo(logo)),
       }
     : undefined
 
@@ -63,10 +36,10 @@ export function Footer() {
   return (
     <DSFRFooter
       accessibility="partially compliant"
-      license={t('license')}
+      license={t('footer.license')}
       homeLinkProps={{
         search: true,
-        title: t_Header('home link title'),
+        title: t('header.homeLinkTitle'),
         // needs a href to prevent the default redirection to the homepage.
         // we assume it is a link pointing to the current url
         href: '#',
@@ -84,7 +57,7 @@ export function Footer() {
         onClick: isCollect ? openLinkInNewTab : undefined,
       }}
       operatorLogo={{
-        alt: resolveLocalizedStringDetailed(mainLogo.label).str,
+        alt: resolveLocalizedString(mainLogo.label),
         imgUrl: mainLogo.url,
         orientation: 'horizontal',
       }}
@@ -97,14 +70,14 @@ export function Footer() {
       ]}
       bottomItems={[
         {
-          text: t_SecurityPage('security title'),
+          text: t('footer.securityPage.title'),
           linkProps: {
             to: '/securite',
             onClick: isCollect ? openLinkInNewTab : undefined,
           },
         },
         {
-          text: t_NavigationAssistancePage('navigation assistance title'),
+          text: t('footer.navigationAssistance.title'),
           linkProps: {
             to: '/aide-a-la-navigation',
             onClick: isCollect ? openLinkInNewTab : undefined,
@@ -118,12 +91,3 @@ export function Footer() {
     />
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<{ K: 'license'; R: React.JSX.Element }>()(
-  {
-    Footer,
-  },
-)
-
-export type I18n = typeof i18n

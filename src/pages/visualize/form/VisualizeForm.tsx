@@ -2,10 +2,10 @@ import { Button } from '@codegouvfr/react-dsfr/Button'
 import { Input } from '@codegouvfr/react-dsfr/Input'
 import { useNavigate } from '@tanstack/react-router'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import { Container } from '@/components/Container'
 import { Grid } from '@/components/Grid'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 import { SelectNomenclatures } from './SelectNomenclatures'
 
@@ -30,7 +30,7 @@ export function VisualizeForm() {
     formState: { errors },
   } = methods
 
-  const { t } = useTranslation({ VisualizeForm })
+  const { t } = useTranslation()
 
   const onSubmit = handleSubmit((values) => {
     const { data, metadata, nomenclature, source } = values
@@ -52,57 +52,40 @@ export function VisualizeForm() {
       <Grid>
         <FormProvider {...methods}>
           <form onSubmit={onSubmit}>
-            <h1>{t('form title')}</h1>
-            <h2>{t('source file title')}</h2>
+            <h1>{t('visualizePage.title')}</h1>
+            <h2>{t('visualizePage.sourceFileTitle')}</h2>
             <Input
               nativeInputProps={{
                 ...register('source', {
-                  required: t('source file error'),
+                  required: t('visualizePage.sourceFileError') as string,
                 }),
               }}
-              hintText={t('hint text')}
-              label={t('source label')}
+              hintText={t('visualizePage.hintText')}
+              label={t('visualizePage.sourceLabel')}
               state={errors.source ? 'error' : 'default'}
               stateRelatedMessage={errors.source?.message}
             />
-            <h2>{t('metadata file title')}</h2>
+            <h2>{t('visualizePage.metadataFileTitle')}</h2>
             <Input
               nativeInputProps={{ ...register('metadata') }}
-              label={t('metadata label')}
-              hintText={t('hint text')}
+              label={t('visualizePage.metadataLabel')}
+              hintText={t('visualizePage.hintText')}
               state="default"
-              stateRelatedMessage={t('state related message')}
+              stateRelatedMessage={t('visualizePage.stateRelatedMessage')}
             />
-            <h2>{t('data file title')}</h2>
+            <h2>{t('visualizePage.dataFileTitle')}</h2>
             <Input
               nativeInputProps={{ ...register('data') }}
-              hintText={t('hint text')}
-              label={t('data label')}
+              hintText={t('visualizePage.hintText')}
+              label={t('visualizePage.dataLabel')}
               state="default"
-              stateRelatedMessage={t('state related message')}
+              stateRelatedMessage={t('visualizePage.stateRelatedMessage')}
             />
             <SelectNomenclatures />
-            <Button type="submit">{t('submit button')}</Button>
+            <Button type="submit">{t('visualizePage.submitButton')}</Button>
           </form>
         </FormProvider>
       </Grid>
     </Container>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'form title'
-  | 'source file title'
-  | 'metadata file title'
-  | 'data file title'
-  | 'source file error'
-  | 'source label'
-  | 'metadata label'
-  | 'data label'
-  | 'hint text'
-  | 'state related message'
-  | 'submit button'
->()({ VisualizeForm })
-
-export type I18n = typeof i18n

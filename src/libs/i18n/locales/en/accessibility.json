@@ -1,0 +1,168 @@
+{
+  "title": "Accessibility",
+  "declarationTitle": "Accessibility Statement RGAA 4.1.2",
+  "declaration": {
+    "paragraph1": "Insee is committed to making its websites, intranet, extranet, and its software accessible (and its mobile applications and digital urban furniture) in accordance with Article 47 of Law No. 2005-102 of February 11, 2005.",
+    "paragraph2Prefix": "To this end, it implements a multi-year plan setting out INSEE's digital accessibility policy and a",
+    "paragraph2LinkText": "INSEE's multi-year digital accessibility plan for 2023-2025",
+    "paragraph2LinkUrl": "https://www.insee.fr/fr/information/7621795",
+    "paragraph2LinkTitle": "INSEE's multi-year digital accessibility plan for 2023-2025 - opens in a new window",
+    "paragraph3Prefix": "This accessibility statement applies to",
+    "paragraph3Suffix": "."
+  },
+  "conformityStatus": {
+    "title": "Conformity Status",
+    "prefix": "The website",
+    "linkText": "questionnaire-enquetes.stat-publique.fr",
+    "linkUrl": "https://questionnaire-enquetes.stat-publique.fr",
+    "linkTitle": "questionnaire-enquetes.stat-publique.fr - opens a new window",
+    "middle": "is partially compliant with the general accessibility improvement guidelines",
+    "rgaaLinkText": "RGAA",
+    "rgaaLinkUrl": "https://accessibilite.numerique.gouv.fr/",
+    "rgaaLinkTitle": "General accessibility improvement guidelines - opens in a new window",
+    "suffix": ", version 4.1.2, due to the non-conformities and derogations listed below."
+  },
+  "testResults": {
+    "title": "Test Results",
+    "introPrefix": "The compliance audit conducted by",
+    "koenaLinkText": "Koena",
+    "koenaLinkUrl": "https://koena.net/",
+    "koenaLinkTitle": "https://koena.net/ - opens in a new window",
+    "introSuffix": "reveals that:",
+    "criterion1": "71% of RGAA criteria are met. This is the number of criteria fully met across all pages in the sample. This is also referred to as the overall compliance rate.",
+    "criterion2": "The average compliance rate for the online service is 80%. This is the average compliance score obtained on each of the pages in the sample.",
+    "auditGridLinkText": "Access to the RGAA audit grid",
+    "auditGridLinkTitle": "RGAA audit grid - downloadable file - opens in a new window"
+  },
+  "nonAccessibleContent": {
+    "title": "Non-Accessible Content",
+    "nonCompliantTitle": "Non-Compliance",
+    "nonCompliantIntro": "We list below all non-compliant criteria. For details, refer to the audit grid and the multi-year plan for continuous improvement.",
+    "criteria": [
+      "5.3 — For each formatting table, does the linearized content remain understandable?",
+      "6.1 — Is each link explicit (except in special cases)?",
+      "7.3 — Can each script be controlled using the keyboard and any pointing device (except in special cases)?",
+      "7.4 — For each script that initiates a context change, is the user notified or does the user have control over it?",
+      "7.5 — On each web page, are status messages correctly rendered by assistive technologies?",
+      "8.6 — For each web page with a page title, is that title relevant?",
+      "10.8 — For each web page, is hidden content intended to be ignored by assistive technologies?",
+      "11.2 — Is each label associated with a form field relevant (except in special cases)?",
+      "11.7 — In each form, is each caption associated with a group of fields of the same type relevant?",
+      "11.10 — Is input validation used appropriately in each form (except in special cases)?",
+      "12.3 — Is the “site map” page relevant?",
+      "12.7 — Does each web page have a skip link or quick access link to the main content area (except in special cases)?",
+      "13.1 — For each web page, does the user have control over each time limit that modifies the content (except in special cases)?",
+      "13.3 — On each web page, does each downloadable office document have an accessible version, if necessary (except in special cases)?",
+      "13.11 — On each web page, can actions triggered by pointing to a single point on the screen be canceled (except in special cases)?"
+    ]
+  },
+  "disproportionateBurden": {
+    "title": "Exemptions for Disproportionate Burden",
+    "content": "None."
+  },
+  "nonSubmittedContent": {
+    "title": "Content Not Subject to Accessibility Obligation",
+    "content": "No content subject to legal exemption."
+  },
+  "establishment": {
+    "title": "Establishment of this Accessibility Statement",
+    "content": "This statement was made on October 6, 2025."
+  },
+  "technologiesUsed": {
+    "title": "Technologies Used for the Site Development",
+    "intro": "The following technologies are used on the website:",
+    "list": ["HTML5", "CSS", "Javascript", "React"]
+  },
+  "testEnvironment": {
+    "title": "Test Environment",
+    "intro": "Web page testing was performed using the following combinations of web browsers and screen readers:",
+    "tableHeaders": {
+      "userAgent": "User Agent",
+      "assistiveTech": "Assistive Technology"
+    },
+    "combinations": [
+      { "userAgent": "Firefox 142.0.1", "assistiveTech": "NVDA 2025.3" },
+      { "userAgent": "Firefox 142.0.1", "assistiveTech": "JAWS 2025.2508.120" },
+      { "userAgent": "Safari 26", "assistiveTech": "VoiceOver" }
+    ]
+  },
+  "evaluationTools": {
+    "title": "Accessibility Evaluation Tools",
+    "intro": "The following tools were used during the evaluation:",
+    "tools": [
+      "RGAA extension published by DINUM for Firefox",
+      "Browser code inspector (Firefox)",
+      "Contrast-Finder and Color Contrast Analyzer to test color contrasts.",
+      {
+        "text": "W3C Validator:",
+        "linkText": "https://validator.w3.org/",
+        "linkUrl": "https://validator.w3.org/",
+        "linkTitle": "W3C Validator - opens in a new window"
+      },
+      "HeadingsMap extension for Firefox, to visualize the structure of headings.",
+      {
+        "text": "Web Developer browser extension by Chris Pederick:",
+        "linkText": "https://chrispederick.com/work/web-developer/",
+        "linkUrl": "https://chrispederick.com/work/web-developer/",
+        "linkTitle": "Web Developer browser extension - opens in a new window"
+      },
+      {
+        "text": "ARCtoolkit on Chrome for many criteria:",
+        "linkText": "https://www.tpgi.com/arc-platform/arc-toolkit/",
+        "linkUrl": "https://www.tpgi.com/arc-platform/arc-toolkit/",
+        "linkTitle": "ARCtoolkit - opens a new window"
+      },
+      {
+        "text": "PDF Accessibility | PDF Accessibility Checker (PAC 2021):",
+        "linkText": "https://pac.pdf-accessibility.org/en",
+        "linkUrl": "https://pac.pdf-accessibility.org/en",
+        "linkTitle": "PDF Accessibility - opens a new window"
+      }
+    ]
+  },
+  "evaluatedPages": {
+    "title": "Pages of the Site That Have Been Verified for Conformity",
+    "content": "Not applicable.",
+    "structuredSampleTitle": "Evaluated Structured Sample",
+    "structuredSamplePages": [
+      "Questionnaire homepage",
+      "I - Questionnaire contexte Entreprise",
+      "II - Questionnaire contexte ménage",
+      "III - Les habitants du logement",
+      "Temps de réponse",
+      "Commentaire",
+      "Sending the questionnaire",
+      "End of questionnaire"
+    ],
+    "randomSampleTitle": "Evaluated Random Sample",
+    "randomSampleContent": "In accordance with the RGAA: “randomly selected pages representing at least 10% of the pages in the sample described above are added.” This service did not allow pages to be selected at random. 100% of the steps in the questionnaire were evaluated."
+  },
+  "feedbackContact": {
+    "title": "Feedback and Contact",
+    "contentPrefix": "If you are unable to access content or a service, you can contact support to be directed to an accessible alternative or to obtain the content in another form.",
+    "linkText": "Contact us",
+    "linkUrl": "https://www.insee.fr/fr/information/6438369",
+    "linkTitle": "Contact us - opens a new window"
+  },
+  "recourse": {
+    "title": "Recourse",
+    "intro": "If you notice an accessibility defect preventing you from accessing content or a functionality of the site, you can report it and if you do not receive a response, you are entitled to send your complaints or a request to the Defender of Rights.",
+    "links": [
+      {
+        "text": "Write a message to the Defender of Rights (via the contact form)",
+        "url": "https://formulaire.defenseurdesdroits.fr"
+      },
+      {
+        "text": "Contact the Defender of Rights delegate in your region",
+        "url": "https://www.defenseurdesdroits.fr/carte-des-delegues"
+      }
+    ],
+    "mailPrefix": "Send a letter by mail (free, no stamp required) to the following address:",
+    "mailAddress": [
+      "Défenseur des droits",
+      "Libre réponse 71120",
+      "75342 Paris CEDEX 07"
+    ],
+    "phone": "Contact the Defender of Rights by phone: 09 69 39 00 00."
+  }
+}

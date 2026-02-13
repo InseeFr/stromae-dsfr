@@ -4,17 +4,14 @@ import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
 import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
 import { useSearch } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_EXIT_SOURCE } from '@/constants/telemetry'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { executePreLogoutActions } from '@/hooks/prelogout'
 import { useMode } from '@/hooks/useMode'
-import {
-  declareComponentKeys,
-  useResolveLocalizedString,
-  useTranslation,
-} from '@/i18n'
+import { resolveLocalizedString } from '@/libs/i18n/utils'
 import { useOidc } from '@/oidc'
 import { collectPath } from '@/pages/collect/route'
 import { useMetadataStore } from '@/stores/useMetadataStore'
@@ -24,12 +21,8 @@ import { createSafeUrl, decodeUrlSafeBase64 } from '@/utils/url'
 import { ExitModal } from '../orchestrator/customPages/ExitModal'
 
 export function Header() {
-  const { t } = useTranslation({ Header })
+  const { t } = useTranslation()
   const { isUserLoggedIn } = useOidc()
-  const { resolveLocalizedString, resolveLocalizedStringDetailed } =
-    useResolveLocalizedString({
-      labelWhenMismatchingLanguage: true,
-    })
   const mode = useMode()
 
   const { label: serviceTitle, mainLogo } = useMetadataStore()
@@ -92,7 +85,7 @@ export function Header() {
         }
         homeLinkProps={{
           search: true,
-          title: t('home link title'),
+          title: t('header.homeLinkTitle'),
           // needs a href to prevent the default redirection to the homepage.
           // we assume it is a link pointing to the current url
           href: '#',
@@ -111,7 +104,7 @@ export function Header() {
                     }
                   : undefined,
             },
-            text: t('quick access support'),
+            text: t('header.quickAccessSupport'),
           },
           ...(!isUserLoggedIn
             ? []
@@ -122,14 +115,14 @@ export function Header() {
                     onClick: exitModal?.open,
                     disabled: !isCollectRoute,
                   },
-                  text: t('quick access portal'),
+                  text: t('header.quickAccessPortal'),
                 } as const,
               ]),
         ]}
         serviceTagline={surveyUnitCompositeName}
         serviceTitle={resolveLocalizedString(serviceTitle)}
         operatorLogo={{
-          alt: resolveLocalizedStringDetailed(mainLogo.label).str,
+          alt: resolveLocalizedString(mainLogo.label),
           imgUrl: mainLogo.url,
           orientation: 'horizontal',
         }}
@@ -138,13 +131,3 @@ export function Header() {
     </>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'home link title'
-  | 'quick access support'
-  | 'quick access logout'
-  | 'quick access portal'
->()({ Header })
-
-export type I18n = typeof i18n

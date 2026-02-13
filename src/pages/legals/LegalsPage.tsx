@@ -1,65 +1,65 @@
-import { type ReactNode, memo } from 'react'
+import { memo } from 'react'
 
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 import { Grid } from '@/components/Grid'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export const LegalsPage = memo(function LegalsPage() {
-  const { t } = useTranslation({ LegalsPage })
+  const { t } = useTranslation()
   return (
     <Grid>
       <Breadcrumb
-        currentPageLabel={t('legals title')}
+        currentPageLabel={t('legal.legalsTitle')}
         homeLinkProps={{}}
         segments={[]}
       />
-      <h2>{t('legals title')}</h2>
+      <h2>{t('legal.legalsTitle')}</h2>
       <section>
-        <h3>{t('service title')}</h3>
-        <p>{t('service content')}</p>
+        <h3>{t('legal.serviceTitle')}</h3>
+        <p>
+          {t('legal.serviceContent1')}
+          <br />
+          {t('legal.serviceContent2')}
+          <br />
+          {t('legal.serviceContent3')}
+        </p>
 
-        <h3>{t('survey legals terms title')}</h3>
-        <p>{t('survey legals terms content')}</p>
+        <h3>{t('legal.surveyLegalsTermsTitle')}</h3>
+        <p>{t('legal.surveyLegalsTermsContent')}</p>
 
-        <h3>{t('cookies title')}</h3>
-        <p>{t('cookies content')}</p>
+        <h3>{t('legal.cookiesTitle')}</h3>
+        <p>{t('legal.cookiesContent')}</p>
 
-        <h3>{t('session title')}</h3>
-        <p>{t('session content')}</p>
+        <h3>{t('legal.sessionTitle')}</h3>
+        <p>
+          {t('legal.sessionContent')}
+          <br />
+          {t('legal.sessionContentDetails')}
+        </p>
 
-        <h3>{t('copyright title')}</h3>
-        <p>{t('copyright content')}</p>
+        <h3>{t('legal.copyrightTitle')}</h3>
+        <p>{t('legal.copyrightContent')}</p>
 
-        <h3>{t('editor information title')}</h3>
-        <p>{t('editor information content')}</p>
+        <h3>{t('legal.editorInformationTitle')}</h3>
+        <p>
+          {t('legal.editorInformationLine1')}
+          <br />
+          <br />
+          {t('legal.editorInformationLine2')}
+          <br />
+          <br />
+          {t('legal.editorInformationLine3')}
+          <br />
+          <br />
+          {t('legal.editorInformationLine4')}
+        </p>
 
-        <h3>{t('personal data title')}</h3>
-        <p>{t('personal data content')}</p>
+        <h3>{t('legal.personalDataTitle')}</h3>
+        <a href={t('legal.personalDataLink')}>
+          {t('legal.personalDataContent')}
+        </a>
       </section>
     </Grid>
   )
 })
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'legals title'
-  | 'service title'
-  | { K: 'service content'; R: ReactNode }
-  | 'survey legals terms title'
-  | 'survey legals terms content'
-  | 'cookies title'
-  | 'cookies content'
-  | 'session title'
-  | { K: 'session content'; R: ReactNode }
-  | 'copyright title'
-  | 'copyright content'
-  | 'editor information title'
-  | { K: 'editor information content'; R: ReactNode }
-  | 'design production title'
-  | 'design production content'
-  | 'personal data title'
-  | { K: 'personal data content'; R: ReactNode }
->()({ LegalsPage })
-
-export type I18n = typeof i18n

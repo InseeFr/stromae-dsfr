@@ -2,13 +2,12 @@ import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
 import Input from '@codegouvfr/react-dsfr/Input'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-
-import { declareComponentKeys, useTranslation } from '@/i18n'
+import { useTranslation } from 'react-i18next'
 
 import type { FormInputs } from './VisualizeForm'
 
 export function SelectNomenclatures() {
-  const { t } = useTranslation({ SelectNomenclatures })
+  const { t } = useTranslation()
   const { register, control } = useFormContext<FormInputs>()
   const { fields, append, remove } = useFieldArray({
     control,
@@ -21,10 +20,10 @@ export function SelectNomenclatures() {
 
   return (
     <>
-      <h2>{t('nomenclatures title')}</h2>
-      <p>{t('nomenclatures description')}</p>
+      <h2>{t('visualizePage.selectNomenclature.title')}</h2>
+      <p>{t('visualizePage.selectNomenclature.description')}</p>
       <Button type="button" priority="secondary" onClick={addNomenclature}>
-        {t('add nomenclature button')}
+        {t('visualizePage.selectNomenclature.addButton')}
       </Button>
       <ul style={{ listStyle: 'none' }}>
         {fields.map((item, index) => {
@@ -32,18 +31,18 @@ export function SelectNomenclatures() {
             <li key={item.id} style={{ display: 'flex', flexDirection: 'row' }}>
               <Input
                 nativeInputProps={{ ...register(`nomenclature.${index}.name`) }}
-                label={t('name label')}
+                label={t('visualizePage.selectNomenclature.nameLabel')}
                 className={fr.cx('fr-mr-4v')}
               />
               <Input
                 nativeInputProps={{ ...register(`nomenclature.${index}.uri`) }}
-                label={t('uri label')}
+                label={t('visualizePage.selectNomenclature.uriLabel')}
               />
               <Button
                 type="button"
                 iconId={'fr-icon-close-line'}
                 onClick={() => remove(index)}
-                title={t('delete button title')}
+                title={t('visualizePage.selectNomenclature.deleteButtonTitle')}
                 priority="tertiary no outline"
               />
             </li>
@@ -53,15 +52,3 @@ export function SelectNomenclatures() {
     </>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'nomenclatures title'
-  | 'nomenclatures description'
-  | 'add nomenclature button'
-  | 'name label'
-  | 'uri label'
-  | 'delete button title'
->()({ SelectNomenclatures })
-
-export type I18n = typeof i18n

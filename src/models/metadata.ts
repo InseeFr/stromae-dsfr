@@ -1,4 +1,9 @@
-import type { LocalizedString } from '@/i18n'
+//TODO: move this
+export type SupportedLanguage = 'en' | 'fr' | 'sq'
+
+export type LocalizedString =
+  | string
+  | Partial<Record<SupportedLanguage, string>>
 
 export type Logo = {
   label: LocalizedString

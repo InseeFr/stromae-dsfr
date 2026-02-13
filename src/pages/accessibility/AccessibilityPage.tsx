@@ -12,7 +12,7 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
 
   // Helper function to safely get array from translation
   const getArray = (key: string): any[] => {
-    const result = t(key, { returnObjects: true })
+    const result = t(key, { returnObjects: true } as any)
     return Array.isArray(result) ? result : []
   }
 

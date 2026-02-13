@@ -78,7 +78,7 @@ export const VTLDevTools = () => {
                 priority="primary"
                 title="Vider les erreurs"
               >
-                {t('clean error')}
+                {t('collectPage.VtlDevTools.cleanError')}
               </Button>
             </div>
             <div className={fr.cx('fr-table__wrapper')}>

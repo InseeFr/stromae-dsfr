@@ -19,10 +19,7 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       // disable oidc-spa for Storybook, else it can't build storybook due to oidc-spa issue
-      !isStorybook &&
-        oidcSpa({
-          enableTokenExfiltrationDefense: true,
-        }),
+      !isStorybook && oidcSpa(),
       viteEnvs({
         computedEnv: async () => {
           const path = await import('path')

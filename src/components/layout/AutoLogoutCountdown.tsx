@@ -5,14 +5,13 @@ import { useOidc } from '@/oidc'
 
 export function AutoLogoutCountdown() {
   const { t } = useTranslation({ AutoLogoutCountdown })
-  const { useAutoLogoutWarningCountdown } = useOidc()
-  const { secondsLeft } = useAutoLogoutWarningCountdown({
-    warningDurationSeconds: 60,
-  })
+  const { autoLogoutState } = useOidc()
 
-  if (secondsLeft === undefined) {
+  if (!autoLogoutState.shouldDisplayWarning) {
     return null
   }
+
+  const secondsLeft = autoLogoutState.secondsLeftBeforeAutoLogout
 
   return (
     <div

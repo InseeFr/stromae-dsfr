@@ -48,8 +48,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.6(react@19.2.4)
       oidc-spa:
-        specifier: 8.6.11
-        version: 8.6.11(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4)
+        specifier: 10.0.8
+        version: 10.0.8(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4)
       react:
         specifier: ^19.2.3
         version: 19.2.4
@@ -3820,8 +3820,8 @@ packages:
     resolution: {integrity: sha512-nK28WOo+QIjBkDduTINE4JkF/UJJKyf2EJxvJKfblDpyg0Q+pkOHNTL0Qwy6NP6FhE/EnzV73BxxqcJaXY9anw==}
     engines: {node: '>= 0.4'}
 
-  oidc-spa@8.6.11:
-    resolution: {integrity: sha512-0K4vq4fkm+BXXOLHtd1+1wH+BidPnN25CrX9PY6pjSUmIuFbnWVuPAl1zzEM6GfmjnU4oVf16ww3fCjbK1M/cA==}
+  oidc-spa@10.0.8:
+    resolution: {integrity: sha512-4RMLNsxQxtjzqVH5gySYB0TdivNRtJP/DXbnen17ORXA1BjvDLIiNSEoJEUndAe22Wi24PC6hk+rFxzlQ2qwDw==}
     peerDependencies:
       '@angular/common': '*'
       '@angular/core': '*'
@@ -8962,7 +8962,7 @@ snapshots:
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
-  oidc-spa@8.6.11(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4):
+  oidc-spa@10.0.8(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4):
     optionalDependencies:
       '@tanstack/react-router': 1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@types/react': 19.2.10

@@ -1,5 +1,4 @@
-import { createMockReactOidc } from 'oidc-spa/mock/react'
-import { createReactOidc } from 'oidc-spa/react'
+import { oidcSpa } from 'oidc-spa/react-spa'
 import { z } from 'zod'
 
 const decodedIdTokenSchema = z.object({
@@ -16,23 +15,31 @@ const autoLogoutParams =
       }
     : { redirectTo: 'current page' as const }
 
-export const { OidcProvider, useOidc, getOidc } =
-  import.meta.env.VITE_OIDC_ENABLED === 'false'
-    ? createMockReactOidc({
-        isUserInitiallyLoggedIn: false,
-        mockedTokens: {
-          decodedIdToken: {
-            sid: `mock-${self.crypto.randomUUID()}`,
-            sub: 'mock-sub',
-            preferred_username: 'mock-user',
-          } satisfies z.infer<typeof decodedIdTokenSchema>,
-        },
-        homeUrl: import.meta.env.BASE_URL,
-      })
-    : createReactOidc({
+export const { bootstrapOidc, getOidc, useOidc } = oidcSpa
+  .withExpectedDecodedIdTokenShape({
+    decodedIdTokenSchema: decodedIdTokenSchema,
+  })
+  .createUtils()
+
+bootstrapOidc(
+  import.meta.env.VITE_OIDC_ENABLED === 'true'
+    ? {
+        implementation: 'real',
+        // Configure your OIDC provider in `.env.local`
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
-        homeUrl: import.meta.env.BASE_URL,
-        autoLogoutParams,
-        decodedIdTokenSchema,
-      })
+        autoLogoutParams: autoLogoutParams,
+        // Enable for detailed initialization and token lifecycle logs.
+        debugLogs: true,
+      }
+    : {
+        // Mock mode: no requests to an auth server are made.
+        implementation: 'mock',
+        isUserInitiallyLoggedIn: true,
+        decodedIdToken_mock: {
+          sid: `mock-${globalThis.crypto.randomUUID()}`,
+          sub: 'mock-sub',
+          preferred_username: 'mock-user',
+        },
+      },
+)

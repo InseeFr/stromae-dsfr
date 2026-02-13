@@ -1,11 +1,22 @@
+import { useEffect } from 'react'
+
 import { declareComponentKeys } from 'i18nifty'
 
+import { executePreLogoutActions } from '@/hooks/prelogout'
 import { useTranslation } from '@/i18n'
 import { useOidc } from '@/oidc'
 
 export function AutoLogoutCountdown() {
   const { t } = useTranslation({ AutoLogoutCountdown })
   const { autoLogoutState } = useOidc()
+
+  useEffect(() => {
+    if (autoLogoutState.shouldDisplayWarning) {
+      ;(async () => {
+        await executePreLogoutActions()
+      })()
+    }
+  }, [autoLogoutState.shouldDisplayWarning])
 
   if (!autoLogoutState.shouldDisplayWarning) {
     return null

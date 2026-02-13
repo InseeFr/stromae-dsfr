@@ -31,6 +31,7 @@ bootstrapOidc(
         autoLogoutParams: autoLogoutParams,
         // Enable for detailed initialization and token lifecycle logs.
         debugLogs: true,
+        warnUserSecondsBeforeAutoLogout: 60,
       }
     : {
         // Mock mode: no requests to an auth server are made.

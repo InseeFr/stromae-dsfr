@@ -13,6 +13,7 @@ import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useOidc } from '@/oidc'
 import { accessibilityRoute } from '@/pages/accessibility/route'
 import { collectRoute } from '@/pages/collect/route'
+import { deconnexionRoute } from '@/pages/deconnexion/route'
 import { legalsRoute } from '@/pages/legals/route'
 import { navigationAssistanceRoute } from '@/pages/navigationAssistance/route'
 import { reviewRoute } from '@/pages/review/route'
@@ -62,6 +63,7 @@ export const routeTree = rootRoute.addChildren([
     ? []
     : [visualizeRoute]),
   accessibilityRoute,
+  deconnexionRoute,
   securityRoute,
   siteMapRoute,
   legalsRoute,

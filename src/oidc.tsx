@@ -1,6 +1,8 @@
 import { oidcSpa } from 'oidc-spa/react-spa'
 import { z } from 'zod'
 
+import { BASE_PATH } from './utils/env'
+
 const decodedIdTokenSchema = z.object({
   sid: z.string(),
   sub: z.string(),
@@ -11,7 +13,7 @@ const autoLogoutParams =
   import.meta.env.VITE_AUTO_LOGOUT_REDIRECTION === 'true'
     ? {
         redirectTo: 'specific url' as const,
-        url: '/deconnexion',
+        url: `${BASE_PATH}/deconnexion`,
       }
     : { redirectTo: 'current page' as const }
 
@@ -25,6 +27,7 @@ bootstrapOidc(
   import.meta.env.VITE_OIDC_ENABLED === 'true'
     ? {
         implementation: 'real',
+        BASE_URL: BASE_PATH,
         // Configure your OIDC provider in `.env.local`
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,

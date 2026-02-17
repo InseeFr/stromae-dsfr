@@ -11,6 +11,8 @@ import {
 import { TelemetryProvider } from '@/contexts/TelemetryContext'
 import { routeTree } from '@/router/router'
 
+import { BASE_PATH } from './utils/env'
+
 startReactDsfr({
   defaultColorScheme: 'system',
   Link,
@@ -51,10 +53,7 @@ export function App() {
     <MuiDsfrThemeProvider>
       <QueryClientProvider client={queryClient}>
         <TelemetryProvider>
-          <RouterProvider
-            router={router}
-            basepath={import.meta.env.VITE_BASE_PATH}
-          />
+          <RouterProvider router={router} basepath={BASE_PATH} />
         </TelemetryProvider>
       </QueryClientProvider>
     </MuiDsfrThemeProvider>

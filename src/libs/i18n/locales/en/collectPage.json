@@ -1,0 +1,38 @@
+{
+  "continueWelcome": "Start",
+  "continueLunatic": "Continue",
+  "continueEnd": "Download the receipt",
+  "continueValidation": "Submit my responses",
+  "continueTitleDefault": "Proceed to the next step",
+  "continueTitleEnd": "Download the acknowledgment of receipt",
+  "downloadData": "Download data",
+  "downloadArticulation": "Download roundabout recap",
+  "expand": "Expand view",
+  "collapse": "Collapse view",
+  "previousTitle": "Return to the previous step",
+  "previousLabel": "Previous",
+  "stepperState": "Step {{currentStep}} of {{stepCount}}",
+  "exitModal": {
+    "title": "Do you want to leave the questionnaire?",
+    "buttonCancel": "Cancel",
+    "buttonValidate": "I understand",
+    "content": "If you leave the questionnaire, your responses will be saved. You can return to the questionnaire at any time to complete or finalize it."
+  },
+  "toast": {
+    "toastSaveSuccessTitle": "Data saved successfully!",
+    "toastSaveSuccessDescription": "Your changes have been recorded and saved.",
+    "toastSaveErrorTitle": "Save error",
+    "toastSaveErrorDescription": "An error occurred while saving your changes.",
+    "toastSaveNetworkErrorTitle": "Network error",
+    "toastSaveNetworkErrorDescription": "A network error occurred, and the data was not saved. Do not close this window so that it can be transmitted upon reconnection."
+  },
+  "VtlDevTools": {
+    "fabButton": "Console VTL",
+    "cleanError": "Clear Errors",
+    "tableTitle": "VTL Runtime Error List",
+    "tableHeaderExpression": "Expression",
+    "tableHeaderBindings": "Bindings",
+    "tableHeaderMessage": "Error Message",
+    "tableHeaderPage": "Page"
+  }
+}

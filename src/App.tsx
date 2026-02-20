@@ -11,6 +11,7 @@ import {
 import { TelemetryProvider } from '@/contexts/TelemetryContext'
 import { routeTree } from '@/router/router'
 
+import './libs/i18n'
 import { BASE_PATH } from './utils/env'
 
 startReactDsfr({

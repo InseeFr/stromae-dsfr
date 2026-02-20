@@ -1,0 +1,6 @@
+{
+  "title": "Thank you for your participation in this survey.",
+  "paragraphWithDate": "Your responses were sent on {{formattedDate}}.",
+  "paragraphWithoutDate": "Your responses were sent.",
+  "documentTitle": "End of questionnaire"
+}

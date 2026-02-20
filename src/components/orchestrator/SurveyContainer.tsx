@@ -2,10 +2,10 @@ import { type PropsWithChildren, type ReactNode, useState } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Button from '@codegouvfr/react-dsfr/Button'
+import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 import type { LunaticOverview } from '@/models/lunaticType'
 import type { InternalPageType } from '@/models/page'
 
@@ -49,7 +49,7 @@ export function SurveyContainer(
     bottomContent,
   } = props
 
-  const { t } = useTranslation({ SurveyContainer })
+  const { t } = useTranslation()
 
   const isPreviousButtonDisplayed = [PAGE_TYPE.WELCOME, PAGE_TYPE.END].includes(
     currentPage,
@@ -77,13 +77,13 @@ export function SurveyContainer(
             <div className={fr.cx('fr-col', 'fr-grid-row--left')}>
               <Button
                 id="button-precedent"
-                title={t('button previous title')}
+                title={t('collectPage.previousTitle')}
                 priority="tertiary no outline"
                 iconId="fr-icon-arrow-left-line"
                 onClick={handlePreviousClick}
                 disabled={isPreviousButtonDisplayed}
               >
-                {t('button previous label')}
+                {t('collectPage.previousLabel')}
               </Button>
             </div>
 
@@ -109,7 +109,9 @@ export function SurveyContainer(
                   priority="tertiary"
                   onClick={() => setIsLayoutExpanded((expanded) => !expanded)}
                   title={
-                    isLayoutExpanded ? t('button collapse') : t('button expand')
+                    isLayoutExpanded
+                      ? t('collectPage.collapse')
+                      : t('collectPage.expand')
                   }
                   aria-pressed={isLayoutExpanded}
                 />
@@ -133,7 +135,11 @@ export function SurveyContainer(
             {children}
             <Button
               priority="primary"
-              title={t('button continue title', { currentPage })}
+              title={
+                currentPage === PAGE_TYPE.END
+                  ? t('collectPage.continueTitleEnd')
+                  : t('collectPage.continueTitleDefault')
+              }
               id="continue-button"
               onClick={
                 currentPage === PAGE_TYPE.END
@@ -141,7 +147,13 @@ export function SurveyContainer(
                   : handleNextClick
               }
             >
-              {t('button continue label', { currentPage })}
+              {t(
+                currentPage === PAGE_TYPE.END
+                  ? 'collectPage.continueEnd'
+                  : currentPage === PAGE_TYPE.WELCOME
+                    ? 'collectPage.continueWelcome'
+                    : 'collectPage.continueLunatic',
+              )}
             </Button>
             {bottomContent}
             {(mode === MODE_TYPE.VISUALIZE || isDownloadEnabled) && (
@@ -150,18 +162,18 @@ export function SurveyContainer(
                   iconId="ri-download-2-line"
                   priority="tertiary no outline"
                   onClick={handleDownloadData}
-                  title={t('button download data')}
+                  title={t('collectPage.downloadData')}
                 >
-                  {t('button download data')}
+                  {t('collectPage.downloadData')}
                 </Button>
                 {hasArticulation && (
                   <Button
                     iconId="ri-download-2-line"
                     priority="tertiary no outline"
                     onClick={handleDownloadArticulation}
-                    title={t('button download articulation')}
+                    title={t('collectPage.downloadArticulation')}
                   >
-                    {t('button download articulation')}
+                    {t('collectPage.downloadArticulation')}
                   </Button>
                 )}
               </div>
@@ -172,25 +184,3 @@ export function SurveyContainer(
     </>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'button previous title'
-  | 'button previous label'
-  | 'button expand'
-  | 'button collapse'
-  | {
-      K: 'button continue title'
-      P: { currentPage: InternalPageType }
-      R: string
-    }
-  | {
-      K: 'button continue label'
-      P: { currentPage: InternalPageType }
-      R: string
-    }
-  | 'button download data'
-  | 'button download articulation'
->()({ SurveyContainer })
-
-export type I18n = typeof i18n

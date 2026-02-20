@@ -4,11 +4,11 @@ import ArtWorkBackground from '@codegouvfr/react-dsfr/dsfr/artwork/background/ov
 import TechnicalError from '@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg'
 import ArtWork from '@codegouvfr/react-dsfr/dsfr/artwork/system.svg'
 import { useNavigate } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { Container } from '@/components/Container'
 import { errorNormalizer } from '@/components/error/errorNormalizer'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 type Props = {
   error: unknown
@@ -16,13 +16,21 @@ type Props = {
   redirectTo: 'home' | 'portal' | 'visualizeForm' | undefined
 }
 
+const REDIRECT_KEY_MAP = {
+  home: 'error.redirectHome',
+  portal: 'error.redirectPortal',
+  visualizeForm: 'error.redirectVisualizeForm',
+} as const satisfies Record<NonNullable<Props['redirectTo']>, string>
+
 export function ErrorComponent(props: Props) {
   const { error, redirectTo, reset } = props
   const navigate = useNavigate()
-  const { t } = useTranslation({ ErrorComponent })
+  const { t } = useTranslation()
   const { title, subtitle, paragraph, code } = errorNormalizer(error)
 
   useDocumentTitle(title)
+
+  const redirectKey = redirectTo ? REDIRECT_KEY_MAP[redirectTo] : ''
 
   return (
     <Container>
@@ -60,7 +68,7 @@ export function ErrorComponent(props: Props) {
                 }
               })()}
             >
-              {t('error button redirect to', { redirectTo })}
+              {redirectKey ? t(redirectKey) : ''}
             </Button>
           )}
         </div>
@@ -109,12 +117,3 @@ export function ErrorComponent(props: Props) {
     </Container>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<{
-  K: 'error button redirect to'
-  P: { redirectTo: Props['redirectTo'] }
-  R: string
-}>()({ ErrorComponent })
-
-export type I18n = typeof i18n

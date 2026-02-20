@@ -20,6 +20,7 @@ type ImportMetaEnv = {
   VITE_TELEMETRY_MAX_DELAY: string
   VITE_TELEMETRY_MAX_LENGTH: string
   VITE_MULTIMODE_ENABLED: string
+  VITE_DOWNLOAD_DISABLED: string
   BASE_URL: string
   MODE: string
   DEV: boolean

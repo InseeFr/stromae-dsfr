@@ -1,0 +1,11 @@
+{
+  "title": "Vous êtes arrivé à la fin du questionnaire",
+  "paragraph": "Après envoi, vous ne pourrez plus modifier vos réponses et vous pourrez télécharger un accusé de réception.",
+  "documentTitle": "Envoi du questionnaire",
+  "validationModal": {
+    "title": "Voulez vous envoyer vos réponses",
+    "buttonCancel": "Annuler",
+    "buttonValidate": "Envoyer mes réponses",
+    "content": "Vous êtes sur le point d'envoyer vos réponses au questionnaire. Après envoi, vous ne pourrez plus modifier vos réponses."
+  }
+}

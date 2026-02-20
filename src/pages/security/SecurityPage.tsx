@@ -1,31 +1,25 @@
 import { memo } from 'react'
 
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 import { Grid } from '@/components/Grid'
-import { declareComponentKeys, useTranslation } from '@/i18n'
 
 export const SecurityPage = memo(function SecurityPage() {
-  const { t } = useTranslation({ SecurityPage })
+  const { t } = useTranslation()
+  const fullUrl = `${window.location.protocol}//${window.location.hostname}`
   return (
     <Grid>
       <Breadcrumb
-        currentPageLabel={t('security title')}
+        currentPageLabel={t('footer.securityPage.title')}
         homeLinkProps={{}}
         segments={[]}
       />
-      <h2>{t('security title')}</h2>
-      {t('security content', {
-        fullUrl: `${window.location.protocol}//${window.location.hostname}`,
-      })}
+      <h2>{t('footer.securityPage.title')}</h2>
+      <p>
+        {t('footer.securityPage.contentPrefix')} <a href={fullUrl}>{fullUrl}</a>{' '}
+        {t('footer.securityPage.contentSuffix')}
+      </p>
     </Grid>
   )
 })
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'security title'
-  | { K: 'security content'; R: React.JSX.Element; P: { fullUrl: string } }
->()('SecurityPage')
-
-export type I18n = typeof i18n

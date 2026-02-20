@@ -1,0 +1,38 @@
+{
+  "continueWelcome": "Commencer",
+  "continueLunatic": "Continuer",
+  "continueEnd": "Télécharger l'accusé de réception",
+  "continueValidation": "Envoyer mes réponses",
+  "continueTitleDefault": "Passer à l'étape suivante",
+  "continueTitleEnd": "Télécharger l'accusé de réception",
+  "downloadData": "Télécharger les données",
+  "downloadArticulation": "Télécharger le récapitulatif du rond-point",
+  "expand": "Étendre l'affichage",
+  "collapse": "Réduire l'affichage",
+  "previousTitle": "Revenir à l'étape précédente",
+  "previousLabel": "Précédent",
+  "stepperState": "Étape {{currentStep}} sur {{stepCount}}",
+  "exitModal": {
+    "title": "Voulez-vous quitter le questionnaire ?",
+    "buttonCancel": "Annuler",
+    "buttonValidate": "J'ai compris",
+    "content": "Vos données seront enregistrées, vous allez être renvoyé vers le portail de réponse"
+  },
+  "toast": {
+    "toastSaveSuccessTitle": "Données sauvegardées avec succès !",
+    "toastSaveSuccessDescription": "Vos modifications ont été enregistrées et sauvegardées.",
+    "toastSaveErrorTitle": "Erreur de sauvegarde",
+    "toastSaveErrorDescription": "Une erreur est survenue lors de l'enregistrement de vos modifications.",
+    "toastSaveNetworkErrorTitle": "Erreur réseau",
+    "toastSaveNetworkErrorDescription": "Une erreur réseau est survenue, les données ne sont pas enregistrées. Ne fermez pas cette fenêtre pour qu'elles puissent être transmises à la reconnexion."
+  },
+  "VtlDevTools": {
+    "fabButton": "Console VTL",
+    "cleanError": "Vider les erreurs",
+    "tableTitle": "Liste des erreurs d'exécution VTL",
+    "tableHeaderExpression": "Expression",
+    "tableHeaderBindings": "Bindings",
+    "tableHeaderMessage": "Message d'erreur",
+    "tableHeaderPage": "Page"
+  }
+}

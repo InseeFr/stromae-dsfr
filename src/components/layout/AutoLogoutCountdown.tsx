@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 
-import { declareComponentKeys } from 'i18nifty'
+import { useTranslation } from 'react-i18next'
 
 import { executePreLogoutActions } from '@/hooks/prelogout'
-import { useTranslation } from '@/i18n'
 import { useOidc } from '@/oidc'
 
 export function AutoLogoutCountdown() {
-  const { t } = useTranslation({ AutoLogoutCountdown })
+  const { t } = useTranslation()
   const { autoLogoutState } = useOidc()
 
   useEffect(() => {
@@ -42,20 +41,9 @@ export function AutoLogoutCountdown() {
       }}
     >
       <div style={{ textAlign: 'center' }}>
-        <p>{t('paragraph still there')}</p>
-        <p>{t('paragraph logged out in', { secondsLeft })}</p>
+        <p>{t('header.stillThere')}</p>
+        <p>{t('header.loggedOutIn', { secondsLeft })}</p>
       </div>
     </div>
   )
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { i18n } = declareComponentKeys<
-  | 'paragraph still there'
-  | {
-      K: 'paragraph logged out in'
-      P: { secondsLeft: number }
-      R: string
-    }
->()({ AutoLogoutCountdown })
-export type I18n = typeof i18n

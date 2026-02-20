@@ -1,0 +1,8 @@
+{
+  "homeLinkTitle": "Home - Name of the entity (ministry, state secretariat, government)",
+  "quickAccessSupport": "Need help?",
+  "quickAccessLogout": "Log out",
+  "quickAccessPortal": "Back to the portal",
+  "stillThere": "Are you still there?",
+  "loggedOutIn": "You will be logged out in {{secondsLeft}}"
+}

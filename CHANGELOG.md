@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.5.0) - 2026-02-20
+
 ### Changed
 
 - Switched i18n library from i18nifty to i18next.
+- deps: migrate to oidc-spa v10 (10.0.8) for improving authentication
 
 ## [2.4.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.2) - 2026-02-09
 
@@ -79,10 +82,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In collect and review mode, the `surveyUnitLabel` param in url has been renamed into `surveyUnitCompositeName`.
 - In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
 - Update static page of accessibility
-
-### Changed
-
-- deps: migrate to oidc-spa v8 (8.6.11) for improving authentication
 
 ### Fixed
 

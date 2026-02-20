@@ -80,6 +80,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In collect and review mode, provide the surveyUnit composite name when downloading the deposit proof.
 - Update static page of accessibility
 
+### Changed
+
+- deps: migrate to oidc-spa v8 (8.6.11) for improving authentication
+
 ### Fixed
 
 - Fixed authentication by downgrading `oidc-spa` (cross-domain issues) (already done in 2.2.4 but it must be a minor version, not a patch)

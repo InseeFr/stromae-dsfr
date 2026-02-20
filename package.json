@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.4.3-rc-technical-debt.3",
+  "version": "2.5.0-rc-oidc-spa-v10-rc.2",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",
@@ -20,7 +20,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "cross-env STORYBOOK=true storybook build",
     "prestorybook": "react-dsfr update-icons",
     "prebuild-storybook": "react-dsfr update-icons"
   },
@@ -39,7 +39,8 @@
     "he": "^1.2.0",
     "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",
-    "oidc-spa": "6.8.2",
+    "i18nifty": "^3.2.6",
+    "oidc-spa": "10.0.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.66.0",
@@ -75,6 +76,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.1.2",
+    "cross-env": "^10.1.0",
     "dotenv-flow": "^4.1.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc-d48603a5-20240813",

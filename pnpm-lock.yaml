@@ -48,8 +48,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.6(react@19.2.4)
       oidc-spa:
-        specifier: 6.8.2
-        version: 6.8.2(@types/react@19.2.10)(react@19.2.4)
+        specifier: 10.0.8
+        version: 10.0.8(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4)
       react:
         specifier: ^19.2.3
         version: 19.2.4
@@ -147,6 +147,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^2.1.2
         version: 2.1.9(vitest@2.1.9(@types/node@24.10.9)(jsdom@27.4.0)(sass@1.77.8))
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
       dotenv-flow:
         specifier: ^4.1.0
         version: 4.1.0
@@ -485,6 +488,9 @@ packages:
 
   '@emotion/weak-memoize@0.4.0':
     resolution: {integrity: sha512-snKqtPW01tN0ui7yu9rGv69aJXr/a/Ywvl11sUjNtEcRc+ng/mQriFL0wLXMef74iHa/EkftbDzU9F8iFbH+zg==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -2487,6 +2493,11 @@ packages:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
     engines: {node: '>=10'}
 
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -3809,15 +3820,33 @@ packages:
     resolution: {integrity: sha512-nK28WOo+QIjBkDduTINE4JkF/UJJKyf2EJxvJKfblDpyg0Q+pkOHNTL0Qwy6NP6FhE/EnzV73BxxqcJaXY9anw==}
     engines: {node: '>= 0.4'}
 
-  oidc-spa@6.8.2:
-    resolution: {integrity: sha512-R27+BDg9RW/eI0uZLDnBC/BzKdhkPcOrLIyFwnwCLeL9D9oe+YGXt0LlxSHlgU1DQ3ElLEWNCCNQc9bjpb4oeg==}
+  oidc-spa@10.0.8:
+    resolution: {integrity: sha512-4RMLNsxQxtjzqVH5gySYB0TdivNRtJP/DXbnen17ORXA1BjvDLIiNSEoJEUndAe22Wi24PC6hk+rFxzlQ2qwDw==}
     peerDependencies:
+      '@angular/common': '*'
+      '@angular/core': '*'
+      '@angular/router': '*'
+      '@tanstack/react-router': '*'
+      '@tanstack/react-start': '*'
       '@types/react': '*'
       react: '*'
+      rxjs: '*'
     peerDependenciesMeta:
+      '@angular/common':
+        optional: true
+      '@angular/core':
+        optional: true
+      '@angular/router':
+        optional: true
+      '@tanstack/react-router':
+        optional: true
+      '@tanstack/react-start':
+        optional: true
       '@types/react':
         optional: true
       react:
+        optional: true
+      rxjs:
         optional: true
 
   onetime@5.1.2:
@@ -5288,6 +5317,8 @@ snapshots:
   '@emotion/utils@1.4.2': {}
 
   '@emotion/weak-memoize@0.4.0': {}
+
+  '@epic-web/invariant@1.0.0': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -7292,6 +7323,11 @@ snapshots:
       path-type: 4.0.0
       yaml: 1.10.2
 
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
+
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -8926,8 +8962,9 @@ snapshots:
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
-  oidc-spa@6.8.2(@types/react@19.2.10)(react@19.2.4):
+  oidc-spa@10.0.8(@tanstack/react-router@1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.10)(react@19.2.4):
     optionalDependencies:
+      '@tanstack/react-router': 1.134.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@types/react': 19.2.10
       react: 19.2.4
 

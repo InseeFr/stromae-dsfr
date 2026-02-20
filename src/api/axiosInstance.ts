@@ -11,7 +11,7 @@ const getAccessToken = async () => {
 
   if (!oidc.isUserLoggedIn) return undefined
 
-  return oidc.getTokens().accessToken
+  return await oidc.getAccessToken()
 }
 
 // Type issue https://github.com/axios/axios/issues/5494

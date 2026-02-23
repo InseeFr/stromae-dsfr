@@ -49,7 +49,7 @@
     "react-number-format": "^5.4.4",
     "tsafe": "^1.8.12",
     "tss-react": "^4.9.19",
-    "zod": "^3.25.76"
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^14.0.0",

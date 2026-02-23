@@ -39,7 +39,6 @@
     "he": "^1.2.0",
     "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",
-    "i18nifty": "^3.2.6",
     "oidc-spa": "10.0.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",

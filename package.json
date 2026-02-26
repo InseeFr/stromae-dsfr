@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.6.0-qcu-pairwise-rc.0",
+  "version": "2.6.0",
   "type": "module",
   "scripts": {
     "prepare": "husky && vite-envs update-types",

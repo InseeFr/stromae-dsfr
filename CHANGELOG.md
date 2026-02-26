@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.6.0) - 2026-02-26
+
+### Added
+
+- Radio, Dropdown and CheckboxOne can now have options based on a variable. Added by Lunatic 3.12.0.
+- Enable Pairwise component to be paginated in a loop. Added by Lunatic 3.12.0.
+
 ## [2.5.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.5.0) - 2026-02-20
 
 ### Changed

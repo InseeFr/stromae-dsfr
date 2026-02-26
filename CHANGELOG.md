@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Suggester synonyms now handle uppercase. Fixed by Lunatic 3.12.1
+
 ## [2.6.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.6.0) - 2026-02-26
 
 ### Added

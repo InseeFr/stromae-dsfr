@@ -86,7 +86,7 @@
     "lint-staged": "^16.0.0",
     "orval": "^7.20.0",
     "prettier": "^3.8.1",
-    "storybook": "8.6.17",
+    "storybook": "8.6.18",
     "storybook-dark-mode": "^4.0.2",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4",

@@ -7,7 +7,6 @@ import { MODE_TYPE } from '@/constants/mode'
 import { TELEMETRY_EVENT_TYPE } from '@/constants/telemetry'
 import { TelemetryContext } from '@/contexts/TelemetryContext'
 import { useMode } from '@/hooks/useMode'
-import { OidcProvider } from '@/oidc'
 import { renderWithRouter } from '@/utils/tests'
 
 import { Footer } from './Footer'
@@ -48,17 +47,15 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getAllByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent,
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent,
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -83,17 +80,15 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.VISUALIZE)
 
     const { getAllByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent,
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent,
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -111,17 +106,15 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getAllByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: false,
-            pushEvent,
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: false,
+          pushEvent,
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => expect(pushEvent).not.toHaveBeenCalled())
@@ -137,17 +130,15 @@ describe('Header & Footer', () => {
     const showToast = vi.fn()
 
     const { getAllByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
     )
     await waitFor(() => expect(showToast).not.toHaveBeenCalled())
 
@@ -166,18 +157,16 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getAllByTitle } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-          <Footer />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+        <Footer />
+      </TelemetryContext.Provider>,
     )
 
     const homeLinks = getAllByTitle(
@@ -197,18 +186,16 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getAllByTitle } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: false,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-          <Footer />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: false,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+        <Footer />
+      </TelemetryContext.Provider>,
     )
 
     const homeLinks = getAllByTitle(
@@ -226,18 +213,16 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getAllByTitle } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: false,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-          <Footer />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: false,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+        <Footer />
+      </TelemetryContext.Provider>,
     )
 
     const homeLinks = getAllByTitle(
@@ -263,17 +248,15 @@ describe('Header & Footer', () => {
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
 
     const { getByText } = renderWithRouter(
-      <OidcProvider>
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>
-      </OidcProvider>,
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
     )
 
     await waitFor(() => {

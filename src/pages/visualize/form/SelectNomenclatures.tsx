@@ -20,10 +20,10 @@ export function SelectNomenclatures() {
 
   return (
     <>
-      <h2>{t('collectPage.selectNomenclature.title')}</h2>
-      <p>{t('collectPage.selectNomenclature.description')}</p>
+      <h2>{t('visualizePage.selectNomenclature.title')}</h2>
+      <p>{t('visualizePage.selectNomenclature.description')}</p>
       <Button type="button" priority="secondary" onClick={addNomenclature}>
-        {t('collectPage.selectNomenclature.addButton')}
+        {t('visualizePage.selectNomenclature.addButton')}
       </Button>
       <ul style={{ listStyle: 'none' }}>
         {fields.map((item, index) => {
@@ -31,18 +31,18 @@ export function SelectNomenclatures() {
             <li key={item.id} style={{ display: 'flex', flexDirection: 'row' }}>
               <Input
                 nativeInputProps={{ ...register(`nomenclature.${index}.name`) }}
-                label={t('collectPage.selectNomenclature.nameLabel')}
+                label={t('visualizePage.selectNomenclature.nameLabel')}
                 className={fr.cx('fr-mr-4v')}
               />
               <Input
                 nativeInputProps={{ ...register(`nomenclature.${index}.uri`) }}
-                label={t('collectPage.selectNomenclature.uriLabel')}
+                label={t('visualizePage.selectNomenclature.uriLabel')}
               />
               <Button
                 type="button"
                 iconId={'fr-icon-close-line'}
                 onClick={() => remove(index)}
-                title={t('collectPage.selectNomenclature.deleteButton')}
+                title={t('visualizePage.selectNomenclature.deleteButtonTitle')}
                 priority="tertiary no outline"
               />
             </li>

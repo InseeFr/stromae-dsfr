@@ -13,6 +13,7 @@ import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useOidc } from '@/oidc'
 import { accessibilityRoute } from '@/pages/accessibility/route'
 import { collectRoute } from '@/pages/collect/route'
+import { deconnexionRoute } from '@/pages/deconnexion/route'
 import { legalsRoute } from '@/pages/legals/route'
 import { navigationAssistanceRoute } from '@/pages/navigationAssistance/route'
 import { reviewRoute } from '@/pages/review/route'
@@ -22,16 +23,16 @@ import { visualizeRoute } from '@/pages/visualize/route'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RootComponent = memo(() => {
-  const { tokens } = useOidc()
+  const { decodedIdToken } = useOidc()
   const { isTelemetryEnabled, setDefaultValues } = useTelemetry()
 
   // Retrieve the OIDC's session id (different for each session of the user
   // agent used by the end-user which allows to identify distinct sessions)
   useEffect(() => {
-    if (isTelemetryEnabled && tokens?.decodedIdToken.sid) {
-      setDefaultValues({ sid: tokens?.decodedIdToken.sid })
+    if (isTelemetryEnabled && decodedIdToken?.sid) {
+      setDefaultValues({ sid: decodedIdToken?.sid })
     }
-  }, [isTelemetryEnabled, tokens?.decodedIdToken.sid, setDefaultValues])
+  }, [isTelemetryEnabled, decodedIdToken?.sid, setDefaultValues])
 
   return (
     <div
@@ -62,6 +63,7 @@ export const routeTree = rootRoute.addChildren([
     ? []
     : [visualizeRoute]),
   accessibilityRoute,
+  deconnexionRoute,
   securityRoute,
   siteMapRoute,
   legalsRoute,

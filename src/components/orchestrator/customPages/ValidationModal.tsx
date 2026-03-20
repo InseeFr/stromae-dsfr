@@ -67,7 +67,7 @@ export function ValidationModal({ actionsRef }: Props) {
       ]}
       concealingBackdrop={true}
     >
-      {t('content')}
+      {t('validation.validationModal.content')}
     </modal.Component>
   )
 }

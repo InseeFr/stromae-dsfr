@@ -102,6 +102,7 @@ export namespace OrchestratorProps {
       data: LunaticData['COLLECTED']
       onSuccess?: () => void
       isLogout: boolean
+      shouldShowToast?: boolean
     }) => Promise<void>
     /** Allows user to download a deposit proof PDF */
     getDepositProof: (params?: GenerateDepositProofParams) => Promise<void>
@@ -335,16 +336,20 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
-  const triggerDataAndStateUpdate = async (isLogout: boolean = false) => {
+  const triggerDataAndStateUpdate = async (
+    isLogout: boolean = false,
+    shouldShowToast: boolean = true,
+  ) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
+      isSavingRef.current = true
       const changedData = getChangedData(false) as InterrogationData
       const interrogation = updateInterrogation(changedData, currentPage)
 
       if (!interrogation.stateData) {
         setIsDirtyState(false)
+        isSavingRef.current = false
         return
       }
-
       const dataToSend =
         hasDataChanged(changedData) && changedData.COLLECTED
           ? {
@@ -369,8 +374,10 @@ export function Orchestrator(props: OrchestratorProps) {
                 globalThis.location.reload()
               }, 3000)
             }
+            isSavingRef.current = false
           },
           isLogout: isLogout,
+          shouldShowToast: shouldShowToast,
         })
       } catch (error) {
         console.error('Failed to update data:', error)
@@ -380,9 +387,22 @@ export function Orchestrator(props: OrchestratorProps) {
           data: dataToSend,
           stateData: interrogation.stateData,
         })
+        isSavingRef.current = false
       }
     }
   }
+
+  const autoSaveRef = useRef({
+    isDirtyState,
+    currentPageType,
+    triggerDataAndStateUpdate,
+  })
+  autoSaveRef.current = {
+    isDirtyState,
+    currentPageType,
+    triggerDataAndStateUpdate,
+  }
+  const isSavingRef = useRef(false)
 
   // Telemetry initialization
   useEffect(() => {
@@ -468,6 +488,27 @@ export function Orchestrator(props: OrchestratorProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Persist data at a set interval when in collect mode and there is unsaved data
+  useEffect(() => {
+    if (mode !== MODE_TYPE.COLLECT) return
+
+    const intervalSec = Number(import.meta.env.VITE_AUTOSAVE_INTERVAL) || 60
+
+    const interval = setInterval(() => {
+      const { isDirtyState, currentPageType, triggerDataAndStateUpdate } =
+        autoSaveRef.current
+      if (
+        isDirtyState &&
+        currentPageType !== PAGE_TYPE.END &&
+        !isSavingRef.current
+      ) {
+        triggerDataAndStateUpdate(false, false)
+      }
+    }, intervalSec * 1000)
+
+    return () => clearInterval(interval)
+  }, [mode])
 
   const { components, bottomComponents } = computeLunaticComponents(
     getComponents(),

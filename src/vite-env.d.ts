@@ -20,6 +20,7 @@ type ImportMetaEnv = {
   VITE_TELEMETRY_MAX_DELAY: string
   VITE_TELEMETRY_MAX_LENGTH: string
   VITE_MULTIMODE_ENABLED: string
+  VITE_AUTOSAVE_INTERVAL: string
   VITE_DOWNLOAD_DISABLED: string
   BASE_URL: string
   MODE: string
@@ -36,6 +37,8 @@ type ImportMetaEnv = {
    * Example:
    */
   SSR: boolean
+  /** Auto-save interval in milliseconds when filling a questionnaire (default: 30000) */
+  VITE_AUTOSAVE_INTERVAL_MS: string
   // @user-defined-end
 }
 

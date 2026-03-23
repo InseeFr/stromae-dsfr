@@ -166,6 +166,11 @@ describe('Orchestrator', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.clearAllMocks()
+    vi.stubEnv('VITE_AUTOSAVE_INTERVAL', '2')
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
   })
 
   it('sets idInterrogation as default value', async () => {
@@ -819,5 +824,207 @@ describe('Orchestrator', () => {
     const expandButton = getByRole('button', { name: 'Expand view' })
     expect(expandButton).toBeInTheDocument()
     expect(expandButton).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('does not auto-save when there is no dirty state', async () => {
+    const updateDataAndStateData = vi.fn().mockResolvedValue(undefined)
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+
+    await new Promise((r) => setTimeout(r, 300))
+
+    expect(updateDataAndStateData).not.toHaveBeenCalled()
+  })
+
+  it('auto-saves when dirty state and interval elapses', async () => {
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+    await user.click(getByText('my-question'))
+    await user.keyboard('some input')
+
+    await waitFor(
+      () => {
+        expect(updateDataAndStateData).toHaveBeenCalledOnce()
+      },
+      { timeout: 2000 },
+    )
+  })
+
+  it('auto-saves without showing a toast', async () => {
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+    await user.click(getByText('my-question'))
+    await user.keyboard('some input')
+
+    await waitFor(
+      () => {
+        expect(updateDataAndStateData).toHaveBeenCalledWith(
+          expect.objectContaining({ isLogout: false, shouldShowToast: false }),
+        )
+      },
+      { timeout: 2000 },
+    )
+  })
+
+  it('does not auto-save on end page', async () => {
+    const updateDataAndStateData = vi.fn().mockResolvedValue(undefined)
+
+    const initialInterrogation = {
+      ...defaultInterrogation,
+      stateData: {
+        state: 'COMPLETED' as QuestionnaireState,
+        date: 0,
+        currentPage: PAGE_TYPE.END as PageType,
+      },
+    }
+
+    renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        initialInterrogation={initialInterrogation}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await new Promise((r) => setTimeout(r, 300))
+
+    expect(updateDataAndStateData).not.toHaveBeenCalled()
+  })
+
+  it('does not auto-save in visualize mode', async () => {
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper mode={MODE_TYPE.VISUALIZE} />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+    await user.click(getByText('my-question'))
+    await user.keyboard('some input')
+
+    await new Promise((r) => setTimeout(r, 300))
+  })
+
+  it('auto-saves multiple times over multiple intervals', async () => {
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+    await user.click(getByText('my-question'))
+    await user.keyboard('some input')
+
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
+      { timeout: 2000 },
+    )
+
+    await user.click(getByText('my-question'))
+    await user.keyboard(' more input')
+
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
+      { timeout: 2000 },
+    )
+  })
+
+  it('retains user input after failed auto-save and successful retry', async () => {
+    const user = userEvent.setup()
+    let callCount = 0
+
+    // First call fails, second call succeeds
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      callCount++
+      if (callCount === 1) {
+        return Promise.reject(new Error('Network error'))
+      }
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    // First auto-save fires (300ms) — fails, isDirtyState stays true
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
+      { timeout: 2000 },
+    )
+
+    // Second auto-save fires automatically (isDirtyState still true) — succeeds
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
+      { timeout: 2000 },
+    )
+
+    expect(updateDataAndStateData).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          'my-question-input': {
+            COLLECTED: 'Maelle ending >>',
+          },
+        }),
+      }),
+    )
+
+    await waitFor(() => {
+      expect(document.title).not.toContain('*')
+    })
   })
 })

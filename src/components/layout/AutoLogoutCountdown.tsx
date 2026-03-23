@@ -11,7 +11,7 @@ export function AutoLogoutCountdown() {
 
   useEffect(() => {
     if (autoLogoutState.shouldDisplayWarning) {
-      ; (async () => {
+      ;(async () => {
         await executePreLogoutActions()
       })()
     }

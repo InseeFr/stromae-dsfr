@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added autosave feature based on time interval (every minute by default) in collect mode
+
 ### Fixed
 
 - Suggester synonyms now handle uppercase. Fixed by Lunatic 3.12.1

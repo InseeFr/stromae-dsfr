@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Suggester synonyms now sort correctly the results. Fixed by Lunatic 3.12.2
 - Cleaning is now working correctly for questions in loop with a list of responses options based on a variable. Fixed by Lunatic 3.13.0
 
+### Changed
+
+- Upgrade react-dsfr from 1.13.6 to 1.31.1
+
 ## [2.6.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.6.0) - 2026-02-26
 
 ### Added
@@ -26,11 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switched i18n library from i18nifty to i18next.
 - deps: migrate to oidc-spa v10 (10.0.8) for improving authentication
-
-### Changed
-
-- Switched i18n library from i18nifty to i18next.
-- Updated React DSFR from v1.13.6 to v1.31.1.
 
 ## [2.4.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.4.2) - 2026-02-09
 

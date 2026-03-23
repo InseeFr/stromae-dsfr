@@ -185,11 +185,11 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
               tool:
                 | string
                 | {
-                  text: string
-                  linkText: string
-                  linkUrl: string
-                  linkTitle: string
-                },
+                    text: string
+                    linkText: string
+                    linkUrl: string
+                    linkTitle: string
+                  },
               index: number,
             ) => (
               <li key={index}>

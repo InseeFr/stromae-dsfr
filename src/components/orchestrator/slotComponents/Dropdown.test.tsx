@@ -19,9 +19,9 @@ vi.mock('./utils/errorStates', () => ({
 }))
 
 describe('Dropdown Component', () => {
-  // this case must not be happen in future (Eno make option as VTL label, and not VTL|MD lavel for DropdownOptions)
+  // this case must not be happen in future (Eno makes option as VTL label, and not VTL|MD label for DropdownOptions)
   // MD si invalid inside <option> html tag
-  // should remove MDLabel in this test
+  // We should remove MDLabel in this test
   it('renders the options correctly with MD', () => {
     ;(getErrorStates as Mock).mockReturnValue({
       state: 'default',
@@ -57,6 +57,5 @@ describe('Dropdown Component', () => {
     expect(options).toHaveLength(2)
     expect(options[0]).toHaveTextContent("L'enfant")
     expect(options[1]).toHaveTextContent('With some **bold**')
-    console.log('options[1]', options[1])
   })
 })

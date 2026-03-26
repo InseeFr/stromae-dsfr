@@ -2,7 +2,6 @@ import { useId } from 'react'
 
 import { Select } from '@codegouvfr/react-dsfr/SelectNext'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
-import { renderToString } from 'react-dom/server'
 
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
@@ -55,11 +54,7 @@ export const Dropdown: LunaticSlotComponents['Dropdown'] = (props) => {
       stateRelatedMessage={stateRelatedMessage}
       hint={description}
       disabled={disabled || readOnly}
-      options={options.map(({ label, value }) => ({
-        // MD is not yet forbidden in options so in this case we must convert label in string
-        label: typeof label === 'object' ? renderToString(label) : label,
-        value,
-      }))}
+      options={options}
     />
   )
 }

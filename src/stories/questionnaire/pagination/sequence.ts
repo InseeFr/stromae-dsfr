@@ -318,8 +318,7 @@ export const source: LunaticSource = {
       componentType: 'Question',
       page: '1',
       label: {
-        value:
-          '"➡ 4. " || "Numérique décimal sans unité (entre 0 et 1000.00)"',
+        value: '"➡ 4. " || "Numérique décimal sans unité (entre 0 et 1000.00)"',
         type: 'VTL|MD',
       },
       declarations: [
@@ -1867,8 +1866,7 @@ export const source: LunaticSource = {
       componentType: 'Question',
       page: '2',
       label: {
-        value:
-          '"➡ 9. " || "Question à choix multiple - réponse oui/non radio"',
+        value: '"➡ 9. " || "Question à choix multiple - réponse oui/non radio"',
         type: 'VTL|MD',
       },
       components: [

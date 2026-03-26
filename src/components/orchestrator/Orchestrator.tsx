@@ -493,7 +493,8 @@ export function Orchestrator(props: OrchestratorProps) {
   useEffect(() => {
     if (mode !== MODE_TYPE.COLLECT) return
 
-    const intervalSec = Number(import.meta.env.VITE_AUTOSAVE_INTERVAL) || 60
+    const intervalMs =
+      Number(import.meta.env.VITE_AUTOSAVE_INTERVAL_MS) || 60000
 
     const interval = setInterval(() => {
       const { isDirtyState, currentPageType, triggerDataAndStateUpdate } =
@@ -505,7 +506,7 @@ export function Orchestrator(props: OrchestratorProps) {
       ) {
         triggerDataAndStateUpdate(false, false)
       }
-    }, intervalSec * 1000)
+    }, intervalMs)
 
     return () => clearInterval(interval)
   }, [mode])

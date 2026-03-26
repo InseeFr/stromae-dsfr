@@ -166,7 +166,7 @@ describe('Orchestrator', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.clearAllMocks()
-    vi.stubEnv('VITE_AUTOSAVE_INTERVAL', '2')
+    vi.stubEnv('VITE_AUTOSAVE_INTERVAL_MS', '2100')
   })
 
   afterEach(() => {
@@ -1001,16 +1001,16 @@ describe('Orchestrator', () => {
     await user.click(getByText('my-question'))
     await user.keyboard('Maelle ending >>')
 
-    // First auto-save fires (300ms) — fails, isDirtyState stays true
+    // First auto-save fires — fails, isDirtyState stays true
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2000 },
+      { timeout: 2100 },
     )
 
     // Second auto-save fires automatically (isDirtyState still true) — succeeds
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2000 },
+      { timeout: 2100 },
     )
 
     expect(updateDataAndStateData).toHaveBeenLastCalledWith(
@@ -1018,6 +1018,75 @@ describe('Orchestrator', () => {
         data: expect.objectContaining({
           'my-question-input': {
             COLLECTED: 'Maelle ending >>',
+          },
+        }),
+      }),
+    )
+
+    await waitFor(() => {
+      expect(document.title).not.toContain('*')
+    })
+  })
+
+  it('retains user modification after failed auto-save and successful retry', async () => {
+    const user = userEvent.setup()
+    let callCount = 0
+
+    // Only the last request succeeds
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      callCount++
+      if (callCount === 1 || callCount === 2) {
+        return Promise.reject(new Error('Network error'))
+      }
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
+      { timeout: 2000 },
+    )
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('{Control>}a{/Control}Esquio is the true MVP')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
+      { timeout: 2000 },
+    )
+
+    await user.click(getByText('my-question-2'))
+    await user.keyboard('Esquie goes weeeee')
+
+    await waitFor(
+      () => expect(updateDataAndStateData).toHaveBeenCalledTimes(3),
+      { timeout: 2000 },
+    )
+
+    expect(updateDataAndStateData).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          'my-question-input': {
+            COLLECTED: 'Esquio is the true MVP',
+          },
+          'my-question-2-input': {
+            COLLECTED: 'Esquie goes weeeee',
           },
         }),
       }),

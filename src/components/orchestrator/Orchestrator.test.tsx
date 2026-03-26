@@ -166,7 +166,7 @@ describe('Orchestrator', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.clearAllMocks()
-    vi.stubEnv('VITE_AUTOSAVE_INTERVAL_MS', '2100')
+    vi.stubEnv('VITE_AUTOSAVE_INTERVAL', '2100')
   })
 
   afterEach(() => {

@@ -36,8 +36,6 @@ type ImportMetaEnv = {
    * Example:
    */
   SSR: boolean
-  /** Auto-save interval in milliseconds when filling a questionnaire (default: 30000) */
-  VITE_AUTOSAVE_INTERVAL_MS: string
   // @user-defined-end
 }
 

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Suggester: selected labels are now properly refreshed when the store is successfully indexed. Fixed By Lunatic 3.12.2
 - Suggester synonyms now handle uppercase. Fixed by Lunatic 3.12.1
 - Suggester synonyms now sort correctly the results. Fixed by Lunatic 3.12.2
 - Cleaning is now working correctly for questions in loop with a list of responses options based on a variable. Fixed by Lunatic 3.13.0

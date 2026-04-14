@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Pairwise: do not display error when person is empty. Fixed by Launtic 3.13.4
 - Suggester: selected labels are now properly refreshed when the store is successfully indexed. Fixed By Lunatic 3.12.2
 - Suggester synonyms now handle uppercase. Fixed by Lunatic 3.12.1
 - Suggester synonyms now sort correctly the results. Fixed by Lunatic 3.12.2

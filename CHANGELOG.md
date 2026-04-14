@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.7.0) - 2026-04-14
+
 ### Added
 
 - Added autosave feature based on time interval (every minute by default) in collect mode
+  - [NEW] environnement variable : `VITE_AUTOSAVE_INTERVAL`: interval in `ms` for auto-save feature (default: `60000` = 1 min)
 
 ### Fixed
 

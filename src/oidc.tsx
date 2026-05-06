@@ -23,6 +23,10 @@ export const { bootstrapOidc, getOidc, useOidc } = oidcSpa
   })
   .createUtils()
 
+const oidcScopes = (import.meta.env.VITE_OIDC_SCOPES || 'profile,roles').split(
+  ',',
+)
+
 bootstrapOidc(
   import.meta.env.VITE_OIDC_ENABLED === 'true'
     ? {
@@ -31,6 +35,7 @@ bootstrapOidc(
         // Configure your OIDC provider in `.env.local`
         clientId: import.meta.env.VITE_OIDC_CLIENT_ID,
         issuerUri: import.meta.env.VITE_OIDC_ISSUER,
+        scopes: oidcScopes,
         autoLogoutParams: autoLogoutParams,
         // Enable for detailed initialization and token lifecycle logs.
         debugLogs: true,

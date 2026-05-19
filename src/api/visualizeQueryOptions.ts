@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query'
 import { type AxiosRequestConfig } from 'axios'
 import { ZodError } from 'zod'
 
-import { axiosInstance } from '@/api/axiosInstance'
+import { visualizeAxiosInstance } from '@/api/axiosInstance'
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
 import type { Interrogation } from '@/models/interrogation'
 import type { Nomenclature } from '@/models/lunaticType'
@@ -11,7 +11,7 @@ import type { Metadata } from '@/models/metadata'
 import { interrogationMetadataSchema } from '@/models/metadataSchema'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
-  return axiosInstance.get<T>(url, options).then(({ data }) => data)
+  return visualizeAxiosInstance.get<T>(url, options).then(({ data }) => data)
 }
 
 export const sourceQueryOptions = (

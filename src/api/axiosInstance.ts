@@ -37,6 +37,10 @@ const onRequest = async (config: any) => ({
 
 axiosInstance.interceptors.request.use(onRequest)
 
+//We use a custom instance for visualization mode because we do not need the baseUrl
+export const visualizeAxiosInstance = axios.create()
+visualizeAxiosInstance.interceptors.request.use(onRequest)
+
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const stromaeInstance = <T>(
   config: AxiosRequestConfig,

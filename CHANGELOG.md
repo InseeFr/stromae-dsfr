@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - new env variable: `VITE_OIDC_SCOPES` (default value `"profile,roles"`)
   - added authentication check on visualization page
 
+- Added a new environment variable `VITE_TRUST_URI_DOMAINS` to specify trusted domains for visualization requests
+
 ## [2.7.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.7.0) - 2026-04-14
 
 ### Added

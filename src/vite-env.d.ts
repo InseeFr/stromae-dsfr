@@ -22,6 +22,7 @@ type ImportMetaEnv = {
   VITE_TELEMETRY_MAX_LENGTH: string
   VITE_MULTIMODE_ENABLED: string
   VITE_AUTOSAVE_INTERVAL: string
+  VITE_TRUST_URI_DOMAINS: string
   BASE_URL: string
   MODE: string
   DEV: boolean

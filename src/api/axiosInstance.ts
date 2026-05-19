@@ -37,9 +37,35 @@ const onRequest = async (config: any) => ({
 
 axiosInstance.interceptors.request.use(onRequest)
 
+const trustedDomains: string[] = (import.meta.env.VITE_TRUST_URI_DOMAINS ?? '')
+  .split(',')
+  .map((d: string) => d.trim())
+  .filter(Boolean)
+
+const isUriAuthorized = (url: string): boolean => {
+  try {
+    const { hostname } = new URL(url)
+    return trustedDomains.some(
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+    )
+  } catch {
+    return false
+  }
+}
+
+const onDomainCheck = (config: any) => {
+  if (!isUriAuthorized(config.url ?? '')) {
+    return Promise.reject(
+      new Error(`Request to untrusted domain: ${config.url}`),
+    )
+  }
+  return config
+}
+
 //We use a custom instance for visualization mode because we do not need the baseUrl
 export const visualizeAxiosInstance = axios.create()
 visualizeAxiosInstance.interceptors.request.use(onRequest)
+visualizeAxiosInstance.interceptors.request.use(onDomainCheck)
 
 // add a second `options` argument here if you want to pass extra options to each generated query
 export const stromaeInstance = <T>(

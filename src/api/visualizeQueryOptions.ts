@@ -1,8 +1,9 @@
 import type { LunaticSource } from '@inseefr/lunatic'
 import { queryOptions } from '@tanstack/react-query'
-import axios, { type AxiosRequestConfig } from 'axios'
+import { type AxiosRequestConfig } from 'axios'
 import { ZodError } from 'zod'
 
+import { visualizeAxiosInstance } from '@/api/axiosInstance'
 import { ZodErrorWithName } from '@/components/error/ZodErrorWithName'
 import type { Interrogation } from '@/models/interrogation'
 import type { Nomenclature } from '@/models/lunaticType'
@@ -10,7 +11,7 @@ import type { Metadata } from '@/models/metadata'
 import { interrogationMetadataSchema } from '@/models/metadataSchema'
 
 function axiosGet<T>(url: string, options?: AxiosRequestConfig) {
-  return axios.get<T>(url, options).then(({ data }) => data)
+  return visualizeAxiosInstance.get<T>(url, options).then(({ data }) => data)
 }
 
 export const sourceQueryOptions = (

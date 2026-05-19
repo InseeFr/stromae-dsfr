@@ -8,6 +8,7 @@ import {
 } from '@/api/visualizeQueryOptions'
 import { ContentSkeleton } from '@/components/ContentSkeleton'
 import { ErrorComponent } from '@/components/error/ErrorComponent'
+import { protectedRouteLoader } from '@/loader/protectedLoader'
 import { rootRoute } from '@/router/router'
 import { metadataStore } from '@/stores/metadataStore'
 import { convertOldPersonalization } from '@/utils/convertOldPersonalization'
@@ -28,6 +29,7 @@ export const visualizeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: visualizePath,
   component: VisualizePage,
+  beforeLoad: async () => protectedRouteLoader(),
   validateSearch: visualizeSearchSchema,
   loaderDeps: ({ search }) => ({
     sourceUrl: search?.source,
@@ -38,7 +40,6 @@ export const visualizeRoute = createRoute({
   loader: async ({
     context: { queryClient },
     deps: { sourceUrl, interrogationUrl, metadataUrl, nomenclature },
-    abortController,
   }) => {
     document.title = "Visualisation | Filière d'Enquête"
 
@@ -46,25 +47,15 @@ export const visualizeRoute = createRoute({
       return
     }
 
-    const sourcePr = queryClient.ensureQueryData(
-      sourceQueryOptions(sourceUrl, { signal: abortController.signal }),
-    )
+    const sourcePr = queryClient.ensureQueryData(sourceQueryOptions(sourceUrl))
 
     const interrogationPr = interrogationUrl
-      ? queryClient.ensureQueryData(
-          interrogationQueryOptions(interrogationUrl, {
-            signal: abortController.signal,
-          }),
-        )
+      ? queryClient.ensureQueryData(interrogationQueryOptions(interrogationUrl))
       : Promise.resolve(undefined)
 
     const metadataPr = metadataUrl
       ? queryClient
-          .ensureQueryData(
-            metadataQueryOptions(metadataUrl, {
-              signal: abortController.signal,
-            }),
-          )
+          .ensureQueryData(metadataQueryOptions(metadataUrl))
           .then((metadata) => {
             if (metadata.label) {
               document.title = metadata.label

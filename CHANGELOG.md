@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.8.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.7.0) - 2026-05-20
+## [2.8.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.8.0) - 2026-05-20
 
 ### Changed
 

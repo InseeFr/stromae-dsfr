@@ -34,6 +34,8 @@ export function Header() {
    */
   const isCollectRoute = mode === MODE_TYPE.COLLECT
 
+  console.log('mode', mode)
+  console.log('isCollectRoute', isCollectRoute)
   const search = useSearch({ strict: false })
 
   const surveyUnitCompositeName = decodeUrlSafeBase64(
@@ -73,6 +75,7 @@ export function Header() {
     )
   }
 
+  console.log('assistanceHref', assistanceHref)
   return (
     <>
       <DsfrHeader
@@ -96,7 +99,7 @@ export function Header() {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {
               href: collectPath ? assistanceHref : '',
-              disabled: isCollectRoute,
+              disabled: !isCollectRoute || assistanceHref === '',
               onClick:
                 isCollectRoute && isTelemetryEnabled
                   ? () => {

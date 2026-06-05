@@ -284,28 +284,22 @@ describe('Header & Footer', () => {
   })
 
   it('should disable help button when assistance url is not provided', async () => {
-    const previousPortailUrl = import.meta.env.VITE_PORTAIL_URL
-    import.meta.env.VITE_PORTAIL_URL = ''
+    vi.stubEnv('VITE_PORTAIL_URL', '')
 
     vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
+    const { getAllByText } = renderWithRouter(
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
+    )
 
-    try {
-      const { getAllByText } = renderWithRouter(
-        <TelemetryContext.Provider
-          value={{
-            isTelemetryEnabled: true,
-            pushEvent: vi.fn(),
-            setDefaultValues: () => {},
-          }}
-        >
-          <Header />
-        </TelemetryContext.Provider>,
-      )
-
-      const helpButton = getAllByText('Need help?')[0]
-      expect(helpButton).toHaveAttribute('disabled')
-    } finally {
-      import.meta.env.VITE_PORTAIL_URL = previousPortailUrl
-    }
+    const helpButton = getAllByText('Need help?')[0]
+    expect(helpButton).toHaveAttribute('disabled')
   })
 })

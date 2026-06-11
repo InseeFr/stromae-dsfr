@@ -263,4 +263,43 @@ describe('Header & Footer', () => {
       expect(getByText('My Test Label')).toBeInTheDocument()
     })
   })
+
+  it('should disable help button when not in collect mode', async () => {
+    vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.VISUALIZE)
+
+    const { getAllByText } = renderWithRouter(
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
+    )
+
+    const helpButton = getAllByText('Need help?')[0]
+    expect(helpButton).toHaveAttribute('disabled')
+  })
+
+  it('should disable help button when assistance url is not provided', async () => {
+    vi.stubEnv('VITE_PORTAIL_URL', '')
+
+    vi.mocked(useMode).mockReturnValueOnce(MODE_TYPE.COLLECT)
+    const { getAllByText } = renderWithRouter(
+      <TelemetryContext.Provider
+        value={{
+          isTelemetryEnabled: true,
+          pushEvent: vi.fn(),
+          setDefaultValues: () => {},
+        }}
+      >
+        <Header />
+      </TelemetryContext.Provider>,
+    )
+
+    const helpButton = getAllByText('Need help?')[0]
+    expect(helpButton).toHaveAttribute('disabled')
+  })
 })

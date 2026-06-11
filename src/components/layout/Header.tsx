@@ -96,7 +96,7 @@ export function Header() {
             iconId: 'fr-icon-customer-service-fill',
             linkProps: {
               href: collectPath ? assistanceHref : '',
-              disabled: isCollectRoute,
+              disabled: !isCollectRoute || assistanceHref === '',
               onClick:
                 isCollectRoute && isTelemetryEnabled
                   ? () => {

@@ -1,2 +1,87 @@
-/*! For license information please see sidemenu.nomodule.js.LICENSE.txt */
-!function(){"use strict";var e=window.dsfr,t=e.internals.ns.selector("sidemenu__item"),n=e.internals.ns.selector("collapse"),r={LIST:e.internals.ns.selector("sidemenu__list"),COLLAPSE:t+" > "+n+", "+t+" > *:not("+t+"):not("+n+") > "+n+", "+t+" > *:not("+t+"):not("+n+") > *:not("+t+"):not("+n+") > "+n,COLLAPSE_LEGACY:t+" "+n,ITEM:e.internals.ns.selector("sidemenu__item"),BUTTON:e.internals.ns.selector("sidemenu__btn")},i=function(t){function n(){t.apply(this,arguments)}t&&(n.__proto__=t),n.prototype=Object.create(t&&t.prototype),n.prototype.constructor=n;var i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SidemenuList"},n.prototype.validate=function(n){return t.prototype.validate.call(this,n)&&n.node.matches(e.internals.legacy.isLegacy?r.COLLAPSE_LEGACY:r.COLLAPSE)},Object.defineProperties(n,i),n}(e.core.CollapsesGroup),s=function(e){function t(){e.apply(this,arguments)}e&&(t.__proto__=e),t.prototype=Object.create(e&&e.prototype),t.prototype.constructor=t;var n={collapsePrimary:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SidemenuItem"},n.collapsePrimary.get=function(){return this.element.children.map((function(e){return e.getInstance("CollapseButton")})).filter((function(e){return null!==e&&e.hasClass(r.BUTTON)}))[0]},Object.defineProperties(t.prototype,n),Object.defineProperties(t,i),t}(e.core.Instance);e.sidemenu={SidemenuList:i,SidemenuItem:s,SidemenuSelector:r},e.internals.register(e.sidemenu.SidemenuSelector.LIST,e.sidemenu.SidemenuList),e.internals.register(e.sidemenu.SidemenuSelector.ITEM,e.sidemenu.SidemenuItem)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var ITEM = api.internals.ns.selector('sidemenu__item');
+  var COLLAPSE = api.internals.ns.selector('collapse');
+
+  var SidemenuSelector = {
+    LIST: api.internals.ns.selector('sidemenu__list'),
+    COLLAPSE: (ITEM + " > " + COLLAPSE + ", " + ITEM + " > *:not(" + ITEM + "):not(" + COLLAPSE + ") > " + COLLAPSE + ", " + ITEM + " > *:not(" + ITEM + "):not(" + COLLAPSE + ") > *:not(" + ITEM + "):not(" + COLLAPSE + ") > " + COLLAPSE),
+    COLLAPSE_LEGACY: (ITEM + " " + COLLAPSE),
+    ITEM: api.internals.ns.selector('sidemenu__item'),
+    BUTTON: api.internals.ns.selector('sidemenu__btn')
+  };
+
+  var SidemenuList = /*@__PURE__*/(function (superclass) {
+    function SidemenuList () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) SidemenuList.__proto__ = superclass;
+    SidemenuList.prototype = Object.create( superclass && superclass.prototype );
+    SidemenuList.prototype.constructor = SidemenuList;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SidemenuList';
+    };
+
+    SidemenuList.prototype.validate = function validate (member) {
+      return superclass.prototype.validate.call(this, member) && member.node.matches(api.internals.legacy.isLegacy ? SidemenuSelector.COLLAPSE_LEGACY : SidemenuSelector.COLLAPSE);
+    };
+
+    Object.defineProperties( SidemenuList, staticAccessors );
+
+    return SidemenuList;
+  }(api.core.CollapsesGroup));
+
+  var SidemenuItem = /*@__PURE__*/(function (superclass) {
+    function SidemenuItem () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) SidemenuItem.__proto__ = superclass;
+    SidemenuItem.prototype = Object.create( superclass && superclass.prototype );
+    SidemenuItem.prototype.constructor = SidemenuItem;
+
+    var prototypeAccessors = { collapsePrimary: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SidemenuItem';
+    };
+
+    prototypeAccessors.collapsePrimary.get = function () {
+      var buttons = this.element.children.map(function (child) { return child.getInstance('CollapseButton'); }).filter(function (button) { return button !== null && button.hasClass(SidemenuSelector.BUTTON); });
+      return buttons[0];
+    };
+
+    Object.defineProperties( SidemenuItem.prototype, prototypeAccessors );
+    Object.defineProperties( SidemenuItem, staticAccessors );
+
+    return SidemenuItem;
+  }(api.core.Instance));
+
+  api.sidemenu = {
+    SidemenuList: SidemenuList,
+    SidemenuItem: SidemenuItem,
+    SidemenuSelector: SidemenuSelector
+  };
+
+  api.internals.register(api.sidemenu.SidemenuSelector.LIST, api.sidemenu.SidemenuList);
+  api.internals.register(api.sidemenu.SidemenuSelector.ITEM, api.sidemenu.SidemenuItem);
+
+})();
+//# sourceMappingURL=sidemenu.nomodule.js.map

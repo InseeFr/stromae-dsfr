@@ -1,2 +1,102 @@
-/*! For license information please see breadcrumb.module.js.LICENSE.txt */
-const config={prefix:"fr",namespace:"dsfr",organisation:"@gouvfr",version:"1.12.1"},api=window[config.namespace],BreadcrumbSelector={BREADCRUMB:api.internals.ns.selector("breadcrumb"),BUTTON:api.internals.ns.selector("breadcrumb__button")};class Breadcrumb extends api.core.Instance{constructor(){super(),this.count=0,this.focusing=this.focus.bind(this)}static get instanceClassName(){return"Breadcrumb"}init(){this.getCollapse(),this.isResizing=!0}get proxy(){const e=this;return Object.assign(super.proxy,{focus:e.focus.bind(e),disclose:e.collapse.disclose.bind(e.collapse)})}getCollapse(){const e=this.collapse;e?e.listen(api.core.DisclosureEvent.DISCLOSE,this.focusing):this.addAscent(api.core.DisclosureEmission.ADDED,this.getCollapse.bind(this))}resize(){const e=this.collapse,s=this.links;e&&s.length&&(this.isBreakpoint(api.core.Breakpoints.MD)?e.buttonHasFocus&&s[0].focus():s.indexOf(document.activeElement)>-1&&e.focus())}get links(){return[...this.querySelectorAll("a[href]")]}get collapse(){return this.element.getDescendantInstances(api.core.Collapse.instanceClassName,null,!0)[0]}focus(){this.count=0,this._focus()}_focus(){const e=this.links[0];e&&(e.focus(),this.request(this.verify.bind(this)))}verify(){if(this.count++,this.count>100)return;const e=this.links[0];e&&document.activeElement!==e&&this._focus()}get collapsePrimary(){return this.element.children.map((e=>e.getInstance("CollapseButton"))).filter((e=>null!==e&&e.hasClass(BreadcrumbSelector.BUTTON)))[0]}}api.breadcrumb={BreadcrumbSelector:BreadcrumbSelector,Breadcrumb:Breadcrumb},api.internals.register(api.breadcrumb.BreadcrumbSelector.BREADCRUMB,api.breadcrumb.Breadcrumb);
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+const config = {
+  prefix: 'fr',
+  namespace: 'dsfr',
+  organisation: '@gouvfr',
+  version: '1.12.1'
+};
+
+const api = window[config.namespace];
+
+const BreadcrumbSelector = {
+  BREADCRUMB: api.internals.ns.selector('breadcrumb'),
+  BUTTON: api.internals.ns.selector('breadcrumb__button')
+};
+
+class Breadcrumb extends api.core.Instance {
+  constructor () {
+    super();
+    this.count = 0;
+    this.focusing = this.focus.bind(this);
+  }
+
+  static get instanceClassName () {
+    return 'Breadcrumb';
+  }
+
+  init () {
+    this.getCollapse();
+    this.isResizing = true;
+  }
+
+  get proxy () {
+    const scope = this;
+    return Object.assign(super.proxy, {
+      focus: scope.focus.bind(scope),
+      disclose: scope.collapse.disclose.bind(scope.collapse)
+    });
+  }
+
+  getCollapse () {
+    const collapse = this.collapse;
+    if (collapse) {
+      collapse.listen(api.core.DisclosureEvent.DISCLOSE, this.focusing);
+    } else {
+      this.addAscent(api.core.DisclosureEmission.ADDED, this.getCollapse.bind(this));
+    }
+  }
+
+  resize () {
+    const collapse = this.collapse;
+    const links = this.links;
+    if (!collapse || !links.length) return;
+
+    if (this.isBreakpoint(api.core.Breakpoints.MD)) {
+      if (collapse.buttonHasFocus) links[0].focus();
+    } else {
+      if (links.indexOf(document.activeElement) > -1) collapse.focus();
+    }
+  }
+
+  get links () {
+    return [...this.querySelectorAll('a[href]')];
+  }
+
+  get collapse () {
+    return this.element.getDescendantInstances(api.core.Collapse.instanceClassName, null, true)[0];
+  }
+
+  focus () {
+    this.count = 0;
+    this._focus();
+  }
+
+  _focus () {
+    const link = this.links[0];
+    if (!link) return;
+    link.focus();
+    this.request(this.verify.bind(this));
+  }
+
+  verify () {
+    this.count++;
+    if (this.count > 100) return;
+    const link = this.links[0];
+    if (!link) return;
+    if (document.activeElement !== link) this._focus();
+  }
+
+  get collapsePrimary () {
+    const buttons = this.element.children.map(child => child.getInstance('CollapseButton')).filter(button => button !== null && button.hasClass(BreadcrumbSelector.BUTTON));
+    return buttons[0];
+  }
+}
+
+api.breadcrumb = {
+  BreadcrumbSelector: BreadcrumbSelector,
+  Breadcrumb: Breadcrumb
+};
+
+api.internals.register(api.breadcrumb.BreadcrumbSelector.BREADCRUMB, api.breadcrumb.Breadcrumb);
+//# sourceMappingURL=breadcrumb.module.js.map

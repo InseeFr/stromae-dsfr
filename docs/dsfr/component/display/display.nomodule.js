@@ -1,2 +1,112 @@
-/*! For license information please see display.nomodule.js.LICENSE.txt */
-!function(){"use strict";var e=window.dsfr,s={DISPLAY:e.internals.ns.selector("display"),RADIO_BUTTONS:'input[name="'+e.internals.ns("radios-theme")+'"]',FIELDSET:e.internals.ns.selector("fieldset")},t=function(t){function i(){t.apply(this,arguments)}t&&(i.__proto__=t),i.prototype=Object.create(t&&t.prototype),i.prototype.constructor=i;var n={scheme:{configurable:!0}},c={instanceClassName:{configurable:!0}};return c.instanceClassName.get=function(){return"Display"},i.prototype.init=function(){if(this.radios=this.querySelectorAll(s.RADIO_BUTTONS),e.scheme){this.changing=this.change.bind(this);for(var t=0,i=this.radios;t<i.length;t+=1){i[t].addEventListener("change",this.changing)}this.addDescent(e.scheme.SchemeEmission.SCHEME,this.apply.bind(this)),this.ascend(e.scheme.SchemeEmission.ASK)}else this.querySelector(s.FIELDSET).setAttribute("disabled","")},n.scheme.get=function(){return this._scheme},n.scheme.set=function(s){if(this._scheme!==s&&e.scheme)switch(s){case e.scheme.SchemeValue.SYSTEM:case e.scheme.SchemeValue.LIGHT:case e.scheme.SchemeValue.DARK:this._scheme=s;for(var t=0,i=this.radios;t<i.length;t+=1){var n=i[t];n.checked=n.value===s}this.ascend(e.scheme.SchemeEmission.SCHEME,s)}},i.prototype.change=function(){for(var e=0,s=this.radios;e<s.length;e+=1){var t=s[e];if(t.checked)return void(this.scheme=t.value)}},i.prototype.apply=function(e){this.scheme=e},i.prototype.dispose=function(){for(var e=0,s=this.radios;e<s.length;e+=1){s[e].removeEventListener("change",this.changing)}},Object.defineProperties(i.prototype,n),Object.defineProperties(i,c),i}(e.core.Instance);e.display={Display:t,DisplaySelector:s},e.internals.register(e.display.DisplaySelector.DISPLAY,e.display.Display)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var DisplaySelector = {
+    DISPLAY: api.internals.ns.selector('display'),
+    RADIO_BUTTONS: ("input[name=\"" + (api.internals.ns('radios-theme')) + "\"]"),
+    FIELDSET: api.internals.ns.selector('fieldset')
+  };
+
+  var Display = /*@__PURE__*/(function (superclass) {
+    function Display () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) Display.__proto__ = superclass;
+    Display.prototype = Object.create( superclass && superclass.prototype );
+    Display.prototype.constructor = Display;
+
+    var prototypeAccessors = { scheme: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Display';
+    };
+
+    Display.prototype.init = function init () {
+      this.radios = this.querySelectorAll(DisplaySelector.RADIO_BUTTONS);
+
+      if (api.scheme) {
+        this.changing = this.change.bind(this);
+        for (var i = 0, list = this.radios; i < list.length; i += 1) {
+          var radio = list[i];
+
+          radio.addEventListener('change', this.changing);
+        }
+        this.addDescent(api.scheme.SchemeEmission.SCHEME, this.apply.bind(this));
+        this.ascend(api.scheme.SchemeEmission.ASK);
+      } else {
+        this.querySelector(DisplaySelector.FIELDSET).setAttribute('disabled', '');
+      }
+    };
+
+    prototypeAccessors.scheme.get = function () {
+      return this._scheme;
+    };
+
+    prototypeAccessors.scheme.set = function (value) {
+      if (this._scheme === value || !api.scheme) { return; }
+      switch (value) {
+        case api.scheme.SchemeValue.SYSTEM:
+        case api.scheme.SchemeValue.LIGHT:
+        case api.scheme.SchemeValue.DARK:
+          this._scheme = value;
+          for (var i = 0, list = this.radios; i < list.length; i += 1) {
+            var radio = list[i];
+
+        radio.checked = radio.value === value;
+          }
+          this.ascend(api.scheme.SchemeEmission.SCHEME, value);
+          break;
+      }
+    };
+
+    Display.prototype.change = function change () {
+      for (var i = 0, list = this.radios; i < list.length; i += 1) {
+        var radio = list[i];
+
+        if (radio.checked) {
+          this.scheme = radio.value;
+          return;
+        }
+      }
+    };
+
+    Display.prototype.apply = function apply (value) {
+      this.scheme = value;
+    };
+
+    Display.prototype.dispose = function dispose () {
+      for (var i = 0, list = this.radios; i < list.length; i += 1) {
+        var radio = list[i];
+
+        radio.removeEventListener('change', this.changing);
+      }
+    };
+
+    Object.defineProperties( Display.prototype, prototypeAccessors );
+    Object.defineProperties( Display, staticAccessors );
+
+    return Display;
+  }(api.core.Instance));
+
+  api.display = {
+    Display: Display,
+    DisplaySelector: DisplaySelector
+  };
+
+  api.internals.register(api.display.DisplaySelector.DISPLAY, api.display.Display);
+
+})();
+//# sourceMappingURL=display.nomodule.js.map

@@ -1,2 +1,224 @@
-/*! For license information please see tooltip.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t="fr",e="dsfr",i=window[e],o={TOOLTIP:i.internals.ns.selector("tooltip"),SHOWN:i.internals.ns.selector("tooltip--shown"),BUTTON:i.internals.ns.selector("btn--tooltip")},s=1,n=2,r=function(t){function e(){t.call(this),this._state=0}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var r={state:{configurable:!0}},c={instanceClassName:{configurable:!0}};return c.instanceClassName.get=function(){return"TooltipReferent"},e.prototype.init=function(){if(t.prototype.init.call(this),this.listen("focusin",this.focusIn.bind(this)),this.listen("focusout",this.focusOut.bind(this)),!this.matches(o.BUTTON)){var e=this.mouseover.bind(this);this.listen("mouseover",e),this.placement.listen("mouseover",e);var s=this.mouseout.bind(this);this.listen("mouseout",s),this.placement.listen("mouseout",s)}this.addEmission(i.core.RootEmission.KEYDOWN,this._keydown.bind(this)),this.listen("click",this._click.bind(this)),this.addEmission(i.core.RootEmission.CLICK,this._clickOut.bind(this))},e.prototype._click=function(){this.focus()},e.prototype._clickOut=function(t){this.node.contains(t)||this.blur()},e.prototype._keydown=function(t){if(t===i.core.KeyCodes.ESCAPE)this.blur(),this.close()},e.prototype.close=function(){this.state=0},r.state.get=function(){return this._state},r.state.set=function(t){this._state!==t&&(this.isShown=t>0,this._state=t)},e.prototype.focusIn=function(){this.state|=s},e.prototype.focusOut=function(){this.state&=~s},e.prototype.mouseover=function(){this.state|=n},e.prototype.mouseout=function(){this.state&=~n},Object.defineProperties(e.prototype,r),Object.defineProperties(e,c),e}(i.core.PlacementReferent),c=function(e){return t+"-"+e};c.selector=function(t,e){return void 0===e&&(e="."),""+e+c(t)},(c.attr=function(t){return"data-"+c(t)}).selector=function(t,e){var i=c.attr(t);return void 0!==e&&(i+='="'+e+'"'),"["+i+"]"},c.event=function(t){return e+"."+t},c.emission=function(t,e){return"emission:"+t+"."+e};var h={SHOW:c.event("show"),HIDE:c.event("hide")},a="hidden",p="shown",l="hiding",u=function(t){function e(){t.call(this,i.core.PlacementMode.AUTO,[i.core.PlacementPosition.TOP,i.core.PlacementPosition.BOTTOM],[i.core.PlacementAlign.CENTER,i.core.PlacementAlign.START,i.core.PlacementAlign.END]),this.modifier="",this._state=a}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var s={isShown:{configurable:!0}},n={instanceClassName:{configurable:!0}};return n.instanceClassName.get=function(){return"Tooltip"},e.prototype.init=function(){t.prototype.init.call(this),this.register('[aria-describedby="'+this.id+'"]',r),this.listen("transitionend",this.transitionEnd.bind(this))},e.prototype.transitionEnd=function(){this._state===l&&(this._state=a,this.isShown=!1)},s.isShown.get=function(){return t.prototype.isShown},s.isShown.set=function(e){if(this.isEnabled)switch(!0){case e:this._state=p,this.addClass(o.SHOWN),this.dispatch(h.SHOW),t.prototype.isShown=!0;break;case this.isShown&&!e&&this._state===p:this._state=l,this.removeClass(o.SHOWN);break;case this.isShown&&!e&&this._state===a:this.dispatch(h.HIDE),t.prototype.isShown=!1}},e.prototype.render=function(){t.prototype.render.call(this);var e=this.referentRect.center-this.rect.center,i=.5*this.rect.width-8;e<-i&&(e=-i),e>i&&(e=i),this.setProperty("--arrow-x",e.toFixed(2)+"px")},Object.defineProperties(e.prototype,s),Object.defineProperties(e,n),e}(i.core.Placement);i.tooltip={Tooltip:u,TooltipSelector:o,TooltipEvent:h},i.internals.register(i.tooltip.TooltipSelector.TOOLTIP,i.tooltip.Tooltip)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var TooltipSelector = {
+    TOOLTIP: api.internals.ns.selector('tooltip'),
+    SHOWN: api.internals.ns.selector('tooltip--shown'),
+    BUTTON: api.internals.ns.selector('btn--tooltip')
+  };
+
+  var TooltipReferentState = {
+    FOCUS: 1 << 0,
+    HOVER: 1 << 1
+  };
+
+  var TooltipReferent = /*@__PURE__*/(function (superclass) {
+    function TooltipReferent () {
+      superclass.call(this);
+      this._state = 0;
+    }
+
+    if ( superclass ) TooltipReferent.__proto__ = superclass;
+    TooltipReferent.prototype = Object.create( superclass && superclass.prototype );
+    TooltipReferent.prototype.constructor = TooltipReferent;
+
+    var prototypeAccessors = { state: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TooltipReferent';
+    };
+
+    TooltipReferent.prototype.init = function init () {
+      superclass.prototype.init.call(this);
+      this.listen('focusin', this.focusIn.bind(this));
+      this.listen('focusout', this.focusOut.bind(this));
+      if (!this.matches(TooltipSelector.BUTTON)) {
+        var mouseover = this.mouseover.bind(this);
+        this.listen('mouseover', mouseover);
+        this.placement.listen('mouseover', mouseover);
+        var mouseout = this.mouseout.bind(this);
+        this.listen('mouseout', mouseout);
+        this.placement.listen('mouseout', mouseout);
+      }
+      this.addEmission(api.core.RootEmission.KEYDOWN, this._keydown.bind(this));
+      this.listen('click', this._click.bind(this));
+      this.addEmission(api.core.RootEmission.CLICK, this._clickOut.bind(this));
+    };
+
+    TooltipReferent.prototype._click = function _click () {
+      this.focus();
+    };
+
+    TooltipReferent.prototype._clickOut = function _clickOut (target) {
+      if (!this.node.contains(target)) { this.blur(); }
+    };
+
+    TooltipReferent.prototype._keydown = function _keydown (keyCode) {
+      switch (keyCode) {
+        case api.core.KeyCodes.ESCAPE:
+          this.blur();
+          this.close();
+          break;
+      }
+    };
+
+    TooltipReferent.prototype.close = function close () {
+      this.state = 0;
+    };
+
+    prototypeAccessors.state.get = function () {
+      return this._state;
+    };
+
+    prototypeAccessors.state.set = function (value) {
+      if (this._state === value) { return; }
+      this.isShown = value > 0;
+      this._state = value;
+    };
+
+    TooltipReferent.prototype.focusIn = function focusIn () {
+      this.state |= TooltipReferentState.FOCUS;
+    };
+
+    TooltipReferent.prototype.focusOut = function focusOut () {
+      this.state &= ~TooltipReferentState.FOCUS;
+    };
+
+    TooltipReferent.prototype.mouseover = function mouseover () {
+      this.state |= TooltipReferentState.HOVER;
+    };
+
+    TooltipReferent.prototype.mouseout = function mouseout () {
+      this.state &= ~TooltipReferentState.HOVER;
+    };
+
+    Object.defineProperties( TooltipReferent.prototype, prototypeAccessors );
+    Object.defineProperties( TooltipReferent, staticAccessors );
+
+    return TooltipReferent;
+  }(api.core.PlacementReferent));
+
+  var ns = function (name) { return ((config.prefix) + "-" + name); };
+
+  ns.selector = function (name, notation) {
+    if (notation === undefined) { notation = '.'; }
+    return ("" + notation + (ns(name)));
+  };
+
+  ns.attr = function (name) { return ("data-" + (ns(name))); };
+
+  ns.attr.selector = function (name, value) {
+    var result = ns.attr(name);
+    if (value !== undefined) { result += "=\"" + value + "\""; }
+    return ("[" + result + "]");
+  };
+
+  ns.event = function (type) { return ((config.namespace) + "." + type); };
+
+  ns.emission = function (domain, type) { return ("emission:" + domain + "." + type); };
+
+  var TooltipEvent = {
+    SHOW: ns.event('show'),
+    HIDE: ns.event('hide')
+  };
+
+  var TooltipState = {
+    HIDDEN: 'hidden',
+    SHOWN: 'shown',
+    HIDING: 'hiding'
+  };
+
+  var Tooltip = /*@__PURE__*/(function (superclass) {
+    function Tooltip () {
+      superclass.call(this, api.core.PlacementMode.AUTO, [api.core.PlacementPosition.TOP, api.core.PlacementPosition.BOTTOM], [api.core.PlacementAlign.CENTER, api.core.PlacementAlign.START, api.core.PlacementAlign.END]);
+      this.modifier = '';
+      this._state = TooltipState.HIDDEN;
+    }
+
+    if ( superclass ) Tooltip.__proto__ = superclass;
+    Tooltip.prototype = Object.create( superclass && superclass.prototype );
+    Tooltip.prototype.constructor = Tooltip;
+
+    var prototypeAccessors = { isShown: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Tooltip';
+    };
+
+    Tooltip.prototype.init = function init () {
+      superclass.prototype.init.call(this);
+      this.register(("[aria-describedby=\"" + (this.id) + "\"]"), TooltipReferent);
+      this.listen('transitionend', this.transitionEnd.bind(this));
+    };
+
+    Tooltip.prototype.transitionEnd = function transitionEnd () {
+      if (this._state === TooltipState.HIDING) {
+        this._state = TooltipState.HIDDEN;
+        this.isShown = false;
+      }
+    };
+
+    prototypeAccessors.isShown.get = function () {
+      return superclass.prototype.isShown;
+    };
+
+    prototypeAccessors.isShown.set = function (value) {
+      if (!this.isEnabled) { return; }
+      switch (true) {
+        case value:
+          this._state = TooltipState.SHOWN;
+          this.addClass(TooltipSelector.SHOWN);
+          this.dispatch(TooltipEvent.SHOW);
+          superclass.prototype.isShown = true;
+          break;
+
+        case this.isShown && !value && this._state === TooltipState.SHOWN:
+          this._state = TooltipState.HIDING;
+          this.removeClass(TooltipSelector.SHOWN);
+          break;
+
+        case this.isShown && !value && this._state === TooltipState.HIDDEN:
+          this.dispatch(TooltipEvent.HIDE);
+          superclass.prototype.isShown = false;
+          break;
+      }
+    };
+
+    Tooltip.prototype.render = function render () {
+      superclass.prototype.render.call(this);
+      var x = this.referentRect.center - this.rect.center;
+      var limit = this.rect.width * 0.5 - 8;
+      if (x < -limit) { x = -limit; }
+      if (x > limit) { x = limit; }
+      this.setProperty('--arrow-x', ((x.toFixed(2)) + "px"));
+    };
+
+    Object.defineProperties( Tooltip.prototype, prototypeAccessors );
+    Object.defineProperties( Tooltip, staticAccessors );
+
+    return Tooltip;
+  }(api.core.Placement));
+
+  api.tooltip = {
+    Tooltip: Tooltip,
+    TooltipSelector: TooltipSelector,
+    TooltipEvent: TooltipEvent
+  };
+
+  api.internals.register(api.tooltip.TooltipSelector.TOOLTIP, api.tooltip.Tooltip);
+
+})();
+//# sourceMappingURL=tooltip.nomodule.js.map

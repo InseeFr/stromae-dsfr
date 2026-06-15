@@ -1,2 +1,60 @@
-/*! For license information please see tile.nomodule.js.LICENSE.txt */
-!function(){"use strict";var e=window.dsfr,s=function(s){function t(){s.apply(this,arguments)}s&&(t.__proto__=s),t.prototype=Object.create(s&&s.prototype),t.prototype.constructor=t;var n={instanceClassName:{configurable:!0}};return n.instanceClassName.get=function(){return"TileDownload"},t.prototype.init=function(){var s=this;this.addAscent(e.core.AssessEmission.UPDATE,(function(t){s.descend(e.core.AssessEmission.UPDATE,t)})),this.addAscent(e.core.AssessEmission.ADDED,(function(){s.descend(e.core.AssessEmission.ADDED)}))},Object.defineProperties(t,n),t}(e.core.Instance),t={DOWNLOAD:e.internals.ns.selector("tile--download"),DOWNLOAD_DETAIL:e.internals.ns.selector("tile--download")+" "+e.internals.ns.selector("tile__detail")};e.tile={TileSelector:t,TileDownload:s},e.internals.register(e.tile.TileSelector.DOWNLOAD,e.tile.TileDownload),e.internals.register(e.tile.TileSelector.DOWNLOAD_DETAIL,e.core.AssessDetail)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var TileDownload = /*@__PURE__*/(function (superclass) {
+    function TileDownload () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) TileDownload.__proto__ = superclass;
+    TileDownload.prototype = Object.create( superclass && superclass.prototype );
+    TileDownload.prototype.constructor = TileDownload;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TileDownload';
+    };
+
+    TileDownload.prototype.init = function init () {
+      var this$1$1 = this;
+
+      this.addAscent(api.core.AssessEmission.UPDATE, function (details) {
+        this$1$1.descend(api.core.AssessEmission.UPDATE, details);
+      });
+      this.addAscent(api.core.AssessEmission.ADDED, function () {
+        this$1$1.descend(api.core.AssessEmission.ADDED);
+      });
+    };
+
+    Object.defineProperties( TileDownload, staticAccessors );
+
+    return TileDownload;
+  }(api.core.Instance));
+
+  var TileSelector = {
+    DOWNLOAD: api.internals.ns.selector('tile--download'),
+    DOWNLOAD_DETAIL: ((api.internals.ns.selector('tile--download')) + " " + (api.internals.ns.selector('tile__detail')))
+  };
+
+  api.tile = {
+    TileSelector: TileSelector,
+    TileDownload: TileDownload
+  };
+
+  api.internals.register(api.tile.TileSelector.DOWNLOAD, api.tile.TileDownload);
+  api.internals.register(api.tile.TileSelector.DOWNLOAD_DETAIL, api.core.AssessDetail);
+
+})();
+//# sourceMappingURL=tile.nomodule.js.map

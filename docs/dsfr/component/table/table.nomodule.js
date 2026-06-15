@@ -1,2 +1,279 @@
-/*! For license information please see table.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e={SCROLLABLE:t.internals.ns.emission("table","scrollable"),CHANGE:t.internals.ns.emission("table","change"),CAPTION_HEIGHT:t.internals.ns.emission("table","captionheight"),CAPTION_WIDTH:t.internals.ns.emission("table","captionwidth")},n=function(t){function n(){t.apply(this,arguments)}t&&(n.__proto__=t),n.prototype=Object.create(t&&t.prototype),n.prototype.constructor=n;var s={instanceClassName:{configurable:!0}};return s.instanceClassName.get=function(){return"Table"},n.prototype.init=function(){this.addAscent(e.CAPTION_HEIGHT,this.setCaptionHeight.bind(this))},n.prototype.setCaptionHeight=function(t){this.setProperty("--table-offset",t)},Object.defineProperties(n,s),n}(t.core.Instance),s=function(t){function n(){t.apply(this,arguments)}t&&(n.__proto__=t),n.prototype=Object.create(t&&t.prototype),n.prototype.constructor=n;var s={instanceClassName:{configurable:!0}};return s.instanceClassName.get=function(){return"TableWrapper"},n.prototype.init=function(){this.addAscent(e.CAPTION_HEIGHT,this.setCaptionHeight.bind(this))},n.prototype.setCaptionHeight=function(t){var n=this;requestAnimationFrame((function(){return n.ascend(e.CAPTION_HEIGHT,0)})),this.setProperty("--table-offset",t)},Object.defineProperties(n,s),n}(t.core.Instance),i={TABLE:t.internals.ns.selector("table"),TABLE_WRAPPER:[t.internals.ns.selector("table")+" "+t.internals.ns.selector("table__wrapper")],SHADOW:t.internals.ns.selector("table__shadow"),SHADOW_LEFT:t.internals.ns.selector("table__shadow--left"),SHADOW_RIGHT:t.internals.ns.selector("table__shadow--right"),ELEMENT:[t.internals.ns.selector("table")+":not("+t.internals.ns.selector("table--no-scroll")+") table"],CAPTION:t.internals.ns.selector("table")+" table caption",ROW:t.internals.ns.selector("table")+" tbody tr",COL:t.internals.ns.selector("table")+" thead th"},o=function(t){function e(){t.apply(this,arguments)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={isScrolling:{configurable:!0}},s={instanceClassName:{configurable:!0}};return s.instanceClassName.get=function(){return"TableElement"},e.prototype.init=function(){this.listen("scroll",this.scroll.bind(this)),this.content=this.querySelector("tbody"),this.tableOffsetHeight=0,this.isResizing=!0},n.isScrolling.get=function(){return this._isScrolling},n.isScrolling.set=function(t){this._isScrolling!==t&&(this._isScrolling=t,t?(this.addClass(i.SHADOW),this.scroll()):(this.removeClass(i.SHADOW),this.removeClass(i.SHADOW_LEFT),this.removeClass(i.SHADOW_RIGHT)))},e.prototype.scroll=function(){var t=this.node.scrollLeft<=0,e=this.content.offsetWidth-this.node.offsetWidth-0,n=Math.abs(this.node.scrollLeft)>=e,s="rtl"===document.documentElement.getAttribute("dir"),o=s?i.SHADOW_RIGHT:i.SHADOW_LEFT,r=s?i.SHADOW_LEFT:i.SHADOW_RIGHT;t?this.removeClass(o):this.addClass(o),n?this.removeClass(r):this.addClass(r)},e.prototype.resize=function(){this.isScrolling=this.content.offsetWidth>this.node.offsetWidth},e.prototype.dispose=function(){this.isScrolling=!1},Object.defineProperties(e.prototype,n),Object.defineProperties(e,s),e}(t.core.Instance),r=function(t){function n(){t.apply(this,arguments)}t&&(n.__proto__=t),n.prototype=Object.create(t&&t.prototype),n.prototype.constructor=n;var s={instanceClassName:{configurable:!0}};return s.instanceClassName.get=function(){return"TableCaption"},n.prototype.init=function(){this.height=0,this.isResizing=!0},n.prototype.resize=function(){var t=this.getRect().height;this.height!==t&&(this.height=t,this.ascend(e.CAPTION_HEIGHT,"calc("+t+"px + 1rem)"))},Object.defineProperties(n,s),n}(t.core.Instance),a={CHANGE:t.internals.ns.emission("checkbox","change"),RETRIEVE:t.internals.ns.emission("checkbox","retrieve")},l=function(e){function n(){e.apply(this,arguments)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var s={isSelected:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TableRow"},n.prototype.init=function(){t.checkbox&&(this.addAscent(a.CHANGE,this._handleCheckboxChange.bind(this)),this.descend(a.RETRIEVE))},n.prototype._handleCheckboxChange=function(t){"row-select"===t.name&&(this.isSelected=!0===t.checked)},n.prototype.render=function(){var t=this.getRect().height+2;this._height!==t&&(this._height=t,this.setProperty("--row-height",this._height+"px"))},s.isSelected.get=function(){return this._isSelected},s.isSelected.set=function(t){this._isSelected!==t&&(this.isRendering=t,this._isSelected=t,this.setAttribute("aria-selected",t))},Object.defineProperties(n.prototype,s),Object.defineProperties(n,i),n}(t.core.Instance);t.table={Table:n,TableWrapper:s,TableElement:o,TableCaption:r,TableSelector:i,TableRow:l},t.internals.register(t.table.TableSelector.TABLE,t.table.Table),t.internals.register(t.table.TableSelector.TABLE_WRAPPER,t.table.TableWrapper),t.internals.register(t.table.TableSelector.ELEMENT,t.table.TableElement),t.internals.register(t.table.TableSelector.CAPTION,t.table.TableCaption),t.internals.register(t.table.TableSelector.ROW,t.table.TableRow)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var TableEmission = {
+    SCROLLABLE: api.internals.ns.emission('table', 'scrollable'),
+    CHANGE: api.internals.ns.emission('table', 'change'),
+    CAPTION_HEIGHT: api.internals.ns.emission('table', 'captionheight'),
+    CAPTION_WIDTH: api.internals.ns.emission('table', 'captionwidth')
+  };
+
+  var Table = /*@__PURE__*/(function (superclass) {
+    function Table () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) Table.__proto__ = superclass;
+    Table.prototype = Object.create( superclass && superclass.prototype );
+    Table.prototype.constructor = Table;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Table';
+    };
+
+    Table.prototype.init = function init () {
+      this.addAscent(TableEmission.CAPTION_HEIGHT, this.setCaptionHeight.bind(this));
+    };
+
+    Table.prototype.setCaptionHeight = function setCaptionHeight (value) {
+      this.setProperty('--table-offset', value);
+    };
+
+    Object.defineProperties( Table, staticAccessors );
+
+    return Table;
+  }(api.core.Instance));
+
+  var TableWrapper = /*@__PURE__*/(function (superclass) {
+    function TableWrapper () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) TableWrapper.__proto__ = superclass;
+    TableWrapper.prototype = Object.create( superclass && superclass.prototype );
+    TableWrapper.prototype.constructor = TableWrapper;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TableWrapper';
+    };
+
+    TableWrapper.prototype.init = function init () {
+      this.addAscent(TableEmission.CAPTION_HEIGHT, this.setCaptionHeight.bind(this));
+    };
+
+    TableWrapper.prototype.setCaptionHeight = function setCaptionHeight (value) {
+      var this$1$1 = this;
+
+      requestAnimationFrame(function () { return this$1$1.ascend(TableEmission.CAPTION_HEIGHT, 0); });
+      this.setProperty('--table-offset', value);
+    };
+
+    Object.defineProperties( TableWrapper, staticAccessors );
+
+    return TableWrapper;
+  }(api.core.Instance));
+
+  var TableSelector = {
+    TABLE: api.internals.ns.selector('table'),
+    TABLE_WRAPPER: [((api.internals.ns.selector('table')) + " " + (api.internals.ns.selector('table__wrapper')))],
+    SHADOW: api.internals.ns.selector('table__shadow'),
+    SHADOW_LEFT: api.internals.ns.selector('table__shadow--left'),
+    SHADOW_RIGHT: api.internals.ns.selector('table__shadow--right'),
+    ELEMENT: [((api.internals.ns.selector('table')) + ":not(" + (api.internals.ns.selector('table--no-scroll')) + ") table")],
+    CAPTION: ((api.internals.ns.selector('table')) + " table caption"),
+    ROW: ((api.internals.ns.selector('table')) + " tbody tr"),
+    COL: ((api.internals.ns.selector('table')) + " thead th")
+  };
+
+  var SCROLL_OFFSET = 0; // valeur en px du scroll avant laquelle le shadow s'active ou se desactive
+
+  var TableElement = /*@__PURE__*/(function (superclass) {
+    function TableElement () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) TableElement.__proto__ = superclass;
+    TableElement.prototype = Object.create( superclass && superclass.prototype );
+    TableElement.prototype.constructor = TableElement;
+
+    var prototypeAccessors = { isScrolling: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TableElement';
+    };
+
+    TableElement.prototype.init = function init () {
+      this.listen('scroll', this.scroll.bind(this));
+      this.content = this.querySelector('tbody');
+      this.tableOffsetHeight = 0;
+      this.isResizing = true;
+    };
+
+    prototypeAccessors.isScrolling.get = function () {
+      return this._isScrolling;
+    };
+
+    prototypeAccessors.isScrolling.set = function (value) {
+      if (this._isScrolling === value) { return; }
+      this._isScrolling = value;
+
+      if (value) {
+        this.addClass(TableSelector.SHADOW);
+        this.scroll();
+      } else {
+        this.removeClass(TableSelector.SHADOW);
+        this.removeClass(TableSelector.SHADOW_LEFT);
+        this.removeClass(TableSelector.SHADOW_RIGHT);
+      }
+    };
+
+    /* ajoute la classe fr-table__shadow-left ou fr-table__shadow-right sur fr-table en fonction d'une valeur de scroll et du sens (right, left) */
+    TableElement.prototype.scroll = function scroll () {
+      var isMin = this.node.scrollLeft <= SCROLL_OFFSET;
+      var max = this.content.offsetWidth - this.node.offsetWidth - SCROLL_OFFSET;
+      var isMax = Math.abs(this.node.scrollLeft) >= max;
+      var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+      var minSelector = isRtl ? TableSelector.SHADOW_RIGHT : TableSelector.SHADOW_LEFT;
+      var maxSelector = isRtl ? TableSelector.SHADOW_LEFT : TableSelector.SHADOW_RIGHT;
+
+      if (isMin) {
+        this.removeClass(minSelector);
+      } else {
+        this.addClass(minSelector);
+      }
+
+      if (isMax) {
+        this.removeClass(maxSelector);
+      } else {
+        this.addClass(maxSelector);
+      }
+    };
+
+    TableElement.prototype.resize = function resize () {
+      this.isScrolling = this.content.offsetWidth > this.node.offsetWidth;
+    };
+
+    TableElement.prototype.dispose = function dispose () {
+      this.isScrolling = false;
+    };
+
+    Object.defineProperties( TableElement.prototype, prototypeAccessors );
+    Object.defineProperties( TableElement, staticAccessors );
+
+    return TableElement;
+  }(api.core.Instance));
+
+  var PADDING = '1rem'; // padding de 4v sur le caption
+  var TableCaption = /*@__PURE__*/(function (superclass) {
+    function TableCaption () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) TableCaption.__proto__ = superclass;
+    TableCaption.prototype = Object.create( superclass && superclass.prototype );
+    TableCaption.prototype.constructor = TableCaption;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TableCaption';
+    };
+
+    TableCaption.prototype.init = function init () {
+      this.height = 0;
+      this.isResizing = true;
+    };
+
+    TableCaption.prototype.resize = function resize () {
+      var height = this.getRect().height;
+      if (this.height === height) { return; }
+      this.height = height;
+      this.ascend(TableEmission.CAPTION_HEIGHT, ("calc(" + height + "px + " + PADDING + ")"));
+    };
+
+    Object.defineProperties( TableCaption, staticAccessors );
+
+    return TableCaption;
+  }(api.core.Instance));
+
+  var CheckboxEmission = {
+    CHANGE: api.internals.ns.emission('checkbox', 'change'),
+    RETRIEVE: api.internals.ns.emission('checkbox', 'retrieve')
+  };
+
+  var TableRow = /*@__PURE__*/(function (superclass) {
+    function TableRow () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) TableRow.__proto__ = superclass;
+    TableRow.prototype = Object.create( superclass && superclass.prototype );
+    TableRow.prototype.constructor = TableRow;
+
+    var prototypeAccessors = { isSelected: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TableRow';
+    };
+
+    TableRow.prototype.init = function init () {
+      if (api.checkbox) {
+        this.addAscent(CheckboxEmission.CHANGE, this._handleCheckboxChange.bind(this));
+        this.descend(CheckboxEmission.RETRIEVE);
+      }
+    };
+
+    TableRow.prototype._handleCheckboxChange = function _handleCheckboxChange (node) {
+      if (node.name === 'row-select') {
+        this.isSelected = node.checked === true;
+      }
+    };
+
+    TableRow.prototype.render = function render () {
+      var height = this.getRect().height + 2;
+      if (this._height === height) { return; }
+      this._height = height;
+      this.setProperty('--row-height', ((this._height) + "px"));
+    };
+
+    prototypeAccessors.isSelected.get = function () {
+      return this._isSelected;
+    };
+
+    prototypeAccessors.isSelected.set = function (value) {
+      if (this._isSelected === value) { return; }
+      this.isRendering = value;
+      this._isSelected = value;
+      this.setAttribute('aria-selected', value);
+    };
+
+    Object.defineProperties( TableRow.prototype, prototypeAccessors );
+    Object.defineProperties( TableRow, staticAccessors );
+
+    return TableRow;
+  }(api.core.Instance));
+
+  api.table = {
+    Table: Table,
+    TableWrapper: TableWrapper,
+    TableElement: TableElement,
+    TableCaption: TableCaption,
+    TableSelector: TableSelector,
+    TableRow: TableRow
+  };
+
+  api.internals.register(api.table.TableSelector.TABLE, api.table.Table);
+  api.internals.register(api.table.TableSelector.TABLE_WRAPPER, api.table.TableWrapper);
+  api.internals.register(api.table.TableSelector.ELEMENT, api.table.TableElement);
+  api.internals.register(api.table.TableSelector.CAPTION, api.table.TableCaption);
+  api.internals.register(api.table.TableSelector.ROW, api.table.TableRow);
+
+})();
+//# sourceMappingURL=table.nomodule.js.map

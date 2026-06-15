@@ -1,2 +1,28 @@
-/*! For license information please see button.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e={EQUISIZED_BUTTON:t.internals.ns.selector("btns-group--equisized")+" "+t.internals.ns.selector("btn"),EQUISIZED_GROUP:t.internals.ns.selector("btns-group--equisized")};t.button={ButtonSelector:e},t.internals.register(t.button.ButtonSelector.EQUISIZED_BUTTON,t.core.Equisized),t.internals.register(t.button.ButtonSelector.EQUISIZED_GROUP,t.core.EquisizedsGroup)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var ButtonSelector = {
+    EQUISIZED_BUTTON: ((api.internals.ns.selector('btns-group--equisized')) + " " + (api.internals.ns.selector('btn'))),
+    EQUISIZED_GROUP: api.internals.ns.selector('btns-group--equisized')
+  };
+
+  api.button = {
+    ButtonSelector: ButtonSelector
+  };
+
+  api.internals.register(api.button.ButtonSelector.EQUISIZED_BUTTON, api.core.Equisized);
+  api.internals.register(api.button.ButtonSelector.EQUISIZED_GROUP, api.core.EquisizedsGroup);
+
+})();
+//# sourceMappingURL=button.nomodule.js.map

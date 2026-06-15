@@ -1,2 +1,206 @@
-/*! For license information please see password.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e={TOGGLE:t.internals.ns.emission("password","toggle"),ADJUST:t.internals.ns.emission("password","adjust")},s=function(t){function s(){t.apply(this,arguments)}t&&(s.__proto__=t),s.prototype=Object.create(t&&t.prototype),s.prototype.constructor=s;var o={width:{configurable:!0},isChecked:{configurable:!0}},n={instanceClassName:{configurable:!0}};return n.instanceClassName.get=function(){return"PasswordToggle"},s.prototype.init=function(){this.listenClick(),this.ascend(e.ADJUST,this.width),this.isSwappingFont=!0,this._isChecked=this.isChecked},o.width.get=function(){var t=getComputedStyle(this.node.parentNode);return parseInt(t.width)},o.isChecked.get=function(){return this.node.checked},o.isChecked.set=function(t){this._isChecked=t,this.ascend(e.TOGGLE,t)},s.prototype.handleClick=function(){this.isChecked=!this._isChecked},s.prototype.swapFont=function(t){this.ascend(e.ADJUST,this.width)},Object.defineProperties(s.prototype,o),Object.defineProperties(s,n),s}(t.core.Instance),o=function(t){function s(){t.apply(this,arguments)}t&&(s.__proto__=t),s.prototype=Object.create(t&&t.prototype),s.prototype.constructor=s;var o={instanceClassName:{configurable:!0}};return o.instanceClassName.get=function(){return"Password"},s.prototype.init=function(){this.addAscent(e.TOGGLE,this.toggle.bind(this)),this.addAscent(e.ADJUST,this.adjust.bind(this))},s.prototype.toggle=function(t){this.descend(e.TOGGLE,t)},s.prototype.adjust=function(t){this.descend(e.ADJUST,t)},Object.defineProperties(s,o),s}(t.core.Instance),n={PASSWORD:t.internals.ns.selector("password"),INPUT:t.internals.ns.selector("password__input"),LABEL:t.internals.ns.selector("password__label"),TOOGLE:t.internals.ns.selector("password__checkbox")+' input[type="checkbox"]'},i=function(s){function o(){s.apply(this,arguments)}s&&(o.__proto__=s),o.prototype=Object.create(s&&s.prototype),o.prototype.constructor=o;var n={isRevealed:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"PasswordInput"},o.prototype.init=function(){this.addDescent(e.TOGGLE,this.toggle.bind(this)),this._isRevealed="password"===this.hasAttribute("type"),this.listen("keydown",this.capslock.bind(this)),this.listen("keyup",this.capslock.bind(this))},o.prototype.toggle=function(t){this.isRevealed=t,this.setAttribute("type",t?"text":"password")},n.isRevealed.get=function(){return this._isRevealed},o.prototype.capslock=function(e){e&&"function"!=typeof e.getModifierState||(e.getModifierState("CapsLock")?this.node.parentNode.setAttribute(t.internals.ns.attr("capslock"),""):this.node.parentNode.removeAttribute(t.internals.ns.attr("capslock")))},n.isRevealed.set=function(t){this._isRevealed=t,this.setAttribute("type",t?"text":"password")},Object.defineProperties(o.prototype,n),Object.defineProperties(o,i),o}(t.core.Instance),r=function(t){function s(){t.apply(this,arguments)}t&&(s.__proto__=t),s.prototype=Object.create(t&&t.prototype),s.prototype.constructor=s;var o={instanceClassName:{configurable:!0}};return o.instanceClassName.get=function(){return"PasswordLabel"},s.prototype.init=function(){this.addDescent(e.ADJUST,this.adjust.bind(this))},s.prototype.adjust=function(t){var e=Math.ceil(t/16);this.node.style.paddingRight=e+"rem"},Object.defineProperties(s,o),s}(t.core.Instance);t.password={Password:o,PasswordToggle:s,PasswordSelector:n,PasswordInput:i,PasswordLabel:r},t.internals.register(t.password.PasswordSelector.INPUT,t.password.PasswordInput),t.internals.register(t.password.PasswordSelector.PASSWORD,t.password.Password),t.internals.register(t.password.PasswordSelector.TOOGLE,t.password.PasswordToggle),t.internals.register(t.password.PasswordSelector.LABEL,t.password.PasswordLabel)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var PasswordEmission = {
+    TOGGLE: api.internals.ns.emission('password', 'toggle'),
+    ADJUST: api.internals.ns.emission('password', 'adjust')
+  };
+
+  var PasswordToggle = /*@__PURE__*/(function (superclass) {
+    function PasswordToggle () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) PasswordToggle.__proto__ = superclass;
+    PasswordToggle.prototype = Object.create( superclass && superclass.prototype );
+    PasswordToggle.prototype.constructor = PasswordToggle;
+
+    var prototypeAccessors = { width: { configurable: true },isChecked: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'PasswordToggle';
+    };
+
+    PasswordToggle.prototype.init = function init () {
+      this.listenClick();
+      this.ascend(PasswordEmission.ADJUST, this.width);
+      this.isSwappingFont = true;
+      this._isChecked = this.isChecked;
+    };
+
+    prototypeAccessors.width.get = function () {
+      var style = getComputedStyle(this.node.parentNode);
+      return parseInt(style.width);
+    };
+
+    prototypeAccessors.isChecked.get = function () {
+      return this.node.checked;
+    };
+
+    prototypeAccessors.isChecked.set = function (value) {
+      this._isChecked = value;
+      this.ascend(PasswordEmission.TOGGLE, value);
+    };
+
+    PasswordToggle.prototype.handleClick = function handleClick () {
+      this.isChecked = !this._isChecked;
+    };
+
+    PasswordToggle.prototype.swapFont = function swapFont (families) {
+      this.ascend(PasswordEmission.ADJUST, this.width);
+    };
+
+    Object.defineProperties( PasswordToggle.prototype, prototypeAccessors );
+    Object.defineProperties( PasswordToggle, staticAccessors );
+
+    return PasswordToggle;
+  }(api.core.Instance));
+
+  var Password = /*@__PURE__*/(function (superclass) {
+    function Password () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) Password.__proto__ = superclass;
+    Password.prototype = Object.create( superclass && superclass.prototype );
+    Password.prototype.constructor = Password;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Password';
+    };
+
+    Password.prototype.init = function init () {
+      this.addAscent(PasswordEmission.TOGGLE, this.toggle.bind(this));
+      this.addAscent(PasswordEmission.ADJUST, this.adjust.bind(this));
+    };
+
+    Password.prototype.toggle = function toggle (value) {
+      this.descend(PasswordEmission.TOGGLE, value);
+    };
+
+    Password.prototype.adjust = function adjust (value) {
+      this.descend(PasswordEmission.ADJUST, value);
+    };
+
+    Object.defineProperties( Password, staticAccessors );
+
+    return Password;
+  }(api.core.Instance));
+
+  var PasswordSelector = {
+    PASSWORD: api.internals.ns.selector('password'),
+    INPUT: api.internals.ns.selector('password__input'),
+    LABEL: api.internals.ns.selector('password__label'),
+    TOOGLE: ((api.internals.ns.selector('password__checkbox')) + " input[type=\"checkbox\"]")
+  };
+
+  var PasswordInput = /*@__PURE__*/(function (superclass) {
+    function PasswordInput () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) PasswordInput.__proto__ = superclass;
+    PasswordInput.prototype = Object.create( superclass && superclass.prototype );
+    PasswordInput.prototype.constructor = PasswordInput;
+
+    var prototypeAccessors = { isRevealed: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'PasswordInput';
+    };
+
+    PasswordInput.prototype.init = function init () {
+      this.addDescent(PasswordEmission.TOGGLE, this.toggle.bind(this));
+      this._isRevealed = this.hasAttribute('type') === 'password';
+      this.listen('keydown', this.capslock.bind(this)); // for capslock enabled
+      this.listen('keyup', this.capslock.bind(this)); // for capslock desabled
+    };
+
+    PasswordInput.prototype.toggle = function toggle (value) {
+      this.isRevealed = value;
+      this.setAttribute('type', value ? 'text' : 'password');
+    };
+
+    prototypeAccessors.isRevealed.get = function () {
+      return this._isRevealed;
+    };
+
+    PasswordInput.prototype.capslock = function capslock (event) {
+      if (event && typeof event.getModifierState !== 'function') { return; }
+      if (event.getModifierState('CapsLock')) {
+        this.node.parentNode.setAttribute(api.internals.ns.attr('capslock'), '');
+      } else {
+        this.node.parentNode.removeAttribute(api.internals.ns.attr('capslock'));
+      }
+    };
+
+    prototypeAccessors.isRevealed.set = function (value) {
+      this._isRevealed = value;
+      this.setAttribute('type', value ? 'text' : 'password');
+    };
+
+    Object.defineProperties( PasswordInput.prototype, prototypeAccessors );
+    Object.defineProperties( PasswordInput, staticAccessors );
+
+    return PasswordInput;
+  }(api.core.Instance));
+
+  var PasswordLabel = /*@__PURE__*/(function (superclass) {
+    function PasswordLabel () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) PasswordLabel.__proto__ = superclass;
+    PasswordLabel.prototype = Object.create( superclass && superclass.prototype );
+    PasswordLabel.prototype.constructor = PasswordLabel;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'PasswordLabel';
+    };
+
+    PasswordLabel.prototype.init = function init () {
+      this.addDescent(PasswordEmission.ADJUST, this.adjust.bind(this));
+    };
+
+    PasswordLabel.prototype.adjust = function adjust (value) {
+      var valueREM = Math.ceil(value / 16);
+      this.node.style.paddingRight = valueREM + 'rem';
+    };
+
+    Object.defineProperties( PasswordLabel, staticAccessors );
+
+    return PasswordLabel;
+  }(api.core.Instance));
+
+  api.password = {
+    Password: Password,
+    PasswordToggle: PasswordToggle,
+    PasswordSelector: PasswordSelector,
+    PasswordInput: PasswordInput,
+    PasswordLabel: PasswordLabel
+  };
+
+  api.internals.register(api.password.PasswordSelector.INPUT, api.password.PasswordInput);
+  api.internals.register(api.password.PasswordSelector.PASSWORD, api.password.Password);
+  api.internals.register(api.password.PasswordSelector.TOOGLE, api.password.PasswordToggle);
+  api.internals.register(api.password.PasswordSelector.LABEL, api.password.PasswordLabel);
+
+})();
+//# sourceMappingURL=password.nomodule.js.map

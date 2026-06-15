@@ -1,2 +1,5808 @@
-/*! For license information please see analytics.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e="a4e35ba2a938ba9d007689dbf3f46acbb9807869",n={MANUAL:"manual",LOAD:"load",FULL:"full",HASH:"hash"},i="_EA_",r=i+"disabled",o=i+"toggle",s=function(){this._configure()},a={isDisabled:{configurable:!0}};s.prototype._configure=function(){var t=this;window[r]=function(){return t.isDisabled},window[o]=this.toggle.bind(this)},a.isDisabled.get=function(){return localStorage.getItem(i)},s.prototype.toggle=function(){this.isDisabled?this.enable():this.disable()},s.prototype.enable=function(){localStorage.getItem(i)&&localStorage.removeItem(i)},s.prototype.disable=function(){localStorage.setItem(i,"1")},Object.defineProperties(s.prototype,a);var c=new s,l="EA_push",u=function(t){var e=this;this._domain=t,this._isLoaded=!1,this._promise=new Promise((function(t,n){e._resolve=t,e._reject=n}))},p={id:{configurable:!0},store:{configurable:!0}};p.id.get=function(){return this._id},p.store.get=function(){return this._store},u.prototype.configure=function(){return this.init(),this._promise},u.prototype.init=function(){for(var e=this,n=5381,i=this._domain.length-1;i>0;i--)n=33*n^this._domain.charCodeAt(i);n>>>=0,this._id="_EA_"+n,this._store=[],this._store.eah=this._domain,window[this._id]=this._store,window[l]||(window[l]=function(){for(var t=[],n=arguments.length;n--;)t[n]=arguments[n];return e.store.push(t)}),c.isDisabled?(t.inspector.warn("User opted out, eulerian is disabled"),this._reject("User opted out, eulerian is disabled")):this.load()},u.prototype.load=function(){var t=new Date/1e7|0,e=t%26,n=String.fromCharCode(97+e,122-e,65+e)+t%1e3;this._script=document.createElement("script"),this._script.ea=this.id,this._script.async=!0,this._script.addEventListener("load",this.loaded.bind(this)),this._script.addEventListener("error",this.error.bind(this)),this._script.src="//"+this._domain+"/"+n+".js?2";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(this._script,i)},u.prototype.error=function(){t.inspector.error("unable to load Eulerian script file. the domain declared in your configuration must match the domain provided by the Eulerian interface (tag creation)"),this._reject("eulerian script loading error")},u.prototype.loaded=function(){this._isLoaded||(this._isLoaded=!0,this._resolve())},Object.defineProperties(u.prototype,p);var h=-1,f=0,g=1,d=2,_=3,b=function(t){var e=this;this._config=t,this._state=h,this._promise=new Promise((function(t,n){e._resolve=t,e._reject=n}))};b.prototype.configure=function(){if(this._state>=g)return this._promise;this._state===h&&(t.inspector.info("analytics configures tarteaucitron"),this._state=f);var e=window.tarteaucitron;if(e&&e.services){this._state=g;var n={key:"eulerian",type:"analytic",name:"Eulerian Analytics",needConsent:!0,cookies:["etuix"],uri:"https://eulerian.com/vie-privee",js:this.init.bind(this),fallback:function(){e.services.eulerian.js()}};return e.services.eulerian=n,e.job||(e.job=[]),e.job.push("eulerian"),this._promise}window.requestAnimationFrame(this.configure.bind(this))},b.prototype.init=function(){if(!(this._state>=d)){this._state=d,window.__eaGenericCmpApi=this.integrate.bind(this);var t=this.update.bind(this);window.addEventListener("tac.close_alert",t),window.addEventListener("tac.close_panel",t)}},b.prototype.integrate=function(e){this._state>=_||(this._state=_,this._cmpApi=e,t.inspector.info("analytics has integrated tarteaucitron"),this._resolve(),this.update())},b.prototype.update=function(){this._state<_||this._cmpApi("tac",window.tarteaucitron,1)};var y=function(t){if(this._config=t,t&&"tarteaucitron"===t.id)this.integrateTarteAuCitron()};y.prototype.integrateTarteAuCitron=function(){return this._tac=new b(this._config),this._tac.configure()},y.prototype.optin=function(){};var m=function(e,n){"function"==typeof window.EA_push?(t.inspector.info("analytics",e,n),window.EA_push(e,n)):t.inspector.warn("Analytics datalayer not sent, Eulerian API isn't yet avalaible")},v={COLLECTOR:"collector",ACTION:"action",ACTION_PARAMETER:"actionparam"},N=function(){this._renderables=[],this._rendering=this.render.bind(this),requestAnimationFrame(this._rendering)};N.prototype.add=function(t){-1===this._renderables.indexOf(t)&&this._renderables.push(t)},N.prototype.remove=function(t){var e=this._renderables.indexOf(t);e>-1&&this._renderables.splice(e,1)},N.prototype.render=function(){this._renderables.forEach((function(t){return t.render()})),requestAnimationFrame(this._rendering)};var O=new N,C={ENFORCE:"enforce",PREVENT:"prevent",NONE:"none"},E=function(){this._startingActions=[],this._endingActions=[],this._handlingVisibilityChange=this._handleVisibilityChange.bind(this),this._handlingEnd=this._handleEnd.bind(this),this._isStarted=!1,this._isListening=!1,this.reset()};E.prototype.setCollector=function(t){this._collector=t},E.prototype.reset=function(t){void 0===t&&(t=!1),this._type=v.ACTION,t||(this._startingActions.length=0),this._endingActions.length=0,this._count=0,this._delay=-1,this._isRequested=!1,this._unlisten()},E.prototype.start=function(){this._isStarted||(this._isStarted=!0,O.add(this))},E.prototype.collect=function(){this._type=v.COLLECTOR,this._request()},E.prototype.regulate=function(e,n){if(!e)return!1;if(n.some((function(t){return t.test(e)})))return t.inspector.log("action exists in queue",e),!1;switch(e.regulation){case C.PREVENT:return!1;case C.ENFORCE:return!0;default:return this._collector.isActionEnabled}},E.prototype.appendStartingAction=function(t,e){if(this.regulate(t,this._startingActions)){var n=new T(t,e);this._startingActions.push(n),this._request()}},E.prototype.appendEndingAction=function(t,e){if(this.regulate(t,this._endingActions)){var n=new T(t,e);this._endingActions.push(n),this._request()}},E.prototype._request=function(){this._listen(),this._isRequested=!0,this._delay=4},E.prototype._listen=function(){this._isListening||(this._isListening=!0,document.addEventListener("visibilitychange",this._handlingVisibilityChange),document.addEventListener("unload",this._handlingEnd),document.addEventListener("beforeunload",this._handlingEnd),document.addEventListener("pagehide",this._handlingEnd))},E.prototype._unlisten=function(){this._isListening&&(this._isListening=!1,document.removeEventListener("visibilitychange",this._handlingVisibilityChange),document.removeEventListener("unload",this._handlingEnd),document.removeEventListener("beforeunload",this._handlingEnd),document.removeEventListener("pagehide",this._handlingEnd))},E.prototype._handleVisibilityChange=function(t){"hidden"===document.visibilityState&&this.send()},E.prototype._handleEnd=function(){this.send()},E.prototype.render=function(){if(!(this._delay<=-1))switch(this._delay--,this._count++,!0){case this._count>20:case 0===this._delay:this.send()}},E.prototype.send=function(t){if(void 0===t&&(t=!1),this._isRequested){var e=[];t||e.push.apply(e,this._startingActions.map((function(t){return t.start()})).filter((function(t){return t.length>0}))),e.push.apply(e,this._endingActions.map((function(t){return t.end()})).filter((function(t){return t.length>0})));for(var n=e.length/80+1|0,i=[],r=0;r<n;r++){var o=e.slice(80*r,80*(r+1));i.push(o.flat())}if(this._type===v.COLLECTOR&&this._collector.isCollecting){var s=this._collector.layer;if(i.length>0){var a=i.splice(0,1)[0];a.length>0&&s.push.apply(s,a)}s.flat(),s.length>0&&m(v.COLLECTOR,s)}if(i.length>0)for(var c=0;c<i.length;c++){var l=i[c];l.length>0&&m(v.ACTION,l)}this.reset(t)}};var T=function(t,e){this._action=t,this._data=e};T.prototype.test=function(t){return this._action===t},T.prototype.start=function(){return this._action.start(this._data)},T.prototype.end=function(){return this._action.end(this._data)};var A=new E,L=function(){},I={debugger:{configurable:!0},isActive:{configurable:!0}};I.debugger.get=function(){return window._oEa},I.isActive.get=function(){return!!this.debugger&&"1"===this.debugger._dbg},I.isActive.set=function(t){this.debugger&&this.isActive!==t&&this.debugger.debug(t?1:0)},Object.defineProperties(L.prototype,I);var j=new L,P={CONNECTED:{id:"connected",value:"connect\xe9",isConnected:!0,isDefault:!0},ANONYMOUS:{id:"anonymous",value:"anonyme",isConnected:!1,isDefault:!0},GUEST:{id:"guest",value:"invit\xe9",isConnected:!1}},S={INDIVIDUAL:{id:"individual",value:"part"},PROFESSIONNAL:{id:"professionnal",value:"pro"}},w={"0x0022":"\uff02","0x0024":"\uff04","0x0026":"\uff06","0x0027":"\uff07","0x002a":"\uff0a","0x002c":"\uff0c","0x003c":"\uff1c","0x003e":"\uff1e","0x003f":"\uff1f","0x005c":"\uff3c","0x005e":"\uff3e","0x0060":"\uff40","0x007c":"\uff5c","0x007e":"\uff5e"},k=function(t){return t?t=(t=(t=[].concat(t).map((function(t){return w[function(t){var e=t.charCodeAt(0).toString(16);return"0x0000".slice(0,-e.length)+e}(t)]||t})).join("")).replace(/\s+/g," ").replace(/\s/g,"_")).toLowerCase():t},x=function(e,n,i){switch(void 0===i&&(i=!0),!0){case"number"==typeof e:return""+e;case"string"==typeof e:return e;case void 0===e&&i:case null===e&&i:return""}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting a String"),null},D=function(e,n,i){switch(void 0===i&&(i=!0),!0){case!isNaN(e):return e;case"string"==typeof e&&!isNaN(Number(e)):return Number(e);case void 0===e&&i:case null===e&&i:return-1}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting a Number"),null},R=function(e,n){switch(!0){case"boolean"==typeof e:return e;case"string"==typeof e&&"true"===e.toLowerCase():case"1"===e:case 1===e:return!0;case"string"==typeof e&&"false"===e.toLowerCase():case"0"===e:case 0===e:return!1;case void 0===e:case null===e:return e}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting a Boolean"),null},M=function(e,n,i){switch(void 0===i&&(i=!0),!0){case"string"==typeof e&&/^[A-Za-z]{2}$|^[A-Za-z]{2}[-_]/.test(e):return e.split(/[-_]/)[0].toLowerCase();case void 0===e&&i:case null===e&&i:return""}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting language as a String following ISO 639-1 format"),null},B=function(e,n,i){switch(void 0===i&&(i=!0),!0){case"string"==typeof e:return/^FR-[A-Z0-9]{2,3}$/.test(e)||t.inspector.warn("value '"+e+"' set at analytics."+n+" with wrong format. Geographic location should be a String following ISO 3166-2:FR format"),e;case void 0===e&&i:case null===e&&i:return""}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting geographic location as a String following ISO 3166-2:FR format"),null},F=function(t){return t.toISOString().split("T")[0]},U=function(t){this._config=t||{}},q={uid:{configurable:!0},email:{configurable:!0},isNew:{configurable:!0},status:{configurable:!0},profile:{configurable:!0},language:{configurable:!0},type:{configurable:!0},layer:{configurable:!0}};U.prototype.reset=function(t){void 0===t&&(t=!1),this._isConnected=!1,this.status=P.ANONYMOUS,!t&&this._config.connect?this.connect(this._config.connect.uid,this._config.connect.email,this._config.connect.isNew):(this._uid=void 0,this._email=void 0,this._isNew=!1),this.profile=t?void 0:this._config.profile,this.language=t?void 0:this._config.language,this.type=t?void 0:this._config.type},U.prototype.connect=function(e,n,i){void 0===i&&(i=!1),this._uid=x(e,"user.uid"),/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]{2,}@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/.test(n)&&t.inspector.warn("Please check analytics.user.email is properly encrypted "),this._email=x(n,"user.email"),this._isNew=R(i),this._isConnected=!0,this.status=P.CONNECTED},q.uid.get=function(){return this._uid},q.email.get=function(){return this._email},q.isNew.get=function(){return this._isNew},q.status.set=function(t){var e=this,n=Object.values(P).filter((function(t){return t.isConnected===e._isConnected}));this._status=n.filter((function(e){return e.id===t||e.value===t}))[0]||n.filter((function(t){return t.isDefault}))[0]},q.status.get=function(){return this._status.id},q.profile.set=function(t){var e=x(t,"user.profile");null!==e&&(this._profile=e)},q.profile.get=function(){return this._profile.id},q.language.set=function(t){var e=M(t,"user.language");null!==e&&(this._language=e)},q.language.get=function(){return this._language||navigator.language},q.type.set=function(t){this._type=Object.values(S).filter((function(e){return e.id===t||e.value===t}))[0]},q.type.get=function(){return this._type.id},q.layer.get=function(){var t=[];return this.uid&&t.push("uid",k(this.uid)),this.email&&t.push("email",k(this.email)),this.isNew&&t.push("newcustomer","1"),this.language&&t.push("user_language",this.language),t.push("user_login_status",this._status.value),this._profile&&t.push("profile",this._profile),this._type&&t.push("user_type",this._type.value),t},Object.defineProperties(U.prototype,q),U.Status=P,U.Type=S;var H={DEVELOPMENT:{id:"development",value:"dev"},STAGE:{id:"stage",value:"stage"},PRODUCTION:{id:"production",value:"prod"}},K=function(t){this._config=t||{}},V={environment:{configurable:!0},entity:{configurable:!0},language:{configurable:!0},target:{configurable:!0},type:{configurable:!0},region:{configurable:!0},department:{configurable:!0},version:{configurable:!0},api:{configurable:!0},layer:{configurable:!0}};K.prototype.reset=function(e){void 0===e&&(e=!1),this.environment=e?H.DEVELOPMENT.id:this._config.environment,this.entity=e?void 0:this._config.entity,this.language=e?void 0:this._config.language,this.target=e?void 0:this._config.target,this.type=e?void 0:this._config.type,this.region=e?void 0:this._config.region,this.department=e?void 0:this._config.department,this.version=e?void 0:this._config.version,this._api=t.version},V.environment.set=function(t){switch(t){case H.PRODUCTION.id:case H.PRODUCTION.value:this._environment=H.PRODUCTION;break;case H.STAGE.id:case H.STAGE.value:this._environment=H.STAGE;break;case H.DEVELOPMENT.id:case H.DEVELOPMENT.value:default:this._environment=H.DEVELOPMENT}},V.environment.get=function(){return this._environment?this._environment.id:H.DEVELOPMENT.id},V.entity.set=function(t){var e=x(t,"site.entity");null!==e&&(this._entity=e)},V.entity.get=function(){return this._entity},V.language.set=function(t){var e=M(t,"site.language");null!==e&&(this._language=e)},V.language.get=function(){return this._language||document.documentElement.lang},V.target.set=function(t){var e=x(t,"site.target");null!==e&&(this._target=e)},V.target.get=function(){return this._target},V.type.set=function(t){var e=x(t,"site.type");null!==e&&(this._type=e)},V.type.get=function(){return this._type},V.region.set=function(t){var e=B(t,"site.region");null!==e&&(this._region=e)},V.region.get=function(){return this._region},V.department.set=function(t){var e=B(t,"site.department");null!==e&&(this._department=e)},V.department.get=function(){return this._department},V.version.set=function(t){var e=x(t,"site.version");null!==e&&(this._version=e)},V.version.get=function(){return this._version},V.api.get=function(){return this._api},V.layer.get=function(){var e=[];return e.push("site_environment",this._environment.value),this.entity?e.push("site_entity",k(this.entity)):t.inspector.warn("entity is required in analytics.site"),this.language&&e.push("site_language",this.language),this.target&&e.push("site_target",k(this.target)),this.type&&e.push("site_type",k(this.type)),this.region&&e.push("site_region",this.region),this.department&&e.push("site_department",this.department),this.version&&e.push("site_version",this.version),this.api&&e.push("api_version",this.api),e},Object.defineProperties(K.prototype,V),K.Environment=H;var G={accordion:t.internals.ns.selector("accordion"),alert:t.internals.ns.selector("alert"),badge:t.internals.ns.selector("badge"),breadcrumb:t.internals.ns.selector("breadcrumb"),button:t.internals.ns.selector("btn"),callout:t.internals.ns.selector("callout"),card:t.internals.ns.selector("card"),checkbox:t.internals.ns.selector("checkbox-group"),connect:t.internals.ns.selector("connect"),consent:t.internals.ns.selector("consent-banner"),content:t.internals.ns.selector("content-media"),download:t.internals.ns.selector("download"),follow:t.internals.ns.selector("follow"),footer:t.internals.ns.selector("footer"),header:t.internals.ns.selector("header"),highlight:t.internals.ns.selector("highlight"),input:t.internals.ns.selector("input-group"),link:t.internals.ns.selector("link"),modal:t.internals.ns.selector("modal"),navigation:t.internals.ns.selector("nav"),notice:t.internals.ns.selector("notice"),pagination:t.internals.ns.selector("pagination"),quote:t.internals.ns.selector("quote"),radio:t.internals.ns.selector("radio-group"),search:t.internals.ns.selector("search-bar"),select:t.internals.ns.selector("select"),share:t.internals.ns.selector("share"),sidemenu:t.internals.ns.selector("sidemenu"),stepper:t.internals.ns.selector("stepper"),summary:t.internals.ns.selector("summary"),tab:t.internals.ns.selector("tabs"),table:t.internals.ns.selector("table"),tag:t.internals.ns.selector("tag"),tile:t.internals.ns.selector("tile"),toggle:t.internals.ns.selector("toggle"),tooltip:t.internals.ns.selector("tooltip"),transcription:t.internals.ns.selector("transcription"),translate:t.internals.ns.selector("translate"),upload:t.internals.ns.selector("upload-group")},W="collectable",Y="collecting",z="collected",Z=function(t){this._config=t||{},this._state=W},X={isCollecting:{configurable:!0},path:{configurable:!0},referrer:{configurable:!0},title:{configurable:!0},id:{configurable:!0},author:{configurable:!0},date:{configurable:!0},tags:{configurable:!0},name:{configurable:!0},labels:{configurable:!0},categories:{configurable:!0},isError:{configurable:!0},template:{configurable:!0},segment:{configurable:!0},group:{configurable:!0},subtemplate:{configurable:!0},theme:{configurable:!0},subtheme:{configurable:!0},related:{configurable:!0},depth:{configurable:!0},current:{configurable:!0},total:{configurable:!0},filters:{configurable:!0},layer:{configurable:!0}};Z.prototype.reset=function(t){void 0===t&&(t=!1),this.path=t?"":this._config.path,this.referrer=t?"":this._config.referrer,this.title=t?"":this._config.title,this.name=t?"":this._config.name,this.id=t?"":this._config.id,this.author=t?"":this._config.author,this.date=t?"":this._config.date,this._labels=t||!this._config.labels?["","","","",""]:this._config.labels,this._labels.length=5,this._tags=t||!this._config.tags?[]:this._config.tags,this._categories=t||!this._config.categories?["","",""]:this._config.categories,this.isError=!t&&this._config.isError,this.template=t?"":this._config.template,this.group=t?"":this._config.group,this.segment=t?"":this._config.segment,this.subtemplate=t?"":this._config.subtemplate,this.theme=t?"":this._config.theme,this.subtheme=t?"":this._config.subtheme,this.related=t?"":this._config.related,this.depth=t||isNaN(this._config.depth)?0:this._config.depth,this.current=t||isNaN(this._config.current)?-1:this._config.current,this.total=t||isNaN(this._config.total)?-1:this._config.total,this._filters=t||!this._config.filters?[]:this._config.filters},Z.prototype.collecting=function(){return this._state!==W?(t.inspector.warn("current path '"+this.path+"' was already collected"),!1):(this._state=Y,!0)},X.isCollecting.get=function(){return this._state===Y},X.path.set=function(t){var e=x(t,"page.path");null!==e&&(this._path=e,this._state=W)},X.path.get=function(){return this._path||""+document.location.pathname+document.location.search},X.referrer.set=function(t){var e=x(t,"page.referrer");null!==e&&(this._referrer=e)},X.referrer.get=function(){return this._referrer},X.title.set=function(t){var e=x(t,"page.title");null!==e&&(this._title=e)},X.title.get=function(){return this._title||document.title},X.id.set=function(t){var e=x(t,"page.id");null!==e&&(this._id=e)},X.id.get=function(){return this._id},X.author.set=function(t){var e=x(t,"page.author");null!==e&&(this._author=e)},X.author.get=function(){return this._author},X.date.set=function(e){var n=function(e,n,i){switch(void 0===i&&(i=!0),!0){case e instanceof Date:return F(e);case"string"==typeof e:var r=new Date(e);if("Invalid Date"!==r.toString())return F(r);break;case void 0===e&&i:case null===e&&i:return null}return t.inspector.warn("unexpected value '"+e+"' set at analytics."+n+". Expecting a Date"),null}(e,"page.date");null!==n&&(this._date=n)},X.date.get=function(){return this._date},X.tags.get=function(){return this._tags},X.name.set=function(t){var e=x(t,"page.name");null!==e&&(this._name=e)},X.name.get=function(){return this._name||this.title},X.labels.get=function(){return this._labels},X.categories.get=function(){return this._categories},X.isError.set=function(t){var e=R(t,"page.isError");null!==e&&(this._isError=e)},X.isError.get=function(){return this._isError},X.template.set=function(t){var e=x(t,"page.template");null!==e&&(this._template=e)},X.template.get=function(){return this._template||"autres"},X.segment.set=function(t){var e=x(t,"page.segment");null!==e&&(this._segment=e)},X.segment.get=function(){return this._segment||this.template},X.group.set=function(t){var e=x(t,"page.group");null!==e&&(this._group=e)},X.group.get=function(){return this._group||this.template},X.subtemplate.set=function(t){var e=x(t,"page.subtemplate");null!==e&&(this._subtemplate=e)},X.subtemplate.get=function(){return this._subtemplate},X.theme.set=function(t){var e=x(t,"page.theme");null!==e&&(this._theme=e)},X.theme.get=function(){return this._theme},X.subtheme.set=function(t){var e=x(t,"page.subtheme");null!==e&&(this._subtheme=e)},X.subtheme.get=function(){return this._subtheme},X.related.set=function(t){var e=x(t,"page.related");null!==e&&(this._related=e)},X.related.get=function(){return this._related},X.depth.set=function(t){var e=D(t,"page.depth");null!==e&&(this._depth=e)},X.depth.get=function(){return this._depth},X.current.set=function(t){var e=D(t,"page.current");null!==e&&(this._current=e)},X.current.get=function(){return this._current},X.total.set=function(t){var e=D(t,"page.total");null!==e&&(this._total=e)},X.total.get=function(){return this._total},X.filters.get=function(){return this._filters},X.layer.get=function(){this._state=z;var t=[];this.path&&t.push("path",k(this.path)),this.referrer&&t.push("referrer",k(this.referrer)),this.title&&t.push("page_title",k(this.title)),this.name&&t.push("page_name",k(this.name)),this.id&&t.push("page_id",k(this.id)),this.author&&t.push("page_author",k(this.author)),this.date&&t.push("page_date",k(this.date));var e=Object.keys(G).map((function(t){return null!==document.querySelector(G[t])?t:null})).filter((function(t){return null!==t})).join(",");e&&t.push("page_components",e);var n=this._labels.slice(0,5);n.length=5,n.some((function(t){return t}))&&t.push("pagelabel",n.map((function(t){return"string"==typeof t?k(t):""})).join(","));var i=this._tags;if(i.some((function(t){return t}))&&t.push("pagetag",i.map((function(t){return"string"==typeof t?k(t):""})).join(",")),this._categories.forEach((function(e,n){e&&t.push("page_category"+(n+1),e)})),this._isError&&t.push("error","1"),t.push("page_template",k(this.template)),t.push("pagegroup",k(this.group)),t.push("site-segment",k(this.segment)),this.subtemplate&&t.push("page_subtemplate",k(this.subtemplate)),this.theme&&t.push("page_theme",k(this.theme)),this.subtheme&&t.push("page_subtheme",k(this.subtheme)),this.related&&t.push("page_related",k(this.related)),isNaN(this.depth)||t.push("page_depth",this.depth),!isNaN(this.current)&&this.current>-1){var r=""+this.current;!isNaN(this.total)&&this.total>-1&&(r+="/"+this.total),t.push("page_pagination",r)}if(this.filters.length&&this.filters.some((function(t){return t}))){var o=this.filters.map((function(t){return"string"==typeof t?k(t):""}));t.push("page_filters",o.join(","))}return t},Object.defineProperties(Z.prototype,X);var $={STANDARD:{id:"standard",value:"standard",isDefault:!0},AUTOCOMPLETE:{id:"autocomplete",value:"autocompletion"}},Q=function(t){this._config=t||{}},J={engine:{configurable:!0},results:{configurable:!0},terms:{configurable:!0},category:{configurable:!0},theme:{configurable:!0},type:{configurable:!0},method:{configurable:!0},layer:{configurable:!0}};Q.prototype.reset=function(t){void 0===t&&(t=!1),this.engine=t?void 0:this._config.engine,this.results=t||isNaN(this._config.results)?-1:this._config.results,this.terms=t?void 0:this._config.terms,this.category=t?void 0:this._config.category,this.theme=t?void 0:this._config.theme,this.type=t?void 0:this._config.type,this.method=t?void 0:this._config.method},J.engine.set=function(t){var e=x(t,"search.engine");null!==e&&(this._engine=e)},J.engine.get=function(){return this._engine},J.results.set=function(t){var e=D(t,"search.results");null!==e&&(this._results=e)},J.results.get=function(){return this._results},J.terms.set=function(t){var e=x(t,"search.terms");null!==e&&(this._terms=e)},J.terms.get=function(){return this._terms},J.category.set=function(t){var e=x(t,"search.category");null!==e&&(this._category=e)},J.category.get=function(){return this._category},J.theme.set=function(t){var e=x(t,"search.theme");null!==e&&(this._theme=e)},J.theme.get=function(){return this._theme},J.type.set=function(t){var e=x(t,"search.type");null!==e&&(this._type=e),this._type=t},J.type.get=function(){return this._type},J.method.set=function(t){var e=Object.values($);this._method=e.filter((function(e){return e.id===t||e.value===t}))[0]||e.filter((function(t){return t.isDefault}))[0]},J.method.get=function(){return this._method},J.layer.get=function(){var t=[];return this.engine&&t.push("isearchengine",k(this.engine)),this.results>-1&&t.push("isearchresults",this.results),this.terms&&t.push("isearchkey","search_terms","isearchdata",k(this.terms)),this.category&&t.push("isearchkey","search_category","isearchdata",k(this.category)),this.theme&&t.push("isearchkey","search_theme","isearchdata",k(this.theme)),this.type&&t.push("isearchkey","search_type","isearchdata",k(this.type)),this._method&&t.length&&t.push("isearchkey","search_method","isearchdata",this._method.value),t},Object.defineProperties(Q.prototype,J),Q.Method=$;var tt=function(t){this._config=t||{}},et={id:{configurable:!0},type:{configurable:!0},name:{configurable:!0},step:{configurable:!0},current:{configurable:!0},total:{configurable:!0},objective:{configurable:!0},error:{configurable:!0},layer:{configurable:!0}};tt.prototype.reset=function(t){void 0===t&&(t=!1),this.id=t?void 0:this._config.id,this.type=t?void 0:this._config.type,this.name=t?void 0:this._config.name,this.step=t?void 0:this._config.step,this.current=t||isNaN(this._config.current)?-1:this._config.current,this.total=t||isNaN(this._config.total)?-1:this._config.total,this.objective=t?void 0:this._config.objective,this.error=t?void 0:this._config.error},et.id.set=function(t){var e=x(t,"funnel.id");null!==e&&(this._id=e)},et.id.get=function(){return this._id},et.type.set=function(t){var e=x(t,"funnel.type");null!==e&&(this._type=e)},et.type.get=function(){return this._type},et.name.set=function(t){var e=x(t,"funnel.name");null!==e&&(this._name=e)},et.name.get=function(){return this._name},et.step.set=function(t){var e=x(t,"funnel.step");null!==e&&(this._step=e)},et.step.get=function(){return this._step},et.current.set=function(t){var e=D(t,"funnel.current");null!==e&&(this._current=e)},et.current.get=function(){return this._current},et.total.set=function(t){var e=D(t,"funnel.total");null!==e&&(this._total=e)},et.total.get=function(){return this._total},et.objective.set=function(t){var e=x(t,"funnel.objective");null!==e&&(this._objective=e),this._objective=t},et.objective.get=function(){return this._objective},et.error.set=function(t){var e=x(t,"funnel.error");null!==e&&(this._error=e),this._error=t},et.error.get=function(){return this._error},et.layer.get=function(){var t=[];return this.id&&t.push("funnel_id",k(this.id)),this.type&&t.push("funnel_type",k(this.type)),this.name&&t.push("funnel_name",k(this.name)),this.step&&t.push("funnel_step_name",k(this.step)),!isNaN(this.current)&&this.current>-1&&t.push("funnel_step_number",this.current),!isNaN(this.total)&&this.total>-1&&t.push("funnel_step_max",this.total),this.objective&&t.push("funnel_objective",k(this.objective)),this.error&&t.push("funnel_error",k(this.error)),t},Object.defineProperties(tt.prototype,et);var nt={IN:"in",OUT:"out",NONE:"none"},it={id:"unstarted",value:-1},rt={id:"started",value:1},ot={id:"singular",value:2},st={id:"ended",value:3},at=function(t){return Object.entries(t).map((function(t){var e=t[0],n=t[1];return["actionpname",k(e),"actionpvalue",k(n)]})).flat()},ct=function(t){this._isMuted=!1,this._regulation=C.NONE,this._name=t,this._status=it,this._labels=[],this._parameters={},this._sentData=[]},lt={isMuted:{configurable:!0},regulation:{configurable:!0},isSingular:{configurable:!0},status:{configurable:!0},name:{configurable:!0},labels:{configurable:!0},reference:{configurable:!0},parameters:{configurable:!0},mode:{configurable:!0},_base:{configurable:!0}};lt.isMuted.get=function(){return this._isMuted},lt.isMuted.set=function(t){this._isMuted=t},lt.regulation.get=function(){return this._regulation},lt.regulation.set=function(t){Object.values(C).includes(t)&&(this._regulation=t)},lt.isSingular.get=function(){return this._status===ot},lt.status.get=function(){return this._status},lt.name.get=function(){return this._name},lt.labels.get=function(){return this._labels},lt.reference.get=function(){return this._reference},lt.parameters.get=function(){return this._parameters},lt.mode.get=function(){return this._mode},ct.prototype.singularize=function(){this._status=ot},ct.prototype.rewind=function(){this._sentData=[],this._status=it},ct.prototype.addParameter=function(t,e){this._parameters[t]=e},ct.prototype.removeParameter=function(t){delete this._parameters[t]},lt.reference.set=function(t){var e=x(t,"action "+this._name);null!==e&&(this._reference=e)},lt._base.get=function(){return["actionname",this._name]},ct.prototype._getLayer=function(t){if(void 0===t&&(t={}),this._isMuted)return[];this._mode!==nt.IN&&this._sentData.push(JSON.stringify(t));var e=this._base;switch(this._mode){case nt.IN:case nt.OUT:e.push("actionmode",this._mode)}var n=this._labels.slice(0,5);return n.length=5,n.some((function(t){return t}))&&e.push("actionlabel",n.map((function(t){return"string"==typeof t?k(t):""})).join(",")),this._reference&&e.push("actionref",this._reference),e.push.apply(e,at(Object.assign(this._parameters,t||{}))),e},ct.prototype.start=function(e){switch(this._status){case it:this._mode=nt.IN,this._status=rt;break;case ot:this._mode=nt.NONE,this._status=st;break;default:return t.inspector.error("unexpected start on action "+this._name+" with status "+this._status.id),[]}return this._getLayer(e)},ct.prototype.end=function(t){switch(this._status){case rt:this._mode=nt.OUT,this._status=st;break;case it:case ot:this._mode=nt.NONE,this._status=st;break;case st:if(this._sentData.includes(JSON.stringify(t)))return[];this._mode=nt.NONE,this._status=st;break;default:return[]}return this._getLayer(t)},ct.prototype.resume=function(e){if(this._isMuted)return[];if(this._status.value>=st.value)return t.inspector.error("unexpected resuming on action "+this._name+" with status "+this._status.id),[];var n=this._base;return e&&n.push.apply(n,at(e)),n},Object.defineProperties(ct.prototype,lt);var ut=function(){this._actions=[]};ut.prototype.rewind=function(){this._actions.forEach((function(t){return t.rewind()}))},ut.prototype.getAction=function(t){var e=this._actions.filter((function(e){return e.name===t}))[0];return e||(e=new ct(t),this._actions.push(e)),e},ut.prototype.hasAction=function(t){return this._actions.some((function(e){return e.name===t}))},ut.prototype.remove=function(t){var e=this._actions.indexOf(t);return-1!==e&&(this._actions.splice(e,1),!0)},ut.ActionMode=nt;var pt=new ut;ut.instance=pt;var ht=function(t,e){void 0===e&&(e=!1),this._onRouteChange=t,this._isListeningHash=e,this._update(),O.add(this)},ft={path:{configurable:!0},hasTitle:{configurable:!0},title:{configurable:!0},referrer:{configurable:!0}};ht.prototype._update=function(){this._pathname=document.location.pathname,this._search=document.location.search,this._hash=document.location.hash,this._path=""+this._pathname+this._search,this._isListeningHash&&(this._path+=this._hash),this._hasTitle=this._title===document.title,this._title=document.title},ht.prototype.render=function(){this._pathname===document.location.pathname&&this._search===document.location.search||this.change(),this._isListeningHash&&this._hash!==document.location.hash&&this.change()},ht.prototype.change=function(){this._referrer=this._path,this._update(),this._onRouteChange()},ft.path.get=function(){return this._path},ft.hasTitle.get=function(){return this._hasTitle},ft.title.get=function(){return this._title},ft.referrer.get=function(){return this._referrer},Object.defineProperties(ht.prototype,ft);var gt={COLLECT:t.internals.ns.event("collect")},dt={REWIND:t.internals.ns.emission("analytics","rewind")},_t=function(e){switch(e.collection){case n.MANUAL:case n.LOAD:case n.FULL:case n.HASH:this._collection=e.collection;break;default:if(e.mode&&"manual"===e.mode)this._collection=e.collection;switch(!0){case"manual"===e.mode:this._collection=n.MANUAL;break;case t.mode===t.Modes.ANGULAR:case t.mode===t.Modes.REACT:case t.mode===t.Modes.VUE:this._collection=n.FULL;break;default:this._collection=n.LOAD}}this._isActionEnabled="false"===e.isActionEnabled||e.isActionEnabled,this._user=new U(e.user),this._site=new K(e.site),this._page=new Z(e.page),this._search=new Q(e.search),this._funnel=new tt(e.funnel),this._delay=-1,A.setCollector(this)},bt={page:{configurable:!0},user:{configurable:!0},site:{configurable:!0},search:{configurable:!0},funnel:{configurable:!0},collection:{configurable:!0},isCollecting:{configurable:!0},isActionEnabled:{configurable:!0},layer:{configurable:!0}};bt.page.get=function(){return this._page},bt.user.get=function(){return this._user},bt.site.get=function(){return this._site},bt.search.get=function(){return this._search},bt.funnel.get=function(){return this._funnel},_t.prototype.start=function(){var t=this._handleRouteChange.bind(this);switch(this._collection){case n.LOAD:this.collect();break;case n.FULL:this.collect(),this._location=new ht(t);break;case n.HASH:this.collect(),this._location=new ht(t,!0)}},_t.prototype._handleRouteChange=function(){A.send(!0),this._delay=6,O.add(this)},_t.prototype.render=function(){this._delay--,this._delay<0&&(O.remove(this),this._routeChanged())},_t.prototype._routeChanged=function(){pt.rewind(),this._page.referrer=this._location.referrer,this._location.hasTitle&&(this._page.title=this._location.title),this._page.path=this._location.path;var e=new CustomEvent(gt.COLLECT);document.documentElement.dispatchEvent(e),this.collect(),t.internals&&t.internals.stage&&t.internals.stage.root&&t.internals.stage.root.descend(dt.REWIND)},_t.prototype.reset=function(t){void 0===t&&(t=!1),this._user.reset(t),this._site.reset(t),this._page.reset(t),this._search.reset(t),this._funnel.reset(t)},_t.prototype.collect=function(){this.page.collecting()&&A.collect()},bt.collection.get=function(){return this._collection},bt.isCollecting.get=function(){return this._page.isCollecting},bt.isActionEnabled.get=function(){return this._isActionEnabled},bt.isActionEnabled.set=function(t){this._isActionEnabled=t},bt.layer.get=function(){return this._user.layer.concat(this._site.layer,this._page.layer,this._search.layer,this._funnel.layer)},Object.defineProperties(_t.prototype,bt);var yt=function(){var t=this;this._isReady=!1,this._readiness=new Promise((function(e,n){t._isReady?e():(t._resolve=e,t._reject=n)})),this._configure()},mt={isReady:{configurable:!0},readiness:{configurable:!0},page:{configurable:!0},user:{configurable:!0},site:{configurable:!0},search:{configurable:!0},funnel:{configurable:!0},cmp:{configurable:!0},opt:{configurable:!0},collection:{configurable:!0},isActionEnabled:{configurable:!0},isDebugging:{configurable:!0}};yt.prototype._configure=function(){switch(!0){case void 0!==window[e]:this._config=window[e].configuration.analytics,window[e].promise.then(this._build.bind(this),(function(){}));break;case void 0!==t.internals&&void 0!==t.internals.configuration&&void 0!==t.internals.configuration.analytics&&void 0!==t.internals.configuration.analytics.domain:this._config=t.internals.configuration.analytics,this._build();break;case void 0!==t.analytics&&void 0!==t.analytics.domain:this._config=t.analytics,this._build();break;default:t.inspector.warn("analytics configuration is incorrect or missing (required : domain)")}},yt.prototype._build=function(){var t=this;this._init=new u(this._config.domain),this._init.configure().then(this._start.bind(this),(function(e){return t._reject(e)}))},mt.isReady.get=function(){return this._isReady},mt.readiness.get=function(){return this._readiness},yt.prototype._start=function(){this._isReady||(this._cmp=new y(this._config.cmp),this._collector=new _t(this._config),this._collector.reset(),this._isReady=!0,this._resolve(),A.start(),this._collector.start())},mt.page.get=function(){return this._collector.page},mt.user.get=function(){return this._collector.user},mt.site.get=function(){return this._collector._site},mt.search.get=function(){return this._collector.search},mt.funnel.get=function(){return this._collector.funnel},mt.cmp.get=function(){return this._cmp},mt.opt.get=function(){return c},mt.collection.get=function(){return this._collector.collection},mt.isActionEnabled.get=function(){return this._collector.isActionEnabled},mt.isActionEnabled.set=function(t){this._collector.isActionEnabled=t},mt.isDebugging.get=function(){return j.isActive},mt.isDebugging.set=function(t){j.isActive=t},yt.prototype.push=function(t,e){m(t,e)},yt.prototype.reset=function(t){this._collector.reset()},yt.prototype.collect=function(){this._collector.collect()},Object.defineProperties(yt.prototype,mt);var vt=new yt;vt.Collection=n,vt.PushType=v;t.analytics=function(t){for(var e=[],n=arguments.length-1;n-- >0;)e[n]=arguments[n+1];return e.forEach((function(e){var n=Object.keys(e).reduce((function(t,n){return t[n]=Object.getOwnPropertyDescriptor(e,n),t}),{});Object.getOwnPropertySymbols(e).forEach((function(t){var i=Object.getOwnPropertyDescriptor(e,t);i.enumerable&&(n[t]=i)})),Object.defineProperties(t,n)})),t}(vt,{});var Nt={IMPRESSION:{id:"impression",isSingular:!0,isBeginning:!0,attributed:!1,type:"impression"},CLICK:{id:"click",isBeginning:!0,attributed:!0,type:"interaction",event:"click",method:"eventListener"},INTERNAL:{id:"internal",isBeginning:!0,attributed:!0,type:"interaction",event:"click",method:"eventListener"},EXTERNAL:{id:"external",isBeginning:!0,attributed:!0,type:"interaction",event:"click",method:"eventListener"},DOWNLOAD:{id:"download",isBeginning:!0,attributed:!0,type:"interaction",event:"click",method:"eventListener"},BUTTON:{id:"button",isBeginning:!0,attributed:!0,type:"interaction",event:"click",method:"eventListener"},DOUBLE_CLICK:{id:"dblclick",isBeginning:!0,attributed:!0,type:"interaction",event:"dblclick",method:"eventListener"},OPEN:{id:"open",isSingular:!0,attributed:!1,type:"event",method:"eventListener"},COMPLETE:{id:"complete",isSingular:!0,attributed:!1,type:"event",method:"eventListener"},FOCUS:{id:"focus",isSingular:!0,attributed:!1,type:"event",method:"eventListener"},ERROR:{id:"error",isSingular:!0,attributed:!1,type:"event"},ADD:{id:"add",isSingular:!0,attributed:!1,type:"event"},REMOVE:{id:"remove",isSingular:!0,attributed:!1,type:"event"},DISPLAY:{id:"display",isSingular:!0,attributed:!1,type:"event"},CHANGE:{id:"change",isSingular:!0,attributed:!0,type:"event",event:"change",method:"change"},PROGRESS:{id:"progress",isBeginning:!0,attributed:!0,type:"event"},SHARE:{id:"share",isBeginning:!0,attributed:!1,type:"interaction"},PRESS:{id:"press",isBeginning:!0,attributed:!1,type:"interaction"},RELEASE:{id:"release",isBeginning:!0,attributed:!1,type:"interaction"},DISMISS:{id:"dismiss",isBeginning:!0,attributed:!1,type:"interaction"},UPLOAD:{id:"upload",isBeginning:!0,attributed:!1,type:"interaction"},CHECK:{id:"check",isBeginning:!0,attributed:!1,type:"interaction"},UNCHECK:{id:"uncheck",isBeginning:!0,attributed:!1,type:"interaction"},SELECT:{id:"select",isBeginning:!0,attributed:!1,type:"interaction"},SUBSCRIBE:{id:"subscribe",isBeginning:!0,attributed:!1,type:"interaction"},DISCLOSE:{id:"disclose",isBeginning:!0,attributed:!1,type:"event"},SEARCH:{id:"search",isBeginning:!0,attributed:!1,type:"event"},SHOW:{id:"show",isSingular:!0,attributed:!1,type:"event"},HIDE:{id:"hide",isSingular:!0,attributed:!1,type:"event"},AUTOPLAY:{id:"autoplay",isBeginning:!0,attributed:!1,type:"event"},PLAY:{id:"play",isBeginning:!0,attributed:!1,type:"interaction"},PAUSE:{id:"pause",isBeginning:!0,attributed:!1,type:"interaction"},END:{id:"end",isBeginning:!0,attributed:!1,type:"event"}},Ot="undefined",Ct="heading",Et="component",Tt="content",At=Node.DOCUMENT_POSITION_PRECEDING|Node.DOCUMENT_POSITION_CONTAINED_BY,Lt=function(t){this._label=t.textContent.trim(),this._level=Number(t.tagName.charAt(1))},It={level:{configurable:!0},label:{configurable:!0}};It.level.get=function(){return this._level},It.label.get=function(){return this._label},Object.defineProperties(Lt.prototype,It);var jt=function(t,e,n){this._type=Ot,this._node=t,this._target=e,this._level=n,this._label="",this._component="",this._isValid=!0,this.analyse()},Pt={type:{configurable:!0},level:{configurable:!0},label:{configurable:!0},component:{configurable:!0},node:{configurable:!0},target:{configurable:!0},isValid:{configurable:!0}};jt.prototype._parseHeadings=function(){var t=this,e=Array.from({length:this._level},(function(t,e){return"h"+(e+1)})).join(",");this._headings=Array.from(this._node.querySelectorAll(e)).filter((function(e){return e===t._node||e.parentNode===t._node||null!=e.parentNode&&e.parentNode.parentNode===t._node})).filter((function(e){return(t._target.compareDocumentPosition(e)&At)>0})).map((function(t){return new Lt(t)})).reverse()},jt.prototype._getComponent=function(){if("function"!=typeof t)return!1;var e=t(this._node);if(!e)return!1;var n=Object.values(e).filter((function(t){return t.isActionee})).sort((function(t,e){return e.priority-t.priority}))[0];if(!n)return!1;this._type=Et,this._isValid=n.validate(this._target);var i=Array.from({length:6},(function(t,e){return"h"+(e+1)})).join(","),r=Array.from(this._node.querySelectorAll(i)).map((function(t){return new Lt(t)})).sort((function(t,e){return t.level-e.level}))[0];r&&r.level<=this._level&&(this._level=r.level-1);var o=this._node.closest(i);if(o){var s=new Lt(o);s.level<=this._level&&(this._level=s.level-1)}return!isNaN(n.level)&&n.level<this._level&&(this._level=n.level),this._label=n.label,this._component=n.component,!0},jt.prototype._getHeading=function(){var t=this;if(!this._headings.length)return!1;var e=[];return this._headings.forEach((function(n){n.level<=t._level&&(n.level>1&&e.unshift(n.label),t._level=n.level-1)})),!!e.length&&(this._type=Ct,this._label=e.join(" \u203a "),!0)},jt.prototype.analyse=function(){if(this._parseHeadings(),!this._getComponent()&&!this._getHeading()&&this._node===this._target){var t=this._node.textContent.trim();t&&(this._type=Tt,this._label=t)}},Pt.type.get=function(){return this._type},Pt.level.get=function(){return this._level},Pt.label.get=function(){return this._label},Pt.component.get=function(){return this._component},Pt.node.get=function(){return this._node},Pt.target.get=function(){return this._target},Pt.isValid.get=function(){return this._isValid},Object.defineProperties(jt.prototype,Pt);var St=function(t){this._node=t,this._process()},wt={localComponent:{configurable:!0},globalComponent:{configurable:!0},label:{configurable:!0},title:{configurable:!0},component:{configurable:!0}};St.prototype._process=function(){var t=new jt(this._node,this._node,6);this._level=t.level,this._members=[t];for(var e=this._node.parentNode;document.documentElement.contains(e)&&e!==document.documentElement&&this._level>0;){var n=new jt(e,this._node,this._level);switch(!0){case n.type===Ot:case!n.isValid:case n.label===this._members[0].label&&n.type===Ct&&this._members[0].type===Et:break;case n.label===this._members[0].label&&n.type===Et&&this._members[0].type===Ct:this._members.splice(0,1,n);break;default:this._members.unshift(n),n.level<this._level&&(this._level=n.level)}e=e.parentNode}this._label=k(this._members[this._members.length-1].label),this._title=k(this._members.filter((function(t){return t.label})).map((function(t){return t.label})).join(" \u203a "));var i=this._members.filter((function(t){return t.component})).map((function(t){return t.component}));this._component=k(i.join(" \u203a ")),this._localComponent=i[i.length-1],this._globalComponent=i[0]},wt.localComponent.get=function(){return this._localComponent},wt.globalComponent.get=function(){return this._globalComponent},wt.label.get=function(){return this._label},wt.title.get=function(){return this._title},wt.component.get=function(){return this._component},Object.defineProperties(St.prototype,wt);var kt=function(t,e,n,i,r,o,s,a){void 0===i&&(i=""),void 0===r&&(r=null),void 0===o&&(o={}),void 0===s&&(s=!1),void 0===a&&(a=C.NONE),this._node=t,this._type=e,this._id=n||this._node.id,this._isMuted=!1,this._title=r,this._category=i,this._parameters=o,this._isRating=s,this._regulation=a,this._hasBegun=!1,requestAnimationFrame(this._init.bind(this))},xt={isMuted:{configurable:!0},regulation:{configurable:!0},action:{configurable:!0}};kt.prototype._init=function(){var e=this;this._hierarchy=new St(this._node);var n="",i="";this._id?n="_["+this._id+"]":t.inspector.warn("Analytics API requires an id to be set on tracked element. Missing on "+this._node.outerHTML),this._type&&(i="("+this._type.id+")_"),this._name=""+i+(this._title||this._hierarchy.title)+n,this._action=pt.getAction(this._name,this._type.status),this._type.isSingular&&this._action.singularize(),Object.keys(this._parameters).forEach((function(t){return e._action.addParameter(t,e._parameters[t])})),this._action.isMuted=this._isMuted,this._action.regulation=this._regulation,this._action.labels[0]=this._type.id,this._action.labels[1]=this._hierarchy.globalComponent,this._action.labels[2]=this._hierarchy.localComponent,this._action.labels[4]=this._category,this._hierarchy.label&&this._action.addParameter("component_label",this._hierarchy.label),this._hierarchy.title&&this._action.addParameter("heading_hierarchy",this._hierarchy.title),this._hierarchy.component&&this._action.addParameter("component_hierarchy",this._hierarchy.component),this.begin()},xt.isMuted.get=function(){return this._action?this._action.isMuted:this._isMuted},xt.isMuted.set=function(t){this._isMuted=t,this._action&&(this._action.isMuted=t)},xt.regulation.get=function(){return this._regulation},xt.regulation.set=function(t){this._regulation=t,this._action&&(this._action.regulation=t)},xt.action.get=function(){return this._action},kt.prototype.rewind=function(){this._hasBegun=!1,this.begin()},kt.prototype.begin=function(t){void 0===t&&(t={}),this._hasBegun||(this._hasBegun=!0,this._type.isBeginning&&(this._type.isSingular||this._isRating)&&A.appendStartingAction(this._action,t))},kt.prototype.act=function(t){var e=this;void 0===t&&(t={}),this._isMuted||(this._action?A.appendEndingAction(this._action,t):requestAnimationFrame((function(){return e.act(t)})))},kt.prototype.dispose=function(){pt.remove(this._action)},Object.defineProperties(kt.prototype,xt);var Dt={RATING:t.internals.ns.attr("analytics-rating"),ACTION:t.internals.ns.attr("analytics-action")},Rt=function(e){function n(t,n,i,r){void 0===t&&(t=-1),void 0===n&&(n=""),void 0===i&&(i=null),void 0===r&&(r=C.NONE),e.call(this),this._type=null,this._priority=t,this._category=n,this._title=i,this._parameters={},this._data={},this._isMuted=!1,this._regulation=r}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={proxy:{configurable:!0},data:{configurable:!0},isMuted:{configurable:!0},priority:{configurable:!0},isInteractive:{configurable:!0},actionElement:{configurable:!0},label:{configurable:!0},value:{configurable:!0},isActionee:{configurable:!0},level:{configurable:!0},type:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"Actionee"},i.proxy.get=function(){var n=this,i={validate:function(t,e){return n.validate(t,e)}},r={get isActionee(){return!0},get label(){return n.label},get priority(){return n.priority},get level(){return n.level},get node(){return n.node}};return t.internals.property.completeAssign.call(this,e.prototype.proxy,i,r)},i.data.get=function(){return this._data},n.prototype._config=function(t,n){if(e.prototype._config.call(this,t,n),null===this._type)return this._sort(t),void(this._isMuted=!0);var i=this.getRegulation();this._regulation=i!==C.NONE?i:this._regulation;var r=this.getAttribute(Dt.ACTION),o="string"==typeof r&&"false"!==r.toLowerCase()&&"true"!==r.toLowerCase()?k(r):this._title;this._isRating=this.hasAttribute(Dt.RATING),this._actionElement=new kt(this.node,this._type,this.id,this._category,o,this._parameters,this._isRating,this._regulation),this._isMuted&&(this._actionElement.isMuted=!0),this.addDescent(dt.REWIND,this.rewind.bind(this)),this._sort(t)},n.prototype.getRegulation=function(){var t=this.getAttribute(Dt.ACTION);switch(!0){case"string"==typeof t&&"false"===t.toLowerCase():return C.PREVENT;case null!==t:return C.ENFORCE;default:return C.NONE}},n.prototype.mutate=function(t){if(t.includes(Dt.ACTION)){var n=this.getRegulation();this._regulation!==n&&(this._regulation=n,this._actionElement&&(this._actionElement.regulation=n))}e.prototype.mutate.call(this,t)},n.prototype._sort=function(t){var e=t.instances.filter((function(t){return t.isActionee})).sort((function(t,e){return e.priority-t.priority}));e.length<=1||e.forEach((function(t,e){t.isMuted=e>0}))},i.isMuted.get=function(){return this._actionElement?this._actionElement.isMuted:this._isMuted},i.isMuted.set=function(t){this._isMuted=t,this._actionElement&&(this._actionElement.isMuted=t)},i.priority.get=function(){return this._priority},n.prototype.setPriority=function(t){this._priority=t},i.isInteractive.get=function(){return"A"===this.node.tagName||"BUTTON"===this.node.tagName},n.prototype.detectInteractionType=function(t){t||(t=this.node);var e=t.tagName,n=t.getAttribute("href"),i=t.hasAttribute("download"),r=t.hostname;switch(!0){case"A"!==e:this._type=Nt.CLICK;break;case i:this._type=Nt.DOWNLOAD,this.value=n;break;case r===location.hostname:this._type=Nt.INTERNAL,this.value=n;break;case r.length>0:this._type=Nt.EXTERNAL,this.value=n;break;default:this._type=Nt.CLICK}},n.prototype.setClickType=function(){this._type=Nt.CLICK},n.prototype.listenActionClick=function(t){t?(this._clickTarget=t,this._clickTarget.addEventListener("click",this._handlingClick,{capture:!0})):this.listenClick({capture:!0})},n.prototype.handleClick=function(){this.act()},n.prototype.setImpressionType=function(){this._type=Nt.IMPRESSION},n.prototype.rewind=function(){this._actionElement&&this._actionElement.rewind()},n.prototype.act=function(t){void 0===t&&(t={}),void 0!==this._actionElement&&(this._data.component_value=this.value,this._actionElement.act(Object.assign(this._data,t)))},n.prototype.getFirstText=function(t){if(t||(t=this.node),t.childNodes&&t.childNodes.length>0){for(var e=0;e<t.childNodes.length;e++)if(t.childNodes[e].nodeType===Node.TEXT_NODE){var n=t.childNodes[e].textContent.trim();if(n)return this.cropText(n)}for(var i=0;i<t.childNodes.length;i++){var r=this.getFirstText(t.childNodes[i]);if(r)return this.cropText(r)}}return""},n.prototype.cropText=function(t,e){return t.length>50?t.substring(0,50).trim()+"[...]":t},n.prototype.getInteractionLabel=function(){var t=this.getAttribute("title");if(t)return this.cropText(t);var e=this.getFirstText();if(e)return e;var n=this.node.querySelector("img");if(n){var i=n.getAttribute("alt");if(i)return this.cropText(i)}return null},n.prototype.getHeadingLabel=function(t){var e=this;void 0===t&&(t=6);var n=Array.from({length:t},(function(t,e){return"h"+(e+1)})).join(","),i=Array.from(this.querySelectorAll(n)).filter((function(t){return(e.node.compareDocumentPosition(t)&Node.DOCUMENT_POSITION_CONTAINED_BY)>0}));if(i.length)for(var r=0,o=i;r<o.length;r+=1){var s=o[r],a=this.getFirstText(s);if(a)return a}},n.prototype.detectLevel=function(t){t||(t=this.node);var e=Array.from({length:6},(function(t,e){return"h"+(e+1)})).join(","),n=Array.from(t.querySelectorAll(e)).map((function(t){return Number(t.tagName.charAt(1))}));n.length&&(this._level=Math.min.apply(null,n)-1)},n.prototype.validate=function(t){return!0},i.actionElement.get=function(){return this._actionElement},i.label.get=function(){return null},i.value.get=function(){return this._value||this.label},i.value.set=function(t){this._value=t},i.isActionee.get=function(){return!0},i.level.get=function(){return this._level},i.type.get=function(){return this._type},n.prototype.dispose=function(){this._clickTarget&&this._clickTarget.removeEventListener("click",this._handlingClick),e.prototype.dispose.call(this)},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(t.core.Instance),Mt=function(t){function e(){t.call(this,100,"",null,!0)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={instanceClassName:{configurable:!0}};return n.instanceClassName.get=function(){return"AttributeActionee"},e.prototype.init=function(){this._attribute=this.registration.selector.replace(/[[\]]/g,"");var t=this._attribute.split("-").pop();switch(this._type=Object.values(Nt).filter((function(e){return e.id===t}))[0],this._title=this.getAttribute(this._attribute),this._type===Nt.CLICK&&this.detectInteractionType(),this._type.method){case"eventListener":this.listen(this._type.event,this.handleEvent.bind(this));break;case"change":this.listen(this._type.event,this.handleChange.bind(this))}},e.prototype.handleEvent=function(t){this._actionElement.act()},e.prototype.handleChange=function(t){this._actionElement.act({change_value:t.target.value})},e.prototype.dispose=function(){this._actionElement.dispose(),t.prototype.dispose.call(this)},Object.defineProperties(e,n),e}(Rt),Bt={CLICK:t.internals.ns.emission("button","click")},Ft=function(e){function n(t){void 0===t&&(t=-1),e.call(this,t,"dsfr_component")}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={proxy:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"ComponentActionee"},i.proxy.get=function(){var n=this,i={get component(){return n.component}};return t.internals.property.completeAssign.call(this,e.prototype.proxy,i)},n.prototype.setDiscloseType=function(){this._type=Nt.DISCLOSE},n.prototype.listenDisclose=function(){this.listen(t.core.DisclosureEvent.DISCLOSE,this._handleDisclose.bind(this),{capture:!0})},n.prototype._handleDisclose=function(){this.act()},n.prototype.setChangeType=function(){this._type=Nt.CHANGE},n.prototype.listenChange=function(){this.listen("change",this._handleChange.bind(this),{capture:!0})},n.prototype._handleChange=function(t){t.target&&t.target.value&&(this.setChangeValue(t),this.act())},n.prototype.setChangeValue=function(t){this.value=t.target.value},n.prototype.listenInputValidation=function(t,e,n){void 0===e&&(e=Nt.CLICK),void 0===n&&(n=!1),t||(t=this.node),this._type=e,this._isSendingInputValue=n,this.addAscent(Bt.CLICK,this._actValidatedInput.bind(this));var i=this.element.getDescendantInstances("ButtonActionee",null,!0)[0];i&&(i.isMuted=!0),this._validatedInput=t.querySelector("input"),this._handlingInputValidation=this._handleInputValidation.bind(this),this._validatedInput&&this._validatedInput.addEventListener("keydown",this._handlingInputValidation)},n.prototype._handleInputValidation=function(t){13===t.keyCode&&this._actValidatedInput()},n.prototype._actValidatedInput=function(){this._isActingValidatedInput||(this._isActingValidatedInput=!0,this._isSendingInputValue&&(this.value=this._validatedInput.value.trim()),this.act(),this.request(this._actedValidatedInput.bind(this)))},n.prototype._actedValidatedInput=function(){this._isActingValidatedInput=!1},n.prototype.setCheckType=function(){this._type=Nt.CHECK},n.prototype.detectCheckableType=function(){var t=this.node.checked;this._type=t?Nt.UNCHECK:Nt.CHECK},n.prototype.listenCheckable=function(){this.listen("change",this._handleCheckable.bind(this),{capture:!0})},n.prototype._handleCheckable=function(t){switch(t.target&&"on"!==t.target.value&&(this.value=t.target.value),!0){case this._type===Nt.CHECK&&t.target.checked:case this._type===Nt.UNCHECK&&!t.target.checked:this.act()}},n.prototype.detectPressableType=function(){var t=this.node.hasAttribute("aria-pressed");if(t){var e="true"===this.node.getAttribute("aria-pressed");this._type=e?Nt.RELEASE:Nt.PRESS}return t},n.prototype.listenPressable=function(){this.listen("click",this._handlePressable.bind(this),{capture:!0})},n.prototype._handlePressable=function(t){switch(!0){case this._type===Nt.PRESS&&"false"===t.target.getAttribute("aria-pressed"):case this._type===Nt.RELEASE&&"true"===t.target.getAttribute("aria-pressed"):this.act()}},n.prototype.setDismissType=function(){this._type=Nt.DISMISS},i.component.get=function(){return null},n.prototype.dispose=function(){this._validatedInput&&this._validatedInput.removeEventListener("keydown",this._handlingInputValidation),e.prototype.dispose.call(this)},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Rt),Ut={ACCORDION:t.internals.ns.selector("accordion"),TITLE:t.internals.ns.selector("accordion__title")},qt="accordion",Ht=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={button:{configurable:!0},label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"AccordionButtonActionee"},e.prototype.init=function(){this.isMuted=!0},n.button.get=function(){return this.element.getInstance("CollapseButton")},n.label.get=function(){var t=this.getFirstText();return t||"bouton d'accord\xe9on"},n.component.get=function(){return qt},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Kt=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"AccordionActionee"},e.prototype.init=function(){this.setDiscloseType(),this.wrapper=this.node.closest(Ut.ACCORDION),this.detectLevel(this.wrapper),this.register('[aria-controls="'+this.id+'"]',Ht),this.listenDisclose()},n.label.get=function(){if(this.wrapper){var t=this.wrapper.querySelector(Ut.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}}var n=this.element.getInstance("Collapse");if(n){var i=n.buttons.filter((function(t){return t.isPrimary}))[0];if(i){var r=this.getFirstText(i);if(r)return r}}return"accord\xe9on"},n.component.get=function(){return qt},e.prototype.dispose=function(){t.prototype.dispose.call(this)},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Vt={ALERT:t.internals.ns.selector("alert"),TITLE:t.internals.ns.selector("alert__title")},Gt=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"AlertActionee"},n.label.get=function(){var t=this.node.querySelector(Vt.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}return"alerte"},n.component.get=function(){return"alert"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Wt={LINK:t.internals.ns.selector("breadcrumb__link")+":not([aria-current])",COLLAPSE:t.internals.ns.selector("breadcrumb")+" "+t.internals.ns.selector("collapse")},Yt=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"BreadcrumbActionee"},n.label.get=function(){return"fil d'ariane"},n.component.get=function(){return"breadcrumb"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),zt=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"BreadcrumbLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},e.prototype.handleClick=function(){this.act()},n.label.get=function(){var t=this.getFirstText();return t||"lien fil d'ariane"},n.component.get=function(){return null},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Zt={BUTTON:t.internals.ns.selector("btn")+":not("+t.internals.ns.selector("btn--close")+")"},Xt=function(t){function e(){t.call(this,1),this._data={}}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ButtonActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},e.prototype.handleClick=function(){this.ascend(Bt.CLICK),this.act()},n.label.get=function(){if("input"===this.node.tagName)switch(this.node.type){case"button":case"submit":if(this.hasAttribute("value"))return this.getAttribute("value")}var t=this.getFirstText();return t||"bouton"},n.component.get=function(){return"button"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),$t={CALLOUT:t.internals.ns.selector("callout"),TITLE:t.internals.ns.selector("callout__title")},Qt=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"CalloutActionee"},n.label.get=function(){var t=this.node.querySelector($t.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}return"mise en avant"},n.component.get=function(){return"callout"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Jt={CARD:t.internals.ns.selector("card"),LINK:t.internals.ns.selector("card__title")+" a, "+t.internals.ns.selector("card__title")+" button",TITLE:t.internals.ns.selector("card__title")},te=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"CardActionee"},e.prototype.init=function(){var t=this.node.querySelector(Jt.LINK);t&&(this.link=t,this.detectInteractionType(t),this.listenActionClick(t))},n.label.get=function(){var t=this.node.querySelector(Jt.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}var n=this.getHeadingLabel();return n||"carte"},n.component.get=function(){return"card"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),ee={INPUT:t.internals.ns.selector('checkbox-group [type="checkbox"]')},ne=function(e){function n(){e.call(this,1),this._data={}}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"CheckboxActionee"},n.prototype.init=function(){this.detectCheckableType(),this.listenCheckable()},i.label.get=function(){var e=this.node.parentNode.querySelector(t.internals.ns.selector("label"));if(e){var n=this.getFirstText(e);if(n)return n}return"case \xe0 cocher"},i.component.get=function(){return"checkbox"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),ie={CONNECT:t.internals.ns.selector("connect"),LINK:t.internals.ns.selector("connect + * a, connect + a")},re="connect",oe=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ConnectActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){return this.node.classList.contains("fr-connect--plus")?"FranceConnect+":"FranceConnect"},n.component.get=function(){return re},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),se=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ConnectLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){return this.getFirstText()||"qu'est-ce que FranceConnect ?"},n.component.get=function(){return re},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),ae={BANNER:t.internals.ns.selector("consent-banner")},ce=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ConsentActionee"},n.label.get=function(){return"gestionnaire de consentement"},n.component.get=function(){return"consent"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),le={LINK:t.internals.ns.selector("download__link")},ue=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"DownloadActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"t\xe9l\xe9chargement"},n.component.get=function(){return"download"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),pe={FOLLOW:t.internals.ns.selector("follow"),NEWSLETTER_INPUT_GROUP:t.internals.ns.selector("follow__newsletter")+" "+t.internals.ns.selector("input-group")},he=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"FollowActionee"},e.prototype.init=function(){if(this._inputGroup=this.querySelector(pe.NEWSLETTER_INPUT_GROUP),this._inputGroup){this.listenInputValidation(this._inputGroup,Nt.SUBSCRIBE);var t=this.element.getDescendantInstances("InputActionee",null,!0)[0];t&&(t.isMuted=!0)}},n.label.get=function(){return"lettre d'information et r\xe9seaux sociaux"},n.component.get=function(){return"follow"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),fe={FOOTER:t.internals.ns.selector("footer"),FOOTER_LINKS:t.internals.ns.selector("footer")+" a[href], "+t.internals.ns.selector("footer")+" button"},ge=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"FooterActionee"},n.label.get=function(){return"pied de page"},n.component.get=function(){return"footer"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),de=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"FooterLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getInteractionLabel();return t||"lien pied de page"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),_e=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"HeaderActionee"},n.label.get=function(){return"en-t\xeate"},n.component.get=function(){return"header"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),be=function(t){function e(){t.call(this,4)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={instanceClassName:{configurable:!0}};return n.instanceClassName.get=function(){return"HeaderModalButtonActionee"},Object.defineProperties(e,n),e}(Ft),ye=function(e){function n(){e.call(this,0)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"HeaderModalActionee"},n.prototype.init=function(){this.isBreakpoint(t.core.Breakpoints.LG)&&(this.setPriority(4),this.register('[aria-controls="'+this.id+'"]',be))},Object.defineProperties(n,i),n}(Ft),me={TOOLS_BUTTON:t.internals.ns.selector("header__tools-links")+" "+t.internals.ns.selector("btns-group")+" "+t.internals.ns.selector("btn"),MENU_BUTTON:t.internals.ns.selector("header__menu-links")+" "+t.internals.ns.selector("btns-group")+" "+t.internals.ns.selector("btn")},ve=function(e){function n(){e.call(this,4)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"HeaderToolsButtonActionee"},n.prototype.init=function(){this.isBreakpoint(t.core.Breakpoints.LG)&&(this._priority=-1)},Object.defineProperties(n,i),n}(Ft),Ne=function(e){function n(){e.apply(this,arguments)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"HeaderMenuButtonActionee"},n.prototype.init=function(){this.isBreakpoint(t.core.Breakpoints.LG)&&this.setPriority(4)},Object.defineProperties(n,i),n}(Ft),Oe={HIGHLIGHT:t.internals.ns.selector("highlight")},Ce=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"HighlightActionee"},n.label.get=function(){return"mise en exergue"},n.component.get=function(){return"highlight"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Ee={LINK:t.internals.ns.selector("link")},Te=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"LinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien"},n.component.get=function(){return"link"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Ae={INPUT:t.internals.ns.selector("input-group")},Le=function(e){function n(){e.call(this,1)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"InputActionee"},n.prototype.init=function(){this._input=this.querySelector(t.internals.ns.selector("input")),this._label=this.querySelector(t.internals.ns.selector("label")),this._inputWrap=this.querySelector(t.internals.ns.selector("input-wrap")),this._inputWrap&&this.listenInputValidation(this._inputWrap)},i.label.get=function(){if(this._label){var t=this.getFirstText(this._label);if(t)return t}return"champ de saisie"},i.component.get=function(){return"input"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),Ie={TITLE:t.internals.ns.selector("modal__title")},je=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ModalActionee"},e.prototype.init=function(){this.setDiscloseType(),this.detectLevel(),this.listenDisclose()},n.label.get=function(){var t=this.node.querySelector(Ie.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}var n=this.getHeadingLabel(2);if(n)return n;var i=this.element.getInstance("Modal");if(i){var r=i.buttons.filter((function(t){return t.isPrimary}))[0];if(r){var o=this.getFirstText(r.node);if(o)return o}}return"modale"},n.component.get=function(){return"modal"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Pe=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"NavigationActionee"},n.label.get=function(){return"navigation"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Se={LINK:t.internals.ns.selector("nav__link"),BUTTON:t.internals.ns.selector("nav__btn")},we=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"NavigationLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien de navigation"},n.component.get=function(){return"navigation"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),ke=function(e){function n(){e.call(this,2)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"NavigationSectionActionee"},n.prototype.init=function(){this._wrapper=this.node.closest(t.navigation.NavigationSelector.ITEM)},i.label.get=function(){if(this._wrapper){var t=this._wrapper.querySelector(Se.BUTTON);if(t){var e=this.getFirstText(t);if(e)return e}}var n=this.element.getInstance("Collapse");if(n){var i=n.buttons.filter((function(t){return t.isPrimary}))[0];if(i){var r=this.getFirstText(i);if(r)return r}}return"section de navigation"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),xe={NOTICE:t.internals.ns.selector("notice"),TITLE:t.internals.ns.selector("notice__title"),LINK:t.internals.ns.selector("notice a")},De="notice",Re=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"NoticeActionee"},n.label.get=function(){var t=this.node.querySelector(xe.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}return"bandeau d'information importante"},n.component.get=function(){return De},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Me=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"NoticeLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien de bandeau d'information importante"},n.component.get=function(){return De},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Be={PAGINATION:t.internals.ns.selector("pagination"),LINK:t.internals.ns.selector("pagination__link"),NEXT_LINK:t.internals.ns.selector("pagination__link--next"),LAST_LINK:t.internals.ns.selector("pagination__link--last"),ANALYTICS_TOTAL:t.internals.ns.attr("analytics-page-total"),CURRENT:'[aria-current="page"]'},Fe=function(e){function n(){e.call(this,1)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"PaginationActionee"},n.prototype.init=function(){this.setPagination()},i.label.get=function(){return"pagination"},i.component.get=function(){return"pagination"},n.prototype.setPagination=function(){var e=this.node.querySelector(Be.CURRENT);if(e){var n=this.getFirstText(e);if(n){var i=this.getInt(n);if(!isNaN(i)){t.analytics.page.current=i;var r=this.getTotalPage();isNaN(r)||(t.analytics.page.total=r)}}}},n.prototype.getTotalPage=function(){var t=parseInt(this.node.getAttribute(Be.ANALYTICS_TOTAL));if(!isNaN(t))return t;var e=this.node.querySelectorAll(Be.LINK+":not("+Be.NEXT_LINK+"):not("+Be.LAST_LINK+")");if(!e)return null;var n=this.getFirstText(e[e.length-1]);return n?this.getInt(n):null},n.prototype.getInt=function(t){var e=t.match(/\d+/);return e&&0!==e.length?parseInt(e[0]):null},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),Ue=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"PaginationLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien pagination"},n.component.get=function(){return null},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),qe={QUOTE:t.internals.ns.selector("quote")},He=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"QuoteActionee"},n.label.get=function(){var t=this.node.querySelector("blockquote");if(t){var e=this.getFirstText(t);if(e)return e}return"citation"},n.component.get=function(){return"quote"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Ke={INPUT:t.internals.ns.selector('radio-group [type="radio"]')},Ve={LABEL:t.internals.ns.selector("label"),FIELDSET:t.internals.ns.selector("fieldset"),LEGEND:t.internals.ns.selector("fieldset__legend")},Ge=function(e){function n(){e.call(this,1),this._data={}}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"RadioActionee"},n.prototype.init=function(){this.setCheckType(),this.listenCheckable()},i.label.get=function(){var e=[],n=this.node.closest(Ve.FIELDSET);if(n){var i=n.querySelector(Ve.LEGEND);if(i){var r=this.getFirstText(i);r&&e.push(r)}}var o=this.node.parentNode.querySelector(t.internals.ns.selector("label"));if(o){var s=this.getFirstText(o);s&&e.push(s)}return e.join(" \u203a ")},i.component.get=function(){return"radio"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),We={SEARCH_BAR:t.internals.ns.selector("search-bar")},Ye=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SearchActionee"},e.prototype.init=function(){this.listenInputValidation(this.node,Nt.SEARCH,!0)},n.label.get=function(){return"barre de recherche"},n.component.get=function(){return"search"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),ze={SELECT:t.internals.ns.selector("select")},Ze=function(e){function n(){e.call(this,1),this._data={}}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"SelectActionee"},n.prototype.init=function(){this.setChangeType(),this.listenChange()},n.prototype.setChangeValue=function(t){if(t.target&&t.target.selectedOptions){var e=Array.from(t.target.selectedOptions).map((function(t){return t.text})).join(" - ");e&&(this.value=e)}},i.label.get=function(){var e=this.node.parentNode.querySelector(t.internals.ns.selector("label"));if(e){var n=this.getFirstText(e);if(n)return n}return"liste d\xe9roulante"},i.component.get=function(){return"select"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),Xe={SHARE:t.internals.ns.selector("share"),TITLE:t.internals.ns.selector("share__title")},$e=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"ShareActionee"},n.label.get=function(){var t=this.querySelector(Xe.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}return"boutons de partage"},n.component.get=function(){return"share"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Qe={SIDEMENU:t.internals.ns.selector("sidemenu"),ITEM:t.internals.ns.selector("sidemenu__item"),LINK:t.internals.ns.selector("sidemenu__link"),BUTTON:t.internals.ns.selector("sidemenu__btn"),TITLE:t.internals.ns.selector("sidemenu__title")},Je=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SidemenuActionee"},n.label.get=function(){var t=this.node.closest(Qe.SIDEMENU);if(t){var e=t.querySelector(Qe.TITLE);if(e){var n=this.getFirstText(e);if(n)return n}}return"menu Lat\xe9ral"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),tn=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SidemenuLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien menu lat\xe9ral"},n.component.get=function(){return"sidemenu"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),en=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SidemenuSectionActionee"},e.prototype.init=function(){this._wrapper=this.node.closest(Qe.ITEM)},n.label.get=function(){if(this._wrapper){var t=this._wrapper.querySelector(Qe.BUTTON);if(t){var e=this.getFirstText(t);if(e)return e}}var n=this.element.getInstance("Collapse");if(n){var i=n.buttons.filter((function(t){return t.isPrimary}))[0];if(i){var r=this.getFirstText(i);if(r)return r}}return"section menu lat\xe9ral"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),nn={SUMMARY:t.internals.ns.selector("summary"),LINK:t.internals.ns.selector("summary__link"),TITLE:t.internals.ns.selector("summary__title"),ITEM:t.internals.ns.selector("summary")+" li"},rn=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SummaryActionee"},n.label.get=function(){var t=this.node.querySelector(nn.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}return"sommaire"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),on=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SummaryLinkActionee"},e.prototype.init=function(){this.detectInteractionType(),this.listenActionClick()},n.label.get=function(){var t=this.getFirstText();return t||"lien sommaire"},n.component.get=function(){return"summary"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),sn=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"SummarySectionActionee"},e.prototype.init=function(){this._link=this.querySelector(nn.LINK)},e.prototype.validate=function(t){return this._link!==t},n.label.get=function(){if(!this._link)return null;var t=this.getFirstText(this._link);return t||"section sommaire"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),an=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TabButtonActionee"},e.prototype.init=function(){this.isMuted=!0},n.label.get=function(){var t=this.getFirstText();return t||"bouton onglet"},n.component.get=function(){return"tab"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),cn=function(e){function n(){e.call(this,2)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"TabActionee"},n.prototype.init=function(){this.setDiscloseType(),this.register('[aria-controls="'+this.id+'"]',an),this._instance=this.element.getInstance("TabPanel"),this.listenDisclose()},i.label.get=function(){var e=this.node.closest(t.tab.TabSelector.GROUP);if(e){var n=e.querySelector(t.tab.TabSelector.LIST+' [aria-controls="'+this.id+'"]'+t.tab.TabSelector.TAB);if(n){var i=this.getFirstText(n);if(i)return i}}var r=this._instance.buttons.filter((function(t){return t.isPrimary}))[0];if(r){var o=this.getFirstText(r);if(o)return o}return"onglet"},i.component.get=function(){return"tab"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),ln={TABLE:t.internals.ns.selector("table")},un=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TableActionee"},n.label.get=function(){var t=this.node.querySelector("caption");if(t){var e=this.getFirstText(t);if(e)return e}return"tableau"},n.component.get=function(){return"table"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),pn={TAG:t.internals.ns.selector("tag"),PRESSABLE:"[aria-pressed]",DISMISSIBLE:""+t.internals.ns.selector("tag--dismiss","")},hn=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TagActionee"},e.prototype.init=function(){switch(!0){case this.detectPressableType():this.listenPressable();break;case this.isInteractive&&this.node.classList.contains(pn.DISMISSIBLE):this.setDismissType(),this.listenActionClick();break;case this.isInteractive:this.detectInteractionType(),this.listenActionClick()}},n.label.get=function(){var t=this.getFirstText();return t||"tag"},n.component.get=function(){return"tag"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),fn={TILE:t.internals.ns.selector("tile"),LINK:t.internals.ns.selector("tile__title")+" a, "+t.internals.ns.selector("tile__title")+" button",TITLE:t.internals.ns.selector("tile__title")},gn=function(t){function e(){t.call(this,1)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TileActionee"},e.prototype.init=function(){var t=this.node.querySelector(fn.LINK);t&&(this.link=t,this.detectInteractionType(t),this.listenActionClick(t))},n.label.get=function(){var t=this.node.querySelector(fn.TITLE);if(t)return this.getFirstText(t);var e=this.getHeadingLabel();return e||"tuile"},n.component.get=function(){return"tile"},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),dn={INPUT:t.internals.ns.selector('toggle [type="checkbox"]')},_n=function(e){function n(){e.call(this,1),this._data={}}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"ToggleActionee"},n.prototype.init=function(){this.detectCheckableType(),this.listenCheckable()},i.label.get=function(){var e=this.node.parentNode.querySelector(t.internals.ns.selector("toggle__label"));if(e){var n=this.getFirstText(e);if(n)return n}return"interrupteur"},i.component.get=function(){return"toggle"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),bn=t.internals.ns.selector("transcription"),yn=t.internals.ns.selector("collapse"),mn={TRANSCRIPTION:bn,COLLAPSE:bn+" > "+yn+", "+bn+" > *:not("+bn+"):not("+yn+") > "+yn+", "+bn+" > *:not("+bn+"):not("+yn+") > *:not("+bn+"):not("+yn+") > "+yn,COLLAPSE_LEGACY:bn+" "+yn,TITLE:bn+"__title"},vn="transcription",Nn=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={button:{configurable:!0},label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TranscriptionButtonActionee"},e.prototype.init=function(){this.isMuted=!0},n.button.get=function(){return this.element.getInstance("CollapseButton")},n.label.get=function(){var t=this.getFirstText();return t||"bouton transcription"},n.component.get=function(){return vn},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),On=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TranscriptionActionee"},e.prototype.init=function(){this.setDiscloseType(),this.wrapper=this.node.closest(mn.ACCORDION),this.detectLevel(this.wrapper),this.register('[aria-controls="'+this.id+'"]',Nn),this.listenDisclose()},n.label.get=function(){if(this.wrapper){var t=this.wrapper.querySelector(mn.TITLE);if(t){var e=this.getFirstText(t);if(e)return e}}var n=this.element.getInstance("Collapse");if(n){var i=n.buttons.filter((function(t){return t.isPrimary}))[0];if(i){var r=this.getFirstText(i);if(r)return r}}return"transcription"},n.component.get=function(){return vn},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),Cn=t.internals.ns.selector("translate"),En=t.internals.ns.selector("collapse"),Tn={BUTTON:Cn+"__btn",COLLAPSE:Cn+" > "+En+", "+Cn+" > *:not("+Cn+"):not("+En+") > "+En+", "+Cn+" > *:not("+Cn+"):not("+En+") > *:not("+Cn+"):not("+En+") > "+En,COLLAPSE_LEGACY:Cn+" "+En},An="translate",Ln=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TranslateActionee"},n.label.get=function(){var t=this.node.querySelector(Tn.BUTTON);if(t){var e=t.getAttribute("title");if(e)return e}return"s\xe9lecteur de langue"},n.component.get=function(){return An},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),In=function(t){function e(){t.call(this,2)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var n={button:{configurable:!0},label:{configurable:!0},component:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"TranslateButtonActionee"},e.prototype.init=function(){this.isMuted=!0},n.button.get=function(){return this.element.getInstance("CollapseButton")},n.label.get=function(){var t=this.getInteractionLabel();return t||"bouton s\xe9lecteur de langue"},n.component.get=function(){return An},Object.defineProperties(e.prototype,n),Object.defineProperties(e,i),e}(Ft),jn={UPLOAD:t.internals.ns.selector("upload")},Pn=function(e){function n(){e.call(this,1)}e&&(n.__proto__=e),n.prototype=Object.create(e&&e.prototype),n.prototype.constructor=n;var i={label:{configurable:!0},component:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"UploadActionee"},n.prototype.init=function(){this.setChangeType(),this._label=this.node.parentNode.querySelector(t.internals.ns.selector("label")),this.listenChange()},n.prototype.setChangeValue=function(t){if(t.target&&t.target.files){var e=Array.from(t.target.files).map((function(t){return/(?:\.([^.]+))?$/.exec(t.name)[1]})).filter((function(t,e,n){return n.indexOf(t)===e})).join(" - ");e&&(this.value=e)}},i.label.get=function(){if(this._label){var t=this.getFirstText(this._label);if(t)return t}return"ajout de fichier"},i.component.get=function(){return"upload"},Object.defineProperties(n.prototype,i),Object.defineProperties(n,r),n}(Ft),Sn=function(){t.accordion&&t.internals.register(t.accordion.AccordionSelector.COLLAPSE,Kt),t.breadcrumb&&(t.internals.register(Wt.COLLAPSE,Yt),t.internals.register(Wt.LINK,zt)),t.internals.register(Vt.ALERT,Gt),t.internals.register(Zt.BUTTON,Xt),t.internals.register($t.CALLOUT,Qt),t.internals.register(ie.CONNECT,oe),t.internals.register(ie.LINK,se),t.internals.register(ae.BANNER,ce),t.internals.register(Jt.CARD,te),t.internals.register(Ae.INPUT,Le),t.internals.register(ee.INPUT,ne),t.internals.register(le.LINK,ue),t.internals.register(fe.FOOTER,ge),t.internals.register(fe.FOOTER_LINKS,de),t.internals.register(pe.FOLLOW,he),t.header&&(t.internals.register(t.header.HeaderSelector.HEADER,_e),t.internals.register(t.header.HeaderSelector.MODALS,ye),t.internals.register(me.TOOLS_BUTTON,ve),t.internals.register(me.MENU_BUTTON,Ne)),t.internals.register(Oe.HIGHLIGHT,Ce),t.internals.register(Ee.LINK,Te),t.modal&&t.internals.register(t.modal.ModalSelector.MODAL,je),t.navigation&&(t.internals.register(t.navigation.NavigationSelector.NAVIGATION,Pe),t.internals.register(Se.LINK,we),t.internals.register(t.navigation.NavigationSelector.COLLAPSE,ke)),t.internals.register(xe.NOTICE,Re),t.internals.register(xe.LINK,Me),t.internals.register(Be.PAGINATION,Fe),t.internals.register(Be.LINK,Ue),t.internals.register(qe.QUOTE,He),t.internals.register(Ke.INPUT,Ge),t.internals.register(We.SEARCH_BAR,Ye),t.internals.register(ze.SELECT,Ze),t.internals.register(Xe.SHARE,$e),t.sidemenu&&(t.internals.register(Qe.SIDEMENU,Je),t.internals.register(Qe.LINK,tn),t.internals.register(t.sidemenu.SidemenuSelector.COLLAPSE,en)),t.internals.register(nn.SUMMARY,rn),t.internals.register(nn.LINK,on),t.internals.register(nn.ITEM,sn),t.tab&&t.internals.register(t.tab.TabSelector.PANEL,cn),t.internals.register(ln.TABLE,un),t.internals.register(pn.TAG,hn),t.internals.register(fn.TILE,gn),t.internals.register(dn.INPUT,_n),t.internals.register(mn.COLLAPSE,On),t.internals.register(Tn.COLLAPSE,Ln),t.internals.register(Tn.BUTTON,In),t.internals.register(jn.UPLOAD,Pn)},wn=function(){Object.values(Nt).filter((function(t){return t.attributed})).forEach((function(e){return t.internals.register(t.internals.ns.attr.selector("analytics-"+e.id),Mt)})),Sn()};t.analytics.readiness.then((function(){return wn()}),(function(){}))}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var patch = {
+    namespace: 'a4e35ba2a938ba9d007689dbf3f46acbb9807869'
+  };
+
+  var Collection = {
+    MANUAL: 'manual',
+    LOAD: 'load',
+    FULL: 'full',
+    HASH: 'hash'
+  };
+
+  var key = '_EA_';
+  var DISABLED = key + "disabled";
+  var TOGGLE = key + "toggle";
+
+  var Opt = function Opt () {
+    this._configure();
+  };
+
+  var prototypeAccessors$e = { isDisabled: { configurable: true } };
+
+  Opt.prototype._configure = function _configure () {
+    var scope = this;
+    window[DISABLED] = function () { return scope.isDisabled; };
+    window[TOGGLE] = this.toggle.bind(this);
+  };
+
+  prototypeAccessors$e.isDisabled.get = function () {
+    return localStorage.getItem(key);
+  };
+
+  Opt.prototype.toggle = function toggle () {
+    if (this.isDisabled) { this.enable(); }
+    else { this.disable(); }
+  };
+
+  Opt.prototype.enable = function enable () {
+    if (localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+    }
+  };
+
+  Opt.prototype.disable = function disable () {
+    localStorage.setItem(key, '1');
+  };
+
+  Object.defineProperties( Opt.prototype, prototypeAccessors$e );
+
+  var opt = new Opt();
+
+  var PUSH = 'EA_push';
+
+  var Init = function Init (domain) {
+    var this$1$1 = this;
+
+    this._domain = domain;
+    this._isLoaded = false;
+    this._promise = new Promise(function (resolve, reject) {
+      this$1$1._resolve = resolve;
+      this$1$1._reject = reject;
+    });
+  };
+
+  var prototypeAccessors$d = { id: { configurable: true },store: { configurable: true } };
+
+  prototypeAccessors$d.id.get = function () {
+    return this._id;
+  };
+
+  prototypeAccessors$d.store.get = function () {
+    return this._store;
+  };
+
+  Init.prototype.configure = function configure () {
+    this.init();
+    return this._promise;
+  };
+
+  Init.prototype.init = function init () {
+      var this$1$1 = this;
+
+    var bit = 5381;
+    for (var i = this._domain.length - 1; i > 0; i--) { bit = (bit * 33) ^ this._domain.charCodeAt(i); }
+    bit >>>= 0;
+    this._id = "_EA_" + bit;
+
+    this._store = [];
+    this._store.eah = this._domain;
+    window[this._id] = this._store;
+
+    if (!window[PUSH]) { window[PUSH] = function () {
+        var args = [], len = arguments.length;
+        while ( len-- ) args[ len ] = arguments[ len ];
+
+        return this$1$1.store.push(args);
+        }; }
+
+    if (opt.isDisabled) {
+      api.inspector.warn('User opted out, eulerian is disabled');
+      this._reject('User opted out, eulerian is disabled');
+    } else { this.load(); }
+  };
+
+  Init.prototype.load = function load () {
+    var stamp = new Date() / 1E7 | 0;
+    var offset = stamp % 26;
+    var key = String.fromCharCode(97 + offset, 122 - offset, 65 + offset) + (stamp % 1E3);
+    this._script = document.createElement('script');
+    this._script.ea = this.id;
+    this._script.async = true;
+    this._script.addEventListener('load', this.loaded.bind(this));
+    this._script.addEventListener('error', this.error.bind(this));
+    this._script.src = "//" + (this._domain) + "/" + key + ".js?2";
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(this._script, node);
+  };
+
+  Init.prototype.error = function error () {
+    api.inspector.error('unable to load Eulerian script file. the domain declared in your configuration must match the domain provided by the Eulerian interface (tag creation)');
+    this._reject('eulerian script loading error');
+  };
+
+  Init.prototype.loaded = function loaded () {
+    if (this._isLoaded) { return; }
+    this._isLoaded = true;
+    this._resolve();
+  };
+
+  Object.defineProperties( Init.prototype, prototypeAccessors$d );
+
+  /*
+  (function(e, a) {
+    var i = e.length,
+      y = 5381,
+      k = 'script',
+      s = window,
+      v = document,
+      o = v.createElement(k);
+    for (; i;) {
+      i -= 1;
+      y = (y * 33) ^ e.charCodeAt(i)
+    }
+    y = '_EA_' + (y >>>= 0);
+    (function(e, a, s, y) {
+      s[a] = s[a] || function() {
+        (s[y] = s[y] || []).push(arguments);
+        s[y].eah = e;
+      };
+    }(e, a, s, y));
+    i = new Date / 1E7 | 0;
+    o.ea = y;
+    y = i % 26;
+    o.async = 1;
+    o.src = '//' + e + '/' + String.fromCharCode(97 + y, 122 - y, 65 + y) + (i % 1E3) + '.js?2';
+    s = v.getElementsByTagName(k)[0];
+    s.parentNode.insertBefore(o, s);
+  })
+  ('mon.domainedetracking.com', 'EA_push');
+  */
+
+  /*
+  (function(e, a) {
+    var i = e.length,
+      y = 5381,
+      k = 'script',
+      z = '_EA_',
+      zd = z + 'disabled',
+      s = window,
+      v = document,
+      o = v.createElement(k),
+      l = s.localStorage;
+    for (; i;) {
+      i -= 1;
+      y = (y * 33) ^ e.charCodeAt(i)
+    }
+    y = z + (y >>>= 0);
+    (function(e, a, s, y, z, zd, l) {
+      s[a] = s[a] || function() {
+        (s[y] = s[y] || []).push(arguments);
+        s[y].eah = e;
+      };
+      s[zd] = function() {
+        return l.getItem(z);
+      };
+      s[z + 'toggle'] = function() {
+        (s[zd]()) ? l.removeItem(z): l.setItem(z, 1);
+      }
+    }(e, a, s, y, z, zd, l));
+    if (!s[zd]()) {
+      i = new Date / 1E7 | 0;
+      o.ea = y;
+      y = i % 26;
+      o.async = 1;
+      o.src = '//' + e + '/' + String.fromCharCode(97 + y, 122 - y, 65 + y) + (i % 1E3) + '.js?2';
+      s = v.getElementsByTagName(k)[0];
+      s.parentNode.insertBefore(o, s);
+    }
+  })('mon.domainedetracking.com', 'EA_push');
+  */
+
+  var State = {
+    UNKNOWN: -1,
+    CONFIGURING: 0,
+    CONFIGURED: 1,
+    INITIATED: 2,
+    READY: 3
+  };
+
+  var TarteAuCitronIntegration = function TarteAuCitronIntegration (config) {
+    var this$1$1 = this;
+
+    this._config = config;
+    this._state = State.UNKNOWN;
+    this._promise = new Promise(function (resolve, reject) {
+      this$1$1._resolve = resolve;
+      this$1$1._reject = reject;
+    });
+  };
+
+  TarteAuCitronIntegration.prototype.configure = function configure () {
+    if (this._state >= State.CONFIGURED) { return this._promise; }
+    if (this._state === State.UNKNOWN) {
+      api.inspector.info('analytics configures tarteaucitron');
+      this._state = State.CONFIGURING;
+    }
+
+    var tarteaucitron = window.tarteaucitron;
+    if (!tarteaucitron || !tarteaucitron.services) {
+      window.requestAnimationFrame(this.configure.bind(this));
+      return;
+    }
+
+    this._state = State.CONFIGURED;
+    var init = this.init.bind(this);
+
+    var data = {
+      key: 'eulerian',
+      type: 'analytic',
+      name: 'Eulerian Analytics',
+      needConsent: true,
+      cookies: ['etuix'],
+      uri: 'https://eulerian.com/vie-privee',
+      js: init,
+      fallback: function () { tarteaucitron.services.eulerian.js(); }
+    };
+
+    tarteaucitron.services.eulerian = data;
+    if (!tarteaucitron.job) { tarteaucitron.job = []; }
+    tarteaucitron.job.push('eulerian');
+
+    return this._promise;
+  };
+
+  TarteAuCitronIntegration.prototype.init = function init () {
+    if (this._state >= State.INITIATED) { return; }
+    this._state = State.INITIATED;
+    window.__eaGenericCmpApi = this.integrate.bind(this);
+    var update = this.update.bind(this);
+    window.addEventListener('tac.close_alert', update);
+    window.addEventListener('tac.close_panel', update);
+  };
+
+  TarteAuCitronIntegration.prototype.integrate = function integrate (cmpApi) {
+    if (this._state >= State.READY) { return; }
+    this._state = State.READY;
+    this._cmpApi = cmpApi;
+
+    api.inspector.info('analytics has integrated tarteaucitron');
+
+    this._resolve();
+    this.update();
+  };
+
+  TarteAuCitronIntegration.prototype.update = function update () {
+    if (this._state < State.READY) { return; }
+    this._cmpApi('tac', window.tarteaucitron, 1);
+  };
+
+  var ConsentManagerPlatform = function ConsentManagerPlatform (config) {
+    this._config = config;
+
+    if (config) {
+      switch (config.id) {
+        case 'tarteaucitron':
+          this.integrateTarteAuCitron();
+          break;
+      }
+    }
+  };
+
+  ConsentManagerPlatform.prototype.integrateTarteAuCitron = function integrateTarteAuCitron () {
+    this._tac = new TarteAuCitronIntegration(this._config);
+    return this._tac.configure();
+  };
+
+  ConsentManagerPlatform.prototype.optin = function optin () {
+
+  };
+
+  var push = function (type, layer) {
+    if (typeof window.EA_push !== 'function') {
+      api.inspector.warn('Analytics datalayer not sent, Eulerian API isn\'t yet avalaible');
+      return;
+    }
+
+    api.inspector.info('analytics', type, layer);
+
+    window.EA_push(type, layer);
+  };
+
+  var PushType = {
+    COLLECTOR: 'collector',
+    ACTION: 'action',
+    ACTION_PARAMETER: 'actionparam'
+  };
+
+  var Renderer = function Renderer () {
+    this._renderables = [];
+    this._rendering = this.render.bind(this);
+    requestAnimationFrame(this._rendering);
+  };
+
+  Renderer.prototype.add = function add (renderable) {
+    var index = this._renderables.indexOf(renderable);
+    if (index === -1) { this._renderables.push(renderable); }
+  };
+
+  Renderer.prototype.remove = function remove (renderable) {
+    var index = this._renderables.indexOf(renderable);
+    if (index > -1) { this._renderables.splice(index, 1); }
+  };
+
+  Renderer.prototype.render = function render () {
+    this._renderables.forEach(function (renderable) { return renderable.render(); });
+    requestAnimationFrame(this._rendering);
+  };
+
+  var renderer = new Renderer();
+
+  var ActionRegulation = {
+    ENFORCE: 'enforce',
+    PREVENT: 'prevent',
+    NONE: 'none'
+  };
+
+  var SLICE = 80;
+
+  var Queue = function Queue () {
+    this._startingActions = [];
+    this._endingActions = [];
+    this._handlingVisibilityChange = this._handleVisibilityChange.bind(this);
+    this._handlingEnd = this._handleEnd.bind(this);
+    this._isStarted = false;
+    this._isListening = false;
+    this.reset();
+  };
+
+  Queue.prototype.setCollector = function setCollector (collector) {
+    this._collector = collector;
+  };
+
+  Queue.prototype.reset = function reset (ending) {
+      if ( ending === void 0 ) ending = false;
+
+    this._type = PushType.ACTION;
+    if (!ending) { this._startingActions.length = 0; }
+    this._endingActions.length = 0;
+    this._count = 0;
+    this._delay = -1;
+    this._isRequested = false;
+    this._unlisten();
+  };
+
+  Queue.prototype.start = function start () {
+    if (this._isStarted) { return; }
+    this._isStarted = true;
+    renderer.add(this);
+  };
+
+  Queue.prototype.collect = function collect () {
+    this._type = PushType.COLLECTOR;
+    this._request();
+  };
+
+  Queue.prototype.regulate = function regulate (action, queue) {
+    if (!action) { return false; }
+    if (queue.some(function (queued) { return queued.test(action); })) {
+      api.inspector.log('action exists in queue', action);
+      return false;
+    }
+    switch (action.regulation) {
+      case ActionRegulation.PREVENT:
+        return false;
+      case ActionRegulation.ENFORCE:
+        return true;
+      default:
+        return this._collector.isActionEnabled;
+    }
+  };
+
+  Queue.prototype.appendStartingAction = function appendStartingAction (action, data) {
+    if (!this.regulate(action, this._startingActions)) { return; }
+    var queued = new QueuedAction(action, data);
+    this._startingActions.push(queued);
+    this._request();
+  };
+
+  Queue.prototype.appendEndingAction = function appendEndingAction (action, data) {
+    if (!this.regulate(action, this._endingActions)) { return; }
+    var queued = new QueuedAction(action, data);
+    this._endingActions.push(queued);
+    this._request();
+  };
+
+  Queue.prototype._request = function _request () {
+    this._listen();
+    this._isRequested = true;
+    this._delay = 4;
+  };
+
+  Queue.prototype._listen = function _listen () {
+    if (this._isListening) { return; }
+    this._isListening = true;
+    document.addEventListener('visibilitychange', this._handlingVisibilityChange);
+    document.addEventListener('unload', this._handlingEnd);
+    document.addEventListener('beforeunload', this._handlingEnd);
+    document.addEventListener('pagehide', this._handlingEnd);
+  };
+
+  Queue.prototype._unlisten = function _unlisten () {
+    if (!this._isListening) { return; }
+    this._isListening = false;
+    document.removeEventListener('visibilitychange', this._handlingVisibilityChange);
+    document.removeEventListener('unload', this._handlingEnd);
+    document.removeEventListener('beforeunload', this._handlingEnd);
+    document.removeEventListener('pagehide', this._handlingEnd);
+  };
+
+  Queue.prototype._handleVisibilityChange = function _handleVisibilityChange (e) {
+    if (document.visibilityState === 'hidden') { this.send(); }
+  };
+
+  Queue.prototype._handleEnd = function _handleEnd () {
+    this.send();
+  };
+
+  Queue.prototype.render = function render () {
+    if (this._delay <= -1) { return; }
+    this._delay--;
+    this._count++;
+    switch (true) {
+      case this._count > 20:
+      case this._delay === 0:
+        this.send();
+        break;
+    }
+  };
+
+  Queue.prototype.send = function send (ending) {
+      if ( ending === void 0 ) ending = false;
+
+    if (!this._isRequested) { return; }
+    var actionLayers = [];
+    if (!ending) { actionLayers.push.apply(actionLayers, this._startingActions.map(function (queued) { return queued.start(); }).filter(function (layer) { return layer.length > 0; })); }
+    actionLayers.push.apply(actionLayers, this._endingActions.map(function (queued) { return queued.end(); }).filter(function (layer) { return layer.length > 0; }));
+
+    var length = ((actionLayers.length / SLICE) + 1) | 0;
+    var slices = [];
+    for (var i = 0; i < length; i++) {
+      var slice = actionLayers.slice(i * SLICE, (i + 1) * SLICE);
+      slices.push(slice.flat());
+    }
+
+    if (this._type === PushType.COLLECTOR && this._collector.isCollecting) {
+      var layer = this._collector.layer;
+      if (slices.length > 0) {
+        var slice$1 = slices.splice(0, 1)[0];
+        if (slice$1.length > 0) { layer.push.apply(layer, slice$1); }
+      }
+      layer.flat();
+      if (layer.length > 0) { push(PushType.COLLECTOR, layer); }
+    }
+
+    if (slices.length > 0) {
+      for (var i$1 = 0; i$1 < slices.length; i$1++) {
+        var slice$2 = slices[i$1];
+        if (slice$2.length > 0) { push(PushType.ACTION, slice$2); }
+      }
+    }
+
+    this.reset(ending);
+  };
+
+  var QueuedAction = function QueuedAction (action, data) {
+    this._action = action;
+    this._data = data;
+  };
+
+  QueuedAction.prototype.test = function test (action) {
+    return this._action === action;
+  };
+
+  QueuedAction.prototype.start = function start () {
+    return this._action.start(this._data);
+  };
+
+  QueuedAction.prototype.end = function end () {
+    return this._action.end(this._data);
+  };
+
+  var queue = new Queue();
+
+  var Debug = function Debug () {};
+
+  var prototypeAccessors$c = { debugger: { configurable: true },isActive: { configurable: true } };
+
+  prototypeAccessors$c.debugger.get = function () {
+    return window._oEa;
+  };
+
+  prototypeAccessors$c.isActive.get = function () {
+    if (!this.debugger) { return false; }
+    return this.debugger._dbg === '1';
+  };
+
+  prototypeAccessors$c.isActive.set = function (value) {
+    if (!this.debugger || this.isActive === value) { return; }
+    this.debugger.debug(value ? 1 : 0);
+  };
+
+  Object.defineProperties( Debug.prototype, prototypeAccessors$c );
+
+  var debug = new Debug();
+
+  var Status = {
+    CONNECTED: {
+      id: 'connected',
+      value: 'connecté',
+      isConnected: true,
+      isDefault: true
+    },
+    ANONYMOUS: {
+      id: 'anonymous',
+      value: 'anonyme',
+      isConnected: false,
+      isDefault: true
+    },
+    GUEST: {
+      id: 'guest',
+      value: 'invité',
+      isConnected: false
+    }
+  };
+
+  var Type$2 = {
+    INDIVIDUAL: {
+      id: 'individual',
+      value: 'part'
+    },
+    PROFESSIONNAL: {
+      id: 'professionnal',
+      value: 'pro'
+    }
+  };
+
+  /*  '["\'<>*$&~`|\\\\?^~]'; */
+  var RESTRICTED = {
+    '0x0022': '＂',
+    '0x0024': '＄',
+    '0x0026': '＆',
+    '0x0027': '＇',
+    '0x002a': '＊',
+    '0x002c': '，',
+    '0x003c': '＜',
+    '0x003e': '＞',
+    '0x003f': '？',
+    '0x005c': '＼',
+    '0x005e': '＾',
+    '0x0060': '｀',
+    '0x007c': '｜',
+    '0x007e': '～'
+  };
+
+  // import TABLE from './unicode-table';
+
+  var charCodeHex = function (char) {
+    var code = char.charCodeAt(0).toString(16);
+    return '0x0000'.slice(0, -code.length) + code;
+  };
+
+  var normalize = function (text) {
+    if (!text) { return text; }
+    // text = [...text].map(char => TABLE[charCodeHex(char)] || char).join('');
+    text = [].concat( text ).map(function (char) { return RESTRICTED[charCodeHex(char)] || char; }).join('');
+    text = text.replace(/\s+/g, ' ').replace(/\s/g, '_');
+    text = text.toLowerCase();
+    return text;
+  };
+
+  var validateString = function (value, name, allowNull) {
+    if ( allowNull === void 0 ) allowNull = true;
+
+    switch (true) {
+      case typeof value === 'number':
+        return ("" + value);
+
+      case typeof value === 'string':
+        return value;
+
+      case value === undefined && allowNull:
+      case value === null && allowNull:
+        return '';
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting a String"));
+    return null;
+  };
+
+  var validateNumber = function (value, name, allowNull) {
+    if ( allowNull === void 0 ) allowNull = true;
+
+    switch (true) {
+      case !isNaN(value):
+        return value;
+
+      case typeof value === 'string' && !isNaN(Number(value)):
+        return Number(value);
+
+      case value === undefined && allowNull:
+      case value === null && allowNull:
+        return -1;
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting a Number"));
+    return null;
+  };
+
+  var validateBoolean = function (value, name) {
+    switch (true) {
+      case typeof value === 'boolean':
+        return value;
+
+      case typeof value === 'string' && value.toLowerCase() === 'true':
+      case value === '1':
+      case value === 1:
+        return true;
+
+      case typeof value === 'string' && value.toLowerCase() === 'false':
+      case value === '0':
+      case value === 0:
+        return false;
+
+      case value === undefined:
+      case value === null:
+        return value;
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting a Boolean"));
+    return null;
+  };
+
+  var validateLang = function (value, name, allowNull) {
+    if ( allowNull === void 0 ) allowNull = true;
+
+    switch (true) {
+      case typeof value === 'string' && /^[A-Za-z]{2}$|^[A-Za-z]{2}[-_]/.test(value):
+        return value.split(/[-_]/)[0].toLowerCase();
+
+      case value === undefined && allowNull:
+      case value === null && allowNull:
+        return '';
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting language as a String following ISO 639-1 format"));
+    return null;
+  };
+
+  var validateGeography = function (value, name, allowNull) {
+    if ( allowNull === void 0 ) allowNull = true;
+
+    switch (true) {
+      case typeof value === 'string':
+        if (!/^FR-[A-Z0-9]{2,3}$/.test(value)) { api.inspector.warn(("value '" + value + "' set at analytics." + name + " with wrong format. Geographic location should be a String following ISO 3166-2:FR format")); }
+        return value;
+
+      case value === undefined && allowNull:
+      case value === null && allowNull:
+        return '';
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting geographic location as a String following ISO 3166-2:FR format"));
+    return null;
+  };
+
+  var normaliseISODate = function (date) { return date.toISOString().split('T')[0]; };
+
+  var validateDate = function (value, name, allowNull) {
+    if ( allowNull === void 0 ) allowNull = true;
+
+    switch (true) {
+      case value instanceof Date:
+        return normaliseISODate(value);
+
+      case typeof value === 'string': {
+        var date = new Date(value);
+        if (date.toString() !== 'Invalid Date') { return normaliseISODate(date); }
+        break;
+      }
+
+      case value === undefined && allowNull:
+      case value === null && allowNull:
+        return null;
+    }
+
+    api.inspector.warn(("unexpected value '" + value + "' set at analytics." + name + ". Expecting a Date"));
+    return null;
+  };
+
+  var User = function User (config) {
+    this._config = config || {};
+  };
+
+  var prototypeAccessors$b = { uid: { configurable: true },email: { configurable: true },isNew: { configurable: true },status: { configurable: true },profile: { configurable: true },language: { configurable: true },type: { configurable: true },layer: { configurable: true } };
+
+  User.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this._isConnected = false;
+    this.status = Status.ANONYMOUS;
+    if (!clear && this._config.connect) { this.connect(this._config.connect.uid, this._config.connect.email, this._config.connect.isNew); }
+    else {
+      this._uid = undefined;
+      this._email = undefined;
+      this._isNew = false;
+    }
+    this.profile = clear ? undefined : this._config.profile;
+    this.language = clear ? undefined : this._config.language;
+    this.type = clear ? undefined : this._config.type;
+  };
+
+  User.prototype.connect = function connect (uid, email, isNew) {
+      if ( isNew === void 0 ) isNew = false;
+
+    this._uid = validateString(uid, 'user.uid');
+    if (/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]{2,}@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/.test(email)) { api.inspector.warn('Please check analytics.user.email is properly encrypted '); }
+    this._email = validateString(email, 'user.email');
+    this._isNew = validateBoolean(isNew);
+    this._isConnected = true;
+    this.status = Status.CONNECTED;
+  };
+
+  prototypeAccessors$b.uid.get = function () {
+    return this._uid;
+  };
+
+  prototypeAccessors$b.email.get = function () {
+    return this._email;
+  };
+
+  prototypeAccessors$b.isNew.get = function () {
+    return this._isNew;
+  };
+
+  prototypeAccessors$b.status.set = function (id) {
+      var this$1$1 = this;
+
+    var stati = Object.values(Status).filter(function (status) { return status.isConnected === this$1$1._isConnected; });
+    this._status = stati.filter(function (status) { return status.id === id || status.value === id; })[0] || stati.filter(function (status) { return status.isDefault; })[0];
+  };
+
+  prototypeAccessors$b.status.get = function () {
+    return this._status.id;
+  };
+
+  prototypeAccessors$b.profile.set = function (value) {
+    var valid = validateString(value, 'user.profile');
+    if (valid !== null) { this._profile = valid; }
+  };
+
+  prototypeAccessors$b.profile.get = function () {
+    return this._profile.id;
+  };
+
+  prototypeAccessors$b.language.set = function (value) {
+    var valid = validateLang(value, 'user.language');
+    if (valid !== null) { this._language = valid; }
+  };
+
+  prototypeAccessors$b.language.get = function () {
+    return this._language || navigator.language;
+  };
+
+  prototypeAccessors$b.type.set = function (id) {
+    this._type = Object.values(Type$2).filter(function (type) { return type.id === id || type.value === id; })[0];
+  };
+
+  prototypeAccessors$b.type.get = function () {
+    return this._type.id;
+  };
+
+  prototypeAccessors$b.layer.get = function () {
+    var layer = [];
+    if (this.uid) { layer.push('uid', normalize(this.uid)); }
+    if (this.email) { layer.push('email', normalize(this.email)); }
+    if (this.isNew) { layer.push('newcustomer', '1'); }
+    if (this.language) { layer.push('user_language', this.language); }
+    layer.push('user_login_status', this._status.value);
+    if (this._profile) { layer.push('profile', this._profile); }
+    if (this._type) { layer.push('user_type', this._type.value); }
+    return layer;
+  };
+
+  Object.defineProperties( User.prototype, prototypeAccessors$b );
+
+  User.Status = Status;
+  User.Type = Type$2;
+
+  var Environment = {
+    DEVELOPMENT: {
+      id: 'development',
+      value: 'dev'
+    },
+    STAGE: {
+      id: 'stage',
+      value: 'stage'
+    },
+    PRODUCTION: {
+      id: 'production',
+      value: 'prod'
+    }
+  };
+
+  var Site = function Site (config) {
+    this._config = config || {};
+  };
+
+  var prototypeAccessors$a = { environment: { configurable: true },entity: { configurable: true },language: { configurable: true },target: { configurable: true },type: { configurable: true },region: { configurable: true },department: { configurable: true },version: { configurable: true },api: { configurable: true },layer: { configurable: true } };
+
+  Site.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this.environment = clear ? Environment.DEVELOPMENT.id : this._config.environment;
+    this.entity = clear ? undefined : this._config.entity;
+    this.language = clear ? undefined : this._config.language;
+    this.target = clear ? undefined : this._config.target;
+    this.type = clear ? undefined : this._config.type;
+    this.region = clear ? undefined : this._config.region;
+    this.department = clear ? undefined : this._config.department;
+    this.version = clear ? undefined : this._config.version;
+    this._api = api.version;
+  };
+
+  prototypeAccessors$a.environment.set = function (value) {
+    switch (value) {
+      case Environment.PRODUCTION.id:
+      case Environment.PRODUCTION.value:
+        this._environment = Environment.PRODUCTION;
+        break;
+
+      case Environment.STAGE.id:
+      case Environment.STAGE.value:
+        this._environment = Environment.STAGE;
+        break;
+
+      case Environment.DEVELOPMENT.id:
+      case Environment.DEVELOPMENT.value:
+        this._environment = Environment.DEVELOPMENT;
+        break;
+
+      default:
+        this._environment = Environment.DEVELOPMENT;
+    }
+  };
+
+  prototypeAccessors$a.environment.get = function () {
+    return this._environment ? this._environment.id : Environment.DEVELOPMENT.id;
+  };
+
+  prototypeAccessors$a.entity.set = function (value) {
+    var valid = validateString(value, 'site.entity');
+    if (valid !== null) { this._entity = valid; }
+  };
+
+  prototypeAccessors$a.entity.get = function () {
+    return this._entity;
+  };
+
+  prototypeAccessors$a.language.set = function (value) {
+    var valid = validateLang(value, 'site.language');
+    if (valid !== null) { this._language = valid; }
+  };
+
+  prototypeAccessors$a.language.get = function () {
+    return this._language || document.documentElement.lang;
+  };
+
+  prototypeAccessors$a.target.set = function (value) {
+    var valid = validateString(value, 'site.target');
+    if (valid !== null) { this._target = valid; }
+  };
+
+  prototypeAccessors$a.target.get = function () {
+    return this._target;
+  };
+
+  prototypeAccessors$a.type.set = function (value) {
+    var valid = validateString(value, 'site.type');
+    if (valid !== null) { this._type = valid; }
+  };
+
+  prototypeAccessors$a.type.get = function () {
+    return this._type;
+  };
+
+  prototypeAccessors$a.region.set = function (value) {
+    var valid = validateGeography(value, 'site.region');
+    if (valid !== null) { this._region = valid; }
+  };
+
+  prototypeAccessors$a.region.get = function () {
+    return this._region;
+  };
+
+  prototypeAccessors$a.department.set = function (value) {
+    var valid = validateGeography(value, 'site.department');
+    if (valid !== null) { this._department = valid; }
+  };
+
+  prototypeAccessors$a.department.get = function () {
+    return this._department;
+  };
+
+  prototypeAccessors$a.version.set = function (value) {
+    var valid = validateString(value, 'site.version');
+    if (valid !== null) { this._version = valid; }
+  };
+
+  prototypeAccessors$a.version.get = function () {
+    return this._version;
+  };
+
+  prototypeAccessors$a.api.get = function () {
+    return this._api;
+  };
+
+  prototypeAccessors$a.layer.get = function () {
+    var layer = [];
+    layer.push('site_environment', this._environment.value);
+    if (this.entity) { layer.push('site_entity', normalize(this.entity)); }
+    else { api.inspector.warn('entity is required in analytics.site'); }
+    if (this.language) { layer.push('site_language', this.language); }
+    if (this.target) { layer.push('site_target', normalize(this.target)); }
+    if (this.type) { layer.push('site_type', normalize(this.type)); }
+    if (this.region) { layer.push('site_region', this.region); }
+    if (this.department) { layer.push('site_department', this.department); }
+    if (this.version) { layer.push('site_version', this.version); }
+    if (this.api) { layer.push('api_version', this.api); }
+    return layer;
+  };
+
+  Object.defineProperties( Site.prototype, prototypeAccessors$a );
+
+  Site.Environment = Environment;
+
+  var Inventory = {
+    accordion: api.internals.ns.selector('accordion'),
+    alert: api.internals.ns.selector('alert'),
+    badge: api.internals.ns.selector('badge'),
+    breadcrumb: api.internals.ns.selector('breadcrumb'),
+    button: api.internals.ns.selector('btn'),
+    callout: api.internals.ns.selector('callout'),
+    card: api.internals.ns.selector('card'),
+    checkbox: api.internals.ns.selector('checkbox-group'),
+    connect: api.internals.ns.selector('connect'),
+    consent: api.internals.ns.selector('consent-banner'),
+    content: api.internals.ns.selector('content-media'),
+    download: api.internals.ns.selector('download'),
+    follow: api.internals.ns.selector('follow'),
+    footer: api.internals.ns.selector('footer'),
+    header: api.internals.ns.selector('header'),
+    highlight: api.internals.ns.selector('highlight'),
+    input: api.internals.ns.selector('input-group'),
+    link: api.internals.ns.selector('link'),
+    modal: api.internals.ns.selector('modal'),
+    navigation: api.internals.ns.selector('nav'),
+    notice: api.internals.ns.selector('notice'),
+    pagination: api.internals.ns.selector('pagination'),
+    quote: api.internals.ns.selector('quote'),
+    radio: api.internals.ns.selector('radio-group'),
+    search: api.internals.ns.selector('search-bar'),
+    select: api.internals.ns.selector('select'),
+    share: api.internals.ns.selector('share'),
+    sidemenu: api.internals.ns.selector('sidemenu'),
+    stepper: api.internals.ns.selector('stepper'),
+    summary: api.internals.ns.selector('summary'),
+    tab: api.internals.ns.selector('tabs'),
+    table: api.internals.ns.selector('table'),
+    tag: api.internals.ns.selector('tag'),
+    tile: api.internals.ns.selector('tile'),
+    toggle: api.internals.ns.selector('toggle'),
+    tooltip: api.internals.ns.selector('tooltip'),
+    transcription: api.internals.ns.selector('transcription'),
+    translate: api.internals.ns.selector('translate'),
+    upload: api.internals.ns.selector('upload-group')
+  };
+
+  var CollectionState = {
+    COLLECTABLE: 'collectable',
+    COLLECTING: 'collecting',
+    COLLECTED: 'collected'
+  };
+
+  var Page = function Page (config) {
+    this._config = config || {};
+    this._state = CollectionState.COLLECTABLE;
+  };
+
+  var prototypeAccessors$9 = { isCollecting: { configurable: true },path: { configurable: true },referrer: { configurable: true },title: { configurable: true },id: { configurable: true },author: { configurable: true },date: { configurable: true },tags: { configurable: true },name: { configurable: true },labels: { configurable: true },categories: { configurable: true },isError: { configurable: true },template: { configurable: true },segment: { configurable: true },group: { configurable: true },subtemplate: { configurable: true },theme: { configurable: true },subtheme: { configurable: true },related: { configurable: true },depth: { configurable: true },current: { configurable: true },total: { configurable: true },filters: { configurable: true },layer: { configurable: true } };
+
+  Page.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this.path = clear ? '' : this._config.path;
+    this.referrer = clear ? '' : this._config.referrer;
+    this.title = clear ? '' : this._config.title;
+    this.name = clear ? '' : this._config.name;
+    this.id = clear ? '' : this._config.id;
+    this.author = clear ? '' : this._config.author;
+    this.date = clear ? '' : this._config.date;
+    this._labels = clear || !this._config.labels ? ['', '', '', '', ''] : this._config.labels;
+    this._labels.length = 5;
+    this._tags = clear || !this._config.tags ? [] : this._config.tags;
+    this._categories = clear || !this._config.categories ? ['', '', ''] : this._config.categories;
+    this.isError = !clear && this._config.isError;
+    this.template = clear ? '' : this._config.template;
+    this.group = clear ? '' : this._config.group;
+    this.segment = clear ? '' : this._config.segment;
+    this.subtemplate = clear ? '' : this._config.subtemplate;
+    this.theme = clear ? '' : this._config.theme;
+    this.subtheme = clear ? '' : this._config.subtheme;
+    this.related = clear ? '' : this._config.related;
+    this.depth = clear || isNaN(this._config.depth) ? 0 : this._config.depth;
+    this.current = clear || isNaN(this._config.current) ? -1 : this._config.current;
+    this.total = clear || isNaN(this._config.total) ? -1 : this._config.total;
+    this._filters = clear || !this._config.filters ? [] : this._config.filters;
+  };
+
+  Page.prototype.collecting = function collecting () {
+    if (this._state !== CollectionState.COLLECTABLE) {
+      api.inspector.warn(("current path '" + (this.path) + "' was already collected"));
+      return false;
+    }
+    this._state = CollectionState.COLLECTING;
+    return true;
+  };
+
+  prototypeAccessors$9.isCollecting.get = function () {
+    return this._state === CollectionState.COLLECTING;
+  };
+
+  prototypeAccessors$9.path.set = function (value) {
+    var valid = validateString(value, 'page.path');
+    if (valid !== null) {
+      this._path = valid;
+      this._state = CollectionState.COLLECTABLE;
+    }
+  };
+
+  prototypeAccessors$9.path.get = function () {
+    return this._path || ("" + (document.location.pathname) + (document.location.search));
+  };
+
+  prototypeAccessors$9.referrer.set = function (value) {
+    var valid = validateString(value, 'page.referrer');
+    if (valid !== null) { this._referrer = valid; }
+  };
+
+  prototypeAccessors$9.referrer.get = function () {
+    return this._referrer;
+  };
+
+  prototypeAccessors$9.title.set = function (value) {
+    var valid = validateString(value, 'page.title');
+    if (valid !== null) { this._title = valid; }
+  };
+
+  prototypeAccessors$9.title.get = function () {
+    return this._title || document.title;
+  };
+
+  prototypeAccessors$9.id.set = function (value) {
+    var valid = validateString(value, 'page.id');
+    if (valid !== null) { this._id = valid; }
+  };
+
+  prototypeAccessors$9.id.get = function () {
+    return this._id;
+  };
+
+  prototypeAccessors$9.author.set = function (value) {
+    var valid = validateString(value, 'page.author');
+    if (valid !== null) { this._author = valid; }
+  };
+
+  prototypeAccessors$9.author.get = function () {
+    return this._author;
+  };
+
+  prototypeAccessors$9.date.set = function (value) {
+    var valid = validateDate(value, 'page.date');
+    if (valid !== null) { this._date = valid; }
+  };
+
+  prototypeAccessors$9.date.get = function () {
+    return this._date;
+  };
+
+  prototypeAccessors$9.tags.get = function () {
+    return this._tags;
+  };
+
+  prototypeAccessors$9.name.set = function (value) {
+    var valid = validateString(value, 'page.name');
+    if (valid !== null) { this._name = valid; }
+  };
+
+  prototypeAccessors$9.name.get = function () {
+    return this._name || this.title;
+  };
+
+  prototypeAccessors$9.labels.get = function () {
+    return this._labels;
+  };
+
+  prototypeAccessors$9.categories.get = function () {
+    return this._categories;
+  };
+
+  prototypeAccessors$9.isError.set = function (value) {
+    var valid = validateBoolean(value, 'page.isError');
+    if (valid !== null) { this._isError = valid; }
+  };
+
+  prototypeAccessors$9.isError.get = function () {
+    return this._isError;
+  };
+
+  prototypeAccessors$9.template.set = function (value) {
+    var valid = validateString(value, 'page.template');
+    if (valid !== null) { this._template = valid; }
+  };
+
+  prototypeAccessors$9.template.get = function () {
+    return this._template || 'autres';
+  };
+
+  prototypeAccessors$9.segment.set = function (value) {
+    var valid = validateString(value, 'page.segment');
+    if (valid !== null) { this._segment = valid; }
+  };
+
+  prototypeAccessors$9.segment.get = function () {
+    return this._segment || this.template;
+  };
+
+  prototypeAccessors$9.group.set = function (value) {
+    var valid = validateString(value, 'page.group');
+    if (valid !== null) { this._group = valid; }
+  };
+
+  prototypeAccessors$9.group.get = function () {
+    return this._group || this.template;
+  };
+
+  prototypeAccessors$9.subtemplate.set = function (value) {
+    var valid = validateString(value, 'page.subtemplate');
+    if (valid !== null) { this._subtemplate = valid; }
+  };
+
+  prototypeAccessors$9.subtemplate.get = function () {
+    return this._subtemplate;
+  };
+
+  prototypeAccessors$9.theme.set = function (value) {
+    var valid = validateString(value, 'page.theme');
+    if (valid !== null) { this._theme = valid; }
+  };
+
+  prototypeAccessors$9.theme.get = function () {
+    return this._theme;
+  };
+
+  prototypeAccessors$9.subtheme.set = function (value) {
+    var valid = validateString(value, 'page.subtheme');
+    if (valid !== null) { this._subtheme = valid; }
+  };
+
+  prototypeAccessors$9.subtheme.get = function () {
+    return this._subtheme;
+  };
+
+  prototypeAccessors$9.related.set = function (value) {
+    var valid = validateString(value, 'page.related');
+    if (valid !== null) { this._related = valid; }
+  };
+
+  prototypeAccessors$9.related.get = function () {
+    return this._related;
+  };
+
+  prototypeAccessors$9.depth.set = function (value) {
+    var valid = validateNumber(value, 'page.depth');
+    if (valid !== null) { this._depth = valid; }
+  };
+
+  prototypeAccessors$9.depth.get = function () {
+    return this._depth;
+  };
+
+  prototypeAccessors$9.current.set = function (value) {
+    var valid = validateNumber(value, 'page.current');
+    if (valid !== null) { this._current = valid; }
+  };
+
+  prototypeAccessors$9.current.get = function () {
+    return this._current;
+  };
+
+  prototypeAccessors$9.total.set = function (value) {
+    var valid = validateNumber(value, 'page.total');
+    if (valid !== null) { this._total = valid; }
+  };
+
+  prototypeAccessors$9.total.get = function () {
+    return this._total;
+  };
+
+  prototypeAccessors$9.filters.get = function () {
+    return this._filters;
+  };
+
+  prototypeAccessors$9.layer.get = function () {
+    this._state = CollectionState.COLLECTED;
+    var layer = [];
+    if (this.path) { layer.push('path', normalize(this.path)); }
+    if (this.referrer) { layer.push('referrer', normalize(this.referrer)); }
+    if (this.title) { layer.push('page_title', normalize(this.title)); }
+    if (this.name) { layer.push('page_name', normalize(this.name)); }
+    if (this.id) { layer.push('page_id', normalize(this.id)); }
+    if (this.author) { layer.push('page_author', normalize(this.author)); }
+    if (this.date) { layer.push('page_date', normalize(this.date)); }
+
+    var components = Object.keys(Inventory).map(function (id) { return document.querySelector(Inventory[id]) !== null ? id : null; }).filter(function (id) { return id !== null; }).join(',');
+    if (components) { layer.push('page_components', components); }
+
+    var labels = this._labels.slice(0, 5);
+    labels.length = 5;
+    if (labels.some(function (label) { return label; })) { layer.push('pagelabel', labels.map(function (label) { return typeof label === 'string' ? normalize(label) : ''; }).join(',')); }
+
+    var tags = this._tags;
+    if (tags.some(function (tag) { return tag; })) { layer.push('pagetag', tags.map(function (tag) { return typeof tag === 'string' ? normalize(tag) : ''; }).join(',')); }
+
+    this._categories.forEach(function (category, index) {
+      if (category) { layer.push(("page_category" + (index + 1)), category); }
+    });
+
+    if (this._isError) { layer.push('error', '1'); }
+
+    layer.push('page_template', normalize(this.template));
+    layer.push('pagegroup', normalize(this.group));
+    layer.push('site-segment', normalize(this.segment));
+
+    if (this.subtemplate) { layer.push('page_subtemplate', normalize(this.subtemplate)); }
+    if (this.theme) { layer.push('page_theme', normalize(this.theme)); }
+    if (this.subtheme) { layer.push('page_subtheme', normalize(this.subtheme)); }
+    if (this.related) { layer.push('page_related', normalize(this.related)); }
+    if (!isNaN(this.depth)) { layer.push('page_depth', this.depth); }
+
+    if (!isNaN(this.current) && this.current > -1) {
+      var pagination = "" + (this.current);
+      if (!isNaN(this.total) && this.total > -1) { pagination += "/" + (this.total); }
+      layer.push('page_pagination', pagination);
+    }
+
+    if (this.filters.length && this.filters.some(function (label) { return label; })) {
+      var filters = this.filters.map(function (filter) { return typeof filter === 'string' ? normalize(filter) : ''; });
+      layer.push('page_filters', filters.join(','));
+    }
+    return layer;
+  };
+
+  Object.defineProperties( Page.prototype, prototypeAccessors$9 );
+
+  var Method = {
+    STANDARD: {
+      id: 'standard',
+      value: 'standard',
+      isDefault: true
+    },
+    AUTOCOMPLETE: {
+      id: 'autocomplete',
+      value: 'autocompletion'
+    }
+  };
+
+  var Search = function Search (config) {
+    this._config = config || {};
+  };
+
+  var prototypeAccessors$8 = { engine: { configurable: true },results: { configurable: true },terms: { configurable: true },category: { configurable: true },theme: { configurable: true },type: { configurable: true },method: { configurable: true },layer: { configurable: true } };
+
+  Search.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this.engine = clear ? undefined : this._config.engine;
+    this.results = clear || isNaN(this._config.results) ? -1 : this._config.results;
+    this.terms = clear ? undefined : this._config.terms;
+    this.category = clear ? undefined : this._config.category;
+    this.theme = clear ? undefined : this._config.theme;
+    this.type = clear ? undefined : this._config.type;
+    this.method = clear ? undefined : this._config.method;
+  };
+
+  prototypeAccessors$8.engine.set = function (value) {
+    var valid = validateString(value, 'search.engine');
+    if (valid !== null) { this._engine = valid; }
+  };
+
+  prototypeAccessors$8.engine.get = function () {
+    return this._engine;
+  };
+
+  prototypeAccessors$8.results.set = function (value) {
+    var valid = validateNumber(value, 'search.results');
+    if (valid !== null) { this._results = valid; }
+  };
+
+  prototypeAccessors$8.results.get = function () {
+    return this._results;
+  };
+
+  prototypeAccessors$8.terms.set = function (value) {
+    var valid = validateString(value, 'search.terms');
+    if (valid !== null) { this._terms = valid; }
+  };
+
+  prototypeAccessors$8.terms.get = function () {
+    return this._terms;
+  };
+
+  prototypeAccessors$8.category.set = function (value) {
+    var valid = validateString(value, 'search.category');
+    if (valid !== null) { this._category = valid; }
+  };
+
+  prototypeAccessors$8.category.get = function () {
+    return this._category;
+  };
+
+  prototypeAccessors$8.theme.set = function (value) {
+    var valid = validateString(value, 'search.theme');
+    if (valid !== null) { this._theme = valid; }
+  };
+
+  prototypeAccessors$8.theme.get = function () {
+    return this._theme;
+  };
+
+  prototypeAccessors$8.type.set = function (value) {
+    var valid = validateString(value, 'search.type');
+    if (valid !== null) { this._type = valid; }
+    this._type = value;
+  };
+
+  prototypeAccessors$8.type.get = function () {
+    return this._type;
+  };
+
+  prototypeAccessors$8.method.set = function (id) {
+    var methods = Object.values(Method);
+    this._method = methods.filter(function (method) { return method.id === id || method.value === id; })[0] || methods.filter(function (method) { return method.isDefault; })[0];
+  };
+
+  prototypeAccessors$8.method.get = function () {
+    return this._method;
+  };
+
+  prototypeAccessors$8.layer.get = function () {
+    var layer = [];
+    if (this.engine) { layer.push('isearchengine', normalize(this.engine)); }
+    if (this.results > -1) { layer.push('isearchresults', this.results); }
+    if (this.terms) { layer.push('isearchkey', 'search_terms', 'isearchdata', normalize(this.terms)); }
+    if (this.category) { layer.push('isearchkey', 'search_category', 'isearchdata', normalize(this.category)); }
+    if (this.theme) { layer.push('isearchkey', 'search_theme', 'isearchdata', normalize(this.theme)); }
+    if (this.type) { layer.push('isearchkey', 'search_type', 'isearchdata', normalize(this.type)); }
+    if (this._method && layer.length) { layer.push('isearchkey', 'search_method', 'isearchdata', this._method.value); }
+    return layer;
+  };
+
+  Object.defineProperties( Search.prototype, prototypeAccessors$8 );
+
+  Search.Method = Method;
+
+  var Funnel = function Funnel (config) {
+    this._config = config || {};
+  };
+
+  var prototypeAccessors$7 = { id: { configurable: true },type: { configurable: true },name: { configurable: true },step: { configurable: true },current: { configurable: true },total: { configurable: true },objective: { configurable: true },error: { configurable: true },layer: { configurable: true } };
+
+  Funnel.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this.id = clear ? undefined : this._config.id;
+    this.type = clear ? undefined : this._config.type;
+    this.name = clear ? undefined : this._config.name;
+    this.step = clear ? undefined : this._config.step;
+    this.current = clear || isNaN(this._config.current) ? -1 : this._config.current;
+    this.total = clear || isNaN(this._config.total) ? -1 : this._config.total;
+    this.objective = clear ? undefined : this._config.objective;
+    this.error = clear ? undefined : this._config.error;
+  };
+
+  prototypeAccessors$7.id.set = function (value) {
+    var valid = validateString(value, 'funnel.id');
+    if (valid !== null) { this._id = valid; }
+  };
+
+  prototypeAccessors$7.id.get = function () {
+    return this._id;
+  };
+
+  prototypeAccessors$7.type.set = function (value) {
+    var valid = validateString(value, 'funnel.type');
+    if (valid !== null) { this._type = valid; }
+  };
+
+  prototypeAccessors$7.type.get = function () {
+    return this._type;
+  };
+
+  prototypeAccessors$7.name.set = function (value) {
+    var valid = validateString(value, 'funnel.name');
+    if (valid !== null) { this._name = valid; }
+  };
+
+  prototypeAccessors$7.name.get = function () {
+    return this._name;
+  };
+
+  prototypeAccessors$7.step.set = function (value) {
+    var valid = validateString(value, 'funnel.step');
+    if (valid !== null) { this._step = valid; }
+  };
+
+  prototypeAccessors$7.step.get = function () {
+    return this._step;
+  };
+
+  prototypeAccessors$7.current.set = function (value) {
+    var valid = validateNumber(value, 'funnel.current');
+    if (valid !== null) { this._current = valid; }
+  };
+
+  prototypeAccessors$7.current.get = function () {
+    return this._current;
+  };
+
+  prototypeAccessors$7.total.set = function (value) {
+    var valid = validateNumber(value, 'funnel.total');
+    if (valid !== null) { this._total = valid; }
+  };
+
+  prototypeAccessors$7.total.get = function () {
+    return this._total;
+  };
+
+  prototypeAccessors$7.objective.set = function (value) {
+    var valid = validateString(value, 'funnel.objective');
+    if (valid !== null) { this._objective = valid; }
+    this._objective = value;
+  };
+
+  prototypeAccessors$7.objective.get = function () {
+    return this._objective;
+  };
+
+  prototypeAccessors$7.error.set = function (value) {
+    var valid = validateString(value, 'funnel.error');
+    if (valid !== null) { this._error = valid; }
+    this._error = value;
+  };
+
+  prototypeAccessors$7.error.get = function () {
+    return this._error;
+  };
+
+  prototypeAccessors$7.layer.get = function () {
+    var layer = [];
+    if (this.id) { layer.push('funnel_id', normalize(this.id)); }
+    if (this.type) { layer.push('funnel_type', normalize(this.type)); }
+    if (this.name) { layer.push('funnel_name', normalize(this.name)); }
+    if (this.step) { layer.push('funnel_step_name', normalize(this.step)); }
+    if (!isNaN(this.current) && this.current > -1) { layer.push('funnel_step_number', this.current); }
+    if (!isNaN(this.total) && this.total > -1) { layer.push('funnel_step_max', this.total); }
+    if (this.objective) { layer.push('funnel_objective', normalize(this.objective)); }
+    if (this.error) { layer.push('funnel_error', normalize(this.error)); }
+    return layer;
+  };
+
+  Object.defineProperties( Funnel.prototype, prototypeAccessors$7 );
+
+  var ActionMode = {
+    IN: 'in',
+    OUT: 'out',
+    NONE: 'none'
+  };
+
+  var ActionStatus = {
+    UNSTARTED: {
+      id: 'unstarted',
+      value: -1
+    },
+    STARTED: {
+      id: 'started',
+      value: 1
+    },
+    SINGULAR: {
+      id: 'singular',
+      value: 2
+    },
+    ENDED: {
+      id: 'ended',
+      value: 3
+    }
+  };
+
+  var getParametersLayer = function (data) {
+    return Object.entries(data).map(function (ref) {
+      var key = ref[0];
+      var value = ref[1];
+
+      return ['actionpname', normalize(key), 'actionpvalue', normalize(value)];
+    }).flat();
+  };
+
+  var Action = function Action (name) {
+    this._isMuted = false;
+    this._regulation = ActionRegulation.NONE;
+    this._name = name;
+    this._status = ActionStatus.UNSTARTED;
+    this._labels = [];
+    this._parameters = {};
+    this._sentData = [];
+  };
+
+  var prototypeAccessors$6 = { isMuted: { configurable: true },regulation: { configurable: true },isSingular: { configurable: true },status: { configurable: true },name: { configurable: true },labels: { configurable: true },reference: { configurable: true },parameters: { configurable: true },mode: { configurable: true },_base: { configurable: true } };
+
+  prototypeAccessors$6.isMuted.get = function () {
+    return this._isMuted;
+  };
+
+  prototypeAccessors$6.isMuted.set = function (value) {
+    this._isMuted = value;
+  };
+
+  prototypeAccessors$6.regulation.get = function () {
+    return this._regulation;
+  };
+
+  prototypeAccessors$6.regulation.set = function (value) {
+    if (Object.values(ActionRegulation).includes(value)) { this._regulation = value; }
+  };
+
+  prototypeAccessors$6.isSingular.get = function () {
+    return this._status === ActionStatus.SINGULAR;
+  };
+
+  prototypeAccessors$6.status.get = function () {
+    return this._status;
+  };
+
+  prototypeAccessors$6.name.get = function () {
+    return this._name;
+  };
+
+  prototypeAccessors$6.labels.get = function () {
+    return this._labels;
+  };
+
+  prototypeAccessors$6.reference.get = function () {
+    return this._reference;
+  };
+
+  prototypeAccessors$6.parameters.get = function () {
+    return this._parameters;
+  };
+
+  prototypeAccessors$6.mode.get = function () {
+    return this._mode;
+  };
+
+  Action.prototype.singularize = function singularize () {
+    this._status = ActionStatus.SINGULAR;
+  };
+
+  Action.prototype.rewind = function rewind () {
+    this._sentData = [];
+    this._status = ActionStatus.UNSTARTED;
+  };
+
+  Action.prototype.addParameter = function addParameter (key, value) {
+    this._parameters[key] = value;
+  };
+
+  Action.prototype.removeParameter = function removeParameter (key) {
+    delete this._parameters[key];
+  };
+
+  prototypeAccessors$6.reference.set = function (value) {
+    var valid = validateString(value, ("action " + (this._name)));
+    if (valid !== null) { this._reference = valid; }
+  };
+
+  prototypeAccessors$6._base.get = function () {
+    return ['actionname', this._name];
+  };
+
+  Action.prototype._getLayer = function _getLayer (data) {
+      if ( data === void 0 ) data = {};
+
+    if (this._isMuted) { return []; }
+
+    if (this._mode !== ActionMode.IN) { this._sentData.push(JSON.stringify(data)); }
+
+    var layer = this._base;
+    switch (this._mode) {
+      case ActionMode.IN:
+      case ActionMode.OUT:
+        layer.push('actionmode', this._mode);
+        break;
+    }
+
+    var labels = this._labels.slice(0, 5);
+    labels.length = 5;
+    if (labels.some(function (label) { return label; })) { layer.push('actionlabel', labels.map(function (label) { return typeof label === 'string' ? normalize(label) : ''; }).join(',')); }
+
+    if (this._reference) { layer.push('actionref', this._reference); }
+
+    layer.push.apply(layer, getParametersLayer(Object.assign(this._parameters, data || {})));
+    return layer;
+  };
+
+  Action.prototype.start = function start (data) {
+    switch (this._status) {
+      case ActionStatus.UNSTARTED:
+        this._mode = ActionMode.IN;
+        this._status = ActionStatus.STARTED;
+        break;
+
+      case ActionStatus.SINGULAR:
+        this._mode = ActionMode.NONE;
+        this._status = ActionStatus.ENDED;
+        break;
+
+      default:
+        api.inspector.error(("unexpected start on action " + (this._name) + " with status " + (this._status.id)));
+        return [];
+    }
+    return this._getLayer(data);
+  };
+
+  Action.prototype.end = function end (data) {
+    switch (this._status) {
+      case ActionStatus.STARTED:
+        this._mode = ActionMode.OUT;
+        this._status = ActionStatus.ENDED;
+        break;
+
+      case ActionStatus.UNSTARTED:
+        this._mode = ActionMode.NONE;
+        this._status = ActionStatus.ENDED;
+        break;
+
+      case ActionStatus.SINGULAR:
+        this._mode = ActionMode.NONE;
+        this._status = ActionStatus.ENDED;
+        break;
+
+      case ActionStatus.ENDED:
+        if (this._sentData.includes(JSON.stringify(data))) { return []; }
+        this._mode = ActionMode.NONE;
+        this._status = ActionStatus.ENDED;
+        break;
+
+      default:
+        return [];
+    }
+    return this._getLayer(data);
+  };
+
+  Action.prototype.resume = function resume (data) {
+    if (this._isMuted) { return []; }
+    if (this._status.value >= ActionStatus.ENDED.value) {
+      api.inspector.error(("unexpected resuming on action " + (this._name) + " with status " + (this._status.id)));
+      return [];
+    }
+    var layer = this._base;
+    if (data) { layer.push.apply(layer, getParametersLayer(data)); }
+    return layer;
+  };
+
+  Object.defineProperties( Action.prototype, prototypeAccessors$6 );
+
+  var Actions = function Actions () {
+    this._actions = [];
+  };
+
+  Actions.prototype.rewind = function rewind () {
+    this._actions.forEach(function (action) { return action.rewind(); });
+  };
+
+  Actions.prototype.getAction = function getAction (name) {
+    var action = this._actions.filter(function (action) { return action.name === name; })[0];
+    if (!action) {
+      action = new Action(name);
+      this._actions.push(action);
+    }
+    return action;
+  };
+
+  Actions.prototype.hasAction = function hasAction (name) {
+    return this._actions.some(function (action) { return action.name === name; });
+  };
+
+  Actions.prototype.remove = function remove (action) {
+    var index = this._actions.indexOf(action);
+    if (index === -1) { return false; }
+    this._actions.splice(index, 1);
+    return true;
+  };
+
+  Actions.ActionMode = ActionMode;
+
+  var actions = new Actions();
+  Actions.instance = actions;
+
+  var Location = function Location (onRouteChange, isListeningHash) {
+    if ( isListeningHash === void 0 ) isListeningHash = false;
+
+    this._onRouteChange = onRouteChange;
+    this._isListeningHash = isListeningHash;
+    this._update();
+    renderer.add(this);
+  };
+
+  var prototypeAccessors$5 = { path: { configurable: true },hasTitle: { configurable: true },title: { configurable: true },referrer: { configurable: true } };
+
+  Location.prototype._update = function _update () {
+    this._pathname = document.location.pathname;
+    this._search = document.location.search;
+    this._hash = document.location.hash;
+    this._path = "" + (this._pathname) + (this._search);
+    if (this._isListeningHash) { this._path += this._hash; }
+    this._hasTitle = this._title === document.title;
+    this._title = document.title;
+  };
+
+  Location.prototype.render = function render () {
+    if (this._pathname !== document.location.pathname || this._search !== document.location.search) { this.change(); }
+    if (this._isListeningHash && this._hash !== document.location.hash) { this.change(); }
+  };
+
+  Location.prototype.change = function change () {
+    this._referrer = this._path;
+    this._update();
+    this._onRouteChange();
+  };
+
+  prototypeAccessors$5.path.get = function () {
+    return this._path;
+  };
+
+  prototypeAccessors$5.hasTitle.get = function () {
+    return this._hasTitle;
+  };
+
+  prototypeAccessors$5.title.get = function () {
+    return this._title;
+  };
+
+  prototypeAccessors$5.referrer.get = function () {
+    return this._referrer;
+  };
+
+  Object.defineProperties( Location.prototype, prototypeAccessors$5 );
+
+  var CollectorEvent = {
+    COLLECT: api.internals.ns.event('collect')
+  };
+
+  var ActioneeEmission = {
+    REWIND: api.internals.ns.emission('analytics', 'rewind')
+  };
+
+  var Collector = function Collector (config) {
+    switch (config.collection) {
+      case Collection.MANUAL:
+      case Collection.LOAD:
+      case Collection.FULL:
+      case Collection.HASH:
+        this._collection = config.collection;
+        break;
+
+      default:
+        /* deprecated start */
+        if (config.mode) {
+          switch (config.mode) {
+            case 'manual':
+              this._collection = config.collection;
+              break;
+          }
+        }
+        /* deprecated end */
+
+        switch (true) {
+          /* deprecated */
+          case config.mode === 'manual':
+            this._collection = Collection.MANUAL;
+            break;
+
+          case api.mode === api.Modes.ANGULAR:
+          case api.mode === api.Modes.REACT:
+          case api.mode === api.Modes.VUE:
+            this._collection = Collection.FULL;
+            break;
+
+          default:
+            this._collection = Collection.LOAD;
+        }
+    }
+
+    this._isActionEnabled = config.isActionEnabled === 'false' || config.isActionEnabled;
+
+    this._user = new User(config.user);
+    this._site = new Site(config.site);
+    this._page = new Page(config.page);
+    this._search = new Search(config.search);
+    this._funnel = new Funnel(config.funnel);
+
+    this._delay = -1;
+    queue.setCollector(this);
+  };
+
+  var prototypeAccessors$4 = { page: { configurable: true },user: { configurable: true },site: { configurable: true },search: { configurable: true },funnel: { configurable: true },collection: { configurable: true },isCollecting: { configurable: true },isActionEnabled: { configurable: true },layer: { configurable: true } };
+
+  prototypeAccessors$4.page.get = function () {
+    return this._page;
+  };
+
+  prototypeAccessors$4.user.get = function () {
+    return this._user;
+  };
+
+  prototypeAccessors$4.site.get = function () {
+    return this._site;
+  };
+
+  prototypeAccessors$4.search.get = function () {
+    return this._search;
+  };
+
+  prototypeAccessors$4.funnel.get = function () {
+    return this._funnel;
+  };
+
+  Collector.prototype.start = function start () {
+    var handleRouteChange = this._handleRouteChange.bind(this);
+    switch (this._collection) {
+      case Collection.LOAD:
+        this.collect();
+        break;
+
+      case Collection.FULL:
+        this.collect();
+        this._location = new Location(handleRouteChange);
+        break;
+
+      case Collection.HASH:
+        this.collect();
+        this._location = new Location(handleRouteChange, true);
+        break;
+    }
+  };
+
+  Collector.prototype._handleRouteChange = function _handleRouteChange () {
+    queue.send(true);
+    this._delay = 6;
+    renderer.add(this);
+  };
+
+  Collector.prototype.render = function render () {
+    this._delay--;
+    if (this._delay < 0) {
+      renderer.remove(this);
+      this._routeChanged();
+    }
+  };
+
+  Collector.prototype._routeChanged = function _routeChanged () {
+    actions.rewind();
+    this._page.referrer = this._location.referrer;
+    if (this._location.hasTitle) { this._page.title = this._location.title; }
+    this._page.path = this._location.path;
+    var event = new CustomEvent(CollectorEvent.COLLECT);
+    document.documentElement.dispatchEvent(event);
+    this.collect();
+    if (api.internals && api.internals.stage && api.internals.stage.root) { api.internals.stage.root.descend(ActioneeEmission.REWIND); }
+  };
+
+  Collector.prototype.reset = function reset (clear) {
+      if ( clear === void 0 ) clear = false;
+
+    this._user.reset(clear);
+    this._site.reset(clear);
+    this._page.reset(clear);
+    this._search.reset(clear);
+    this._funnel.reset(clear);
+  };
+
+  Collector.prototype.collect = function collect () {
+    if (!this.page.collecting()) { return; }
+    queue.collect();
+  };
+
+  prototypeAccessors$4.collection.get = function () {
+    return this._collection;
+  };
+
+  prototypeAccessors$4.isCollecting.get = function () {
+    return this._page.isCollecting;
+  };
+
+  prototypeAccessors$4.isActionEnabled.get = function () {
+    return this._isActionEnabled;
+  };
+
+  prototypeAccessors$4.isActionEnabled.set = function (value) {
+    this._isActionEnabled = value;
+  };
+
+  prototypeAccessors$4.layer.get = function () {
+    return ( this._user.layer ).concat( this._site.layer,
+      this._page.layer,
+      this._search.layer,
+      this._funnel.layer
+    );
+  };
+
+  Object.defineProperties( Collector.prototype, prototypeAccessors$4 );
+
+  var Analytics = function Analytics () {
+    var this$1$1 = this;
+
+    this._isReady = false;
+    this._readiness = new Promise(function (resolve, reject) {
+      if (this$1$1._isReady) { resolve(); }
+      else {
+        this$1$1._resolve = resolve;
+        this$1$1._reject = reject;
+      }
+    });
+    this._configure();
+  };
+
+  var prototypeAccessors$3 = { isReady: { configurable: true },readiness: { configurable: true },page: { configurable: true },user: { configurable: true },site: { configurable: true },search: { configurable: true },funnel: { configurable: true },cmp: { configurable: true },opt: { configurable: true },collection: { configurable: true },isActionEnabled: { configurable: true },isDebugging: { configurable: true } };
+
+  Analytics.prototype._configure = function _configure () {
+    switch (true) {
+      case window[patch.namespace] !== undefined:
+        this._config = window[patch.namespace].configuration.analytics;
+        window[patch.namespace].promise.then(this._build.bind(this), function () {});
+        break;
+
+      case api.internals !== undefined && api.internals.configuration !== undefined && api.internals.configuration.analytics !== undefined && api.internals.configuration.analytics.domain !== undefined:
+        this._config = api.internals.configuration.analytics;
+        this._build();
+        break;
+
+      case api.analytics !== undefined && api.analytics.domain !== undefined:
+        this._config = api.analytics;
+        this._build();
+        break;
+
+      default:
+        api.inspector.warn('analytics configuration is incorrect or missing (required : domain)');
+    }
+  };
+
+  Analytics.prototype._build = function _build () {
+      var this$1$1 = this;
+
+    this._init = new Init(this._config.domain);
+    this._init.configure().then(this._start.bind(this), function (reason) { return this$1$1._reject(reason); });
+  };
+
+  prototypeAccessors$3.isReady.get = function () {
+    return this._isReady;
+  };
+
+  prototypeAccessors$3.readiness.get = function () {
+    return this._readiness;
+  };
+
+  Analytics.prototype._start = function _start () {
+    if (this._isReady) { return; }
+
+    this._cmp = new ConsentManagerPlatform(this._config.cmp);
+    this._collector = new Collector(this._config);
+    this._collector.reset();
+
+    this._isReady = true;
+    this._resolve();
+
+    queue.start();
+    this._collector.start();
+  };
+
+  prototypeAccessors$3.page.get = function () {
+    return this._collector.page;
+  };
+
+  prototypeAccessors$3.user.get = function () {
+    return this._collector.user;
+  };
+
+  prototypeAccessors$3.site.get = function () {
+    return this._collector._site;
+  };
+
+  prototypeAccessors$3.search.get = function () {
+    return this._collector.search;
+  };
+
+  prototypeAccessors$3.funnel.get = function () {
+    return this._collector.funnel;
+  };
+
+  prototypeAccessors$3.cmp.get = function () {
+    return this._cmp;
+  };
+
+  prototypeAccessors$3.opt.get = function () {
+    return opt;
+  };
+
+  prototypeAccessors$3.collection.get = function () {
+    return this._collector.collection;
+  };
+
+  prototypeAccessors$3.isActionEnabled.get = function () {
+    return this._collector.isActionEnabled;
+  };
+
+  prototypeAccessors$3.isActionEnabled.set = function (value) {
+    this._collector.isActionEnabled = value;
+  };
+
+  prototypeAccessors$3.isDebugging.get = function () {
+    return debug.isActive;
+  };
+
+  prototypeAccessors$3.isDebugging.set = function (value) {
+    debug.isActive = value;
+  };
+
+  Analytics.prototype.push = function push$1 (type, layer) {
+    push(type, layer);
+  };
+
+  Analytics.prototype.reset = function reset (clear) {
+
+    this._collector.reset();
+  };
+
+  Analytics.prototype.collect = function collect () {
+    this._collector.collect();
+  };
+
+  Object.defineProperties( Analytics.prototype, prototypeAccessors$3 );
+
+  var analytics = new Analytics();
+
+  analytics.Collection = Collection;
+  analytics.PushType = PushType;
+
+  /**
+   * Copy properties from multiple sources including accessors.
+   * source : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#copier_des_accesseurs
+   *
+   * @param {object} [target] - Target object to copy into
+   * @param {...objects} [sources] - Multiple objects
+   * @return {object} A new object
+   *
+   * @example
+   *
+   *     const obj1 = {
+   *        key: 'value'
+   *     };
+   *     const obj2 = {
+   *        get function01 () {
+   *          return a-value;
+   *        }
+   *        set function01 () {
+   *          return a-value;
+   *        }
+   *     };
+   *     completeAssign(obj1, obj2)
+   */
+  var completeAssign = function (target) {
+    var sources = [], len = arguments.length - 1;
+    while ( len-- > 0 ) sources[ len ] = arguments[ len + 1 ];
+
+    sources.forEach(function (source) {
+      var descriptors = Object.keys(source).reduce(function (descriptors, key) {
+        descriptors[key] = Object.getOwnPropertyDescriptor(source, key);
+        return descriptors;
+      }, {});
+
+      Object.getOwnPropertySymbols(source).forEach(function (sym) {
+        var descriptor = Object.getOwnPropertyDescriptor(source, sym);
+        if (descriptor.enumerable) {
+          descriptors[sym] = descriptor;
+        }
+      });
+      Object.defineProperties(target, descriptors);
+    });
+    return target;
+  };
+
+  api.analytics = completeAssign(analytics, {});
+
+  var Type$1 = {
+    // impression
+    IMPRESSION: {
+      id: 'impression', // element appeared in the page
+      isSingular: true,
+      isBeginning: true,
+      attributed: false,
+      type: 'impression'
+    },
+    // interaction
+    CLICK: {
+      id: 'click', // generic click interaction
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'click',
+      method: 'eventListener'
+    },
+    INTERNAL: {
+      id: 'internal', // anchor click redirecting on an internal url
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'click',
+      method: 'eventListener'
+    },
+    EXTERNAL: {
+      id: 'external', // anchor click redirecting on an external url
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'click',
+      method: 'eventListener'
+    },
+    DOWNLOAD: {
+      id: 'download', // anchor click downloading a file
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'click',
+      method: 'eventListener'
+    },
+    BUTTON: {
+      id: 'button', // button click
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'click',
+      method: 'eventListener'
+    },
+    DOUBLE_CLICK: {
+      id: 'dblclick', // double click
+      isBeginning: true,
+      attributed: true,
+      type: 'interaction',
+      event: 'dblclick',
+      method: 'eventListener'
+    },
+    // event
+    OPEN: {
+      id: 'open', // open event
+      isSingular: true,
+      attributed: false,
+      type: 'event',
+      method: 'eventListener'
+    },
+    COMPLETE: {
+      id: 'complete', // complete event
+      isSingular: true,
+      attributed: false,
+      type: 'event',
+      method: 'eventListener'
+    },
+    FOCUS: {
+      id: 'focus', // focus event
+      isSingular: true,
+      attributed: false,
+      type: 'event',
+      method: 'eventListener'
+    },
+    ERROR: {
+      id: 'error', // error event
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    ADD: {
+      id: 'add', // add event
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    REMOVE: {
+      id: 'remove', // remove event
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    DISPLAY: {
+      id: 'display', // display event
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    CHANGE: {
+      id: 'change', // input event change
+      isSingular: true,
+      attributed: true,
+      type: 'event',
+      event: 'change',
+      method: 'change'
+    },
+    PROGRESS: {
+      id: 'progress', // video retention event with percent of the part reached
+      isBeginning: true,
+      attributed: true,
+      type: 'event'
+    },
+    // component interaction
+    SHARE: {
+      id: 'share', // component share click (share)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    PRESS: {
+      id: 'press', // component press click (pressable tag)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    RELEASE: {
+      id: 'release', // component release click (pressable tag)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    DISMISS: {
+      id: 'dismiss', // component dismiss click (dismissible tag)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    UPLOAD: {
+      id: 'upload', // component upload click (upload)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    CHECK: {
+      id: 'check', // component check click (checkbox, radio, toggle)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    UNCHECK: {
+      id: 'uncheck', // component uncheck click (checkbox, radio, toggle)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    SELECT: {
+      id: 'select', // component select change (select)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    SUBSCRIBE: {
+      id: 'subscribe', // component subscribe click (follow)
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    // component event
+    DISCLOSE: {
+      id: 'disclose', // component disclose event (accordion, modal, tab)
+      isBeginning: true,
+      attributed: false,
+      type: 'event'
+    },
+    SEARCH: {
+      id: 'search', // component disclose event (accordion, modal, tab)
+      isBeginning: true,
+      attributed: false,
+      type: 'event'
+    },
+    SHOW: {
+      id: 'show', // component show event (tooltip)
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    HIDE: {
+      id: 'hide', // component hide event (tooltip)
+      isSingular: true,
+      attributed: false,
+      type: 'event'
+    },
+    // video
+    AUTOPLAY: {
+      id: 'autoplay', // video autoplay event
+      isBeginning: true,
+      attributed: false,
+      type: 'event'
+    },
+    PLAY: {
+      id: 'play', // video play click
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    PAUSE: {
+      id: 'pause', // video pause click
+      isBeginning: true,
+      attributed: false,
+      type: 'interaction'
+    },
+    END: {
+      id: 'end', // video end event
+      isBeginning: true,
+      attributed: false,
+      type: 'event'
+    }
+  };
+
+  var Type = {
+    UNDEFINED: 'undefined',
+    HEADING: 'heading',
+    COMPONENT: 'component',
+    CONTENT: 'content'
+  };
+
+  var NODE_POSITION = Node.DOCUMENT_POSITION_PRECEDING | Node.DOCUMENT_POSITION_CONTAINED_BY;
+
+  var Heading = function Heading (heading) {
+    this._label = heading.textContent.trim();
+    this._level = Number(heading.tagName.charAt(1));
+  };
+
+  var prototypeAccessors$2 = { level: { configurable: true },label: { configurable: true } };
+
+  prototypeAccessors$2.level.get = function () {
+    return this._level;
+  };
+
+  prototypeAccessors$2.label.get = function () {
+    return this._label;
+  };
+
+  Object.defineProperties( Heading.prototype, prototypeAccessors$2 );
+
+  var Member = function Member (node, target, level) {
+    this._type = Type.UNDEFINED;
+    this._node = node;
+    this._target = target;
+    this._level = level;
+    this._label = '';
+    this._component = '';
+    this._isValid = true;
+    this.analyse();
+  };
+
+  var prototypeAccessors$1$1 = { type: { configurable: true },level: { configurable: true },label: { configurable: true },component: { configurable: true },node: { configurable: true },target: { configurable: true },isValid: { configurable: true } };
+
+  Member.prototype._parseHeadings = function _parseHeadings () {
+      var this$1$1 = this;
+
+    var selector = Array.from({ length: this._level }, function (v, i) { return ("h" + (i + 1)); }).join(',');
+    this._headings = Array.from(this._node.querySelectorAll(selector)).filter(function (heading) { return heading === this$1$1._node || heading.parentNode === this$1$1._node || (heading.parentNode != null && heading.parentNode.parentNode === this$1$1._node); }).filter(function (heading) { return (this$1$1._target.compareDocumentPosition(heading) & NODE_POSITION) > 0; }).map(function (heading) { return new Heading(heading); }).reverse();
+  };
+
+  Member.prototype._getComponent = function _getComponent () {
+    if (typeof api !== 'function') { return false; }
+    var element = api(this._node);
+    if (!element) { return false; }
+    var instance = Object.values(element).filter(function (actionee) { return actionee.isActionee; }).sort(function (a, b) { return b.priority - a.priority; })[0];
+    if (!instance) { return false; }
+
+    this._type = Type.COMPONENT;
+    this._isValid = instance.validate(this._target);
+    var selector = Array.from({ length: 6 }, function (v, i) { return ("h" + (i + 1)); }).join(',');
+    var top = Array.from(this._node.querySelectorAll(selector)).map(function (heading) { return new Heading(heading); }).sort(function (a, b) { return a.level - b.level; })[0];
+    if (top && top.level <= this._level) { this._level = top.level - 1; }
+
+    var hx = this._node.closest(selector);
+    if (hx) {
+      var heading = new Heading(hx);
+      if (heading.level <= this._level) { this._level = heading.level - 1; }
+    }
+
+    if (!isNaN(instance.level) && instance.level < this._level) { this._level = instance.level; }
+    this._label = instance.label;
+    this._component = instance.component;
+    return true;
+  };
+
+  Member.prototype._getHeading = function _getHeading () {
+      var this$1$1 = this;
+
+    if (!this._headings.length) { return false; }
+    var labels = [];
+    this._headings.forEach(function (heading) {
+      if (heading.level <= this$1$1._level) {
+        if (heading.level > 1) { labels.unshift(heading.label); }
+        this$1$1._level = heading.level - 1;
+      }
+    });
+    if (!labels.length) { return false; }
+    this._type = Type.HEADING;
+    this._label = labels.join(' › ');
+    return true;
+  };
+
+  Member.prototype.analyse = function analyse () {
+    this._parseHeadings();
+    if (this._getComponent()) { return; }
+    if (this._getHeading()) { return; }
+    if (this._node !== this._target) { return; }
+
+    var label = this._node.textContent.trim();
+    if (!label) { return; }
+    this._type = Type.CONTENT;
+    this._label = label;
+  };
+
+  prototypeAccessors$1$1.type.get = function () {
+    return this._type;
+  };
+
+  prototypeAccessors$1$1.level.get = function () {
+    return this._level;
+  };
+
+  prototypeAccessors$1$1.label.get = function () {
+    return this._label;
+  };
+
+  prototypeAccessors$1$1.component.get = function () {
+    return this._component;
+  };
+
+  prototypeAccessors$1$1.node.get = function () {
+    return this._node;
+  };
+
+  prototypeAccessors$1$1.target.get = function () {
+    return this._target;
+  };
+
+  prototypeAccessors$1$1.isValid.get = function () {
+    return this._isValid;
+  };
+
+  Object.defineProperties( Member.prototype, prototypeAccessors$1$1 );
+
+  var Hierarchy = function Hierarchy (node) {
+    this._node = node;
+    this._process();
+  };
+
+  var prototypeAccessors$1 = { localComponent: { configurable: true },globalComponent: { configurable: true },label: { configurable: true },title: { configurable: true },component: { configurable: true } };
+
+  Hierarchy.prototype._process = function _process () {
+    // console.log('_______________ start ____________________');
+    var member = new Member(this._node, this._node, 6);
+    // console.log('- FIRST MEMBER', member);
+    this._level = member.level;
+    this._members = [member];
+
+    var node = this._node.parentNode;
+
+    while (document.documentElement.contains(node) && node !== document.documentElement && this._level > 0) {
+      // console.log('MEMBERS ARRAY', this._members);
+      // console.log('NODE ANALYSIS', node);
+      var member$1 = new Member(node, this._node, this._level);
+      // console.log('NEW MEMBER', member);
+      switch (true) {
+        case member$1.type === Type.UNDEFINED:
+          // console.log('****UNDEFINED');
+          break;
+
+        case !member$1.isValid:
+          // console.log('****INVALID');
+          break;
+
+        case member$1.label === this._members[0].label && member$1.type === Type.HEADING && this._members[0].type === Type.COMPONENT:
+          // console.log('***** SAME');
+          // do nothing
+          break;
+
+        case member$1.label === this._members[0].label && member$1.type === Type.COMPONENT && this._members[0].type === Type.HEADING:
+          // console.log('***** SAME INVERT');
+          this._members.splice(0, 1, member$1);
+          break;
+
+        default:
+          this._members.unshift(member$1);
+          if (member$1.level < this._level) { this._level = member$1.level; }
+      }
+
+      node = node.parentNode;
+    }
+
+    this._label = normalize(this._members[this._members.length - 1].label);
+    this._title = normalize(this._members.filter(function (member) { return member.label; }).map(function (member) { return member.label; }).join(' › '));
+    var components = this._members.filter(function (member) { return member.component; }).map(function (member) { return member.component; });
+    this._component = normalize(components.join(' › '));
+    this._localComponent = components[components.length - 1];
+    this._globalComponent = components[0];
+
+    // console.log('========= end ===========');
+  };
+
+  prototypeAccessors$1.localComponent.get = function () {
+    return this._localComponent;
+  };
+
+  prototypeAccessors$1.globalComponent.get = function () {
+    return this._globalComponent;
+  };
+
+  prototypeAccessors$1.label.get = function () {
+    return this._label;
+  };
+
+  prototypeAccessors$1.title.get = function () {
+    return this._title;
+  };
+
+  prototypeAccessors$1.component.get = function () {
+    return this._component;
+  };
+
+  Object.defineProperties( Hierarchy.prototype, prototypeAccessors$1 );
+
+  var ActionElement = function ActionElement (node, type, id, category, title, parameters, isRating, regulation) {
+    if ( category === void 0 ) category = '';
+    if ( title === void 0 ) title = null;
+    if ( parameters === void 0 ) parameters = {};
+    if ( isRating === void 0 ) isRating = false;
+    if ( regulation === void 0 ) regulation = ActionRegulation.NONE;
+
+    this._node = node;
+    this._type = type;
+    this._id = id || this._node.id;
+    this._isMuted = false;
+    this._title = title;
+    this._category = category;
+    this._parameters = parameters;
+    this._isRating = isRating;
+    this._regulation = regulation;
+    this._hasBegun = false;
+
+    // this._init();
+    requestAnimationFrame(this._init.bind(this));
+  };
+
+  var prototypeAccessors = { isMuted: { configurable: true },regulation: { configurable: true },action: { configurable: true } };
+
+  ActionElement.prototype._init = function _init () {
+      var this$1$1 = this;
+
+    this._hierarchy = new Hierarchy(this._node);
+
+    var id = '';
+    var type = '';
+    if (this._id) { id = "_[" + (this._id) + "]"; }
+    else { api.inspector.warn(("Analytics API requires an id to be set on tracked element. Missing on " + (this._node.outerHTML))); }
+    if (this._type) { type = "(" + (this._type.id) + ")_"; }
+    this._name = "" + type + (this._title || this._hierarchy.title) + id;
+
+    this._action = actions.getAction(this._name, this._type.status);
+    if (this._type.isSingular) { this._action.singularize(); }
+    Object.keys(this._parameters).forEach(function (key) { return this$1$1._action.addParameter(key, this$1$1._parameters[key]); });
+    this._action.isMuted = this._isMuted;
+    this._action.regulation = this._regulation;
+
+    this._action.labels[0] = this._type.id;
+    this._action.labels[1] = this._hierarchy.globalComponent;
+    this._action.labels[2] = this._hierarchy.localComponent;
+    this._action.labels[4] = this._category;
+
+    if (this._hierarchy.label) { this._action.addParameter('component_label', this._hierarchy.label); }
+    if (this._hierarchy.title) { this._action.addParameter('heading_hierarchy', this._hierarchy.title); }
+    if (this._hierarchy.component) { this._action.addParameter('component_hierarchy', this._hierarchy.component); }
+
+    this.begin();
+  };
+
+  prototypeAccessors.isMuted.get = function () {
+    return this._action ? this._action.isMuted : this._isMuted;
+  };
+
+  prototypeAccessors.isMuted.set = function (value) {
+    this._isMuted = value;
+    if (this._action) { this._action.isMuted = value; }
+  };
+
+  prototypeAccessors.regulation.get = function () {
+    return this._regulation;
+  };
+
+  prototypeAccessors.regulation.set = function (value) {
+    this._regulation = value;
+    if (this._action) { this._action.regulation = value; }
+  };
+
+  prototypeAccessors.action.get = function () {
+    return this._action;
+  };
+
+  ActionElement.prototype.rewind = function rewind () {
+    this._hasBegun = false;
+    this.begin();
+  };
+
+  ActionElement.prototype.begin = function begin (data) {
+      if ( data === void 0 ) data = {};
+
+    if (this._hasBegun) { return; }
+    this._hasBegun = true;
+    if (this._type.isBeginning && (this._type.isSingular || this._isRating)) { queue.appendStartingAction(this._action, data); }
+  };
+
+  ActionElement.prototype.act = function act (data) {
+      var this$1$1 = this;
+      if ( data === void 0 ) data = {};
+
+    if (this._isMuted) { return; }
+    if (!this._action) {
+      requestAnimationFrame(function () { return this$1$1.act(data); });
+      return;
+    }
+    queue.appendEndingAction(this._action, data);
+  };
+
+  ActionElement.prototype.dispose = function dispose () {
+    actions.remove(this._action);
+  };
+
+  Object.defineProperties( ActionElement.prototype, prototypeAccessors );
+
+  var ActionAttributes = {
+    RATING: api.internals.ns.attr('analytics-rating'),
+    ACTION: api.internals.ns.attr('analytics-action')
+  };
+
+  var Actionee = /*@__PURE__*/(function (superclass) {
+    function Actionee (priority, category, title, regulation) {
+      if ( priority === void 0 ) priority = -1;
+      if ( category === void 0 ) category = '';
+      if ( title === void 0 ) title = null;
+      if ( regulation === void 0 ) regulation = ActionRegulation.NONE;
+
+      superclass.call(this);
+      this._type = null;
+      this._priority = priority;
+      this._category = category;
+      this._title = title;
+      this._parameters = {};
+      this._data = {};
+      this._isMuted = false;
+      this._regulation = regulation;
+    }
+
+    if ( superclass ) Actionee.__proto__ = superclass;
+    Actionee.prototype = Object.create( superclass && superclass.prototype );
+    Actionee.prototype.constructor = Actionee;
+
+    var prototypeAccessors = { proxy: { configurable: true },data: { configurable: true },isMuted: { configurable: true },priority: { configurable: true },isInteractive: { configurable: true },actionElement: { configurable: true },label: { configurable: true },value: { configurable: true },isActionee: { configurable: true },level: { configurable: true },type: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Actionee';
+    };
+
+    prototypeAccessors.proxy.get = function () {
+      var scope = this;
+
+      var proxy = {
+        validate: function (target, members) { return scope.validate(target, members); }
+      };
+
+      var proxyAccessors = {
+        get isActionee () {
+          return true;
+        },
+        get label () {
+          return scope.label;
+        },
+        get priority () {
+          return scope.priority;
+        },
+        get level () {
+          return scope.level;
+        },
+        get node () {
+          return scope.node; // TODO: remove in v2
+        }
+      };
+
+      return api.internals.property.completeAssign.call(this, superclass.prototype.proxy, proxy, proxyAccessors);
+    };
+
+    prototypeAccessors.data.get = function () {
+      return this._data;
+    };
+
+    Actionee.prototype._config = function _config (element, registration) {
+      superclass.prototype._config.call(this, element, registration);
+
+      if (this._type === null) {
+        this._sort(element);
+        this._isMuted = true;
+        return;
+      }
+
+      var regulation = this.getRegulation();
+      this._regulation = regulation !== ActionRegulation.NONE ? regulation : this._regulation;
+      var actionAttribute = this.getAttribute(ActionAttributes.ACTION);
+      var title = typeof actionAttribute === 'string' && actionAttribute.toLowerCase() !== 'false' && actionAttribute.toLowerCase() !== 'true' ? normalize(actionAttribute) : this._title;
+      this._isRating = this.hasAttribute(ActionAttributes.RATING);
+
+      this._actionElement = new ActionElement(this.node, this._type, this.id, this._category, title, this._parameters, this._isRating, this._regulation);
+      if (this._isMuted) { this._actionElement.isMuted = true; }
+
+      this.addDescent(ActioneeEmission.REWIND, this.rewind.bind(this));
+
+      this._sort(element);
+    };
+
+    Actionee.prototype.getRegulation = function getRegulation () {
+      var actionAttribute = this.getAttribute(ActionAttributes.ACTION);
+      switch (true) {
+        case typeof actionAttribute === 'string' && actionAttribute.toLowerCase() === 'false':
+          return ActionRegulation.PREVENT;
+        case actionAttribute !== null:
+          return ActionRegulation.ENFORCE;
+        default:
+          return ActionRegulation.NONE;
+      }
+    };
+
+    Actionee.prototype.mutate = function mutate (attributeNames) {
+      if (attributeNames.includes(ActionAttributes.ACTION)) {
+        var regulation = this.getRegulation();
+        if (this._regulation !== regulation) {
+          this._regulation = regulation;
+          if (this._actionElement) { this._actionElement.regulation = regulation; }
+        }
+      }
+      superclass.prototype.mutate.call(this, attributeNames);
+    };
+
+    Actionee.prototype._sort = function _sort (element) {
+      var actionees = element.instances.filter(function (instance) { return instance.isActionee; }).sort(function (a, b) { return b.priority - a.priority; });
+      if (actionees.length <= 1) { return; }
+      actionees.forEach(function (actionee, index) { actionee.isMuted = index > 0; });
+    };
+
+    prototypeAccessors.isMuted.get = function () {
+      return this._actionElement ? this._actionElement.isMuted : this._isMuted;
+    };
+
+    prototypeAccessors.isMuted.set = function (value) {
+      this._isMuted = value;
+      if (this._actionElement) { this._actionElement.isMuted = value; }
+    };
+
+    prototypeAccessors.priority.get = function () {
+      return this._priority;
+    };
+
+    Actionee.prototype.setPriority = function setPriority (value) {
+      this._priority = value;
+    };
+
+    prototypeAccessors.isInteractive.get = function () {
+      return this.node.tagName === 'A' || this.node.tagName === 'BUTTON';
+    };
+
+    Actionee.prototype.detectInteractionType = function detectInteractionType (node) {
+      if (!node) { node = this.node; }
+      var tag = node.tagName;
+      var href = node.getAttribute('href');
+      var isDownload = node.hasAttribute('download');
+      var hostname = node.hostname;
+
+      switch (true) {
+        case tag !== 'A':
+          this._type = Type$1.CLICK;
+          break;
+
+        case isDownload:
+          this._type = Type$1.DOWNLOAD;
+          this.value = href;
+          break;
+
+        case hostname === location.hostname :
+          this._type = Type$1.INTERNAL;
+          this.value = href;
+          break;
+
+        case hostname.length > 0 :
+          this._type = Type$1.EXTERNAL;
+          this.value = href;
+          break;
+
+        default:
+          this._type = Type$1.CLICK;
+          break;
+      }
+    };
+
+    Actionee.prototype.setClickType = function setClickType () {
+      this._type = Type$1.CLICK;
+    };
+
+    Actionee.prototype.listenActionClick = function listenActionClick (target) {
+      if (target) {
+        this._clickTarget = target;
+        this._clickTarget.addEventListener('click', this._handlingClick, { capture: true });
+      } else { this.listenClick({ capture: true }); }
+    };
+
+    Actionee.prototype.handleClick = function handleClick () {
+      this.act();
+    };
+
+    Actionee.prototype.setImpressionType = function setImpressionType () {
+      this._type = Type$1.IMPRESSION;
+    };
+
+    Actionee.prototype.rewind = function rewind () {
+      if (this._actionElement) { this._actionElement.rewind(); }
+    };
+
+    Actionee.prototype.act = function act (data) {
+      if ( data === void 0 ) data = {};
+
+      if (this._actionElement !== undefined) {
+        this._data.component_value = this.value;
+        this._actionElement.act(Object.assign(this._data, data));
+      }
+    };
+
+    Actionee.prototype.getFirstText = function getFirstText (node) {
+      if (!node) { node = this.node; }
+      if (node.childNodes && node.childNodes.length > 0) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          if (node.childNodes[i].nodeType === Node.TEXT_NODE) {
+            var text = node.childNodes[i].textContent.trim();
+            if (text) {
+              return this.cropText(text);
+            }
+          }
+        }
+
+        for (var i$1 = 0; i$1 < node.childNodes.length; i$1++) {
+          var text$1 = this.getFirstText(node.childNodes[i$1]);
+          if (text$1) {
+            return this.cropText(text$1);
+          }
+        }
+      }
+      return '';
+    };
+
+    Actionee.prototype.cropText = function cropText (text, length) {
+
+      return text.length > 50 ? ((text.substring(0, 50).trim()) + "[...]") : text;
+    };
+
+    Actionee.prototype.getInteractionLabel = function getInteractionLabel () {
+      var title = this.getAttribute('title');
+      if (title) { return this.cropText(title); }
+
+      var text = this.getFirstText();
+      if (text) { return text; }
+
+      var img = this.node.querySelector('img');
+      if (img) {
+        var alt = img.getAttribute('alt');
+        if (alt) { return this.cropText(alt); }
+      }
+
+      return null;
+    };
+
+    Actionee.prototype.getHeadingLabel = function getHeadingLabel (length) {
+      var this$1$1 = this;
+      if ( length === void 0 ) length = 6;
+
+      var selector = Array.from({ length: length }, function (v, i) { return ("h" + (i + 1)); }).join(',');
+      var headings = Array.from(this.querySelectorAll(selector)).filter(function (heading) { return (this$1$1.node.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_CONTAINED_BY) > 0; });
+      if (headings.length) {
+        for (var i = 0, list = headings; i < list.length; i += 1) {
+          var heading = list[i];
+
+          var text = this.getFirstText(heading);
+          if (text) { return text; }
+        }
+      }
+    };
+
+    Actionee.prototype.detectLevel = function detectLevel (node) {
+      if (!node) { node = this.node; }
+      var selector = Array.from({ length: 6 }, function (v, i) { return ("h" + (i + 1)); }).join(',');
+      var levels = Array.from(node.querySelectorAll(selector)).map(function (heading) { return Number(heading.tagName.charAt(1)); });
+      if (levels.length) { this._level = Math.min.apply(null, levels) - 1; }
+    };
+
+    Actionee.prototype.validate = function validate (target) {
+      return true;
+    };
+
+    prototypeAccessors.actionElement.get = function () {
+      return this._actionElement;
+    };
+
+    prototypeAccessors.label.get = function () {
+      return null;
+    };
+
+    prototypeAccessors.value.get = function () {
+      return this._value || this.label;
+    };
+
+    prototypeAccessors.value.set = function (value) {
+      this._value = value;
+    };
+
+    prototypeAccessors.isActionee.get = function () {
+      return true;
+    };
+
+    prototypeAccessors.level.get = function () {
+      return this._level;
+    };
+
+    prototypeAccessors.type.get = function () {
+      return this._type;
+    };
+
+    Actionee.prototype.dispose = function dispose () {
+      if (this._clickTarget) {
+        this._clickTarget.removeEventListener('click', this._handlingClick);
+      }
+      superclass.prototype.dispose.call(this);
+    };
+
+    Object.defineProperties( Actionee.prototype, prototypeAccessors );
+    Object.defineProperties( Actionee, staticAccessors );
+
+    return Actionee;
+  }(api.core.Instance));
+
+  var AttributeActionee = /*@__PURE__*/(function (Actionee) {
+    function AttributeActionee () {
+      Actionee.call(this, 100, '', null, true);
+    }
+
+    if ( Actionee ) AttributeActionee.__proto__ = Actionee;
+    AttributeActionee.prototype = Object.create( Actionee && Actionee.prototype );
+    AttributeActionee.prototype.constructor = AttributeActionee;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'AttributeActionee';
+    };
+
+    AttributeActionee.prototype.init = function init () {
+      this._attribute = this.registration.selector.replace(/[[\]]/g, '');
+      var id = this._attribute.split('-').pop();
+      this._type = Object.values(Type$1).filter(function (type) { return type.id === id; })[0];
+      this._title = this.getAttribute(this._attribute);
+      if (this._type === Type$1.CLICK) { this.detectInteractionType(); }
+
+      switch (this._type.method) {
+        case 'eventListener':
+          this.listen(this._type.event, this.handleEvent.bind(this));
+          break;
+
+        case 'change':
+          this.listen(this._type.event, this.handleChange.bind(this));
+          break;
+      }
+    };
+
+    AttributeActionee.prototype.handleEvent = function handleEvent (e) {
+      this._actionElement.act();
+    };
+
+    AttributeActionee.prototype.handleChange = function handleChange (e) {
+      this._actionElement.act({ change_value: e.target.value });
+    };
+
+    AttributeActionee.prototype.dispose = function dispose () {
+      this._actionElement.dispose();
+      Actionee.prototype.dispose.call(this);
+    };
+
+    Object.defineProperties( AttributeActionee, staticAccessors );
+
+    return AttributeActionee;
+  }(Actionee));
+
+  var integrateAttributes = function () {
+    Object.values(Type$1)
+      .filter(function (type) { return type.attributed; })
+      .forEach(function (type) { return api.internals.register(api.internals.ns.attr.selector(("analytics-" + (type.id))), AttributeActionee); });
+  };
+
+  var ButtonEmission = {
+    CLICK: api.internals.ns.emission('button', 'click')
+  };
+
+  var ComponentActionee = /*@__PURE__*/(function (Actionee) {
+    function ComponentActionee (priority) {
+      if ( priority === void 0 ) priority = -1;
+
+      Actionee.call(this, priority, 'dsfr_component');
+    }
+
+    if ( Actionee ) ComponentActionee.__proto__ = Actionee;
+    ComponentActionee.prototype = Object.create( Actionee && Actionee.prototype );
+    ComponentActionee.prototype.constructor = ComponentActionee;
+
+    var prototypeAccessors = { proxy: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ComponentActionee';
+    };
+
+    prototypeAccessors.proxy.get = function () {
+      var scope = this;
+
+      var proxyAccessors = {
+        get component () {
+          return scope.component;
+        }
+      };
+
+      return api.internals.property.completeAssign.call(this, Actionee.prototype.proxy, proxyAccessors);
+    };
+
+    ComponentActionee.prototype.setDiscloseType = function setDiscloseType () {
+      this._type = Type$1.DISCLOSE;
+    };
+
+    ComponentActionee.prototype.listenDisclose = function listenDisclose () {
+      this.listen(api.core.DisclosureEvent.DISCLOSE, this._handleDisclose.bind(this), { capture: true });
+    };
+
+    ComponentActionee.prototype._handleDisclose = function _handleDisclose () {
+      this.act();
+    };
+
+    ComponentActionee.prototype.setChangeType = function setChangeType () {
+      this._type = Type$1.CHANGE;
+    };
+
+    ComponentActionee.prototype.listenChange = function listenChange () {
+      this.listen('change', this._handleChange.bind(this), { capture: true });
+    };
+
+    ComponentActionee.prototype._handleChange = function _handleChange (e) {
+      if (e.target && e.target.value) {
+        this.setChangeValue(e);
+        this.act();
+      }
+    };
+
+    ComponentActionee.prototype.setChangeValue = function setChangeValue (e) {
+      this.value = e.target.value;
+    };
+
+    ComponentActionee.prototype.listenInputValidation = function listenInputValidation (node, type, isSendingInputValue) {
+      if ( type === void 0 ) type = Type$1.CLICK;
+      if ( isSendingInputValue === void 0 ) isSendingInputValue = false;
+
+      if (!node) { node = this.node; }
+      this._type = type;
+      this._isSendingInputValue = isSendingInputValue;
+      this.addAscent(ButtonEmission.CLICK, this._actValidatedInput.bind(this));
+      var button = this.element.getDescendantInstances('ButtonActionee', null, true)[0];
+      if (button) { button.isMuted = true; }
+      this._validatedInput = node.querySelector('input');
+      this._handlingInputValidation = this._handleInputValidation.bind(this);
+      if (this._validatedInput) { this._validatedInput.addEventListener('keydown', this._handlingInputValidation); }
+    };
+
+    ComponentActionee.prototype._handleInputValidation = function _handleInputValidation (e) {
+      if (e.keyCode === 13) { this._actValidatedInput(); }
+    };
+
+    ComponentActionee.prototype._actValidatedInput = function _actValidatedInput () {
+      if (this._isActingValidatedInput) { return; }
+      this._isActingValidatedInput = true;
+      if (this._isSendingInputValue) { this.value = this._validatedInput.value.trim(); }
+      this.act();
+      this.request(this._actedValidatedInput.bind(this));
+    };
+
+    ComponentActionee.prototype._actedValidatedInput = function _actedValidatedInput () {
+      this._isActingValidatedInput = false;
+    };
+
+    ComponentActionee.prototype.setCheckType = function setCheckType () {
+      this._type = Type$1.CHECK;
+    };
+
+    ComponentActionee.prototype.detectCheckableType = function detectCheckableType () {
+      var isChecked = this.node.checked;
+      this._type = isChecked ? Type$1.UNCHECK : Type$1.CHECK;
+    };
+
+    ComponentActionee.prototype.listenCheckable = function listenCheckable () {
+      this.listen('change', this._handleCheckable.bind(this), { capture: true });
+    };
+
+    ComponentActionee.prototype._handleCheckable = function _handleCheckable (e) {
+      if (e.target && e.target.value !== 'on') {
+        this.value = e.target.value;
+      }
+
+      switch (true) {
+        case this._type === Type$1.CHECK && e.target.checked:
+        case this._type === Type$1.UNCHECK && !e.target.checked:
+          this.act();
+          break;
+      }
+    };
+
+    ComponentActionee.prototype.detectPressableType = function detectPressableType () {
+      var isPressable = this.node.hasAttribute('aria-pressed');
+      if (isPressable) {
+        var isPressed = this.node.getAttribute('aria-pressed') === 'true';
+        this._type = isPressed ? Type$1.RELEASE : Type$1.PRESS;
+      }
+      return isPressable;
+    };
+
+    ComponentActionee.prototype.listenPressable = function listenPressable () {
+      this.listen('click', this._handlePressable.bind(this), { capture: true });
+    };
+
+    ComponentActionee.prototype._handlePressable = function _handlePressable (e) {
+      switch (true) {
+        case this._type === Type$1.PRESS && e.target.getAttribute('aria-pressed') === 'false':
+        case this._type === Type$1.RELEASE && e.target.getAttribute('aria-pressed') === 'true':
+          this.act();
+          break;
+      }
+    };
+
+    ComponentActionee.prototype.setDismissType = function setDismissType () {
+      this._type = Type$1.DISMISS;
+    };
+
+    prototypeAccessors.component.get = function () {
+      return null;
+    };
+
+    ComponentActionee.prototype.dispose = function dispose () {
+      if (this._validatedInput) {
+        this._validatedInput.removeEventListener('keydown', this._handlingInputValidation);
+      }
+
+      Actionee.prototype.dispose.call(this);
+    };
+
+    Object.defineProperties( ComponentActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ComponentActionee, staticAccessors );
+
+    return ComponentActionee;
+  }(Actionee));
+
+  var AccordionSelector = {
+    ACCORDION: api.internals.ns.selector('accordion'),
+    TITLE: api.internals.ns.selector('accordion__title')
+  };
+
+  var ID$y = 'accordion';
+
+  var AccordionButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function AccordionButtonActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) AccordionButtonActionee.__proto__ = ComponentActionee;
+    AccordionButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    AccordionButtonActionee.prototype.constructor = AccordionButtonActionee;
+
+    var prototypeAccessors = { button: { configurable: true },label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'AccordionButtonActionee';
+    };
+
+    AccordionButtonActionee.prototype.init = function init () {
+      this.isMuted = true;
+    };
+
+    prototypeAccessors.button.get = function () {
+      return this.element.getInstance('CollapseButton');
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'bouton d\'accordéon';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$y;
+    };
+
+    Object.defineProperties( AccordionButtonActionee.prototype, prototypeAccessors );
+    Object.defineProperties( AccordionButtonActionee, staticAccessors );
+
+    return AccordionButtonActionee;
+  }(ComponentActionee));
+
+  var AccordionActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function AccordionActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) AccordionActionee.__proto__ = ComponentActionee;
+    AccordionActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    AccordionActionee.prototype.constructor = AccordionActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'AccordionActionee';
+    };
+
+    AccordionActionee.prototype.init = function init () {
+      this.setDiscloseType();
+      this.wrapper = this.node.closest(AccordionSelector.ACCORDION);
+      this.detectLevel(this.wrapper);
+      this.register(("[aria-controls=\"" + (this.id) + "\"]"), AccordionButtonActionee);
+      this.listenDisclose();
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this.wrapper) {
+        var title = this.wrapper.querySelector(AccordionSelector.TITLE);
+        if (title) {
+          var text = this.getFirstText(title);
+          if (text) { return text; }
+        }
+      }
+      var instance = this.element.getInstance('Collapse');
+      if (instance) {
+        var button = instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+        if (button) {
+          var text$1 = this.getFirstText(button);
+          if (text$1) { return text$1; }
+        }
+      }
+      return 'accordéon';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$y;
+    };
+
+    AccordionActionee.prototype.dispose = function dispose () {
+      ComponentActionee.prototype.dispose.call(this);
+    };
+
+    Object.defineProperties( AccordionActionee.prototype, prototypeAccessors );
+    Object.defineProperties( AccordionActionee, staticAccessors );
+
+    return AccordionActionee;
+  }(ComponentActionee));
+
+  var integrateAccordion = function () {
+    if (api.accordion) {
+      api.internals.register(api.accordion.AccordionSelector.COLLAPSE, AccordionActionee);
+    }
+  };
+
+  var AlertSelector = {
+    ALERT: api.internals.ns.selector('alert'),
+    TITLE: api.internals.ns.selector('alert__title')
+  };
+
+  var ID$x = 'alert';
+
+  var AlertActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function AlertActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) AlertActionee.__proto__ = ComponentActionee;
+    AlertActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    AlertActionee.prototype.constructor = AlertActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'AlertActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var alertTitle = this.node.querySelector(AlertSelector.TITLE);
+      if (alertTitle) {
+        var text = this.getFirstText(alertTitle);
+        if (text) { return text; }
+      }
+      return 'alerte';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$x;
+    };
+
+    Object.defineProperties( AlertActionee.prototype, prototypeAccessors );
+    Object.defineProperties( AlertActionee, staticAccessors );
+
+    return AlertActionee;
+  }(ComponentActionee));
+
+  var integrateAlert = function () {
+    api.internals.register(AlertSelector.ALERT, AlertActionee);
+  };
+
+  var BreadcrumbSelector = {
+    LINK: ((api.internals.ns.selector('breadcrumb__link')) + ":not([aria-current])"),
+    COLLAPSE: ((api.internals.ns.selector('breadcrumb')) + " " + (api.internals.ns.selector('collapse')))
+  };
+
+  var ID$w = 'breadcrumb';
+
+  var BreadcrumbActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function BreadcrumbActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) BreadcrumbActionee.__proto__ = ComponentActionee;
+    BreadcrumbActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    BreadcrumbActionee.prototype.constructor = BreadcrumbActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'BreadcrumbActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'fil d\'ariane';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$w;
+    };
+
+    Object.defineProperties( BreadcrumbActionee.prototype, prototypeAccessors );
+    Object.defineProperties( BreadcrumbActionee, staticAccessors );
+
+    return BreadcrumbActionee;
+  }(ComponentActionee));
+
+  var BreadcrumbLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function BreadcrumbLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) BreadcrumbLinkActionee.__proto__ = ComponentActionee;
+    BreadcrumbLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    BreadcrumbLinkActionee.prototype.constructor = BreadcrumbLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'BreadcrumbLinkActionee';
+    };
+
+    BreadcrumbLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    BreadcrumbLinkActionee.prototype.handleClick = function handleClick () {
+      this.act();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+      return 'lien fil d\'ariane';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return null;
+    };
+
+    Object.defineProperties( BreadcrumbLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( BreadcrumbLinkActionee, staticAccessors );
+
+    return BreadcrumbLinkActionee;
+  }(ComponentActionee));
+
+  var integrateBreadcrumb = function () {
+    if (api.breadcrumb) {
+      api.internals.register(BreadcrumbSelector.COLLAPSE, BreadcrumbActionee);
+      api.internals.register(BreadcrumbSelector.LINK, BreadcrumbLinkActionee);
+    }
+  };
+
+  var ButtonSelector = {
+    BUTTON: ((api.internals.ns.selector('btn')) + ":not(" + (api.internals.ns.selector('btn--close')) + ")")
+  };
+
+  var ID$v = 'button';
+
+  var ButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ButtonActionee () {
+      ComponentActionee.call(this, 1);
+      this._data = {};
+    }
+
+    if ( ComponentActionee ) ButtonActionee.__proto__ = ComponentActionee;
+    ButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ButtonActionee.prototype.constructor = ButtonActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ButtonActionee';
+    };
+
+    ButtonActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    ButtonActionee.prototype.handleClick = function handleClick () {
+      this.ascend(ButtonEmission.CLICK);
+      this.act();
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this.node.tagName === 'input') {
+        switch (this.node.type) {
+          case 'button':
+          case 'submit':
+            if (this.hasAttribute('value')) { return this.getAttribute('value'); }
+        }
+      }
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+      return 'bouton';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$v;
+    };
+
+    Object.defineProperties( ButtonActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ButtonActionee, staticAccessors );
+
+    return ButtonActionee;
+  }(ComponentActionee));
+
+  var integrateButton = function () {
+    api.internals.register(ButtonSelector.BUTTON, ButtonActionee);
+  };
+
+  var CalloutSelector = {
+    CALLOUT: api.internals.ns.selector('callout'),
+    TITLE: api.internals.ns.selector('callout__title')
+  };
+
+  var ID$u = 'callout';
+
+  var CalloutActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function CalloutActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) CalloutActionee.__proto__ = ComponentActionee;
+    CalloutActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    CalloutActionee.prototype.constructor = CalloutActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'CalloutActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var calloutTitle = this.node.querySelector(CalloutSelector.TITLE);
+      if (calloutTitle) {
+        var text = this.getFirstText(calloutTitle);
+        if (text) { return text; }
+      }
+
+      return 'mise en avant';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$u;
+    };
+
+    Object.defineProperties( CalloutActionee.prototype, prototypeAccessors );
+    Object.defineProperties( CalloutActionee, staticAccessors );
+
+    return CalloutActionee;
+  }(ComponentActionee));
+
+  var integrateCallout = function () {
+    api.internals.register(CalloutSelector.CALLOUT, CalloutActionee);
+  };
+
+  var CardSelector = {
+    CARD: api.internals.ns.selector('card'),
+    LINK: ((api.internals.ns.selector('card__title')) + " a, " + (api.internals.ns.selector('card__title')) + " button"),
+    TITLE: api.internals.ns.selector('card__title')
+  };
+
+  var ID$t = 'card';
+
+  var CardActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function CardActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) CardActionee.__proto__ = ComponentActionee;
+    CardActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    CardActionee.prototype.constructor = CardActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'CardActionee';
+    };
+
+    CardActionee.prototype.init = function init () {
+      var link = this.node.querySelector(CardSelector.LINK);
+      if (link) {
+        this.link = link;
+        this.detectInteractionType(link);
+        this.listenActionClick(link);
+      }
+    };
+
+    prototypeAccessors.label.get = function () {
+      var cardTitle = this.node.querySelector(CardSelector.TITLE);
+      if (cardTitle) {
+        var text = this.getFirstText(cardTitle);
+        if (text) { return text; }
+      }
+
+      var heading = this.getHeadingLabel();
+      if (heading) { return heading; }
+
+      return 'carte';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$t;
+    };
+
+    Object.defineProperties( CardActionee.prototype, prototypeAccessors );
+    Object.defineProperties( CardActionee, staticAccessors );
+
+    return CardActionee;
+  }(ComponentActionee));
+
+  var integrateCard = function () {
+    api.internals.register(CardSelector.CARD, CardActionee);
+  };
+
+  var CheckboxSelector = {
+    INPUT: api.internals.ns.selector('checkbox-group [type="checkbox"]')
+  };
+
+  var ID$s = 'checkbox';
+
+  var CheckboxActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function CheckboxActionee () {
+      ComponentActionee.call(this, 1);
+      this._data = {};
+    }
+
+    if ( ComponentActionee ) CheckboxActionee.__proto__ = ComponentActionee;
+    CheckboxActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    CheckboxActionee.prototype.constructor = CheckboxActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'CheckboxActionee';
+    };
+
+    CheckboxActionee.prototype.init = function init () {
+      this.detectCheckableType();
+      this.listenCheckable();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var label = this.node.parentNode.querySelector(api.internals.ns.selector('label'));
+      if (label) {
+        var text = this.getFirstText(label);
+        if (text) { return text; }
+      }
+      return 'case à cocher';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$s;
+    };
+
+    Object.defineProperties( CheckboxActionee.prototype, prototypeAccessors );
+    Object.defineProperties( CheckboxActionee, staticAccessors );
+
+    return CheckboxActionee;
+  }(ComponentActionee));
+
+  var integrateCheckbox = function () {
+    api.internals.register(CheckboxSelector.INPUT, CheckboxActionee);
+  };
+
+  var ConnectSelector = {
+    CONNECT: api.internals.ns.selector('connect'),
+    LINK: api.internals.ns.selector('connect + * a, connect + a')
+  };
+
+  var ID$r = 'connect';
+
+  var ConnectActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ConnectActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) ConnectActionee.__proto__ = ComponentActionee;
+    ConnectActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ConnectActionee.prototype.constructor = ConnectActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ConnectActionee';
+    };
+
+    ConnectActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this.node.classList.contains('fr-connect--plus')) { return 'FranceConnect+'; }
+      return 'FranceConnect';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$r;
+    };
+
+    Object.defineProperties( ConnectActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ConnectActionee, staticAccessors );
+
+    return ConnectActionee;
+  }(ComponentActionee));
+
+  var ConnectLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ConnectLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) ConnectLinkActionee.__proto__ = ComponentActionee;
+    ConnectLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ConnectLinkActionee.prototype.constructor = ConnectLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ConnectLinkActionee';
+    };
+
+    ConnectLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      return this.getFirstText() || 'qu\'est-ce que FranceConnect ?';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$r;
+    };
+
+    Object.defineProperties( ConnectLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ConnectLinkActionee, staticAccessors );
+
+    return ConnectLinkActionee;
+  }(ComponentActionee));
+
+  var integrateConnect = function () {
+    api.internals.register(ConnectSelector.CONNECT, ConnectActionee);
+    api.internals.register(ConnectSelector.LINK, ConnectLinkActionee);
+  };
+
+  var ConsentSelector = {
+    BANNER: api.internals.ns.selector('consent-banner')
+  };
+
+  var ID$q = 'consent';
+
+  var ConsentActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ConsentActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) ConsentActionee.__proto__ = ComponentActionee;
+    ConsentActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ConsentActionee.prototype.constructor = ConsentActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ConsentActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'gestionnaire de consentement';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$q;
+    };
+
+    Object.defineProperties( ConsentActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ConsentActionee, staticAccessors );
+
+    return ConsentActionee;
+  }(ComponentActionee));
+
+  var integrateConsent = function () {
+    api.internals.register(ConsentSelector.BANNER, ConsentActionee);
+  };
+
+  var DownloadSelector = {
+    LINK: api.internals.ns.selector('download__link')
+  };
+
+  var ID$p = 'download';
+
+  var DownloadActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function DownloadActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) DownloadActionee.__proto__ = ComponentActionee;
+    DownloadActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    DownloadActionee.prototype.constructor = DownloadActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'DownloadActionee';
+    };
+
+    DownloadActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var text = this.getFirstText();
+      if (text) { return text; }
+      return 'téléchargement';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$p;
+    };
+
+    Object.defineProperties( DownloadActionee.prototype, prototypeAccessors );
+    Object.defineProperties( DownloadActionee, staticAccessors );
+
+    return DownloadActionee;
+  }(ComponentActionee));
+
+  var integrateDownload = function () {
+    api.internals.register(DownloadSelector.LINK, DownloadActionee);
+  };
+
+  var FollowSelector = {
+    FOLLOW: api.internals.ns.selector('follow'),
+    NEWSLETTER_INPUT_GROUP: api.internals.ns.selector('follow__newsletter') + ' ' + api.internals.ns.selector('input-group')
+  };
+
+  var ID$o = 'follow';
+
+  var FollowActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function FollowActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) FollowActionee.__proto__ = ComponentActionee;
+    FollowActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    FollowActionee.prototype.constructor = FollowActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'FollowActionee';
+    };
+
+    FollowActionee.prototype.init = function init () {
+      this._inputGroup = this.querySelector(FollowSelector.NEWSLETTER_INPUT_GROUP);
+      if (this._inputGroup) {
+        this.listenInputValidation(this._inputGroup, Type$1.SUBSCRIBE);
+        var input = this.element.getDescendantInstances('InputActionee', null, true)[0];
+        if (input) { input.isMuted = true; }
+      }
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'lettre d\'information et réseaux sociaux';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$o;
+    };
+
+    Object.defineProperties( FollowActionee.prototype, prototypeAccessors );
+    Object.defineProperties( FollowActionee, staticAccessors );
+
+    return FollowActionee;
+  }(ComponentActionee));
+
+  var integrateFollow = function () {
+    api.internals.register(FollowSelector.FOLLOW, FollowActionee);
+  };
+
+  var FooterSelector = {
+    FOOTER: api.internals.ns.selector('footer'),
+    FOOTER_LINKS: ((api.internals.ns.selector('footer')) + " a[href], " + (api.internals.ns.selector('footer')) + " button")
+  };
+
+  var ID$n = 'footer';
+
+  var FooterActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function FooterActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) FooterActionee.__proto__ = ComponentActionee;
+    FooterActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    FooterActionee.prototype.constructor = FooterActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'FooterActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'pied de page';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$n;
+    };
+
+    Object.defineProperties( FooterActionee.prototype, prototypeAccessors );
+    Object.defineProperties( FooterActionee, staticAccessors );
+
+    return FooterActionee;
+  }(ComponentActionee));
+
+  var FooterLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function FooterLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) FooterLinkActionee.__proto__ = ComponentActionee;
+    FooterLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    FooterLinkActionee.prototype.constructor = FooterLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'FooterLinkActionee';
+    };
+
+    FooterLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var label = this.getInteractionLabel();
+      if (label) { return label; }
+
+      return 'lien pied de page';
+    };
+
+    Object.defineProperties( FooterLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( FooterLinkActionee, staticAccessors );
+
+    return FooterLinkActionee;
+  }(ComponentActionee));
+
+  var integrateFooter = function () {
+    api.internals.register(FooterSelector.FOOTER, FooterActionee);
+    api.internals.register(FooterSelector.FOOTER_LINKS, FooterLinkActionee);
+  };
+
+  var ID$m = 'header';
+
+  var HeaderActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HeaderActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) HeaderActionee.__proto__ = ComponentActionee;
+    HeaderActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HeaderActionee.prototype.constructor = HeaderActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HeaderActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'en-tête';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$m;
+    };
+
+    Object.defineProperties( HeaderActionee.prototype, prototypeAccessors );
+    Object.defineProperties( HeaderActionee, staticAccessors );
+
+    return HeaderActionee;
+  }(ComponentActionee));
+
+  var HeaderModalButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HeaderModalButtonActionee () {
+      ComponentActionee.call(this, 4);
+    }
+
+    if ( ComponentActionee ) HeaderModalButtonActionee.__proto__ = ComponentActionee;
+    HeaderModalButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HeaderModalButtonActionee.prototype.constructor = HeaderModalButtonActionee;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HeaderModalButtonActionee';
+    };
+
+    Object.defineProperties( HeaderModalButtonActionee, staticAccessors );
+
+    return HeaderModalButtonActionee;
+  }(ComponentActionee));
+
+  var HeaderModalActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HeaderModalActionee () {
+      ComponentActionee.call(this, 0);
+    }
+
+    if ( ComponentActionee ) HeaderModalActionee.__proto__ = ComponentActionee;
+    HeaderModalActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HeaderModalActionee.prototype.constructor = HeaderModalActionee;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HeaderModalActionee';
+    };
+
+    HeaderModalActionee.prototype.init = function init () {
+      if (this.isBreakpoint(api.core.Breakpoints.LG)) {
+        this.setPriority(4);
+        this.register(("[aria-controls=\"" + (this.id) + "\"]"), HeaderModalButtonActionee);
+      }
+    };
+
+    Object.defineProperties( HeaderModalActionee, staticAccessors );
+
+    return HeaderModalActionee;
+  }(ComponentActionee));
+
+  var HeaderSelector = {
+    TOOLS_BUTTON: ((api.internals.ns.selector('header__tools-links')) + " " + (api.internals.ns.selector('btns-group')) + " " + (api.internals.ns.selector('btn'))),
+    MENU_BUTTON: ((api.internals.ns.selector('header__menu-links')) + " " + (api.internals.ns.selector('btns-group')) + " " + (api.internals.ns.selector('btn')))
+  };
+
+  var HeaderToolsButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HeaderToolsButtonActionee () {
+      ComponentActionee.call(this, 4);
+    }
+
+    if ( ComponentActionee ) HeaderToolsButtonActionee.__proto__ = ComponentActionee;
+    HeaderToolsButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HeaderToolsButtonActionee.prototype.constructor = HeaderToolsButtonActionee;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HeaderToolsButtonActionee';
+    };
+
+    HeaderToolsButtonActionee.prototype.init = function init () {
+      if (this.isBreakpoint(api.core.Breakpoints.LG)) { this._priority = -1; }
+    };
+
+    Object.defineProperties( HeaderToolsButtonActionee, staticAccessors );
+
+    return HeaderToolsButtonActionee;
+  }(ComponentActionee));
+
+  var HeaderMenuButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HeaderMenuButtonActionee () {
+      ComponentActionee.apply(this, arguments);
+    }
+
+    if ( ComponentActionee ) HeaderMenuButtonActionee.__proto__ = ComponentActionee;
+    HeaderMenuButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HeaderMenuButtonActionee.prototype.constructor = HeaderMenuButtonActionee;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HeaderMenuButtonActionee';
+    };
+
+    HeaderMenuButtonActionee.prototype.init = function init () {
+      if (this.isBreakpoint(api.core.Breakpoints.LG)) { this.setPriority(4); }
+    };
+
+    Object.defineProperties( HeaderMenuButtonActionee, staticAccessors );
+
+    return HeaderMenuButtonActionee;
+  }(ComponentActionee));
+
+  var integrateHeader = function () {
+    if (api.header) {
+      api.internals.register(api.header.HeaderSelector.HEADER, HeaderActionee);
+      api.internals.register(api.header.HeaderSelector.MODALS, HeaderModalActionee);
+      api.internals.register(HeaderSelector.TOOLS_BUTTON, HeaderToolsButtonActionee);
+      api.internals.register(HeaderSelector.MENU_BUTTON, HeaderMenuButtonActionee);
+    }
+  };
+
+  var HighlightSelector = {
+    HIGHLIGHT: api.internals.ns.selector('highlight')
+  };
+
+  var ID$l = 'highlight';
+
+  var HighlightActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function HighlightActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) HighlightActionee.__proto__ = ComponentActionee;
+    HighlightActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    HighlightActionee.prototype.constructor = HighlightActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'HighlightActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'mise en exergue';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$l;
+    };
+
+    Object.defineProperties( HighlightActionee.prototype, prototypeAccessors );
+    Object.defineProperties( HighlightActionee, staticAccessors );
+
+    return HighlightActionee;
+  }(ComponentActionee));
+
+  var integrateHighlight = function () {
+    api.internals.register(HighlightSelector.HIGHLIGHT, HighlightActionee);
+  };
+
+  var LinkSelector = {
+    LINK: api.internals.ns.selector('link')
+  };
+
+  var ID$k = 'link';
+
+  var LinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function LinkActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) LinkActionee.__proto__ = ComponentActionee;
+    LinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    LinkActionee.prototype.constructor = LinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'LinkActionee';
+    };
+
+    LinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'lien';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$k;
+    };
+
+    Object.defineProperties( LinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( LinkActionee, staticAccessors );
+
+    return LinkActionee;
+  }(ComponentActionee));
+
+  var integrateLink = function () {
+    api.internals.register(LinkSelector.LINK, LinkActionee);
+  };
+
+  var InputSelector = {
+    INPUT: api.internals.ns.selector('input-group')
+  };
+
+  var ID$j = 'input';
+
+  var InputActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function InputActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) InputActionee.__proto__ = ComponentActionee;
+    InputActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    InputActionee.prototype.constructor = InputActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'InputActionee';
+    };
+
+    InputActionee.prototype.init = function init () {
+      this._input = this.querySelector(api.internals.ns.selector('input'));
+      this._label = this.querySelector(api.internals.ns.selector('label'));
+      this._inputWrap = this.querySelector(api.internals.ns.selector('input-wrap'));
+
+      if (this._inputWrap) { this.listenInputValidation(this._inputWrap); }
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this._label) {
+        var text = this.getFirstText(this._label);
+        if (text) { return text; }
+      }
+
+      return 'champ de saisie';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$j;
+    };
+
+    Object.defineProperties( InputActionee.prototype, prototypeAccessors );
+    Object.defineProperties( InputActionee, staticAccessors );
+
+    return InputActionee;
+  }(ComponentActionee));
+
+  var integrateInput = function () {
+    api.internals.register(InputSelector.INPUT, InputActionee);
+  };
+
+  var ModalSelector = {
+    TITLE: api.internals.ns.selector('modal__title')
+  };
+
+  var ID$i = 'modal';
+
+  var ModalActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ModalActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) ModalActionee.__proto__ = ComponentActionee;
+    ModalActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ModalActionee.prototype.constructor = ModalActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ModalActionee';
+    };
+
+    ModalActionee.prototype.init = function init () {
+      this.setDiscloseType();
+      this.detectLevel();
+      this.listenDisclose();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var title = this.node.querySelector(ModalSelector.TITLE);
+
+      if (title) {
+        var text = this.getFirstText(title);
+        if (text) { return text; }
+      }
+
+      var heading = this.getHeadingLabel(2);
+      if (heading) { return heading; }
+
+      var instance = this.element.getInstance('Modal');
+      if (instance) {
+        var button = instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+        if (button) {
+          var text$1 = this.getFirstText(button.node);
+          if (text$1) { return text$1; }
+        }
+      }
+      return 'modale';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$i;
+    };
+
+    Object.defineProperties( ModalActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ModalActionee, staticAccessors );
+
+    return ModalActionee;
+  }(ComponentActionee));
+
+  var integrateModal = function () {
+    if (api.modal) {
+      api.internals.register(api.modal.ModalSelector.MODAL, ModalActionee);
+    }
+  };
+
+  var NavigationActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function NavigationActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) NavigationActionee.__proto__ = ComponentActionee;
+    NavigationActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    NavigationActionee.prototype.constructor = NavigationActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'NavigationActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'navigation';
+    };
+
+    Object.defineProperties( NavigationActionee.prototype, prototypeAccessors );
+    Object.defineProperties( NavigationActionee, staticAccessors );
+
+    return NavigationActionee;
+  }(ComponentActionee));
+
+  var NavigationSelector = {
+    LINK: api.internals.ns.selector('nav__link'),
+    BUTTON: api.internals.ns.selector('nav__btn')
+  };
+
+  var ID$h = 'navigation';
+
+  var NavigationLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function NavigationLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) NavigationLinkActionee.__proto__ = ComponentActionee;
+    NavigationLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    NavigationLinkActionee.prototype.constructor = NavigationLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'NavigationLinkActionee';
+    };
+
+    NavigationLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'lien de navigation';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$h;
+    };
+
+    Object.defineProperties( NavigationLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( NavigationLinkActionee, staticAccessors );
+
+    return NavigationLinkActionee;
+  }(ComponentActionee));
+
+  var NavigationSectionActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function NavigationSectionActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) NavigationSectionActionee.__proto__ = ComponentActionee;
+    NavigationSectionActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    NavigationSectionActionee.prototype.constructor = NavigationSectionActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'NavigationSectionActionee';
+    };
+
+    NavigationSectionActionee.prototype.init = function init () {
+      this._wrapper = this.node.closest(api.navigation.NavigationSelector.ITEM);
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this._wrapper) {
+        var button = this._wrapper.querySelector(NavigationSelector.BUTTON);
+        if (button) {
+          var text = this.getFirstText(button);
+          if (text) { return text; }
+        }
+      }
+
+      var instance = this.element.getInstance('Collapse');
+      if (instance) {
+        var button$1 = instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+        if (button$1) {
+          var text$1 = this.getFirstText(button$1);
+          if (text$1) { return text$1; }
+        }
+      }
+      return 'section de navigation';
+    };
+
+    Object.defineProperties( NavigationSectionActionee.prototype, prototypeAccessors );
+    Object.defineProperties( NavigationSectionActionee, staticAccessors );
+
+    return NavigationSectionActionee;
+  }(ComponentActionee));
+
+  var integrateNavigation = function () {
+    if (api.navigation) {
+      api.internals.register(api.navigation.NavigationSelector.NAVIGATION, NavigationActionee);
+      api.internals.register(NavigationSelector.LINK, NavigationLinkActionee);
+      api.internals.register(api.navigation.NavigationSelector.COLLAPSE, NavigationSectionActionee);
+    }
+  };
+
+  var NoticeSelector = {
+    NOTICE: api.internals.ns.selector('notice'),
+    TITLE: api.internals.ns.selector('notice__title'),
+    LINK: api.internals.ns.selector('notice a')
+  };
+
+  var ID$g = 'notice';
+
+  var NoticeActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function NoticeActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) NoticeActionee.__proto__ = ComponentActionee;
+    NoticeActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    NoticeActionee.prototype.constructor = NoticeActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'NoticeActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var noticeTitle = this.node.querySelector(NoticeSelector.TITLE);
+      if (noticeTitle) {
+        var firstText = this.getFirstText(noticeTitle);
+        if (firstText) { return firstText; }
+      }
+
+      return 'bandeau d\'information importante';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$g;
+    };
+
+    Object.defineProperties( NoticeActionee.prototype, prototypeAccessors );
+    Object.defineProperties( NoticeActionee, staticAccessors );
+
+    return NoticeActionee;
+  }(ComponentActionee));
+
+  var NoticeLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function NoticeLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) NoticeLinkActionee.__proto__ = ComponentActionee;
+    NoticeLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    NoticeLinkActionee.prototype.constructor = NoticeLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'NoticeLinkActionee';
+    };
+
+    NoticeLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'lien de bandeau d\'information importante';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$g;
+    };
+
+    Object.defineProperties( NoticeLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( NoticeLinkActionee, staticAccessors );
+
+    return NoticeLinkActionee;
+  }(ComponentActionee));
+
+  var integrateNotice = function () {
+    api.internals.register(NoticeSelector.NOTICE, NoticeActionee);
+    api.internals.register(NoticeSelector.LINK, NoticeLinkActionee);
+  };
+
+  var PaginationSelector = {
+    PAGINATION: api.internals.ns.selector('pagination'),
+    LINK: api.internals.ns.selector('pagination__link'),
+    NEXT_LINK: api.internals.ns.selector('pagination__link--next'),
+    LAST_LINK: api.internals.ns.selector('pagination__link--last'),
+    ANALYTICS_TOTAL: api.internals.ns.attr('analytics-page-total'),
+    CURRENT: '[aria-current="page"]'
+  };
+
+  var ID$f = 'pagination';
+
+  var PaginationActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function PaginationActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) PaginationActionee.__proto__ = ComponentActionee;
+    PaginationActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    PaginationActionee.prototype.constructor = PaginationActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'PaginationActionee';
+    };
+
+    PaginationActionee.prototype.init = function init () {
+      this.setPagination();
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'pagination';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$f;
+    };
+
+    PaginationActionee.prototype.setPagination = function setPagination () {
+      var currentLink = this.node.querySelector(PaginationSelector.CURRENT);
+      if (!currentLink) { return; }
+      var currentLabel = this.getFirstText(currentLink);
+      if (!currentLabel) { return; }
+      var current = this.getInt(currentLabel);
+      if (isNaN(current)) { return; }
+      api.analytics.page.current = current;
+
+      var total = this.getTotalPage();
+      if (isNaN(total)) { return; }
+      api.analytics.page.total = total;
+    };
+
+    PaginationActionee.prototype.getTotalPage = function getTotalPage () {
+      var attr = parseInt(this.node.getAttribute(PaginationSelector.ANALYTICS_TOTAL));
+      if (!isNaN(attr)) { return attr; }
+      var links = this.node.querySelectorAll(((PaginationSelector.LINK) + ":not(" + (PaginationSelector.NEXT_LINK) + "):not(" + (PaginationSelector.LAST_LINK) + ")"));
+      if (!links) { return null; }
+      var totalLabel = this.getFirstText(links[links.length - 1]);
+      if (!totalLabel) { return null; }
+      return this.getInt(totalLabel);
+    };
+
+    PaginationActionee.prototype.getInt = function getInt (val) {
+      var ints = val.match(/\d+/);
+      if (!ints || ints.length === 0) { return null; }
+      return parseInt(ints[0]);
+    };
+
+    Object.defineProperties( PaginationActionee.prototype, prototypeAccessors );
+    Object.defineProperties( PaginationActionee, staticAccessors );
+
+    return PaginationActionee;
+  }(ComponentActionee));
+
+  var PaginationLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function PaginationLinkActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) PaginationLinkActionee.__proto__ = ComponentActionee;
+    PaginationLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    PaginationLinkActionee.prototype.constructor = PaginationLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'PaginationLinkActionee';
+    };
+
+    PaginationLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+      return 'lien pagination';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return null;
+    };
+
+    Object.defineProperties( PaginationLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( PaginationLinkActionee, staticAccessors );
+
+    return PaginationLinkActionee;
+  }(ComponentActionee));
+
+  var integratePagination = function () {
+    api.internals.register(PaginationSelector.PAGINATION, PaginationActionee);
+    api.internals.register(PaginationSelector.LINK, PaginationLinkActionee);
+  };
+
+  var QuoteSelector = {
+    QUOTE: api.internals.ns.selector('quote')
+  };
+
+  var ID$e = 'quote';
+
+  var QuoteActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function QuoteActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) QuoteActionee.__proto__ = ComponentActionee;
+    QuoteActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    QuoteActionee.prototype.constructor = QuoteActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'QuoteActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var blockquote = this.node.querySelector('blockquote');
+      if (blockquote) {
+        var firstText = this.getFirstText(blockquote);
+        if (firstText) {
+          return firstText;
+        }
+      }
+      return 'citation';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$e;
+    };
+
+    Object.defineProperties( QuoteActionee.prototype, prototypeAccessors );
+    Object.defineProperties( QuoteActionee, staticAccessors );
+
+    return QuoteActionee;
+  }(ComponentActionee));
+
+  var integrateQuote = function () {
+    api.internals.register(QuoteSelector.QUOTE, QuoteActionee);
+  };
+
+  var RadioSelector = {
+    INPUT: api.internals.ns.selector('radio-group [type="radio"]')
+  };
+
+  var FormSelector = {
+    LABEL: api.internals.ns.selector('label'),
+    FIELDSET: api.internals.ns.selector('fieldset'),
+    LEGEND: api.internals.ns.selector('fieldset__legend')
+  };
+
+  var ID$d = 'radio';
+
+  var RadioActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function RadioActionee () {
+      ComponentActionee.call(this, 1);
+      this._data = {};
+    }
+
+    if ( ComponentActionee ) RadioActionee.__proto__ = ComponentActionee;
+    RadioActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    RadioActionee.prototype.constructor = RadioActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'RadioActionee';
+    };
+
+    RadioActionee.prototype.init = function init () {
+      this.setCheckType();
+      this.listenCheckable();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var parts = [];
+      var fieldset = this.node.closest(FormSelector.FIELDSET);
+      if (fieldset) {
+        var legend = fieldset.querySelector(FormSelector.LEGEND);
+        if (legend) {
+          var firstTextLegend = this.getFirstText(legend);
+          if (firstTextLegend) { parts.push(firstTextLegend); }
+        }
+      }
+      var label = this.node.parentNode.querySelector(api.internals.ns.selector('label'));
+      if (label) {
+        var firstTextLabel = this.getFirstText(label);
+        if (firstTextLabel) { parts.push(firstTextLabel); }
+      }
+      return parts.join(' › ');
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$d;
+    };
+
+    Object.defineProperties( RadioActionee.prototype, prototypeAccessors );
+    Object.defineProperties( RadioActionee, staticAccessors );
+
+    return RadioActionee;
+  }(ComponentActionee));
+
+  var integrateRadio = function () {
+    api.internals.register(RadioSelector.INPUT, RadioActionee);
+  };
+
+  var SearchSelector = {
+    SEARCH_BAR: api.internals.ns.selector('search-bar')
+  };
+
+  var ID$c = 'search';
+
+  var SearchActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SearchActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) SearchActionee.__proto__ = ComponentActionee;
+    SearchActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SearchActionee.prototype.constructor = SearchActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SearchActionee';
+    };
+
+    SearchActionee.prototype.init = function init () {
+      this.listenInputValidation(this.node, Type$1.SEARCH, true);
+    };
+
+    prototypeAccessors.label.get = function () {
+      return 'barre de recherche';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$c;
+    };
+
+    Object.defineProperties( SearchActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SearchActionee, staticAccessors );
+
+    return SearchActionee;
+  }(ComponentActionee));
+
+  var integrateSearch = function () {
+    api.internals.register(SearchSelector.SEARCH_BAR, SearchActionee);
+  };
+
+  var SelectSelector = {
+    SELECT: api.internals.ns.selector('select')
+  };
+
+  var ID$b = 'select';
+
+  var SelectActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SelectActionee () {
+      ComponentActionee.call(this, 1);
+      this._data = {};
+    }
+
+    if ( ComponentActionee ) SelectActionee.__proto__ = ComponentActionee;
+    SelectActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SelectActionee.prototype.constructor = SelectActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SelectActionee';
+    };
+
+    SelectActionee.prototype.init = function init () {
+      this.setChangeType();
+      this.listenChange();
+    };
+
+    SelectActionee.prototype.setChangeValue = function setChangeValue (e) {
+      if (!e.target || !e.target.selectedOptions) { return; }
+      var value = Array.from(e.target.selectedOptions).map(function (option) { return option.text; }).join(' - ');
+      if (value) { this.value = value; }
+    };
+
+    prototypeAccessors.label.get = function () {
+      var label = this.node.parentNode.querySelector(api.internals.ns.selector('label'));
+      if (label) {
+        var firstText = this.getFirstText(label);
+        if (firstText) { return firstText; }
+      }
+
+      return 'liste déroulante';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$b;
+    };
+
+    Object.defineProperties( SelectActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SelectActionee, staticAccessors );
+
+    return SelectActionee;
+  }(ComponentActionee));
+
+  var integrateSelect = function () {
+    api.internals.register(SelectSelector.SELECT, SelectActionee);
+  };
+
+  var ShareSelector = {
+    SHARE: api.internals.ns.selector('share'),
+    TITLE: api.internals.ns.selector('share__title')
+  };
+
+  var ID$a = 'share';
+
+  var ShareActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ShareActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) ShareActionee.__proto__ = ComponentActionee;
+    ShareActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ShareActionee.prototype.constructor = ShareActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ShareActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var title = this.querySelector(ShareSelector.TITLE);
+      if (title) {
+        var firstText = this.getFirstText(title);
+        if (firstText) { return firstText; }
+      }
+      return 'boutons de partage';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$a;
+    };
+
+    Object.defineProperties( ShareActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ShareActionee, staticAccessors );
+
+    return ShareActionee;
+  }(ComponentActionee));
+
+  var integrateShare = function () {
+    api.internals.register(ShareSelector.SHARE, ShareActionee);
+  };
+
+  var SidemenuSelector = {
+    SIDEMENU: api.internals.ns.selector('sidemenu'),
+    ITEM: api.internals.ns.selector('sidemenu__item'),
+    LINK: api.internals.ns.selector('sidemenu__link'),
+    BUTTON: api.internals.ns.selector('sidemenu__btn'),
+    TITLE: api.internals.ns.selector('sidemenu__title')
+  };
+
+  var SidemenuActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SidemenuActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) SidemenuActionee.__proto__ = ComponentActionee;
+    SidemenuActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SidemenuActionee.prototype.constructor = SidemenuActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SidemenuActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var sidemenu = this.node.closest(SidemenuSelector.SIDEMENU);
+      if (sidemenu) {
+        var title = sidemenu.querySelector(SidemenuSelector.TITLE);
+        if (title) {
+          var firstText = this.getFirstText(title);
+          if (firstText) { return firstText; }
+        }
+      }
+
+      return 'menu Latéral';
+    };
+
+    Object.defineProperties( SidemenuActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SidemenuActionee, staticAccessors );
+
+    return SidemenuActionee;
+  }(ComponentActionee));
+
+  var ID$9 = 'sidemenu';
+
+  var SidemenuLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SidemenuLinkActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) SidemenuLinkActionee.__proto__ = ComponentActionee;
+    SidemenuLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SidemenuLinkActionee.prototype.constructor = SidemenuLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SidemenuLinkActionee';
+    };
+
+    SidemenuLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'lien menu latéral';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$9;
+    };
+
+    Object.defineProperties( SidemenuLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SidemenuLinkActionee, staticAccessors );
+
+    return SidemenuLinkActionee;
+  }(ComponentActionee));
+
+  var SidemenuSectionActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SidemenuSectionActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) SidemenuSectionActionee.__proto__ = ComponentActionee;
+    SidemenuSectionActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SidemenuSectionActionee.prototype.constructor = SidemenuSectionActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SidemenuSectionActionee';
+    };
+
+    SidemenuSectionActionee.prototype.init = function init () {
+      this._wrapper = this.node.closest(SidemenuSelector.ITEM);
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this._wrapper) {
+        var button = this._wrapper.querySelector(SidemenuSelector.BUTTON);
+        if (button) {
+          var firstText = this.getFirstText(button);
+          if (firstText) { return firstText; }
+        }
+      }
+      var instance = this.element.getInstance('Collapse');
+      if (instance) {
+        var button$1 = instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+        if (button$1) {
+          var firstTextBtn = this.getFirstText(button$1);
+          if (firstTextBtn) { return firstTextBtn; }
+        }
+      }
+      return 'section menu latéral';
+    };
+
+    Object.defineProperties( SidemenuSectionActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SidemenuSectionActionee, staticAccessors );
+
+    return SidemenuSectionActionee;
+  }(ComponentActionee));
+
+  var integrateSidemenu = function () {
+    if (api.sidemenu) {
+      api.internals.register(SidemenuSelector.SIDEMENU, SidemenuActionee);
+      api.internals.register(SidemenuSelector.LINK, SidemenuLinkActionee);
+      api.internals.register(api.sidemenu.SidemenuSelector.COLLAPSE, SidemenuSectionActionee);
+    }
+  };
+
+  var SummarySelector = {
+    SUMMARY: api.internals.ns.selector('summary'),
+    LINK: api.internals.ns.selector('summary__link'),
+    TITLE: api.internals.ns.selector('summary__title'),
+    ITEM: ((api.internals.ns.selector('summary')) + " li")
+  };
+
+  var SummaryActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SummaryActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) SummaryActionee.__proto__ = ComponentActionee;
+    SummaryActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SummaryActionee.prototype.constructor = SummaryActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SummaryActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var title = this.node.querySelector(SummarySelector.TITLE);
+      if (title) {
+        var firstText = this.getFirstText(title);
+        if (firstText) { return firstText; }
+      }
+      return 'sommaire';
+    };
+
+    Object.defineProperties( SummaryActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SummaryActionee, staticAccessors );
+
+    return SummaryActionee;
+  }(ComponentActionee));
+
+  var ID$8 = 'summary';
+
+  var SummaryLinkActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SummaryLinkActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) SummaryLinkActionee.__proto__ = ComponentActionee;
+    SummaryLinkActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SummaryLinkActionee.prototype.constructor = SummaryLinkActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SummaryLinkActionee';
+    };
+
+    SummaryLinkActionee.prototype.init = function init () {
+      this.detectInteractionType();
+      this.listenActionClick();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+      return 'lien sommaire';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$8;
+    };
+
+    Object.defineProperties( SummaryLinkActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SummaryLinkActionee, staticAccessors );
+
+    return SummaryLinkActionee;
+  }(ComponentActionee));
+
+  var SummarySectionActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function SummarySectionActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) SummarySectionActionee.__proto__ = ComponentActionee;
+    SummarySectionActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    SummarySectionActionee.prototype.constructor = SummarySectionActionee;
+
+    var prototypeAccessors = { label: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'SummarySectionActionee';
+    };
+
+    SummarySectionActionee.prototype.init = function init () {
+      this._link = this.querySelector(SummarySelector.LINK);
+    };
+
+    SummarySectionActionee.prototype.validate = function validate (target) {
+      return this._link !== target;
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (!this._link) { return null; }
+      var firstText = this.getFirstText(this._link);
+      if (firstText) { return firstText; }
+      return 'section sommaire';
+    };
+
+    Object.defineProperties( SummarySectionActionee.prototype, prototypeAccessors );
+    Object.defineProperties( SummarySectionActionee, staticAccessors );
+
+    return SummarySectionActionee;
+  }(ComponentActionee));
+
+  var integrateSummary = function () {
+    api.internals.register(SummarySelector.SUMMARY, SummaryActionee);
+    api.internals.register(SummarySelector.LINK, SummaryLinkActionee);
+    api.internals.register(SummarySelector.ITEM, SummarySectionActionee);
+  };
+
+  var ID$7 = 'tab';
+
+  var TabButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TabButtonActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TabButtonActionee.__proto__ = ComponentActionee;
+    TabButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TabButtonActionee.prototype.constructor = TabButtonActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TabButtonActionee';
+    };
+
+    TabButtonActionee.prototype.init = function init () {
+      this.isMuted = true;
+    };
+
+    prototypeAccessors.label.get = function () {
+      var text = this.getFirstText();
+      if (text) { return text; }
+      return 'bouton onglet';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$7;
+    };
+
+    Object.defineProperties( TabButtonActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TabButtonActionee, staticAccessors );
+
+    return TabButtonActionee;
+  }(ComponentActionee));
+
+  var TabActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TabActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TabActionee.__proto__ = ComponentActionee;
+    TabActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TabActionee.prototype.constructor = TabActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TabActionee';
+    };
+
+    TabActionee.prototype.init = function init () {
+      this.setDiscloseType();
+      this.register(("[aria-controls=\"" + (this.id) + "\"]"), TabButtonActionee);
+      this._instance = this.element.getInstance('TabPanel');
+      this.listenDisclose();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var tabs = this.node.closest(api.tab.TabSelector.GROUP);
+      if (tabs) {
+        var tab = tabs.querySelector(((api.tab.TabSelector.LIST) + " [aria-controls=\"" + (this.id) + "\"]" + (api.tab.TabSelector.TAB)));
+        if (tab) {
+          var firstTextTab = this.getFirstText(tab);
+          if (firstTextTab) { return firstTextTab; }
+        }
+      }
+
+      var button = this._instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+      if (button) {
+        var firstTextBtn = this.getFirstText(button);
+        if (firstTextBtn) { return firstTextBtn; }
+      }
+      return 'onglet';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$7;
+    };
+
+    Object.defineProperties( TabActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TabActionee, staticAccessors );
+
+    return TabActionee;
+  }(ComponentActionee));
+
+  var integrateTab = function () {
+    if (api.tab) {
+      api.internals.register(api.tab.TabSelector.PANEL, TabActionee);
+    }
+  };
+
+  var TableSelector = {
+    TABLE: api.internals.ns.selector('table')
+  };
+
+  var ID$6 = 'table';
+
+  var TableActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TableActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) TableActionee.__proto__ = ComponentActionee;
+    TableActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TableActionee.prototype.constructor = TableActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TableActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var caption = this.node.querySelector('caption');
+      if (caption) {
+        var firstText = this.getFirstText(caption);
+        if (firstText) { return firstText; }
+      }
+      return 'tableau';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$6;
+    };
+
+    Object.defineProperties( TableActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TableActionee, staticAccessors );
+
+    return TableActionee;
+  }(ComponentActionee));
+
+  var integrateTable = function () {
+    api.internals.register(TableSelector.TABLE, TableActionee);
+  };
+
+  var TagSelector = {
+    TAG: api.internals.ns.selector('tag'),
+    PRESSABLE: '[aria-pressed]',
+    DISMISSIBLE: ("" + (api.internals.ns.selector('tag--dismiss', '')))
+  };
+
+  var ID$5 = 'tag';
+
+  var TagActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TagActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TagActionee.__proto__ = ComponentActionee;
+    TagActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TagActionee.prototype.constructor = TagActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TagActionee';
+    };
+
+    TagActionee.prototype.init = function init () {
+      switch (true) {
+        case this.detectPressableType():
+          this.listenPressable();
+          break;
+
+        case this.isInteractive && this.node.classList.contains(TagSelector.DISMISSIBLE):
+          this.setDismissType();
+          this.listenActionClick();
+          break;
+
+        case this.isInteractive:
+          this.detectInteractionType();
+          this.listenActionClick();
+          break;
+      }
+    };
+
+    prototypeAccessors.label.get = function () {
+      var firstText = this.getFirstText();
+      if (firstText) { return firstText; }
+
+      return 'tag';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$5;
+    };
+
+    Object.defineProperties( TagActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TagActionee, staticAccessors );
+
+    return TagActionee;
+  }(ComponentActionee));
+
+  var integrateTag = function () {
+    api.internals.register(TagSelector.TAG, TagActionee);
+  };
+
+  var TileSelector = {
+    TILE: api.internals.ns.selector('tile'),
+    LINK: ((api.internals.ns.selector('tile__title')) + " a, " + (api.internals.ns.selector('tile__title')) + " button"),
+    TITLE: api.internals.ns.selector('tile__title')
+  };
+
+  var ID$4 = 'tile';
+
+  var TileActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TileActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) TileActionee.__proto__ = ComponentActionee;
+    TileActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TileActionee.prototype.constructor = TileActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TileActionee';
+    };
+
+    TileActionee.prototype.init = function init () {
+      var link = this.node.querySelector(TileSelector.LINK);
+      if (link) {
+        this.link = link;
+        this.detectInteractionType(link);
+        this.listenActionClick(link);
+      }
+    };
+
+    prototypeAccessors.label.get = function () {
+      var tileTitle = this.node.querySelector(TileSelector.TITLE);
+      if (tileTitle) { return this.getFirstText(tileTitle); }
+
+      var heading = this.getHeadingLabel();
+      if (heading) { return heading; }
+
+      return 'tuile';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$4;
+    };
+
+    Object.defineProperties( TileActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TileActionee, staticAccessors );
+
+    return TileActionee;
+  }(ComponentActionee));
+
+  var integrateTile = function () {
+    api.internals.register(TileSelector.TILE, TileActionee);
+  };
+
+  var ToggleSelector = {
+    INPUT: api.internals.ns.selector('toggle [type="checkbox"]')
+  };
+
+  var ID$3 = 'toggle';
+
+  var ToggleActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function ToggleActionee () {
+      ComponentActionee.call(this, 1);
+      this._data = {};
+    }
+
+    if ( ComponentActionee ) ToggleActionee.__proto__ = ComponentActionee;
+    ToggleActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    ToggleActionee.prototype.constructor = ToggleActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'ToggleActionee';
+    };
+
+    ToggleActionee.prototype.init = function init () {
+      this.detectCheckableType();
+      this.listenCheckable();
+    };
+
+    prototypeAccessors.label.get = function () {
+      var label = this.node.parentNode.querySelector(api.internals.ns.selector('toggle__label'));
+      if (label) {
+        var firstText = this.getFirstText(label);
+        if (firstText) { return firstText; }
+      }
+
+      return 'interrupteur';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$3;
+    };
+
+    Object.defineProperties( ToggleActionee.prototype, prototypeAccessors );
+    Object.defineProperties( ToggleActionee, staticAccessors );
+
+    return ToggleActionee;
+  }(ComponentActionee));
+
+  var integrateToggle = function () {
+    api.internals.register(ToggleSelector.INPUT, ToggleActionee);
+  };
+
+  var TRANSCRIPTION = api.internals.ns.selector('transcription');
+  var COLLAPSE$1 = api.internals.ns.selector('collapse');
+
+  var TranscriptionSelector = {
+    TRANSCRIPTION: TRANSCRIPTION,
+    COLLAPSE: (TRANSCRIPTION + " > " + COLLAPSE$1 + ", " + TRANSCRIPTION + " > *:not(" + TRANSCRIPTION + "):not(" + COLLAPSE$1 + ") > " + COLLAPSE$1 + ", " + TRANSCRIPTION + " > *:not(" + TRANSCRIPTION + "):not(" + COLLAPSE$1 + ") > *:not(" + TRANSCRIPTION + "):not(" + COLLAPSE$1 + ") > " + COLLAPSE$1),
+    COLLAPSE_LEGACY: (TRANSCRIPTION + " " + COLLAPSE$1),
+    TITLE: (TRANSCRIPTION + "__title")
+  };
+
+  var ID$2 = 'transcription';
+
+  var TranscriptionButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TranscriptionButtonActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TranscriptionButtonActionee.__proto__ = ComponentActionee;
+    TranscriptionButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TranscriptionButtonActionee.prototype.constructor = TranscriptionButtonActionee;
+
+    var prototypeAccessors = { button: { configurable: true },label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TranscriptionButtonActionee';
+    };
+
+    TranscriptionButtonActionee.prototype.init = function init () {
+      this.isMuted = true;
+    };
+
+    prototypeAccessors.button.get = function () {
+      return this.element.getInstance('CollapseButton');
+    };
+
+    prototypeAccessors.label.get = function () {
+      var text = this.getFirstText();
+      if (text) { return text; }
+      return 'bouton transcription';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$2;
+    };
+
+    Object.defineProperties( TranscriptionButtonActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TranscriptionButtonActionee, staticAccessors );
+
+    return TranscriptionButtonActionee;
+  }(ComponentActionee));
+
+  var TranscriptionActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TranscriptionActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TranscriptionActionee.__proto__ = ComponentActionee;
+    TranscriptionActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TranscriptionActionee.prototype.constructor = TranscriptionActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TranscriptionActionee';
+    };
+
+    TranscriptionActionee.prototype.init = function init () {
+      this.setDiscloseType();
+      this.wrapper = this.node.closest(TranscriptionSelector.ACCORDION);
+      this.detectLevel(this.wrapper);
+      this.register(("[aria-controls=\"" + (this.id) + "\"]"), TranscriptionButtonActionee);
+      this.listenDisclose();
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this.wrapper) {
+        var title = this.wrapper.querySelector(TranscriptionSelector.TITLE);
+        if (title) {
+          var firstTextTitle = this.getFirstText(title);
+          if (firstTextTitle) { return firstTextTitle; }
+        }
+      }
+      var instance = this.element.getInstance('Collapse');
+      if (instance) {
+        var button = instance.buttons.filter(function (button) { return button.isPrimary; })[0];
+        if (button) {
+          var firstTextBtn = this.getFirstText(button);
+          if (firstTextBtn) { return firstTextBtn; }
+        }
+      }
+      return 'transcription';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$2;
+    };
+
+    Object.defineProperties( TranscriptionActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TranscriptionActionee, staticAccessors );
+
+    return TranscriptionActionee;
+  }(ComponentActionee));
+
+  var integrateTranscription = function () {
+    api.internals.register(TranscriptionSelector.COLLAPSE, TranscriptionActionee);
+  };
+
+  var TRANSLATE = api.internals.ns.selector('translate');
+  var COLLAPSE = api.internals.ns.selector('collapse');
+
+  var TranslateSelector = {
+    BUTTON: (TRANSLATE + "__btn"),
+    COLLAPSE: (TRANSLATE + " > " + COLLAPSE + ", " + TRANSLATE + " > *:not(" + TRANSLATE + "):not(" + COLLAPSE + ") > " + COLLAPSE + ", " + TRANSLATE + " > *:not(" + TRANSLATE + "):not(" + COLLAPSE + ") > *:not(" + TRANSLATE + "):not(" + COLLAPSE + ") > " + COLLAPSE),
+    COLLAPSE_LEGACY: (TRANSLATE + " " + COLLAPSE)
+  };
+
+  var ID$1 = 'translate';
+
+  var TranslateActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TranslateActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TranslateActionee.__proto__ = ComponentActionee;
+    TranslateActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TranslateActionee.prototype.constructor = TranslateActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TranslateActionee';
+    };
+
+    prototypeAccessors.label.get = function () {
+      var button = this.node.querySelector(TranslateSelector.BUTTON);
+      if (button) {
+        var title = button.getAttribute('title');
+        if (title) { return title; }
+      }
+
+      return 'sélecteur de langue';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$1;
+    };
+
+    Object.defineProperties( TranslateActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TranslateActionee, staticAccessors );
+
+    return TranslateActionee;
+  }(ComponentActionee));
+
+  var TranslateButtonActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function TranslateButtonActionee () {
+      ComponentActionee.call(this, 2);
+    }
+
+    if ( ComponentActionee ) TranslateButtonActionee.__proto__ = ComponentActionee;
+    TranslateButtonActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    TranslateButtonActionee.prototype.constructor = TranslateButtonActionee;
+
+    var prototypeAccessors = { button: { configurable: true },label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'TranslateButtonActionee';
+    };
+
+    TranslateButtonActionee.prototype.init = function init () {
+      this.isMuted = true;
+    };
+
+    prototypeAccessors.button.get = function () {
+      return this.element.getInstance('CollapseButton');
+    };
+
+    prototypeAccessors.label.get = function () {
+      var label = this.getInteractionLabel();
+      if (label) { return label; }
+      return 'bouton sélecteur de langue';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID$1;
+    };
+
+    Object.defineProperties( TranslateButtonActionee.prototype, prototypeAccessors );
+    Object.defineProperties( TranslateButtonActionee, staticAccessors );
+
+    return TranslateButtonActionee;
+  }(ComponentActionee));
+
+  var integrateTranslate = function () {
+    api.internals.register(TranslateSelector.COLLAPSE, TranslateActionee);
+    api.internals.register(TranslateSelector.BUTTON, TranslateButtonActionee);
+  };
+
+  var UploadSelector = {
+    UPLOAD: api.internals.ns.selector('upload')
+  };
+
+  var ID = 'upload';
+
+  var UploadActionee = /*@__PURE__*/(function (ComponentActionee) {
+    function UploadActionee () {
+      ComponentActionee.call(this, 1);
+    }
+
+    if ( ComponentActionee ) UploadActionee.__proto__ = ComponentActionee;
+    UploadActionee.prototype = Object.create( ComponentActionee && ComponentActionee.prototype );
+    UploadActionee.prototype.constructor = UploadActionee;
+
+    var prototypeAccessors = { label: { configurable: true },component: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'UploadActionee';
+    };
+
+    UploadActionee.prototype.init = function init () {
+      this.setChangeType();
+      this._label = this.node.parentNode.querySelector(api.internals.ns.selector('label'));
+      this.listenChange();
+    };
+
+    UploadActionee.prototype.setChangeValue = function setChangeValue (e) {
+      if (!e.target || !e.target.files) { return; }
+      var value = Array.from(e.target.files).map(function (file) { return /(?:\.([^.]+))?$/.exec(file.name)[1]; }).filter(function (name, index, array) { return array.indexOf(name) === index; }).join(' - ');
+      if (value) { this.value = value; }
+    };
+
+    prototypeAccessors.label.get = function () {
+      if (this._label) {
+        var text = this.getFirstText(this._label);
+        if (text) { return text; }
+      }
+
+      return 'ajout de fichier';
+    };
+
+    prototypeAccessors.component.get = function () {
+      return ID;
+    };
+
+    Object.defineProperties( UploadActionee.prototype, prototypeAccessors );
+    Object.defineProperties( UploadActionee, staticAccessors );
+
+    return UploadActionee;
+  }(ComponentActionee));
+
+  var integrateUpload = function () {
+    api.internals.register(UploadSelector.UPLOAD, UploadActionee);
+  };
+
+  var integrateComponents = function () {
+    integrateAccordion();
+    integrateBreadcrumb();
+    integrateAlert();
+    // integrateBadge();
+    integrateButton();
+    integrateCallout();
+    integrateConnect();
+    integrateConsent();
+    // integrateContent();
+    integrateCard();
+    integrateInput();
+    integrateCheckbox();
+    integrateDownload();
+    integrateFooter();
+    integrateFollow();
+    integrateHeader();
+    integrateHighlight();
+    integrateLink();
+    integrateModal();
+    integrateNavigation();
+    integrateNotice();
+    integratePagination();
+    integrateQuote();
+    integrateRadio();
+    integrateSearch();
+    integrateSelect();
+    integrateShare();
+    integrateSidemenu();
+    // integrateStepper();
+    integrateSummary();
+    integrateTab();
+    integrateTable();
+    integrateTag();
+    integrateTile();
+    integrateToggle();
+    // integrateTooltip();
+    integrateTranscription();
+    integrateTranslate();
+    integrateUpload();
+  };
+
+  // import './core/core';
+
+  var integration = function () {
+    integrateAttributes();
+    integrateComponents();
+  };
+
+  api.analytics.readiness.then(function () { return integration(); }, function () {});
+
+})();
+//# sourceMappingURL=analytics.nomodule.js.map

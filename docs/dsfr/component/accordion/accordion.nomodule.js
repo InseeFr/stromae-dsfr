@@ -1,2 +1,88 @@
-/*! For license information please see accordion.nomodule.js.LICENSE.txt */
-!function(){"use strict";var o=window.dsfr,t=o.internals.ns.selector("accordion"),e=o.internals.ns.selector("collapse"),n={GROUP:o.internals.ns.selector("accordions-group"),ACCORDION:t,COLLAPSE:t+" > "+e+", "+t+" > *:not("+t+"):not("+e+") > "+e+", "+t+" > *:not("+t+"):not("+e+") > *:not("+t+"):not("+e+") > "+e,COLLAPSE_LEGACY:t+" "+e,BUTTON:t+"__btn"},r=function(o){function t(){o.apply(this,arguments)}o&&(t.__proto__=o),t.prototype=Object.create(o&&o.prototype),t.prototype.constructor=t;var e={collapsePrimary:{configurable:!0}},r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"Accordion"},e.collapsePrimary.get=function(){return this.element.children.map((function(o){return o.getInstance("CollapseButton")})).filter((function(o){return null!==o&&o.hasClass(n.BUTTON)}))[0]},Object.defineProperties(t.prototype,e),Object.defineProperties(t,r),t}(o.core.Instance),c=function(t){function e(){t.apply(this,arguments)}t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e;var r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"AccordionsGroup"},e.prototype.validate=function(e){var r=e.node.matches(o.internals.legacy.isLegacy?n.COLLAPSE_LEGACY:n.COLLAPSE);return t.prototype.validate.call(this,e)&&r},Object.defineProperties(e,r),e}(o.core.CollapsesGroup);o.accordion={Accordion:r,AccordionSelector:n,AccordionsGroup:c},o.internals.register(o.accordion.AccordionSelector.GROUP,o.accordion.AccordionsGroup),o.internals.register(o.accordion.AccordionSelector.ACCORDION,o.accordion.Accordion)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var ACCORDION = api.internals.ns.selector('accordion');
+  var COLLAPSE = api.internals.ns.selector('collapse');
+
+  var AccordionSelector = {
+    GROUP: api.internals.ns.selector('accordions-group'),
+    ACCORDION: ACCORDION,
+    COLLAPSE: (ACCORDION + " > " + COLLAPSE + ", " + ACCORDION + " > *:not(" + ACCORDION + "):not(" + COLLAPSE + ") > " + COLLAPSE + ", " + ACCORDION + " > *:not(" + ACCORDION + "):not(" + COLLAPSE + ") > *:not(" + ACCORDION + "):not(" + COLLAPSE + ") > " + COLLAPSE),
+    COLLAPSE_LEGACY: (ACCORDION + " " + COLLAPSE),
+    BUTTON: (ACCORDION + "__btn")
+  };
+
+  var Accordion = /*@__PURE__*/(function (superclass) {
+    function Accordion () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) Accordion.__proto__ = superclass;
+    Accordion.prototype = Object.create( superclass && superclass.prototype );
+    Accordion.prototype.constructor = Accordion;
+
+    var prototypeAccessors = { collapsePrimary: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Accordion';
+    };
+
+    prototypeAccessors.collapsePrimary.get = function () {
+      var buttons = this.element.children.map(function (child) { return child.getInstance('CollapseButton'); }).filter(function (button) { return button !== null && button.hasClass(AccordionSelector.BUTTON); });
+      return buttons[0];
+    };
+
+    Object.defineProperties( Accordion.prototype, prototypeAccessors );
+    Object.defineProperties( Accordion, staticAccessors );
+
+    return Accordion;
+  }(api.core.Instance));
+
+  var AccordionsGroup = /*@__PURE__*/(function (superclass) {
+    function AccordionsGroup () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) AccordionsGroup.__proto__ = superclass;
+    AccordionsGroup.prototype = Object.create( superclass && superclass.prototype );
+    AccordionsGroup.prototype.constructor = AccordionsGroup;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'AccordionsGroup';
+    };
+
+    AccordionsGroup.prototype.validate = function validate (member) {
+      var match = member.node.matches(api.internals.legacy.isLegacy ? AccordionSelector.COLLAPSE_LEGACY : AccordionSelector.COLLAPSE);
+      return superclass.prototype.validate.call(this, member) && match;
+    };
+
+    Object.defineProperties( AccordionsGroup, staticAccessors );
+
+    return AccordionsGroup;
+  }(api.core.CollapsesGroup));
+
+  api.accordion = {
+    Accordion: Accordion,
+    AccordionSelector: AccordionSelector,
+    AccordionsGroup: AccordionsGroup
+  };
+
+  api.internals.register(api.accordion.AccordionSelector.GROUP, api.accordion.AccordionsGroup);
+  api.internals.register(api.accordion.AccordionSelector.ACCORDION, api.accordion.Accordion);
+
+})();
+//# sourceMappingURL=accordion.nomodule.js.map

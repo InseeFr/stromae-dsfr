@@ -1,2 +1,60 @@
-/*! For license information please see card.nomodule.js.LICENSE.txt */
-!function(){"use strict";var e=window.dsfr,s=function(s){function n(){s.apply(this,arguments)}s&&(n.__proto__=s),n.prototype=Object.create(s&&s.prototype),n.prototype.constructor=n;var r={instanceClassName:{configurable:!0}};return r.instanceClassName.get=function(){return"CardDownload"},n.prototype.init=function(){var s=this;this.addAscent(e.core.AssessEmission.UPDATE,(function(n){s.descend(e.core.AssessEmission.UPDATE,n)})),this.addAscent(e.core.AssessEmission.ADDED,(function(){s.descend(e.core.AssessEmission.ADDED)}))},Object.defineProperties(n,r),n}(e.core.Instance),n={DOWNLOAD:e.internals.ns.selector("card--download"),DOWNLOAD_DETAIL:e.internals.ns.selector("card--download")+" "+e.internals.ns.selector("card__end")+" "+e.internals.ns.selector("card__detail")};e.card={CardSelector:n,CardDownload:s},e.internals.register(e.card.CardSelector.DOWNLOAD,e.card.CardDownload),e.internals.register(e.card.CardSelector.DOWNLOAD_DETAIL,e.core.AssessDetail)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var CardDownload = /*@__PURE__*/(function (superclass) {
+    function CardDownload () {
+      superclass.apply(this, arguments);
+    }
+
+    if ( superclass ) CardDownload.__proto__ = superclass;
+    CardDownload.prototype = Object.create( superclass && superclass.prototype );
+    CardDownload.prototype.constructor = CardDownload;
+
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'CardDownload';
+    };
+
+    CardDownload.prototype.init = function init () {
+      var this$1$1 = this;
+
+      this.addAscent(api.core.AssessEmission.UPDATE, function (details) {
+        this$1$1.descend(api.core.AssessEmission.UPDATE, details);
+      });
+      this.addAscent(api.core.AssessEmission.ADDED, function () {
+        this$1$1.descend(api.core.AssessEmission.ADDED);
+      });
+    };
+
+    Object.defineProperties( CardDownload, staticAccessors );
+
+    return CardDownload;
+  }(api.core.Instance));
+
+  var CardSelector = {
+    DOWNLOAD: api.internals.ns.selector('card--download'),
+    DOWNLOAD_DETAIL: ((api.internals.ns.selector('card--download')) + " " + (api.internals.ns.selector('card__end')) + " " + (api.internals.ns.selector('card__detail')))
+  };
+
+  api.card = {
+    CardSelector: CardSelector,
+    CardDownload: CardDownload
+  };
+
+  api.internals.register(api.card.CardSelector.DOWNLOAD, api.card.CardDownload);
+  api.internals.register(api.card.CardSelector.DOWNLOAD_DETAIL, api.core.AssessDetail);
+
+})();
+//# sourceMappingURL=card.nomodule.js.map

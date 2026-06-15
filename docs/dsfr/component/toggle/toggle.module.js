@@ -1,2 +1,77 @@
-/*! For license information please see toggle.module.js.LICENSE.txt */
-const config={prefix:"fr",namespace:"dsfr",organisation:"@gouvfr",version:"1.12.1"},api=window[config.namespace];class ToggleInput extends api.core.Instance{static get instanceClassName(){return"ToggleInput"}get isChecked(){return this.node.checked}}class ToggleStatusLabel extends api.core.Instance{static get instanceClassName(){return"ToggleStatusLabel"}init(){this.register(`input[id="${this.getAttribute("for")}"]`,ToggleInput),this.update(),this.isSwappingFont=!0}get proxy(){return Object.assign(super.proxy,{update:this.update.bind(this)})}get input(){return this.getRegisteredInstances("ToggleInput")[0]}update(){this.node.style.removeProperty("--toggle-status-width");const e=this.input.isChecked,t=getComputedStyle(this.node,":before");let s=parseFloat(t.width);this.input.node.checked=!e;const i=getComputedStyle(this.node,":before"),n=parseFloat(i.width);n>s&&(s=n),this.input.node.checked=e,this.node.style.setProperty("--toggle-status-width",s/16+"rem")}swapFont(e){this.update()}}const ToggleSelector={STATUS_LABEL:`${api.internals.ns.selector("toggle__label")}${api.internals.ns.attr.selector("checked-label")}${api.internals.ns.attr.selector("unchecked-label")}`};api.toggle={ToggleStatusLabel:ToggleStatusLabel,ToggleSelector:ToggleSelector},api.internals.register(api.toggle.ToggleSelector.STATUS_LABEL,api.toggle.ToggleStatusLabel);
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+const config = {
+  prefix: 'fr',
+  namespace: 'dsfr',
+  organisation: '@gouvfr',
+  version: '1.12.1'
+};
+
+const api = window[config.namespace];
+
+class ToggleInput extends api.core.Instance {
+  static get instanceClassName () {
+    return 'ToggleInput';
+  }
+
+  get isChecked () {
+    return this.node.checked;
+  }
+}
+
+class ToggleStatusLabel extends api.core.Instance {
+  static get instanceClassName () {
+    return 'ToggleStatusLabel';
+  }
+
+  init () {
+    this.register(`input[id="${this.getAttribute('for')}"]`, ToggleInput);
+    this.update();
+    this.isSwappingFont = true;
+  }
+
+  get proxy () {
+    const scope = this;
+    return Object.assign(super.proxy, {
+      update: scope.update.bind(scope)
+    });
+  }
+
+  get input () {
+    return this.getRegisteredInstances('ToggleInput')[0];
+  }
+
+  update () {
+    this.node.style.removeProperty('--toggle-status-width');
+    const checked = this.input.isChecked;
+
+    const style = getComputedStyle(this.node, ':before');
+    let maxWidth = parseFloat(style.width);
+    this.input.node.checked = !checked;
+
+    const style2 = getComputedStyle(this.node, ':before');
+    const width = parseFloat(style2.width);
+    if (width > maxWidth) maxWidth = width;
+    this.input.node.checked = checked;
+
+    this.node.style.setProperty('--toggle-status-width', (maxWidth / 16) + 'rem');
+  }
+
+  swapFont (families) {
+    this.update();
+  }
+}
+
+const ToggleSelector = {
+  STATUS_LABEL: `${api.internals.ns.selector('toggle__label')}${api.internals.ns.attr.selector('checked-label')}${api.internals.ns.attr.selector('unchecked-label')}`
+};
+
+// import { ToggleInput } from './script/toggle/toggle-input.js';
+
+api.toggle = {
+  ToggleStatusLabel: ToggleStatusLabel,
+  ToggleSelector: ToggleSelector
+};
+
+api.internals.register(api.toggle.ToggleSelector.STATUS_LABEL, api.toggle.ToggleStatusLabel);
+//# sourceMappingURL=toggle.module.js.map

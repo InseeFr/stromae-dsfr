@@ -1,2 +1,119 @@
-/*! For license information please see breadcrumb.nomodule.js.LICENSE.txt */
-!function(){"use strict";var t=window.dsfr,e={BREADCRUMB:t.internals.ns.selector("breadcrumb"),BUTTON:t.internals.ns.selector("breadcrumb__button")},s=function(s){function n(){s.call(this),this.count=0,this.focusing=this.focus.bind(this)}s&&(n.__proto__=s),n.prototype=Object.create(s&&s.prototype),n.prototype.constructor=n;var o={proxy:{configurable:!0},links:{configurable:!0},collapse:{configurable:!0},collapsePrimary:{configurable:!0}},i={instanceClassName:{configurable:!0}};return i.instanceClassName.get=function(){return"Breadcrumb"},n.prototype.init=function(){this.getCollapse(),this.isResizing=!0},o.proxy.get=function(){var t=this;return Object.assign.call(this,s.prototype.proxy,{focus:t.focus.bind(t),disclose:t.collapse.disclose.bind(t.collapse)})},n.prototype.getCollapse=function(){var e=this.collapse;e?e.listen(t.core.DisclosureEvent.DISCLOSE,this.focusing):this.addAscent(t.core.DisclosureEmission.ADDED,this.getCollapse.bind(this))},n.prototype.resize=function(){var e=this.collapse,s=this.links;e&&s.length&&(this.isBreakpoint(t.core.Breakpoints.MD)?e.buttonHasFocus&&s[0].focus():s.indexOf(document.activeElement)>-1&&e.focus())},o.links.get=function(){return[].concat(this.querySelectorAll("a[href]"))},o.collapse.get=function(){return this.element.getDescendantInstances(t.core.Collapse.instanceClassName,null,!0)[0]},n.prototype.focus=function(){this.count=0,this._focus()},n.prototype._focus=function(){var t=this.links[0];t&&(t.focus(),this.request(this.verify.bind(this)))},n.prototype.verify=function(){if(this.count++,!(this.count>100)){var t=this.links[0];t&&document.activeElement!==t&&this._focus()}},o.collapsePrimary.get=function(){return this.element.children.map((function(t){return t.getInstance("CollapseButton")})).filter((function(t){return null!==t&&t.hasClass(e.BUTTON)}))[0]},Object.defineProperties(n.prototype,o),Object.defineProperties(n,i),n}(t.core.Instance);t.breadcrumb={BreadcrumbSelector:e,Breadcrumb:s},t.internals.register(t.breadcrumb.BreadcrumbSelector.BREADCRUMB,t.breadcrumb.Breadcrumb)}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var api = window[config.namespace];
+
+  var BreadcrumbSelector = {
+    BREADCRUMB: api.internals.ns.selector('breadcrumb'),
+    BUTTON: api.internals.ns.selector('breadcrumb__button')
+  };
+
+  var Breadcrumb = /*@__PURE__*/(function (superclass) {
+    function Breadcrumb () {
+      superclass.call(this);
+      this.count = 0;
+      this.focusing = this.focus.bind(this);
+    }
+
+    if ( superclass ) Breadcrumb.__proto__ = superclass;
+    Breadcrumb.prototype = Object.create( superclass && superclass.prototype );
+    Breadcrumb.prototype.constructor = Breadcrumb;
+
+    var prototypeAccessors = { proxy: { configurable: true },links: { configurable: true },collapse: { configurable: true },collapsePrimary: { configurable: true } };
+    var staticAccessors = { instanceClassName: { configurable: true } };
+
+    staticAccessors.instanceClassName.get = function () {
+      return 'Breadcrumb';
+    };
+
+    Breadcrumb.prototype.init = function init () {
+      this.getCollapse();
+      this.isResizing = true;
+    };
+
+    prototypeAccessors.proxy.get = function () {
+      var scope = this;
+      return Object.assign.call(this, superclass.prototype.proxy, {
+        focus: scope.focus.bind(scope),
+        disclose: scope.collapse.disclose.bind(scope.collapse)
+      });
+    };
+
+    Breadcrumb.prototype.getCollapse = function getCollapse () {
+      var collapse = this.collapse;
+      if (collapse) {
+        collapse.listen(api.core.DisclosureEvent.DISCLOSE, this.focusing);
+      } else {
+        this.addAscent(api.core.DisclosureEmission.ADDED, this.getCollapse.bind(this));
+      }
+    };
+
+    Breadcrumb.prototype.resize = function resize () {
+      var collapse = this.collapse;
+      var links = this.links;
+      if (!collapse || !links.length) { return; }
+
+      if (this.isBreakpoint(api.core.Breakpoints.MD)) {
+        if (collapse.buttonHasFocus) { links[0].focus(); }
+      } else {
+        if (links.indexOf(document.activeElement) > -1) { collapse.focus(); }
+      }
+    };
+
+    prototypeAccessors.links.get = function () {
+      return [].concat( this.querySelectorAll('a[href]') );
+    };
+
+    prototypeAccessors.collapse.get = function () {
+      return this.element.getDescendantInstances(api.core.Collapse.instanceClassName, null, true)[0];
+    };
+
+    Breadcrumb.prototype.focus = function focus () {
+      this.count = 0;
+      this._focus();
+    };
+
+    Breadcrumb.prototype._focus = function _focus () {
+      var link = this.links[0];
+      if (!link) { return; }
+      link.focus();
+      this.request(this.verify.bind(this));
+    };
+
+    Breadcrumb.prototype.verify = function verify () {
+      this.count++;
+      if (this.count > 100) { return; }
+      var link = this.links[0];
+      if (!link) { return; }
+      if (document.activeElement !== link) { this._focus(); }
+    };
+
+    prototypeAccessors.collapsePrimary.get = function () {
+      var buttons = this.element.children.map(function (child) { return child.getInstance('CollapseButton'); }).filter(function (button) { return button !== null && button.hasClass(BreadcrumbSelector.BUTTON); });
+      return buttons[0];
+    };
+
+    Object.defineProperties( Breadcrumb.prototype, prototypeAccessors );
+    Object.defineProperties( Breadcrumb, staticAccessors );
+
+    return Breadcrumb;
+  }(api.core.Instance));
+
+  api.breadcrumb = {
+    BreadcrumbSelector: BreadcrumbSelector,
+    Breadcrumb: Breadcrumb
+  };
+
+  api.internals.register(api.breadcrumb.BreadcrumbSelector.BREADCRUMB, api.breadcrumb.Breadcrumb);
+
+})();
+//# sourceMappingURL=breadcrumb.nomodule.js.map

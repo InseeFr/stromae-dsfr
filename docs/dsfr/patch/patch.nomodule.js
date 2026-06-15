@@ -1,2 +1,42 @@
-/*! For license information please see patch.nomodule.js.LICENSE.txt */
-!function(){"use strict";var e="dsfr",n={},r=new Promise((function(e,r){n.resolve=e,n.reject=r}));window.a4e35ba2a938ba9d007689dbf3f46acbb9807869={configuration:window[e],promise:r};var i=function(){var r=window[e];r&&r.internals?(r.inspector.trace&&(r.inspector.log=r.inspector.trace),n.resolve()):requestAnimationFrame(i)};i()}();
+/*! DSFR v1.12.1 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+
+(function () {
+  'use strict';
+
+  var config = {
+    prefix: 'fr',
+    namespace: 'dsfr',
+    organisation: '@gouvfr',
+    version: '1.12.1'
+  };
+
+  var patch = {
+    namespace: 'a4e35ba2a938ba9d007689dbf3f46acbb9807869'
+  };
+
+  var executor = {};
+  var promise = new Promise(function (resolve, reject) {
+    executor.resolve = resolve;
+    executor.reject = reject;
+  });
+
+  window[patch.namespace] = {
+    configuration: window[config.namespace],
+    promise: promise
+  };
+
+  var patchInternals = function () {
+    var api = window[config.namespace];
+    if (!api || !api.internals) {
+      requestAnimationFrame(patchInternals);
+      return;
+    }
+    if (api.inspector.trace) { api.inspector.log = api.inspector.trace; }
+
+    executor.resolve();
+  };
+
+  patchInternals();
+
+})();
+//# sourceMappingURL=patch.nomodule.js.map

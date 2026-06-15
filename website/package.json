@@ -36,7 +36,7 @@
     "docusaurus-plugin-sass": "^0.2.5",
     "dsfr-connect": "^1.1.2",
     "sass": "^1.77.8",
-    "typescript": "~5.5.3"
+    "typescript": "~6.0.0"
   },
   "browserslist": {
     "production": [

@@ -94,6 +94,7 @@ export function useEvents(
         type: `QUESTIONNAIRE_UPDATED` as QuestionnaireEventType,
         payload: {
           interrogationId: interrogation.id,
+          pageTag: pageTag
         },
       },
     })

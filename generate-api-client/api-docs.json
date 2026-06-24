@@ -1,0 +1,1649 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "queen-api",
+    "description": "API for Queen/Stromae",
+    "version": "5.6.1"
+  },
+  "servers": [
+    { "url": "http://localhost:8080", "description": "Generated server url" }
+  ],
+  "security": [{ "oauth2": ["read", "write"] }],
+  "tags": [
+    {
+      "name": "03. Questionnaires",
+      "description": "Endpoints for questionnaires"
+    },
+    {
+      "name": "08. Interrogations in temp Zone",
+      "description": "Endpoints for interrogations in temporary zone"
+    },
+    { "name": "02. Campaigns", "description": "Endpoints for campaigns" },
+    {
+      "name": "05. Metadata",
+      "description": "Endpoints for retrieving metadata"
+    },
+    {
+      "name": "07. Paradata events",
+      "description": "Endpoints for paradata events"
+    },
+    { "name": "01. Integrations", "description": "Endpoints for integration" },
+    {
+      "name": "06. Interrogations",
+      "description": "Endpoints for interrogations"
+    },
+    {
+      "name": "04. Nomenclatures",
+      "description": "Endpoints for nomenclatures"
+    }
+  ],
+  "paths": {
+    "/api/interrogations/{id}": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getInterrogationById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/Interrogation" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["06. Interrogations"],
+        "summary": "Update interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / ",
+        "operationId": "updateInterrogationById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/InterrogationUpdate" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      },
+      "delete": {
+        "tags": ["06. Interrogations"],
+        "summary": "Delete an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "deleteInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "204": { "description": "No Content" } }
+      },
+      "patch": {
+        "tags": ["06. Interrogations"],
+        "summary": "Update interrogation updated data/state-data",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "updateInterrogationDataStateDataById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterrogationDataStateDataUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/interrogations/{id}/state-data": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get state-data for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getStateDataByInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/StateData" } }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["06. Interrogations"],
+        "summary": "Update state-data for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "setStateData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/StateDataUpdate" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/interrogations/{id}/personalization": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get personalization for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getPersonalizationByInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "schema.personalization.json" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["06. Interrogations"],
+        "summary": "Update personalization for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "setPersonalization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "schema.personalization.json" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/interrogations/{id}/data": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get data for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getDataByInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "schema.data.json" } }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["06. Interrogations"],
+        "summary": "Update data for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "updateData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "schema.data.json" } }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/questionnaire-models": {
+      "post": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Create a Questionnaire Model",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createQuestionnaire",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireModelCreation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/paradata": {
+      "post": {
+        "tags": ["07. Paradata events"],
+        "summary": "Create paradata event for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "addParadata",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "type": "object" } } },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/nomenclature": {
+      "post": {
+        "tags": ["04. Nomenclatures"],
+        "summary": "Create/update a nomenclature ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "postNomenclature",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NomenclatureCreation" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/interrogations/{id}/temp-zone": {
+      "post": {
+        "tags": ["08. Interrogations in temp Zone"],
+        "summary": "Create interrogation to temp-zone",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / ",
+        "operationId": "postInterrogationByIdInTempZone",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "schema.interrogation-temp-zone.json" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/interrogations/{id}/synchronize": {
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Synchronize an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "synchronizeInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/interrogations/state-data": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Retrieve interrogations filtered by state data",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getInterrogationsByStateData",
+        "parameters": [
+          {
+            "name": "stateData",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "INIT",
+                "COMPLETED",
+                "VALIDATED",
+                "TOEXTRACT",
+                "EXTRACTED",
+                "IS_MOVED"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Interrogation" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get state-data for all interrogations defined in request body ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getStateDataByInterrogations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/InterrogationsOkNok" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/questionnaire-model-id": {
+      "post": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Search questionnaire ids linked to interrogations",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getQuestionnaireModelIdByInterrogations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/InterrogationsOkNok" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/delete": {
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Delete interrogations",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "deleteInterrogations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "required": true
+        },
+        "responses": { "204": { "description": "No Content" } }
+      }
+    },
+    "/api/events": {
+      "post": {
+        "tags": ["events-controller"],
+        "summary": "Save an event",
+        "operationId": "addEvent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/campaigns": {
+      "get": {
+        "tags": ["02. Campaigns"],
+        "summary": "Get campaign list for the current user",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getInterviewerCampaignList",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CampaignSummary" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["02. Campaigns"],
+        "summary": "Create a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createCampaign",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CampaignCreation" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" } },
+        "deprecated": true
+      }
+    },
+    "/api/campaigns/{id}/interrogations": {
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Create/Update interrogations",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createUpdateInterrogations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/InterrogationCreation"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/campaigns/{id}/interrogation": {
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Create/Update an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createUpdateInterrogation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/InterrogationCreation" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/campaign/{id}/interrogation": {
+      "post": {
+        "tags": ["06. Interrogations"],
+        "summary": "Create/Update an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createUpdateInterrogation_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/InterrogationCreation" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/campaign": {
+      "post": {
+        "tags": ["02. Campaigns"],
+        "summary": "Create a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "createCampaignV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CampaignCreationV2" }
+            }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/campaign/xml/context": {
+      "post": {
+        "tags": ["01. Integrations"],
+        "summary": "Integrates the context of a campaign (XML Version - will be removed in a future version)",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "integrateXmlContext",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/IntegrationResults" }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/campaign/context": {
+      "post": {
+        "tags": ["01. Integrations"],
+        "summary": "Integrates the context of a campaign (JSON version)",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "integrateContext",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/IntegrationResults" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/survey-units/{id}/interrogations": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Retrieve interrogations by survey-unit",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getInterrogationsBySurveyUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterrogationSummary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/questionnaire/{id}": {
+      "get": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Get questionnnaire",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getQuestionnaireValue",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireModelValue"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/questionnaire/{id}/required-nomenclatures": {
+      "get": {
+        "tags": ["04. Nomenclatures"],
+        "summary": "Get list of required nomenclature for a questionnaire",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getListRequiredNomenclatureByQuestionnaireId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/questionnaire/{id}/metadata": {
+      "get": {
+        "tags": ["05. Metadata"],
+        "summary": "Get metadata for a questionnaire ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getMetadataByQuestionnaireId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "schema.metadata.json" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/questionnaire/{id}/data": {
+      "get": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Get questionnnaire data",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getQuestionnaireData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/api/nomenclatures": {
+      "get": {
+        "tags": ["04. Nomenclatures"],
+        "summary": "Get all nomenclatures Ids ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getNomenclaturesId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nomenclature/{id}": {
+      "get": {
+        "tags": ["04. Nomenclatures"],
+        "summary": "Get Nomenclature",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getNomenclatureById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "schema.nomenclature.json" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get all interrogations ids",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getInterrogationIds",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/{id}/metadata": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get interrogation metadata",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getInterrogationMetadataById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterrogationMetadata"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/{id}/deposit-proof": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get deposit proof for an interrogation",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "generateDepositProof",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "surveyUnitCompositeName",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": { "schema": { "type": "string", "format": "binary" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/temp-zone": {
+      "get": {
+        "tags": ["08. Interrogations in temp Zone"],
+        "summary": "GET all interrogations in temp-zone",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getInterrogationsInTempZone",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterrogationTempZone"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/interrogations/interviewer": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get list of interrogations linked to the current interviewer",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / INTERVIEWER / ",
+        "operationId": "getInterviewerInterrogations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Interrogation" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/healthcheck": {
+      "get": {
+        "tags": ["09. HealthCheck"],
+        "summary": "Healthcheck, check if api is alive",
+        "operationId": "healthCheck",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/campaigns/ids": {
+      "get": {
+        "tags": ["02. Campaigns"],
+        "summary": "Get list of all campaigns ids",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getListCampaignsIds",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CampaignIdsDto" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}/required-nomenclatures": {
+      "get": {
+        "tags": ["04. Nomenclatures"],
+        "summary": "Get list of required nomenclatures for a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getListRequiredNomenclature",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}/questionnaires": {
+      "get": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Get questionnaire list for a campaign ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getQuestionnaireDatasByCampaignId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionnaireModelValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}/questionnaire-id": {
+      "get": {
+        "tags": ["03. Questionnaires"],
+        "summary": "Get list of questionnaire ids for a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getQuestionnaireIdsByCampaignId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionnaireModelId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}/metadata": {
+      "get": {
+        "tags": ["05. Metadata"],
+        "summary": "Get metadata for a campaign ",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / SURVEY_UNIT / ",
+        "operationId": "getMetadataByCampaignId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "schema.metadata.json" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}/interrogations": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Get list of interrogations for a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / REVIEWER / REVIEWER_ALTERNATIVE / INTERVIEWER / ",
+        "operationId": "getListInterrogationByCampaign",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterrogationSummary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/campaigns": {
+      "get": {
+        "tags": ["02. Campaigns"],
+        "summary": "Get list of all campaigns",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getListCampaign",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CampaignSummary" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/campaigns/{id}": {
+      "get": {
+        "tags": ["02. Campaigns"],
+        "summary": "Get campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getCampaign",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/Campaign" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/campaign/{id}/interrogations": {
+      "get": {
+        "tags": ["06. Interrogations"],
+        "summary": "Retrieve interrogations by state",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "getInterrogationsByState",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "INIT",
+                "COMPLETED",
+                "VALIDATED",
+                "TOEXTRACT",
+                "EXTRACTED",
+                "IS_MOVED"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterrogationStateDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/campaign/{id}": {
+      "delete": {
+        "tags": ["02. Campaigns"],
+        "summary": "Delete a campaign",
+        "description": "Authorized roles: ADMIN / WEBCLIENT / ",
+        "operationId": "deleteCampaignById",
+        "parameters": [
+          {
+            "name": "force",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "boolean" }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/admin/campaign/{id}/interrogations/data/extracted": {
+      "delete": {
+        "tags": ["06. Interrogations"],
+        "summary": "Clean all data from interrogations of a campaign with extracted state",
+        "description": "Authorized roles: ",
+        "operationId": "cleanData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InterrogationUpdate": {
+        "type": "object",
+        "properties": {
+          "personalization": { "$ref": "schema.personalization.json" },
+          "data": { "type": "object", "$ref": "schema.data.json" },
+          "comment": { "type": "object" },
+          "stateData": {
+            "$ref": "#/components/schemas/StateDataForInterrogationUpdate"
+          },
+          "locked": { "type": "boolean" }
+        }
+      },
+      "StateDataForInterrogationUpdate": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": ["INIT", "COMPLETED", "VALIDATED", "TOEXTRACT", "EXTRACTED"]
+          },
+          "date": { "type": "integer", "format": "int64" },
+          "currentPage": { "type": "string", "minLength": 1 }
+        },
+        "required": ["currentPage", "date"]
+      },
+      "StateDataUpdate": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": ["INIT", "COMPLETED", "VALIDATED", "TOEXTRACT", "EXTRACTED"]
+          },
+          "currentPage": { "type": "string", "minLength": 1 }
+        },
+        "required": ["currentPage", "state"]
+      },
+      "QuestionnaireModelCreation": {
+        "type": "object",
+        "properties": {
+          "idQuestionnaireModel": { "type": "string" },
+          "label": { "type": "string", "minLength": 1 },
+          "value": { "type": "object" },
+          "requiredNomenclatureIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        },
+        "required": ["label", "value"]
+      },
+      "NomenclatureCreation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string", "minLength": 1 },
+          "value": { "$ref": "schema.nomenclature.json" }
+        },
+        "required": ["label", "value"]
+      },
+      "Interrogation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "questionnaireId": { "type": "string" },
+          "personalization": { "$ref": "schema.personalization.json" },
+          "data": { "type": "object", "$ref": "schema.data.json" },
+          "comment": { "type": "object" },
+          "stateData": { "$ref": "#/components/schemas/StateData" },
+          "locked": { "type": "boolean" }
+        }
+      },
+      "InterrogationsOkNok": {
+        "type": "object",
+        "properties": {
+          "interrogationOK": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Interrogation" }
+          },
+          "interrogationNOK": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Interrogation" }
+          }
+        }
+      },
+      "StateData": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "INIT",
+              "COMPLETED",
+              "VALIDATED",
+              "TOEXTRACT",
+              "EXTRACTED",
+              "IS_MOVED"
+            ]
+          },
+          "date": { "type": "integer", "format": "int64" },
+          "currentPage": { "type": "string" }
+        }
+      },
+      "EventDto": {
+        "type": "object",
+        "properties": {
+          "correlationId": { "type": "string", "format": "uuid" },
+          "eventType": {
+            "type": "string",
+            "enum": [
+              "MULTIMODE_MOVED",
+              "QUESTIONNAIRE_INIT",
+              "QUESTIONNAIRE_LEAF_STATES_UPDATED",
+              "QUESTIONNAIRE_UPDATED",
+              "QUESTIONNAIRE_COMPLETED",
+              "QUESTIONNAIRE_VALIDATED",
+              "QUESTIONNAIRE_SWITCH_CAPI"
+            ]
+          },
+          "aggregateType": { "type": "string", "enum": ["QUESTIONNAIRE"] },
+          "payload": { "$ref": "#/components/schemas/EventPayloadDto" }
+        },
+        "required": ["aggregateType", "eventType", "payload"]
+      },
+      "EventPayloadDto": {
+        "type": "object",
+        "properties": {
+          "interrogationId": { "type": "string" },
+          "mode": {
+            "type": "string",
+            "enum": ["CATI", "CAPI", "CAWI", "PAPI"]
+          },
+          "leafStates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventPayloadLeafStatesInnerDto"
+            }
+          }
+        },
+        "required": ["interrogationId", "mode"]
+      },
+      "EventPayloadLeafStatesInnerDto": {
+        "type": "object",
+        "properties": {
+          "state": { "type": "string", "enum": ["INIT", "COMPLETED"] },
+          "date": { "type": "string", "format": "date-time" }
+        },
+        "required": ["date"]
+      },
+      "CampaignCreation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string", "minLength": 1 },
+          "sensitivity": { "type": "string", "enum": ["NORMAL", "SENSITIVE"] },
+          "questionnaireIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "metadata": { "$ref": "#/components/schemas/MetadataCreation" }
+        },
+        "required": ["label", "questionnaireIds"]
+      },
+      "MetadataCreation": {
+        "type": "object",
+        "properties": {
+          "value": { "type": "object", "$ref": "schema.metadata.json" }
+        },
+        "required": ["value"]
+      },
+      "InterrogationCreation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "surveyUnitId": { "type": "string" },
+          "questionnaireId": { "type": "string" },
+          "personalization": { "$ref": "schema.personalization.json" },
+          "data": { "type": "object", "$ref": "schema.data.json" }
+        },
+        "required": ["data", "questionnaireId"]
+      },
+      "CampaignCreationV2": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string", "minLength": 1 },
+          "sensitivity": { "type": "string", "enum": ["NORMAL", "SENSITIVE"] },
+          "questionnaireIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "metadata": { "type": "object", "$ref": "schema.metadata.json" }
+        },
+        "required": ["label", "questionnaireIds"]
+      },
+      "IntegrationResultUnit": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["CREATED", "UPDATED", "ERROR"]
+          },
+          "cause": { "type": "string" }
+        }
+      },
+      "IntegrationResults": {
+        "type": "object",
+        "properties": {
+          "campaign": { "$ref": "#/components/schemas/IntegrationResultUnit" },
+          "nomenclatures": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IntegrationResultUnit" }
+          },
+          "questionnaireModels": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IntegrationResultUnit" }
+          }
+        }
+      },
+      "InterrogationDataStateDataUpdate": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "object", "$ref": "schema.collected-data.json" },
+          "stateData": { "$ref": "#/components/schemas/StateDataUpdate" }
+        },
+        "required": ["stateData"]
+      },
+      "InterrogationSummary": {
+        "type": "object",
+        "properties": {
+          "interrogationId": { "type": "string" },
+          "campaignId": { "type": "string" }
+        }
+      },
+      "QuestionnaireModelValue": {
+        "type": "object",
+        "properties": { "value": { "type": "object" } }
+      },
+      "InterrogationMetadata": {
+        "type": "object",
+        "properties": {
+          "context": { "type": "string", "enum": ["household", "business"] },
+          "personalization": { "$ref": "schema.personalization.json" },
+          "label": { "type": "string" },
+          "objectives": { "type": "string" },
+          "variables": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/MetadataVariable" }
+          },
+          "logos": { "$ref": "#/components/schemas/Logos" }
+        },
+        "required": ["context", "label", "objectives"]
+      },
+      "Logo": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "label": { "type": "string" }
+        },
+        "required": ["label", "url"]
+      },
+      "Logos": {
+        "type": "object",
+        "properties": {
+          "main": { "$ref": "#/components/schemas/Logo" },
+          "secondaries": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Logo" }
+          }
+        },
+        "required": ["main"]
+      },
+      "MetadataVariable": {
+        "type": "object",
+        "properties": { "name": { "type": "string" }, "value": {} },
+        "required": ["name", "value"]
+      },
+      "InterrogationTempZone": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "interrogationId": { "type": "string" },
+          "userId": { "type": "string" },
+          "date": { "type": "integer", "format": "int64" },
+          "interrogation": {
+            "type": "object",
+            "$ref": "schema.interrogation-temp-zone.json"
+          }
+        }
+      },
+      "CampaignSummary": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "sensitivity": { "type": "string", "enum": ["NORMAL", "SENSITIVE"] },
+          "questionnaireIds": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "CampaignIdsDto": {
+        "type": "object",
+        "properties": { "id": { "type": "string" } }
+      },
+      "QuestionnaireModelId": {
+        "type": "object",
+        "properties": { "questionnaireId": { "type": "string" } }
+      },
+      "Campaign": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "sensitivity": { "type": "string", "enum": ["NORMAL", "SENSITIVE"] },
+          "questionnaireIds": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "metadata": { "type": "object" }
+        }
+      },
+      "InterrogationStateDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "surveyUnitId": { "type": "string" },
+          "questionnaireId": { "type": "string" },
+          "campaignId": { "type": "string" },
+          "stateData": { "$ref": "#/components/schemas/StateData" }
+        }
+      },
+      "ArrayNode": { "type": "array", "items": { "type": "object" } },
+      "ObjectNode": { "type": "object" }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "name": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:7080/realms//protocol/openid-connect/auth",
+            "tokenUrl": "http://localhost:7080/realms//protocol/openid-connect/token",
+            "refreshUrl": "http://localhost:7080/realms//protocol/openid-connect/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  }
+}

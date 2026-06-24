@@ -251,7 +251,7 @@ export function Orchestrator(props: OrchestratorProps) {
       getMultimode: getMultimode,
     },
   )
-  useEvents(interrogation, getCurrentArticulationState, pageTag, getChangedData)
+  useEvents(interrogation, pageTag, getChangedData)
 
   /** For validating the questionnaire, it tries to put a `VALIDATED` stateData with the `endPage` */
   const validateQuestionnaire = async () => {

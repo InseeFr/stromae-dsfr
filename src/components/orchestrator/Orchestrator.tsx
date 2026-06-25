@@ -384,14 +384,16 @@ export function Orchestrator(props: OrchestratorProps) {
           shouldShowToast: shouldShowToast,
         })
       } catch (error) {
-        // if: 409 in error, display ErrorComponent (can't be handle by react-error-boundary because error is throw during async callback)
+        // if: error is an isBlockingApiError, display ErrorComponent (can't be handle by react-error-boundary because error is throw during async callback)
         if (isBlockingApiError(error)) setBlockingApiError(error)
         // else: Store pending data to localStorage to try again later
-        setPendingData({
-          data: dataToSend,
-          stateData: interrogation.stateData,
-        })
-        isSavingRef.current = false
+        else {
+          setPendingData({
+            data: dataToSend,
+            stateData: interrogation.stateData,
+          })
+          isSavingRef.current = false
+        }
       }
     }
   }

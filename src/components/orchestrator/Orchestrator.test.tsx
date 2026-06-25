@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useSearch } from '@tanstack/react-router'
 import { act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { AxiosError } from 'axios'
 import { expect, vi } from 'vitest'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -15,6 +14,7 @@ import type { QuestionnaireState } from '@/models/questionnaireState'
 import { renderWithRouter } from '@/utils/tests'
 
 import { Orchestrator } from './Orchestrator'
+import { mockAxiosError } from './utils/blockingError.test'
 
 // Needed to avoid TypeError: window.dsfr is not a function during test
 vi.mock('@codegouvfr/react-dsfr/Modal', () => ({
@@ -1098,27 +1098,13 @@ describe('Orchestrator', () => {
     })
   })
 
-  it('On conflict during update, throw error and display ErrorComponent', async () => {
-    const axiosError409 = new AxiosError(
-      'Conflict',
-      'ERR_BAD_REQUEST',
-      undefined,
-      undefined,
-      {
-        data: {
-          message: "We don't care",
-        },
-        status: 409,
-        statusText: 'Conflict',
-        headers: {},
-        config: {} as any,
-      },
-    )
-
+  it('On conflict during sending stateData & data, throw error and display ErrorComponent', async () => {
     const user = userEvent.setup()
 
     // request failed with 409
-    const updateDataAndStateData = vi.fn().mockRejectedValue(axiosError409)
+    const updateDataAndStateData = vi
+      .fn()
+      .mockRejectedValue(mockAxiosError(409))
 
     const { getByText } = renderWithRouter(
       <OrchestratorTestWrapper

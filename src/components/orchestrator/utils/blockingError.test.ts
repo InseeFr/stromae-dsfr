@@ -2,16 +2,22 @@ import { AxiosError } from 'axios'
 
 import { isBlockingApiError } from './blockingError'
 
-const mockAxiosError = (statuts: number) =>
-  new AxiosError('Conflict', 'ERR_BAD_REQUEST', undefined, undefined, {
-    data: {
-      message: "We don't care",
+export const mockAxiosError = (statuts: number) =>
+  new AxiosError(
+    `Axios error with status ${statuts}`,
+    'ERR_BAD_REQUEST',
+    undefined,
+    undefined,
+    {
+      data: {
+        message: "We don't care",
+      },
+      status: statuts,
+      statusText: `Error HTTP ${statuts}`,
+      headers: {},
+      config: {} as any,
     },
-    status: statuts,
-    statusText: `Error HTTP ${statuts}`,
-    headers: {},
-    config: {} as any,
-  })
+  )
 
 describe('Blocking API error during questionnaire completion', () => {
   it('should return true for 409 axios error', () => {

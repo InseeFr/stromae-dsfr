@@ -10,6 +10,7 @@ import {
   useLunatic,
 } from '@inseefr/lunatic'
 import { useNavigate, useSearch } from '@tanstack/react-router'
+import axios from 'axios'
 import { assert } from 'tsafe/assert'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -380,9 +381,9 @@ export function Orchestrator(props: OrchestratorProps) {
           shouldShowToast: shouldShowToast,
         })
       } catch (error) {
-        console.error('Failed to update data:', error)
-
-        // Store pending data to localStorage to try again later
+        // if: 409 in error, propagate this error, (catch by ErrorComponent, cf RouteComponent)
+        if (axios.isAxiosError(error) && error.status === 409) throw error
+        // else: Store pending data to localStorage to try again later
         setPendingData({
           data: dataToSend,
           stateData: interrogation.stateData,

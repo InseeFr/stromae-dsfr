@@ -385,7 +385,10 @@ export function Orchestrator(props: OrchestratorProps) {
         })
       } catch (error) {
         // if: error is an isBlockingApiError, display ErrorComponent (can't be handle by react-error-boundary because error is throw during async callback)
-        if (isBlockingApiError(error)) setBlockingApiError(error)
+        if (isBlockingApiError(error)) {
+          setBlockingApiError(error)
+          setIsDirtyState(false)
+        }
         // else: Store pending data to localStorage to try again later
         else {
           setPendingData({

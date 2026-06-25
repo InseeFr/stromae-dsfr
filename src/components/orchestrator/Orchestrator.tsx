@@ -10,7 +10,6 @@ import {
   useLunatic,
 } from '@inseefr/lunatic'
 import { useNavigate, useSearch } from '@tanstack/react-router'
-import axios from 'axios'
 import { assert } from 'tsafe/assert'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -34,6 +33,7 @@ import {
 } from '@/utils/telemetry'
 
 import { dismissAllToasts } from '../Toast'
+import { ErrorComponent } from '../error/ErrorComponent'
 import { SurveyContainer } from './SurveyContainer'
 import { EndPage } from './customPages/EndPage'
 import { SyncModal } from './customPages/SyncModal'
@@ -53,6 +53,7 @@ import { useUpdateEffect } from './hooks/useUpdateEffect'
 import './orchestrator.css'
 import { slotComponents } from './slotComponents'
 import { articulationToCsv } from './utils/articulationToCsv'
+import { isBlockingApiError } from './utils/blockingError'
 import { computeLunaticComponents } from './utils/components'
 import { computeInterrogation, trimCollectedData } from './utils/data'
 import { downloadAsCsv, downloadAsJson } from './utils/downloadFile'
@@ -337,6 +338,8 @@ export function Orchestrator(props: OrchestratorProps) {
     })
   })
 
+  const [blockingApiError, setBlockingApiError] = useState<Error | null>(null)
+
   const triggerDataAndStateUpdate = async (
     isLogout: boolean = false,
     shouldShowToast: boolean = true,
@@ -381,8 +384,8 @@ export function Orchestrator(props: OrchestratorProps) {
           shouldShowToast: shouldShowToast,
         })
       } catch (error) {
-        // if: 409 in error, propagate this error, (catch by ErrorComponent, cf RouteComponent)
-        if (axios.isAxiosError(error) && error.status === 409) throw error
+        // if: 409 in error, display ErrorComponent (can't be handle by react-error-boundary because error is throw during async callback)
+        if (isBlockingApiError(error)) setBlockingApiError(error)
         // else: Store pending data to localStorage to try again later
         setPendingData({
           data: dataToSend,
@@ -529,6 +532,9 @@ export function Orchestrator(props: OrchestratorProps) {
       return
     }
   }
+
+  if (blockingApiError)
+    return <ErrorComponent error={blockingApiError} redirectTo="portal" />
 
   return (
     <div ref={containerRef}>

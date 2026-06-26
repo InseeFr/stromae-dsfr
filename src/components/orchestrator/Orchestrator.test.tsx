@@ -14,6 +14,7 @@ import type { QuestionnaireState } from '@/models/questionnaireState'
 import { renderWithRouter } from '@/utils/tests'
 
 import { Orchestrator } from './Orchestrator'
+import { mockAxiosError } from './utils/blockingError.test'
 
 // Needed to avoid TypeError: window.dsfr is not a function during test
 vi.mock('@codegouvfr/react-dsfr/Modal', () => ({
@@ -1094,6 +1095,35 @@ describe('Orchestrator', () => {
 
     await waitFor(() => {
       expect(document.title).not.toContain('*')
+    })
+  })
+
+  it('On conflict during sending stateData & data, throw error and display ErrorComponent', async () => {
+    const user = userEvent.setup()
+
+    // request failed with 409
+    const updateDataAndStateData = vi
+      .fn()
+      .mockRejectedValue(mockAxiosError(409))
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(() => {
+      expect(getByText('Conflict')).toBeInTheDocument()
     })
   })
 })

@@ -32,6 +32,11 @@
     "subtitle": "La requête que vous avez envoyée est incorrecte ou malformée.",
     "paragraph": "Veuillez vérifier les données que vous avez envoyées et réessayer."
   },
+  "conflict": {
+    "title": "Conflit",
+    "subtitle": "Un conflit est détecté par le serveur.",
+    "paragraph": "Il semblerait que vous ayez déjà validé votre questionnaire, veuillez fermer ou rafraichir cette page."
+  },
   "serverError": {
     "title": "Erreur interne du serveur",
     "subtitle": "Une erreur est survenue du côté du serveur. Veuillez réessayer ultérieurement.",

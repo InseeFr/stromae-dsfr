@@ -32,6 +32,11 @@
     "subtitle": "The request you sent is incorrect or malformed.",
     "paragraph": "Please check the data you sent and try again."
   },
+  "conflict": {
+    "title": "Conflict",
+    "subtitle": "A conflict has been detected by the server.",
+    "paragraph": "It appears that you have already submitted your questionnaire. Please close or refresh this page."
+  },
   "serverError": {
     "title": "Internal server error",
     "subtitle": "An error occurred on the server side. Please try again later.",

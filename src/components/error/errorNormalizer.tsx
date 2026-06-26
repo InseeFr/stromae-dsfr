@@ -63,6 +63,13 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
           paragraph: t('error.badRequest.paragraph'),
           code: status,
         }
+      case 409:
+        return {
+          title: t('error.conflict.title'),
+          subtitle: t('error.conflict.subtitle'),
+          paragraph: t('error.conflict.paragraph'),
+          code: status,
+        }
       case 500:
         return {
           title: t('error.serverError.title'),

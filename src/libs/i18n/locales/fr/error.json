@@ -34,7 +34,7 @@
   },
   "conflict": {
     "title": "Conflit",
-    "subtitle": "Un conflit a été détecté par le serveur.",
+    "subtitle": "Un conflit est détecté par le serveur.",
     "paragraph": "Il semblerait que vous ayez déjà validé votre questionnaire, veuillez fermer ou rafraichir cette page."
   },
   "serverError": {

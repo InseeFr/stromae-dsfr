@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.10.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.0) - 2026-06-26
+
 ### Changed
 
 - handle `409 - Conflict` http response when sending data (with `PATCH`) as blocking error, display Custom error for user

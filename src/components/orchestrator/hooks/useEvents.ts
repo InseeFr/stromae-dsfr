@@ -1,23 +1,41 @@
-import type { getArticulationState } from '@inseefr/lunatic'
-
-import { usePostEvents } from '@/api/10-events'
+import { useAddEvent } from '@/api/events-controller'
 import {
-  LeafStatesUpdatedEventType,
-  MultimodeMovedEventType,
-  QuestionnaireEventType,
+  EventDtoAggregateType,
+  EventDtoEventType,
+  EventPayloadDtoMode,
 } from '@/models/api'
 import type { Interrogation } from '@/models/interrogation'
 import type { LunaticPageTag } from '@/models/lunaticType.ts'
+import type { QuestionnaireState } from '@/models/questionnaireState'
 import { hasMultimode } from '@/utils/env.ts'
 
 import { useCallbackOnValueChange } from './useCallbackOnValueChange.ts'
+
+// stromae-dsfr is the self-administered web frontend, so the collect mode is CAWI
+const COLLECTION_MODE = EventPayloadDtoMode.CAWI
+
+/**
+ * Map an interrogation state to its event type. States that do not map to an
+ * event (TOEXTRACT, EXTRACTED) return undefined and emit nothing.
+ */
+function stateToEventType(state: QuestionnaireState | undefined) {
+  switch (state) {
+    case 'INIT':
+      return EventDtoEventType.QUESTIONNAIRE_INIT
+    case 'VALIDATED':
+      return EventDtoEventType.QUESTIONNAIRE_VALIDATED
+    case 'COMPLETED':
+      return EventDtoEventType.QUESTIONNAIRE_COMPLETED
+    default:
+      return undefined
+  }
+}
 
 /**
  * Trigger events when specific operations happens during interrogation
  */
 export function useEvents(
   interrogation: Interrogation,
-  getLeafStatesData: () => ReturnType<typeof getArticulationState>,
   pageTag: LunaticPageTag,
   getChangedData: (reset: boolean) => Record<string, unknown>,
 ) {
@@ -27,23 +45,22 @@ export function useEvents(
   }
 
   /* eslint-disable react-hooks/rules-of-hooks */
-  const { mutateAsync } = usePostEvents()
+  const { mutateAsync } = useAddEvent()
 
-  // Send an event when multimode state changes
+  // Send an event when multimode state changes (only MULTIMODE_MOVED exists)
   useCallbackOnValueChange(
     interrogation.stateData?.multimode?.state ?? null,
     (multimodeState) => {
-      if (!multimodeState || !interrogation.id) {
+      if (multimodeState !== 'IS_MOVED' || !interrogation.id) {
         return
       }
       mutateAsync({
         data: {
-          type: multimodeState.replace(
-            'IS_',
-            'MUTLIMODE_',
-          ) as MultimodeMovedEventType,
+          eventType: EventDtoEventType.MULTIMODE_MOVED,
+          aggregateType: EventDtoAggregateType.QUESTIONNAIRE,
           payload: {
             interrogationId: interrogation.id,
+            mode: COLLECTION_MODE,
           },
         },
       })
@@ -58,21 +75,17 @@ export function useEvents(
         return
       }
 
-      // Inject cell data inside the leafStates
-      const data = getLeafStatesData()
-      const leafStatesWithCells = leafStates.map((leafState, index) => {
-        return {
-          ...leafState,
-          cells: data.items[index].cells,
-        }
-      })
-
       mutateAsync({
         data: {
-          type: LeafStatesUpdatedEventType.LEAF_STATES_UPDATED,
+          eventType: EventDtoEventType.QUESTIONNAIRE_LEAF_STATES_UPDATED,
+          aggregateType: EventDtoAggregateType.QUESTIONNAIRE,
           payload: {
             interrogationId: interrogation.id,
-            leafStates: leafStatesWithCells,
+            mode: COLLECTION_MODE,
+            leafStates: leafStates.map(({ state, date }) => ({
+              state: state ?? undefined,
+              date: new Date(date).toISOString(),
+            })),
           },
         },
       })
@@ -91,9 +104,11 @@ export function useEvents(
 
     mutateAsync({
       data: {
-        type: `QUESTIONNAIRE_UPDATED` as QuestionnaireEventType,
+        eventType: EventDtoEventType.QUESTIONNAIRE_UPDATED,
+        aggregateType: EventDtoAggregateType.QUESTIONNAIRE,
         payload: {
           interrogationId: interrogation.id,
+          mode: COLLECTION_MODE,
         },
       },
     })
@@ -101,14 +116,17 @@ export function useEvents(
 
   // Send an event when the interrogation state changes
   useCallbackOnValueChange(interrogation.stateData?.state, (state) => {
-    if (!state || !interrogation.id) {
+    const eventType = stateToEventType(state)
+    if (!eventType || !interrogation.id) {
       return
     }
     mutateAsync({
       data: {
-        type: `QUESTIONNAIRE_${state}` as QuestionnaireEventType,
+        eventType,
+        aggregateType: EventDtoAggregateType.QUESTIONNAIRE,
         payload: {
           interrogationId: interrogation.id,
+          mode: COLLECTION_MODE,
         },
       },
     })

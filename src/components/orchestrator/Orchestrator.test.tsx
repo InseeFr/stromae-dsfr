@@ -43,6 +43,11 @@ vi.mock('@tanstack/react-router', async (importOriginal) => {
   }
 })
 
+// Autosave interval stubbed for the tests. waitFor timeouts must exceed it,
+// otherwise the first interval tick can never be observed.
+const AUTOSAVE_INTERVAL_MS = 2100
+const AUTOSAVE_WAIT_TIMEOUT_MS = AUTOSAVE_INTERVAL_MS + 900
+
 describe('Orchestrator', () => {
   const defaultInterrogation = {
     stateData: undefined,
@@ -166,7 +171,7 @@ describe('Orchestrator', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.clearAllMocks()
-    vi.stubEnv('VITE_AUTOSAVE_INTERVAL', '2100')
+    vi.stubEnv('VITE_AUTOSAVE_INTERVAL', String(AUTOSAVE_INTERVAL_MS))
   })
 
   afterEach(() => {
@@ -451,7 +456,7 @@ describe('Orchestrator', () => {
         expect(document.title).not.toBe('Sending the questionnaire')
         expect(document.title).toContain('*')
       },
-      { timeout: 3000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -562,7 +567,7 @@ describe('Orchestrator', () => {
       () => {
         expect(updateDataAndStateData).toHaveBeenCalledTimes(2)
       },
-      { timeout: 3000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     const calls = updateDataAndStateData.mock.calls
@@ -600,7 +605,7 @@ describe('Orchestrator', () => {
       () => {
         expect(document.title).not.toContain('*')
       },
-      { timeout: 3000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -659,7 +664,7 @@ describe('Orchestrator', () => {
       () => {
         expect(getByText('Sync in progress')).toBeInTheDocument()
       },
-      { timeout: 3000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -867,7 +872,7 @@ describe('Orchestrator', () => {
       () => {
         expect(updateDataAndStateData).toHaveBeenCalledOnce()
       },
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -896,7 +901,7 @@ describe('Orchestrator', () => {
           expect.objectContaining({ isLogout: false, shouldShowToast: false }),
         )
       },
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -961,7 +966,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     await user.click(getByText('my-question'))
@@ -969,7 +974,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
   })
 
@@ -1004,13 +1009,13 @@ describe('Orchestrator', () => {
     // First auto-save fires — fails, isDirtyState stays true
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2100 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     // Second auto-save fires automatically (isDirtyState still true) — succeeds
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2100 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     expect(updateDataAndStateData).toHaveBeenLastCalledWith(
@@ -1058,7 +1063,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     await user.click(getByText('my-question'))
@@ -1068,7 +1073,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     await user.click(getByText('my-question-2'))
@@ -1076,7 +1081,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(3),
-      { timeout: 2000 },
+      { timeout: AUTOSAVE_WAIT_TIMEOUT_MS },
     )
 
     expect(updateDataAndStateData).toHaveBeenLastCalledWith(

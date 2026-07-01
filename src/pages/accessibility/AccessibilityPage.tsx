@@ -3,7 +3,6 @@ import { memo } from 'react'
 import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb'
 import { useTranslation } from 'react-i18next'
 
-import accessibilityAuditReport from '@/assets/1-grille-RGAA-v2025-09-09-Questionnaire-enquêtes.pdf'
 import { Grid } from '@/components/Grid'
 
 export const AccessibilityPage = memo(function AccessibilityPage() {
@@ -77,21 +76,20 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
           {t('accessibility.testResults.introPrefix')}{' '}
           <a
             className="fr-link"
-            href={t('accessibility.testResults.koenaLinkUrl')}
+            href={t('accessibility.testResults.auditorLinkUrl')}
             target="_blank"
-            title={t('accessibility.testResults.koenaLinkTitle')}
+            title={t('accessibility.testResults.auditorLinkTitle')}
           >
-            {t('accessibility.testResults.koenaLinkText')}
+            {t('accessibility.testResults.auditorLinkText')}
           </a>{' '}
           {t('accessibility.testResults.introSuffix')}
         </p>
         <ul>
           <li>{t('accessibility.testResults.criterion1')}</li>
-          <li>{t('accessibility.testResults.criterion2')}</li>
           <li>
             <a
               className="fr-link"
-              href={accessibilityAuditReport}
+              href={t('accessibility.testResults.auditGridLinkUrl')}
               target="_blank"
               title={t('accessibility.testResults.auditGridLinkTitle')}
             >
@@ -110,23 +108,10 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
         <ul>
           {getArray('accessibility.nonAccessibleContent.criteria').map(
             (criterion: string, index: number) => (
-              <li key={index}>
-                <span>{criterion.split(' — ')[0]}</span> —{' '}
-                {criterion.split(' — ')[1]}
-              </li>
+              <li key={index}>{criterion}</li>
             ),
           )}
         </ul>
-
-        <h5 className="fr-mt-2w">
-          {t('accessibility.disproportionateBurden.title')}
-        </h5>
-        <p>{t('accessibility.disproportionateBurden.content')}</p>
-
-        <h5 className="fr-mt-2w">
-          {t('accessibility.nonSubmittedContent.title')}
-        </h5>
-        <p>{t('accessibility.nonSubmittedContent.content')}</p>
       </section>
 
       <section>
@@ -147,35 +132,13 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
 
         <h4 className="fr-mt-4w">{t('accessibility.testEnvironment.title')}</h4>
         <p>{t('accessibility.testEnvironment.intro')}</p>
-        <div className="fr-table" data-fr-js-table="true">
-          <table data-fr-js-table-element="true">
-            <thead>
-              <tr>
-                <th scope="col">
-                  {t('accessibility.testEnvironment.tableHeaders.userAgent')}
-                </th>
-                <th scope="col">
-                  {t(
-                    'accessibility.testEnvironment.tableHeaders.assistiveTech',
-                  )}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {getArray('accessibility.testEnvironment.combinations').map(
-                (
-                  combo: { userAgent: string; assistiveTech: string },
-                  index: number,
-                ) => (
-                  <tr key={index} data-fr-js-table-row="true">
-                    <td>{combo.userAgent}</td>
-                    <td>{combo.assistiveTech}</td>
-                  </tr>
-                ),
-              )}
-            </tbody>
-          </table>
-        </div>
+        <ul>
+          {getArray('accessibility.testEnvironment.items').map(
+            (item: string, index: number) => (
+              <li key={index}>{item}</li>
+            ),
+          )}
+        </ul>
 
         <h4 className="fr-mt-4w">{t('accessibility.evaluationTools.title')}</h4>
         <p>{t('accessibility.evaluationTools.intro')}</p>
@@ -214,7 +177,6 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
         </ul>
 
         <h4 className="fr-mt-4w">{t('accessibility.evaluatedPages.title')}</h4>
-        <p>{t('accessibility.evaluatedPages.content')}</p>
         <h5 className="fr-mt-2w">
           {t('accessibility.evaluatedPages.structuredSampleTitle')}
         </h5>
@@ -225,13 +187,6 @@ export const AccessibilityPage = memo(function AccessibilityPage() {
             ),
           )}
         </ul>
-
-        <h5 className="fr-mt-2w">
-          {t('accessibility.evaluatedPages.randomSampleTitle')}
-        </h5>
-        <p>
-          <i>{t('accessibility.evaluatedPages.randomSampleContent')}</i>
-        </p>
       </section>
 
       <section>

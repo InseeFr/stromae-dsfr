@@ -4,9 +4,9 @@
   "declaration": {
     "paragraph1": "L'Insee s'engage à rendre ses sites internet, intranet, extranet et ses progiciels accessibles (et ses applications mobiles et mobilier urbain numérique) conformément à l'article 47 de la loi n°2005-102 du 11 février 2005.",
     "paragraph2Prefix": "À cette fin, il met en œuvre un schéma pluriannuel présentant la politique de l'Insee en matière d'accessibilité numérique ainsi qu'un",
-    "paragraph2LinkText": "schéma pluriannuel de mise en accessibilité numérique de l'Insee 2023-2025",
+    "paragraph2LinkText": "Schéma pluriannuel de mise en accessibilité numérique de l'Insee 2026-2028",
     "paragraph2LinkUrl": "https://www.insee.fr/fr/information/7621795",
-    "paragraph2LinkTitle": "Schéma pluriannuel de mise en accessibilité numérique de l'Insee 2023-2025 - ouvre une nouvelle fenêtre",
+    "paragraph2LinkTitle": "Schéma pluriannuel de mise en accessibilité numérique de l'Insee 2026-2028 - ouvre une nouvelle fenêtre",
     "paragraph3Prefix": "Cette déclaration d'accessibilité s'applique à",
     "paragraph3Suffix": "."
   },
@@ -25,48 +25,39 @@
   "testResults": {
     "title": "Résultats des tests",
     "introPrefix": "L'audit de conformité réalisé par",
-    "koenaLinkText": "Koena",
-    "koenaLinkUrl": "https://koena.net/",
-    "koenaLinkTitle": "https://koena.net/ - ouvre une nouvelle fenêtre",
+    "auditorLinkText": "Stratis",
+    "auditorLinkUrl": "https://www.stratis.fr/",
+    "auditorLinkTitle": "Stratis - ouvre une nouvelle fenêtre",
     "introSuffix": "révèle que :",
-    "criterion1": "71 % des critères RGAA sont respectés. Il s'agit du nombre de critères pleinement respectés sur la totalité des pages de l'échantillon. On parle aussi de taux de conformité global.",
-    "criterion2": "Le taux moyen de conformité du service en ligne s'élève à 80 %. Il s'agit de la moyenne du score de conformité obtenu sur chacune des pages de l'échantillon.",
-    "auditGridLinkText": "Accès à la grille d'audit RGAA",
-    "auditGridLinkTitle": "Grille d'audit RGAA - fichier téléchargeable - ouvre une nouvelle fenêtre"
+    "criterion1": "76 % des critères RGAA sont respectés. Il s'agit du nombre de critères pleinement respectés sur la totalité des pages de l'échantillon. On parle aussi de taux de conformité global.",
+    "auditGridLinkText": "Rapport d'audit détaillé",
+    "auditGridLinkUrl": "https://ara.numerique.gouv.fr/rapport/IOohZVEVin6DpJwHbKuZJ/",
+    "auditGridLinkTitle": "Rapport d'audit détaillé - ouvre une nouvelle fenêtre"
   },
   "nonAccessibleContent": {
     "title": "Contenus non accessibles",
     "nonCompliantTitle": "Non conformités",
-    "nonCompliantIntro": "Nous listons ci-dessous l'ensemble des critères non-conformes. Pour le détail, se reporter à la grille d'audit et au schéma pluriannuel pour le plan d'amélioration continue.",
+    "nonCompliantIntro": "Nous listons ci-dessous l'ensemble des critères non-conformes. Pour le détail, se reporter au rapport d'audit détaillé et au schéma pluriannuel pour le plan d'amélioration continue.",
     "criteria": [
-      "5.3 — Pour chaque tableau de mise en forme, le contenu linéarisé reste-t-il compréhensible ?",
-      "6.1 — Chaque lien est-il explicite (hors cas particuliers) ?",
-      "7.3 — Chaque script est-il contrôlable par le clavier et par tout dispositif de pointage (hors cas particuliers) ?",
-      "7.4 — Pour chaque script qui initie un changement de contexte, l'utilisateur est-il averti ou en a-t-il le contrôle ?",
-      "7.5 — Dans chaque page web, les messages de statut sont-ils correctement restitués par les technologies d'assistance ?",
-      "8.6 — Pour chaque page web ayant un titre de page, ce titre est-il pertinent ?",
-      "10.8 — Pour chaque page web, les contenus cachés ont-ils vocation à être ignorés par les technologies d'assistance ?",
-      "11.2 — Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ?",
-      "11.7 — Dans chaque formulaire, chaque légende associée à un regroupement de champs de même nature est-elle pertinente ?",
-      "11.10 — Dans chaque formulaire, le contrôle de saisie est-il utilisé de manière pertinente (hors cas particuliers) ?",
-      "12.3 — La page « plan du site » est-elle pertinente ?",
-      "12.7 — Dans chaque page web, un lien d'évitement ou d'accès rapide à la zone de contenu principal est-il présent (hors cas particuliers) ?",
-      "13.1 — Pour chaque page web, l'utilisateur a-t-il le contrôle de chaque limite de temps modifiant le contenu (hors cas particuliers) ?",
-      "13.3 — Dans chaque page web, chaque document bureautique en téléchargement possède-t-il, si nécessaire, une version accessible (hors cas particuliers) ?",
-      "13.11 — Dans chaque page web, les actions déclenchées au moyen d'un dispositif de pointage sur un point unique de l'écran peuvent-elles faire l'objet d'une annulation (hors cas particuliers) ?"
+      "Le lien du logo en pied de page n'est pas pertinent.",
+      "Le texte des infobulles n'est pas lu par les technologies d'assistance.",
+      "L'état du bouton pour étendre/réduire l'affichage est confus.",
+      "Le focus clavier est perdu à la fermeture des boîtes de dialogue.",
+      "Lors de l'ajout/suppression de ligne dans le tableau des produits, aucune information n'est transmise aux technologies d'assistance.",
+      "Certains textes sont inutilement annoncés par les technologies d'assistance au changement d'étape.",
+      "L'étiquette des champs n'est pas correctement implémentée, certains champs ne possèdent pas d'intitulé, d'autres un intitulé non pertinent.",
+      "Les aides de saisie ne sont pas rattachées aux champs.",
+      "Les groupes de champs ne sont pas correctement légendés.",
+      "Le titre de la page d'accueil du questionnaire n'est pas assez pertinent.",
+      "Le plan du site n'est pas représentatif des étapes du questionnaire.",
+      "Les pages ne possèdent pas de lien d'accès rapide à la zone de contenu principal.",
+      "Les messages de statut disparaissent trop rapidement et ne sont pas contrôlables par l'utilisateur.",
+      "Le PDF de l'accusé de réception est lisible par les technologies d'assistance mais n'est pas structuré."
     ]
-  },
-  "disproportionateBurden": {
-    "title": "Dérogations pour charge disproportionnée",
-    "content": "Aucune."
-  },
-  "nonSubmittedContent": {
-    "title": "Contenus non soumis à l'obligation d'accessibilité",
-    "content": "Aucun contenu soumis à exemption légale."
   },
   "establishment": {
     "title": "Établissement de cette déclaration d'accessibilité",
-    "content": "Cette déclaration a été établie le 06/10/2025."
+    "content": "Cette déclaration a été établie le 12/06/2026."
   },
   "technologiesUsed": {
     "title": "Technologies utilisées pour la réalisation du site",
@@ -75,54 +66,29 @@
   },
   "testEnvironment": {
     "title": "Environnement de test",
-    "intro": "Les tests des pages web ont été effectués avec les combinaisons de navigateurs web et lecteurs d'écran suivants :",
-    "tableHeaders": {
-      "userAgent": "User Agent",
-      "assistiveTech": "Assistive Technology"
-    },
-    "combinations": [
-      { "userAgent": "Firefox 142.0.1", "assistiveTech": "NVDA 2025.3" },
-      { "userAgent": "Firefox 142.0.1", "assistiveTech": "JAWS 2025.2508.120" },
-      { "userAgent": "Safari 26", "assistiveTech": "VoiceOver" }
+    "intro": "Les vérifications de restitution de contenus ont été réalisées sur la base de la combinaison fournie par la base de référence du RGAA, avec les versions suivantes :",
+    "items": [
+      "Sur Mobile Android avec Google Chrome et Talkback",
+      "Sur Ordinateur MacOS avec Safari et VoiceOver",
+      "Sur Ordinateur Windows avec Microsoft Edge et JAWS",
+      "Sur Ordinateur Windows avec Firefox et NVDA"
     ]
   },
   "evaluationTools": {
     "title": "Outils pour évaluer l'accessibilité",
     "intro": "Les outils suivants ont été utilisés lors de l'évaluation :",
     "tools": [
-      "Extension RGAA éditée par la DINUM pour Firefox",
-      "Inspecteur de code du navigateur (Firefox)",
-      "Contrast-Finder et Color Contrast Analyser pour tester les contrastes de couleurs.",
-      {
-        "text": "Validateur du W3C :",
-        "linkText": "https://validator.w3.org/",
-        "linkUrl": "https://validator.w3.org/",
-        "linkTitle": "Validateur du W3C - ouvre une nouvelle fenêtre"
-      },
-      "Extension HeadingsMap pour Firefox, pour visualiser la structuration par les titres.",
-      {
-        "text": "Extension de navigateur Web Developer de Chris Pederick :",
-        "linkText": "https://chrispederick.com/work/web-developer/",
-        "linkUrl": "https://chrispederick.com/work/web-developer/",
-        "linkTitle": "Extension de navigateur Web Developer - ouvre une nouvelle fenêtre"
-      },
-      {
-        "text": "ARCtoolkit sur Chrome pour de nombreux critères :",
-        "linkText": "https://www.tpgi.com/arc-platform/arc-toolkit/",
-        "linkUrl": "https://www.tpgi.com/arc-platform/arc-toolkit/",
-        "linkTitle": "ARCtoolkit - ouvre une nouvelle fenêtre"
-      },
-      {
-        "text": "Accessibilité PDF | PDF Accessibility Checker (PAC 2021) :",
-        "linkText": "https://pac.pdf-accessibility.org/en",
-        "linkUrl": "https://pac.pdf-accessibility.org/en",
-        "linkTitle": "Accessibilité PDF - ouvre une nouvelle fenêtre"
-      }
+      "Web Developer Toolbar",
+      "Colour Contrast Analyser",
+      "HeadingsMap",
+      "ArcToolkit",
+      "Inspecteur de composants",
+      "Assistant RGAA",
+      "Validateur HTML du W3C"
     ]
   },
   "evaluatedPages": {
     "title": "Pages du site ayant fait l'objet de la vérification de conformité",
-    "content": "Sans objet.",
     "structuredSampleTitle": "Échantillon structuré",
     "structuredSamplePages": [
       "Accueil du questionnaire",
@@ -133,9 +99,7 @@
       "Commentaire",
       "Envoi du questionnaire",
       "Fin du questionnaire"
-    ],
-    "randomSampleTitle": "Échantillon pris au hasard",
-    "randomSampleContent": "Conformément au RGAA : « s'ajoutent des pages sélectionnées au hasard représentant au moins 10 % des pages de l'échantillon décrit supra. » Le présent service ne permettait pas de sélectionner des pages au hasard. 100 % des étapes du questionnaire ont été évaluées."
+    ]
   },
   "feedbackContact": {
     "title": "Retour d'information et contact",

@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.10.0",
+  "version": "2.10.1-rc-accessibility-page.0",
   "type": "module",
   "packageManager": "pnpm@11.8.0",
   "scripts": {

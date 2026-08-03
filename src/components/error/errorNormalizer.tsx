@@ -93,7 +93,7 @@ export function errorNormalizer(error: unknown): ErrorNormalized {
       subtitle: t('error.validationError.subtitle', { name: error.name }),
       paragraph: (
         <ul>
-          {error.errors.map((e, index) => (
+          {error.issues.map((e, index) => (
             <li key={index}>
               {e.path.join('.')} : {e.message}
             </li>

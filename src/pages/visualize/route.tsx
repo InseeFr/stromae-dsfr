@@ -20,7 +20,9 @@ const visualizeSearchSchema = z
     source: z.string().transform(decodeURIComponent).optional(),
     metadata: z.string().transform(decodeURIComponent).optional(),
     data: z.string().transform(decodeURIComponent).optional(),
-    nomenclature: z.record(z.string().transform(decodeURIComponent)).optional(),
+    nomenclature: z
+      .record(z.string(), z.string().transform(decodeURIComponent))
+      .optional(),
   })
   .optional()
 

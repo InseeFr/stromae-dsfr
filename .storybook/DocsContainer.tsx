@@ -2,8 +2,8 @@ import React, { ComponentProps, useEffect } from 'react'
 
 import { useIsDark } from '@codegouvfr/react-dsfr/useIsDark'
 import { DocsContainer as DocsContainer_base } from '@storybook/blocks'
-import { addons } from '@storybook/preview-api'
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode'
+import { addons } from 'storybook/preview-api'
 
 import { darkTheme, lightTheme } from './customTheme'
 

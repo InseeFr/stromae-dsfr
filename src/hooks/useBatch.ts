@@ -11,7 +11,7 @@ export function useBatch(
 ) {
   const [data, setData] = useState<Array<any>>([])
   const dataRef = useRef<Array<any>>([])
-  const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     dataRef.current = data

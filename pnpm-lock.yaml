@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@storybook/addon-interactions@8.6.14': b26335a33f0a9d72e1fa7cda75a9575257200a317fb6c71bd9a326acbf2a3e67
+  '@storybook/addon-toolbars@8.6.14': 5ba84a512aed6ed53c075a77cb77973e0a6ce9dde17d0a8b09d587df28cd0cbc
+  '@storybook/blocks@8.6.14': 5b3e7e7c296b148a5e606206dfd44404e3c46a22344cdbd364b6564b92f53d5d
+
 importers:
 
   .:
@@ -95,13 +100,13 @@ importers:
         version: 8.6.14(@types/react@19.2.18)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/addon-interactions':
         specifier: ^8.6.12
-        version: 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
+        version: 8.6.14(patch_hash=b26335a33f0a9d72e1fa7cda75a9575257200a317fb6c71bd9a326acbf2a3e67)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/addon-links':
         specifier: ^10.0.0
         version: 10.5.6(@types/react@19.2.18)(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/blocks':
         specifier: ^8.6.12
-        version: 8.6.14(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
+        version: 8.6.14(patch_hash=5b3e7e7c296b148a5e606206dfd44404e3c46a22344cdbd364b6564b92f53d5d)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/builder-vite':
         specifier: ^10.0.0
         version: 10.5.6(esbuild@0.28.1)(rollup@4.62.4)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))(vite@7.3.6(@types/node@24.13.3)(jiti@2.6.1)(sass@1.97.3)(tsx@4.23.5)(yaml@2.9.0))
@@ -5007,7 +5012,7 @@ snapshots:
   '@babel/helpers@7.28.6':
     dependencies:
       '@babel/template': 7.28.6
-      '@babel/types': 7.29.0
+      '@babel/types': 7.29.8
 
   '@babel/parser@7.29.0':
     dependencies:
@@ -5037,7 +5042,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.29.0
       '@babel/parser': 7.29.0
-      '@babel/types': 7.29.0
+      '@babel/types': 7.29.8
 
   '@babel/traverse@7.29.0(supports-color@7.2.0)':
     dependencies:
@@ -6322,7 +6327,7 @@ snapshots:
   '@storybook/addon-docs@8.6.14(@types/react@19.2.18)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
     dependencies:
       '@mdx-js/react': 3.1.1(@types/react@19.2.18)(react@19.2.8)
-      '@storybook/blocks': 8.6.14(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
+      '@storybook/blocks': 8.6.14(patch_hash=5b3e7e7c296b148a5e606206dfd44404e3c46a22344cdbd364b6564b92f53d5d)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/csf-plugin': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/react-dom-shim': 8.6.14(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       react: 19.2.8
@@ -6341,7 +6346,7 @@ snapshots:
       '@storybook/addon-highlight': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/addon-measure': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/addon-outline': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
-      '@storybook/addon-toolbars': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
+      '@storybook/addon-toolbars': 8.6.14(patch_hash=5ba84a512aed6ed53c075a77cb77973e0a6ce9dde17d0a8b09d587df28cd0cbc)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@storybook/addon-viewport': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
       ts-dedent: 2.2.0
@@ -6353,7 +6358,7 @@ snapshots:
       '@storybook/global': 5.0.0
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
 
-  '@storybook/addon-interactions@8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
+  '@storybook/addon-interactions@8.6.14(patch_hash=b26335a33f0a9d72e1fa7cda75a9575257200a317fb6c71bd9a326acbf2a3e67)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/instrumenter': 8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
@@ -6382,7 +6387,7 @@ snapshots:
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-toolbars@8.6.14(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
+  '@storybook/addon-toolbars@8.6.14(patch_hash=5ba84a512aed6ed53c075a77cb77973e0a6ce9dde17d0a8b09d587df28cd0cbc)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
     dependencies:
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
 
@@ -6391,7 +6396,7 @@ snapshots:
       memoizerific: 1.11.3
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
 
-  '@storybook/blocks@8.6.14(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
+  '@storybook/blocks@8.6.14(patch_hash=5b3e7e7c296b148a5e606206dfd44404e3c46a22344cdbd364b6564b92f53d5d)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
     dependencies:
       '@storybook/icons': 1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       storybook: 10.5.6(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
@@ -6658,12 +6663,12 @@ snapshots:
 
   '@types/babel__generator@7.27.0':
     dependencies:
-      '@babel/types': 7.29.0
+      '@babel/types': 7.29.8
 
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.29.0
-      '@babel/types': 7.29.0
+      '@babel/types': 7.29.8
 
   '@types/babel__traverse@7.28.0':
     dependencies:

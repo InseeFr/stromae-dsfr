@@ -69,7 +69,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
         const errorMessageId = `${params.id}-desc-error` //we use the same convention as react-dsfr
         return (
           <div
-            ref={params.InputProps.ref}
+            ref={params.slotProps.input.ref}
             className={fr.cx(
               'fr-input-group',
               disabled && 'fr-input-group--disabled',
@@ -94,7 +94,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
             <div className={fr.cx('fr-input-wrap', 'fr-input-wrap--addon')}>
               {/* @ts-expect-error cf https://github.com/mui/material-ui/issues/29961#issuecomment-2260546769 */}
               <TextareaAutosize
-                {...params.inputProps}
+                {...params.slotProps.htmlInput}
                 className={fr.cx(
                   'fr-input',
                   (() => {

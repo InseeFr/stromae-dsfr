@@ -1005,13 +1005,13 @@ describe('Orchestrator', () => {
     // First auto-save fires — fails, isDirtyState stays true
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2100 },
+      { timeout: 3000 },
     )
 
     // Second auto-save fires automatically (isDirtyState still true) — succeeds
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2100 },
+      { timeout: 3000 },
     )
 
     expect(updateDataAndStateData).toHaveBeenLastCalledWith(

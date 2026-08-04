@@ -24,58 +24,75 @@ describe('Datepicker Component', () => {
         <Datepicker {...defaultProps} dateFormat={format} />,
       )
 
-      const input = getByRole('textbox')
-      expect(input).toBeInTheDocument()
+      const field = getByRole('group')
+      expect(field).toBeInTheDocument()
     })
   })
 
   it('handle change correctly for format YYYY-MM-DD', () => {
-    const { getByRole } = render(
+    const { container, getByRole } = render(
       <Datepicker {...defaultProps} dateFormat="YYYY-MM-DD" />,
     )
 
-    const input = getByRole('textbox')
+    const field = getByRole('group')
+    const input = container.querySelector<HTMLInputElement>(
+      'input.MuiPickersInputBase-input',
+    )!
+    expect(input).not.toBeNull()
 
     // handle valid dates
     fireEvent.change(input, { target: { value: '05/02/2025' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('2025-02-05')
 
     // handle invalid dates
     fireEvent.change(input, { target: { value: '29/02/2025' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith(null)
 
     // handle year with less than 4 digits, and month/day with 1 digit
     fireEvent.change(input, { target: { value: '8/5/25' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('0025-05-08')
   })
 
   it('handle change correctly for format YYYY-MM', () => {
-    const { getByRole } = render(
+    const { container, getByRole } = render(
       <Datepicker {...defaultProps} dateFormat="YYYY-MM" value="2024-01" />,
     )
 
-    const input = getByRole('textbox')
+    const field = getByRole('group')
+    const input = container.querySelector<HTMLInputElement>(
+      'input.MuiPickersInputBase-input',
+    )!
 
     fireEvent.change(input, { target: { value: '02/2025' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('2025-02')
 
     // handle year with less than 4 digits, and month with 1 digit
     fireEvent.change(input, { target: { value: '5/25' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('0025-05')
   })
 
   it('handle change correctly for format YYYY', () => {
-    const { getByRole } = render(
+    const { container, getByRole } = render(
       <Datepicker {...defaultProps} dateFormat="YYYY" value="2024" />,
     )
 
-    const input = getByRole('textbox')
+    const field = getByRole('group')
+    const input = container.querySelector<HTMLInputElement>(
+      'input.MuiPickersInputBase-input',
+    )!
 
     fireEvent.change(input, { target: { value: '2025' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('2025')
 
     // handle year with less than 4 digits
     fireEvent.change(input, { target: { value: '25' } })
+    fireEvent.blur(field)
     expect(onChangeMock).toHaveBeenCalledWith('0025')
   })
 

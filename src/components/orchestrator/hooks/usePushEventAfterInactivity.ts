@@ -17,7 +17,7 @@ export function usePushEventAfterInactivity(
   const [event, setEvent] = useState<
     (InputParadata & CommonParadata) | undefined
   >(undefined)
-  const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const previousEventRef = useRef<(InputParadata & CommonParadata) | undefined>(
     undefined,
   )

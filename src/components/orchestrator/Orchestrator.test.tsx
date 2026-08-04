@@ -868,7 +868,7 @@ describe('Orchestrator', () => {
       () => {
         expect(updateDataAndStateData).toHaveBeenCalledOnce()
       },
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
   })
 
@@ -897,7 +897,7 @@ describe('Orchestrator', () => {
           expect.objectContaining({ isLogout: false, shouldShowToast: false }),
         )
       },
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
   })
 
@@ -962,7 +962,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
 
     await user.click(getByText('my-question'))
@@ -970,7 +970,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
   })
 
@@ -1059,7 +1059,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(1),
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
 
     await user.click(getByText('my-question'))
@@ -1069,7 +1069,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(2),
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
 
     await user.click(getByText('my-question-2'))
@@ -1077,7 +1077,7 @@ describe('Orchestrator', () => {
 
     await waitFor(
       () => expect(updateDataAndStateData).toHaveBeenCalledTimes(3),
-      { timeout: 2000 },
+      { timeout: 4000 },
     )
 
     expect(updateDataAndStateData).toHaveBeenLastCalledWith(

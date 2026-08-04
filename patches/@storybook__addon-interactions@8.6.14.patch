@@ -1,0 +1,18 @@
+diff --git a/dist/manager.js b/dist/manager.js
+index b4dc45034abadfbe78a232eb7b25297558a5f762..47e8fbb50c8b9ac5b0fec43b627c386c721656a6 100644
+--- a/dist/manager.js
++++ b/dist/manager.js
+@@ -1,11 +1,11 @@
+ import * as React9 from 'react';
+ import React9__default, { memo, useState, useRef, useEffect, useMemo, Fragment, useCallback } from 'react';
+ import { IconButton, TooltipNote, Button, Separator, P, AddonPanel, EmptyTabContent, Link, WithTooltip, Bar, Spaced, Badge } from 'storybook/internal/components';
+-import { useAddonState, useChannel, useParameter, addons, types, Consumer, useStorybookApi } from 'storybook/internal/manager-api';
++import { useAddonState, useChannel, useParameter, addons, types, Consumer, useStorybookApi } from 'storybook/manager-api';
+ import { STORY_RENDER_PHASE_CHANGED, STORY_THREW_EXCEPTION, PLAY_FUNCTION_THREW_EXCEPTION, UNHANDLED_ERRORS_WHILE_PLAYING, FORCE_REMOUNT } from 'storybook/internal/core-events';
+ import { global } from '@storybook/global';
+ import { CallStates, EVENTS } from '@storybook/instrumenter';
+-import { styled, typography, useTheme } from 'storybook/internal/theming';
++import { styled, typography, useTheme } from 'storybook/theming';
+ import { transparentize } from 'polished';
+ import { VideoIcon, DocumentIcon, ListUnorderedIcon, RewindIcon, PlayBackIcon, PlayNextIcon, FastForwardIcon, SyncIcon, CircleIcon, PlayIcon, StopAltIcon, CheckIcon } from '@storybook/icons';
+ 

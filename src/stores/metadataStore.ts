@@ -17,8 +17,8 @@ const defaultState: Metadata = {
   },
   mainLogo: {
     label: {
-      fr: '',
-      en: '',
+      fr: "Logo de l'INSEE",
+      en: 'INSEE Logo',
       sq: '',
     },
     url: logoInsee,

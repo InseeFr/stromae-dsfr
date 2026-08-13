@@ -1,7 +1,7 @@
 import { createRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { getInterrogationById } from '@/api/06-interrogations'
+import { getGetInterrogationByIdQueryOptions } from '@/api/06-interrogations'
 import { rootRoute } from '@/router/router'
 
 import { SiteMapPage } from './SiteMapPage'
@@ -23,16 +23,16 @@ export const siteMapRoute = createRoute({
     questionnaireId: search?.questionnaireId,
     interrogationId: search?.interrogationId,
   }),
-  loader: async ({ deps, abortController }) => {
+  loader: async ({ deps, context: { queryClient }, abortController }) => {
     document.title = "Plan du site | Filière d'Enquête"
 
     let questionnaireId = deps.questionnaireId
 
     if (!questionnaireId && deps.interrogationId) {
-      const interrogation = await getInterrogationById(
-        deps.interrogationId,
-        undefined,
-        abortController.signal,
+      const interrogation = await queryClient.ensureQueryData(
+        getGetInterrogationByIdQueryOptions(deps.interrogationId, {
+          request: { signal: abortController.signal },
+        }),
       )
       questionnaireId = interrogation.questionnaireId
     }

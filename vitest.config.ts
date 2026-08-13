@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
@@ -18,7 +19,9 @@ export default defineConfig((configEnv) => {
       },
       execArgv: [
         '--import',
-        path.resolve(import.meta.dirname, 'tests/register-loader.mjs'),
+        pathToFileURL(
+          path.resolve(import.meta.dirname, 'tests/register-loader.mjs'),
+        ).href,
       ],
     },
   }

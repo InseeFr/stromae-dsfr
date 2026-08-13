@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- Add questionnaire layout in site map page.
+
+## Fixed
+
+- Various accessibility improvements.
+
+## [2.10.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.1) - 2026-07-02
+
 ### Changed
 
 - Update accessibility page following latest accessibility audit.

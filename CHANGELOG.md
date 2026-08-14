@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 
 - Add questionnaire layout in site map page.
+- Confirmation modal when the user remove a row in a loop.
 
 ## Fixed
 

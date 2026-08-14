@@ -44,7 +44,7 @@ const RootComponent = memo(() => {
       <SkipLinks
         links={[
           {
-            anchor: '#content',
+            anchor: '#main',
             label: t('header.skipLinks.content'),
           },
           {

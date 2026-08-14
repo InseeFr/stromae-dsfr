@@ -47,6 +47,7 @@ export function Footer() {
 
   return (
     <DSFRFooter
+      id="footer"
       accessibility="partially compliant"
       license={t('footer.license')}
       homeLinkProps={{

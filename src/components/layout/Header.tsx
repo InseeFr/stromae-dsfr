@@ -3,7 +3,6 @@ import { useMemo } from 'react'
 import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display'
 import { Header as DsfrHeader } from '@codegouvfr/react-dsfr/Header'
 import { createModal } from '@codegouvfr/react-dsfr/Modal'
-import { SkipLinks } from '@codegouvfr/react-dsfr/SkipLinks'
 import { useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
@@ -76,18 +75,6 @@ export function Header() {
 
   return (
     <>
-      <SkipLinks
-        links={[
-          {
-            anchor: '#content',
-            label: t('header.skipLinks.content'),
-          },
-          {
-            anchor: '#footer',
-            label: t('header.skipLinks.footer'),
-          },
-        ]}
-      />
       <DsfrHeader
         brandTop={
           <>

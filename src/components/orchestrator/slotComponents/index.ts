@@ -19,7 +19,7 @@ import { Sequence } from './Sequence'
 import { Subsequence } from './Subsequence'
 import { Suggester } from './Suggester'
 import { SummaryResponses, SummaryTitle } from './Summary'
-import { Table, Td, Tr } from './Table'
+import { Table, Td, Th, Tr } from './Table'
 import { Textarea } from './Textarea'
 
 export const slotComponents = {
@@ -41,6 +41,7 @@ export const slotComponents = {
   Textarea,
   Declarations,
   Table,
+  Th,
   Tr,
   Td,
   ComponentWrapper,

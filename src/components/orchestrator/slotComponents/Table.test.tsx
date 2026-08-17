@@ -3,7 +3,21 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { Table } from './Table'
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+import { renderWithi18n } from '@/utils/tests'
+
+import { Table, Td, Th, Tr } from './Table'
+
+const CellField = () => {
+  const ariaLabelledby = useTableCellAriaLabelledby('fallback')
+  return <input aria-labelledby={ariaLabelledby} />
+}
+
+const cellProps = {
+  id: 'cell',
+  handleChanges: () => undefined,
+  value: null,
+}
 
 describe('Table Component', () => {
   it('should add role="presentation" when children have undefined header prop', () => {
@@ -74,5 +88,66 @@ describe('Table Component', () => {
 
     expect(getByText('Cell 1')).toBeInTheDocument()
     expect(getByText('Cell 2')).toBeInTheDocument()
+  })
+
+  it('should give headers an id and label fields by their column header and row number', () => {
+    const { container } = renderWithi18n(
+      <Table id="table-1" errors={[]} label="Test Table">
+        <div
+          {...({
+            header: [{ label: 'Header 1' }, { label: 'Header 2' }],
+          } as any)}
+        />
+        <Th index={0}>Header 1</Th>
+        <Th index={1}>Header 2</Th>
+        <Tr row={0}>
+          <Td {...cellProps} index={0}>
+            <CellField />
+          </Td>
+          <Td {...cellProps} index={1}>
+            <CellField />
+          </Td>
+        </Tr>
+      </Table>,
+    )
+
+    const table = container.querySelector('table')!
+    const headerThs = table.querySelectorAll('th[id*="header"]')
+    expect(headerThs).toHaveLength(2)
+
+    const rowTh = table.querySelector('th[scope="row"]')!
+    expect(rowTh).toHaveTextContent(/1/)
+    expect(rowTh).toHaveAttribute(
+      'id',
+      `${headerThs[0].id.split('-header-')[0]}-row-0`,
+    )
+
+    const inputs = container.querySelectorAll('input')
+    expect(inputs[0]).toHaveAttribute(
+      'aria-labelledby',
+      `${headerThs[0].id} ${rowTh.id}`,
+    )
+    expect(inputs[1]).toHaveAttribute(
+      'aria-labelledby',
+      `${headerThs[1].id} ${rowTh.id}`,
+    )
+  })
+
+  it('should not label fields when the table has no header', () => {
+    const { container } = renderWithi18n(
+      <Table id="table-1" errors={[]} label="Test Table">
+        <Tr row={0}>
+          <Td {...cellProps} index={0}>
+            <CellField />
+          </Td>
+        </Tr>
+      </Table>,
+    )
+
+    const rowTh = container.querySelector('th[scope="row"]')
+    expect(rowTh).toBeNull()
+
+    const input = container.querySelector('input')!
+    expect(input).toHaveAttribute('aria-labelledby', 'fallback')
   })
 })

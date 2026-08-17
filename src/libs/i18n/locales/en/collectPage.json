@@ -34,5 +34,8 @@
     "tableHeaderBindings": "Bindings",
     "tableHeaderMessage": "Error Message",
     "tableHeaderPage": "Page"
+  },
+  "table": {
+    "rowLabel": "Row {{rowNumber}}"
   }
 }

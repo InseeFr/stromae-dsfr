@@ -1,3 +1,4 @@
+import type { LunaticError } from '@inseefr/lunatic'
 import userEvent from '@testing-library/user-event'
 import { expect, vi } from 'vitest'
 
@@ -83,18 +84,18 @@ describe('Loop', () => {
   })
 
   it('renders error alerts when errors exist', () => {
-    const errors = [
+    const errors: LunaticError[] = [
       {
         id: 'error-1',
         errorMessage: 'First error',
         criticality: 'ERROR',
-        typeOfControl: 'ROW',
+        typeOfControl: 'CONSISTENCY',
       },
       {
         id: 'error-2',
         errorMessage: 'Second error',
         criticality: 'ERROR',
-        typeOfControl: 'ROW',
+        typeOfControl: 'CONSISTENCY',
       },
     ]
 

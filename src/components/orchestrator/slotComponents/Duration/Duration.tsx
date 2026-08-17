@@ -4,6 +4,8 @@ import { fr } from '@codegouvfr/react-dsfr'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 import { type NumberFormatValues } from 'react-number-format'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from '../Question'
 import { FiledsetError } from '../shared/FieldsetError'
 import { getErrorStates } from '../utils/errorStates'
@@ -28,6 +30,7 @@ export const Duration: LunaticSlotComponents['Duration'] = (props) => {
 
   const id = useId()
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
 
   const { state, stateRelatedMessage } = getErrorStates(errors)
 
@@ -82,7 +85,7 @@ export const Duration: LunaticSlotComponents['Duration'] = (props) => {
         })(),
       )}
       id={`${id}-fieldset`}
-      aria-labelledby={label ? undefined : questionId}
+      aria-labelledby={label ? undefined : ariaLabelledby}
     >
       {hasLegend && (
         <legend className={fr.cx('fr-fieldset__legend')}>

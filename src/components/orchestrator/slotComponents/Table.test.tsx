@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest'
 import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
 import { renderWithi18n } from '@/utils/tests'
 
-import { Table, Td, Th, Tr } from './Table'
+import { Table, Td, Th, Thead, Tr } from './Table'
 
 const CellField = () => {
   const ariaLabelledby = useTableCellAriaLabelledby('fallback')
@@ -98,16 +98,22 @@ describe('Table Component', () => {
             header: [{ label: 'Header 1' }, { label: 'Header 2' }],
           } as any)}
         />
-        <Th index={0}>Header 1</Th>
-        <Th index={1}>Header 2</Th>
-        <Tr row={0}>
-          <Td {...cellProps} index={0}>
-            <CellField />
-          </Td>
-          <Td {...cellProps} index={1}>
-            <CellField />
-          </Td>
-        </Tr>
+        <Thead>
+          <Tr row={0}>
+            <Th index={0}>Header 1</Th>
+            <Th index={1}>Header 2</Th>
+          </Tr>
+        </Thead>
+        <tbody>
+          <Tr row={0}>
+            <Td {...cellProps} index={0}>
+              <CellField />
+            </Td>
+            <Td {...cellProps} index={1}>
+              <CellField />
+            </Td>
+          </Tr>
+        </tbody>
       </Table>,
     )
 
@@ -115,7 +121,11 @@ describe('Table Component', () => {
     const headerThs = table.querySelectorAll('th[id*="header"]')
     expect(headerThs).toHaveLength(2)
 
-    const rowTh = table.querySelector('th[scope="row"]')!
+    // The header row must not get a row header, only the body rows do
+    const rowHeaderThs = table.querySelectorAll('th[scope="row"]')
+    expect(rowHeaderThs).toHaveLength(1)
+
+    const rowTh = rowHeaderThs[0]
     expect(rowTh).toHaveTextContent(/1/)
     expect(rowTh).toHaveAttribute(
       'id',

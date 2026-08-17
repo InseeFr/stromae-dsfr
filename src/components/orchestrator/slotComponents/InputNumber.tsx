@@ -7,6 +7,8 @@ import {
   type OnValueChange,
 } from 'react-number-format'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from './Question'
 import { CustomInputDsfr } from './shared/CustomInputDsfr'
 import { getErrorStates } from './utils/errorStates'
@@ -31,6 +33,7 @@ export const InputNumber: LunaticSlotComponents['InputNumber'] = (props) => {
 
   const id = useId()
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
   /**
    * Note that the error message ID follows the format `${id}-desc-error` because this is the convention used by the underlying library react-dsfr
    * See: https://github.com/codegouvfr/react-dsfr/blob/4c41367febcb78307f261df1b761fedb52c8a905/src/Input.tsx#L103
@@ -94,7 +97,7 @@ export const InputNumber: LunaticSlotComponents['InputNumber'] = (props) => {
       placeholder={unit}
       suffix={value !== null && unit ? ` ${unit}` : undefined}
       value={value}
-      aria-labelledby={questionId}
+      aria-labelledby={ariaLabelledby}
       {...(state === 'error'
         ? { 'aria-invalid': true, 'aria-errormessage': errorMessageId }
         : {})}

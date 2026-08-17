@@ -9,8 +9,10 @@ import {
   RowContext,
   TableCellContext,
   TableContext,
+  TheadContext,
   useRowContext,
   useTableContext,
+  useTheadContext,
 } from '@/hooks/useTableCell'
 
 import { useQuestionId } from './Question'
@@ -93,6 +95,7 @@ export const Tr: LunaticSlotComponents['Tr'] = (props) => {
   const { children, className, row } = props
   const { t } = useTranslation()
   const tableContext = useTableContext()
+  const inHeader = useTheadContext()
   const rowHasErrors = className
     ? ['lunatic-row-has-error'].includes(className)
     : false
@@ -108,7 +111,10 @@ export const Tr: LunaticSlotComponents['Tr'] = (props) => {
   // Only render the visually hidden row header ("Ligne N") for tables component
   // as tables without headers (MCQ) have no column header to point fields
   const displayRowHeader =
-    tableContext?.hasHeader && rowId !== undefined && rowNumber !== undefined
+    !inHeader &&
+    tableContext?.hasHeader &&
+    rowId !== undefined &&
+    rowNumber !== undefined
 
   return (
     <RowContext.Provider value={rowId ? { rowId } : undefined}>
@@ -150,6 +156,19 @@ export const Th: LunaticSlotComponents['Th'] = (props) => {
     >
       {children}
     </th>
+  )
+}
+
+export const Thead: LunaticSlotComponents['Thead'] = (props) => {
+  const { children, className } = props
+  return (
+    <TheadContext.Provider value={true}>
+      <thead
+        className={['lunatic-table-thead', className].filter(Boolean).join(' ')}
+      >
+        {children}
+      </thead>
+    </TheadContext.Provider>
   )
 }
 

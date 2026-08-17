@@ -3,6 +3,8 @@ import { useId } from 'react'
 import { Select } from '@codegouvfr/react-dsfr/SelectNext'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
 
@@ -29,6 +31,7 @@ export const Dropdown: LunaticSlotComponents['Dropdown'] = (props) => {
   const id = useId()
 
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
 
   return (
     <Select
@@ -36,7 +39,7 @@ export const Dropdown: LunaticSlotComponents['Dropdown'] = (props) => {
       nativeSelectProps={{
         value: value ?? undefined,
         onChange: (e) => onChange(e.target.value),
-        'aria-labelledby': questionId,
+        'aria-labelledby': ariaLabelledby,
         ...(state === 'error'
           ? {
               'aria-invalid': state === 'error',

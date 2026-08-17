@@ -4,6 +4,8 @@ import { Checkbox } from '@codegouvfr/react-dsfr/Checkbox'
 import Input from '@codegouvfr/react-dsfr/Input'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
 
@@ -24,6 +26,7 @@ export const CheckboxGroup: LunaticSlotComponents['CheckboxGroup'] = (
 
   const id = useId()
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
 
   /**
    * Note that the error message ID follows the format `${id}-messages` because this is the convention used by the underlying library react-dsfr
@@ -48,7 +51,7 @@ export const CheckboxGroup: LunaticSlotComponents['CheckboxGroup'] = (
       state={state}
       stateRelatedMessage={stateRelatedMessage}
       orientation={orientation}
-      aria-labelledby={label ? undefined : questionId}
+      aria-labelledby={label ? undefined : ariaLabelledby}
     />
   )
 }

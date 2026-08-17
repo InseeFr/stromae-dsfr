@@ -10,6 +10,8 @@ import { frFR } from '@mui/x-date-pickers/locales'
 import { format, parseISO } from 'date-fns'
 import { fr as frLocale } from 'date-fns/locale/fr'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
 
@@ -32,6 +34,7 @@ export const Datepicker: LunaticSlotComponents['Datepicker'] = (props) => {
 
   const id = useId()
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
 
   if (declarations) {
     console.error('Only declaration in Question are displayed')
@@ -102,7 +105,7 @@ export const Datepicker: LunaticSlotComponents['Datepicker'] = (props) => {
             },
             textField: {
               id,
-              'aria-labelledby': hasLabel ? labelId : questionId,
+              'aria-labelledby': hasLabel ? labelId : ariaLabelledby,
             },
           }}
         />

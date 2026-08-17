@@ -18,9 +18,13 @@ vi.mock('./utils/errorStates', () => ({
   getErrorStates: vi.fn(),
 }))
 
-vi.mock('react', () => ({
-  useId: vi.fn(() => 'mock-id'),
-}))
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react')>()
+  return {
+    ...actual,
+    useId: vi.fn(() => 'mock-id'),
+  }
+})
 
 vi.mock('./Question', () => ({
   useQuestionId: vi.fn(() => 'mock-question-id'),

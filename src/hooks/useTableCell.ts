@@ -13,6 +13,10 @@ export const TableContext = createContext<TableContextValue | undefined>(
 
 export const useTableContext = () => useContext(TableContext)
 
+export const TheadContext = createContext(false)
+
+export const useTheadContext = () => useContext(TheadContext)
+
 export const RowContext = createContext<{ rowId: string } | undefined>(
   undefined,
 )

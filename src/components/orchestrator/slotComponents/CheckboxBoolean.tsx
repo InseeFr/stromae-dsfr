@@ -3,6 +3,8 @@ import { useId } from 'react'
 import { Checkbox } from '@codegouvfr/react-dsfr/Checkbox'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 
+import { useTableCellAriaLabelledby } from '@/hooks/useTableCell'
+
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
 
@@ -25,6 +27,7 @@ export const CheckboxBoolean: LunaticSlotComponents['CheckboxBoolean'] = (
 
   const id = useId()
   const questionId = useQuestionId()
+  const ariaLabelledby = useTableCellAriaLabelledby(questionId)
 
   const { state, stateRelatedMessage } = getErrorStates(errors)
 
@@ -56,7 +59,7 @@ export const CheckboxBoolean: LunaticSlotComponents['CheckboxBoolean'] = (
           },
         },
       ]}
-      aria-labelledby={questionId}
+      aria-labelledby={ariaLabelledby}
       state={state}
       stateRelatedMessage={stateRelatedMessage}
     />

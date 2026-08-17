@@ -87,8 +87,8 @@ importers:
         version: 4.4.3
     devDependencies:
       '@apidevtools/json-schema-ref-parser':
-        specifier: ^15.0.0
-        version: 15.5.1(@types/json-schema@7.0.15)
+        specifier: ^16.0.0
+        version: 16.0.0(@types/json-schema@7.0.15)
       '@eslint/js':
         specifier: ^9.9.0
         version: 9.39.5
@@ -224,9 +224,9 @@ packages:
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
 
-  '@apidevtools/json-schema-ref-parser@15.5.1':
-    resolution: {integrity: sha512-69KDKWQvk5jfDQfSTzAUHkI731X7CaJLwQxlS87AXyFHoJzsd/Pufrqsz7PqXMgrtAA99D9Y6NujkEkzli6kVA==}
-    engines: {node: '>=20'}
+  '@apidevtools/json-schema-ref-parser@16.0.0':
+    resolution: {integrity: sha512-Am2KotB8TVU8McHvOOnmUiuVHwCs3dw3o16aOApAxEuY1XOlqQeT5mvGb35rhYa6/UtTTNHJwRe9aQFnLASi6Q==}
+    engines: {node: '>=22.19.0'}
     peerDependencies:
       '@types/json-schema': ^7.0.15
 
@@ -4095,10 +4095,6 @@ packages:
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
-  undici@6.28.0:
-    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
-    engines: {node: '>=18.17'}
-
   undici@8.10.0:
     resolution: {integrity: sha512-HvltHd7avK13QIw/oLe4qoOLyoVSoafqJ2jYOrtMRBkbYT31eiBQ8O0ehRKZiEZCMEyLFQNIADpgCWC5fALvYQ==}
     engines: {node: '>=22.19.0'}
@@ -4372,11 +4368,11 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@apidevtools/json-schema-ref-parser@15.5.1(@types/json-schema@7.0.15)':
+  '@apidevtools/json-schema-ref-parser@16.0.0(@types/json-schema@7.0.15)':
     dependencies:
       '@types/json-schema': 7.0.15
       js-yaml: 5.2.3
-      undici: 6.28.0
+      undici: 8.10.0
 
   '@asamuzakjp/css-color@6.0.7':
     dependencies:
@@ -8310,8 +8306,6 @@ snapshots:
   uc.micro@2.1.0: {}
 
   undici-types@7.18.2: {}
-
-  undici@6.28.0: {}
 
   undici@8.10.0: {}
 

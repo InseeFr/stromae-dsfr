@@ -56,8 +56,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.1
       oidc-spa:
-        specifier: 10.0.8
-        version: 10.0.8(@tanstack/react-router@1.170.31(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@types/react@19.2.18)(react@19.2.8)
+        specifier: 10.2.11
+        version: 10.2.11(@tanstack/react-router@1.170.31(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@types/react@19.2.18)(react@19.2.8)
       react:
         specifier: ^19.2.3
         version: 19.2.8
@@ -3283,14 +3283,15 @@ packages:
     resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
     engines: {node: '>=12.20.0'}
 
-  oidc-spa@10.0.8:
-    resolution: {integrity: sha512-4RMLNsxQxtjzqVH5gySYB0TdivNRtJP/DXbnen17ORXA1BjvDLIiNSEoJEUndAe22Wi24PC6hk+rFxzlQ2qwDw==}
+  oidc-spa@10.2.11:
+    resolution: {integrity: sha512-2g8m3PNxB/jNpsv4G5Nns/qFPjRKdKlYqlrQaMpIVdCV3ug8a326lHi2SOderTO5Ocboa+zMbpWVXtLJRCYP7g==}
     peerDependencies:
       '@angular/common': '*'
       '@angular/core': '*'
       '@angular/router': '*'
+      '@nuxt/kit': '*'
       '@tanstack/react-router': '*'
-      '@tanstack/react-start': '*'
+      '@tanstack/react-start': '>=1.168.25'
       '@types/react': '*'
       react: '*'
       rxjs: '*'
@@ -3300,6 +3301,8 @@ packages:
       '@angular/core':
         optional: true
       '@angular/router':
+        optional: true
+      '@nuxt/kit':
         optional: true
       '@tanstack/react-router':
         optional: true
@@ -7315,7 +7318,7 @@ snapshots:
 
   obug@2.1.4: {}
 
-  oidc-spa@10.0.8(@tanstack/react-router@1.170.31(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@types/react@19.2.18)(react@19.2.8):
+  oidc-spa@10.2.11(@tanstack/react-router@1.170.31(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@types/react@19.2.18)(react@19.2.8):
     optionalDependencies:
       '@tanstack/react-router': 1.170.31(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@types/react': 19.2.18

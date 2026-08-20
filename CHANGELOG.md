@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update accessibility page following latest accessibility audit.
+- Replace the toast with a badge to indicate whether the form has been saved.
 
 ## [2.10.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.0) - 2026-06-26
 

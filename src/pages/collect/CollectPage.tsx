@@ -47,7 +47,6 @@ export const CollectPage = memo(function CollectPage() {
     data: LunaticData['COLLECTED']
     onSuccess?: () => void
     isLogout: boolean
-    shouldShowToast?: boolean
   }) =>
     updateInterrogationDataStateDataById(interrogationId, {
       data: params.data,
@@ -59,14 +58,6 @@ export const CollectPage = memo(function CollectPage() {
         })
 
         params.onSuccess?.()
-
-        if (params.data && !params.isLogout && params.shouldShowToast) {
-          showToast({
-            severity: 'success',
-            description: t('collectPage.toast.toastSaveSuccessDescription'),
-            title: t('collectPage.toast.toastSaveSuccessTitle'),
-          })
-        }
       })
       .catch((error: Error) => {
         if (!params.isLogout) {

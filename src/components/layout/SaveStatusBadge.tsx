@@ -29,7 +29,8 @@ export function SaveStatusBadge({
         {t('collectPage.saveStatus.helpText')}
       </p>
       {saveBadgeConfig && (
-        <div className={fr.cx('fr-mt-1w')} role="status">
+        // output is used here instead of div to better handle text changes with screen-readers
+        <output className={fr.cx('fr-mt-1w')}>
           <Badge
             as="span"
             small
@@ -38,7 +39,7 @@ export function SaveStatusBadge({
           >
             {t(saveBadgeConfig.labelKey)}
           </Badge>
-        </div>
+        </output>
       )}
     </div>
   )

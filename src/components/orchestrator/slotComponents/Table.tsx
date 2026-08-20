@@ -1,8 +1,10 @@
-import React, { useId } from 'react'
+import React, { useContext, useId } from 'react'
 
 import { fr } from '@codegouvfr/react-dsfr'
 import Alert from '@codegouvfr/react-dsfr/Alert'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
+
+import { RowLabelContext } from '@/hooks/useRowLabelId.ts'
 
 import { useQuestionId } from './Question'
 
@@ -86,28 +88,38 @@ export const Tr: LunaticSlotComponents['Tr'] = (props) => {
   const rowDisplayError = className
     ? ['lunatic-errors'].includes(className)
     : false
-  //TODO To improve accessibilité we should add aria-labelledBy and "aria-errormessage" but we can't with this component structure
+  const rowLabelId = useId()
+
   return (
-    <tr
-      {...(rowHasErrors ? { 'aria-invalid': true } : {})}
-      style={
-        rowDisplayError
-          ? {
-              color: fr.colors.decisions.background.flat.error.default,
-            }
-          : {}
-      }
-    >
-      {children}
-    </tr>
+    <RowLabelContext.Provider value={rowLabelId}>
+      <tr
+        {...(rowHasErrors ? { 'aria-invalid': true } : {})}
+        style={
+          rowDisplayError
+            ? {
+                color: fr.colors.decisions.background.flat.error.default,
+              }
+            : {}
+        }
+      >
+        {children}
+      </tr>
+    </RowLabelContext.Provider>
   )
 }
 
 export const Td: LunaticSlotComponents['Td'] = (props) => {
-  const { children, colSpan, rowSpan } = props
+  const { children, colSpan, rowSpan, index } = props
+  const rowLabelId = useContext(RowLabelContext)
+  const isFirstColumn = index === 0
+
   return (
     <td className={fr.cx('fr-text--md')} colSpan={colSpan} rowSpan={rowSpan}>
-      {children}
+      {isFirstColumn && rowLabelId ? (
+        <div id={rowLabelId}>{children}</div>
+      ) : (
+        children
+      )}
     </td>
   )
 }

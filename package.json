@@ -1,9 +1,9 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.10.1",
+  "version": "2.10.2-rc.accessibility.2",
   "type": "module",
-  "packageManager": "pnpm@11.22.0",
+  "packageManager": "pnpm@11.21.0",
   "scripts": {
     "prepare": "husky && vite-envs update-types",
     "dev": "vite",
@@ -52,7 +52,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@apidevtools/json-schema-ref-parser": "^16.0.0",
+    "@apidevtools/json-schema-ref-parser": "^15.0.0",
     "@eslint/js": "^9.9.0",
     "@storybook/addon-a11y": "^10.0.0",
     "@storybook/addon-essentials": "^8.6.12",
@@ -87,7 +87,7 @@
     "lint-staged": "^17.0.0",
     "orval": "^8.0.0",
     "prettier": "^3.8.1",
-    "storybook": "10.5.8",
+    "storybook": "10.5.7",
     "storybook-dark-mode": "^5.0.0",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4",

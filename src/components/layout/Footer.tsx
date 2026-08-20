@@ -1,5 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr'
 import { Footer as DSFRFooter } from '@codegouvfr/react-dsfr/Footer'
+import { useMatches } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
@@ -21,6 +22,17 @@ export function Footer() {
   const mode = useMode()
   const isCollect = mode === MODE_TYPE.COLLECT
 
+  const matches = useMatches()
+  const matchWithInterrogation = matches.find(
+    (m) =>
+      typeof (m.params as Record<string, string | undefined>)
+        ?.interrogationId === 'string',
+  )
+  const interrogationId = (
+    matchWithInterrogation?.params as
+      Record<string, string | undefined> | undefined
+  )?.interrogationId
+
   const partnersLogos = secondariesLogo
     ? {
         main: transformLogo(secondariesLogo[0]),
@@ -35,6 +47,7 @@ export function Footer() {
 
   return (
     <DSFRFooter
+      id="footer"
       accessibility="partially compliant"
       license={t('footer.license')}
       homeLinkProps={{
@@ -46,6 +59,7 @@ export function Footer() {
       }}
       websiteMapLinkProps={{
         to: '/plan-du-site',
+        search: interrogationId ? { interrogationId } : undefined,
         onClick: isCollect ? openLinkInNewTab : undefined,
       }}
       accessibilityLinkProps={{

@@ -11,7 +11,9 @@ type SaveStatusBadgeProps = {
 }
 
 /** Displays the save help text and the badge reflecting the saving state. */
-export function SaveStatusBadge({ saveStatus }: SaveStatusBadgeProps) {
+export function SaveStatusBadge({
+  saveStatus,
+}: Readonly<SaveStatusBadgeProps>) {
   const { t } = useTranslation()
   const saveBadgeConfig = getSaveBadgeLabel(saveStatus)
 

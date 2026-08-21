@@ -4,5 +4,9 @@
   "quickAccessLogout": "Se déconnecter",
   "quickAccessPortal": "Quitter le questionnaire",
   "stillThere": "Êtes-vous toujours là?",
-  "loggedOutIn": "Vous serez déconnecté dans {{secondsLeft}} secondes"
+  "loggedOutIn": "Vous serez déconnecté dans {{secondsLeft}} secondes",
+  "skipLinks": {
+    "content": "Contenu",
+    "footer": "Pied de page"
+  }
 }

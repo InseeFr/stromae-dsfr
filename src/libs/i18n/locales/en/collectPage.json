@@ -26,6 +26,16 @@
     "toastSaveNetworkErrorTitle": "Network error",
     "toastSaveNetworkErrorDescription": "A network error occurred, and the data was not saved. Do not close this window so that it can be transmitted upon reconnection."
   },
+  "loop": {
+    "addRow": "Add a row",
+    "removeRow": "Remove last row",
+    "removeRowModal": {
+      "title": "Confirmation",
+      "buttonCancel": "Cancel",
+      "buttonValidate": "Confirm",
+      "content": "The last row of the table will be deleted, the associated data will be permanently deleted."
+    }
+  },
   "VtlDevTools": {
     "fabButton": "Console VTL",
     "cleanError": "Clear Errors",

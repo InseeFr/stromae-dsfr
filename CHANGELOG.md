@@ -11,10 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add questionnaire layout in site map page.
 - Confirmation modal when the user remove a row in a loop.
+- Add skip link component at the top of the page
 
 ## Fixed
 
-- Various accessibility improvements.
+- Use rowId instead of questionId for aria-labelledby in RadioGroup and Table component.
 
 ## [2.10.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.1) - 2026-07-02
 

@@ -2,6 +2,8 @@ import { RadioButtons } from '@codegouvfr/react-dsfr/RadioButtons'
 import { render } from '@testing-library/react'
 import { type Mock, describe, expect, it, vi } from 'vitest'
 
+import { RowLabelContext } from '@/hooks/useRowLabelId.ts'
+
 import { RadioGroup } from './RadioGroup'
 import { getErrorStates } from './utils/errorStates'
 
@@ -86,8 +88,46 @@ describe('RadioGroup Component', () => {
         stateRelatedMessage: undefined,
         orientation: 'vertical',
         disabled: undefined,
-        'aria-labelledby': undefined,
       },
+      undefined,
+    )
+  })
+
+  it('uses rowLabelId for aria-labelledby when label is absent', () => {
+    ;(getErrorStates as Mock).mockReturnValue({
+      state: 'default',
+      stateRelatedMessage: undefined,
+    })
+
+    const onCheckMock = vi.fn()
+
+    const props = {
+      id: 'my-id',
+      value: null,
+      options: [
+        {
+          id: 'option1',
+          label: 'Option 1',
+          name: 'option1',
+          checked: false,
+          onCheck: onCheckMock,
+        },
+      ],
+      label: undefined,
+      description: undefined,
+      orientation: 'vertical' as const,
+    }
+
+    render(
+      <RowLabelContext.Provider value="row-label-id">
+        <RadioGroup {...props} />
+      </RowLabelContext.Provider>,
+    )
+
+    expect(RadioButtons).toHaveBeenCalledWith(
+      expect.objectContaining({
+        'aria-labelledby': 'row-label-id',
+      }),
       undefined,
     )
   })

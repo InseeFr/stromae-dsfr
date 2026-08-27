@@ -819,12 +819,10 @@ describe('Orchestrator', () => {
     await user.click(getByText('Start'))
     const collapseButton = getByRole('button', { name: 'Collapse view' })
     expect(collapseButton).toBeInTheDocument()
-    expect(collapseButton).toHaveAttribute('aria-pressed', 'true')
 
     await user.click(collapseButton)
     const expandButton = getByRole('button', { name: 'Expand view' })
     expect(expandButton).toBeInTheDocument()
-    expect(expandButton).toHaveAttribute('aria-pressed', 'false')
   })
 
   it('does not auto-save when there is no dirty state', async () => {

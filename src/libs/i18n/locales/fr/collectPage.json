@@ -26,6 +26,16 @@
     "toastSaveNetworkErrorTitle": "Erreur réseau",
     "toastSaveNetworkErrorDescription": "Une erreur réseau est survenue, les données ne sont pas enregistrées. Ne fermez pas cette fenêtre pour qu'elles puissent être transmises à la reconnexion."
   },
+  "loop": {
+    "addRow": "Ajouter une ligne",
+    "removeRow": "Supprimer la dernière ligne",
+    "removeRowModal": {
+      "title": "Confirmation",
+      "buttonCancel": "Annuler",
+      "buttonValidate": "Valider",
+      "content": "La dernière ligne va être supprimée, les données associées seront définitivement supprimées."
+    }
+  },
   "VtlDevTools": {
     "fabButton": "Console VTL",
     "cleanError": "Vider les erreurs",

@@ -12,6 +12,9 @@
     "contentSuffix": "a fait l'objet d'une décision d'homologation prononcée par l'autorité d'homologation pour le compte de l'autorité qualifiée de la sécurité du système d'information."
   },
   "siteMap": {
-    "title": "Plan du site"
+    "title": "Plan du site",
+    "questionnaire": "Questionnaire",
+    "questionnaireLabel": "Plan du questionnaire",
+    "questionnaireNotLink": "Le plan du questionnaire est fourni à titre indicatif, la navigation dans le questionnaire est déterminée par les réponses aux questions, certaines parties peuvent ne pas vous être proposées."
   }
 }

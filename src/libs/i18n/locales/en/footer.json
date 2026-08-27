@@ -12,6 +12,9 @@
     "contentSuffix": "has been subject to an approval decision issued by the approval authority on behalf of the qualified authority for information system security."
   },
   "siteMap": {
-    "title": "Site Map"
+    "title": "Site Map",
+    "questionnaire": "Questionnaire",
+    "questionnaireLabel": "Questionnaire structure",
+    "questionnaireNotLink": "The questionnaire structure is not clickable and is provided for information purposes only"
   }
 }

@@ -6,9 +6,11 @@ import { useTranslation } from 'react-i18next'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
+import { SAVE_STATUS } from '@/constants/saveStatus'
 import type { LunaticOverview } from '@/models/lunaticType'
 import type { InternalPageType } from '@/models/page'
 
+import { SaveStatusBadge } from '../layout/SaveStatusBadge'
 import type { OrchestratorProps } from './Orchestrator'
 import { SequenceHeader } from './SequenceHeader'
 
@@ -27,6 +29,7 @@ export function SurveyContainer(
     hasArticulation: boolean
     isDownloadEnabled: boolean
     isDirtyState?: boolean
+    saveStatus: SAVE_STATUS
     isSequencePage: boolean
     bottomContent: ReactNode
   }>,
@@ -45,6 +48,7 @@ export function SurveyContainer(
     hasArticulation,
     isDownloadEnabled,
     isDirtyState = false,
+    saveStatus = SAVE_STATUS.IDLE,
     isSequencePage,
     bottomContent,
   } = props
@@ -133,28 +137,31 @@ export function SurveyContainer(
             )}
           >
             {children}
-            <Button
-              priority="primary"
-              title={
-                currentPage === PAGE_TYPE.END
-                  ? t('collectPage.continueTitleEnd')
-                  : t('collectPage.continueTitleDefault')
-              }
-              id="continue-button"
-              onClick={
-                currentPage === PAGE_TYPE.END
-                  ? handleDepositProofClick
-                  : handleNextClick
-              }
-            >
-              {t(
-                currentPage === PAGE_TYPE.END
-                  ? 'collectPage.continueEnd'
-                  : currentPage === PAGE_TYPE.WELCOME
-                    ? 'collectPage.continueWelcome'
-                    : 'collectPage.continueLunatic',
-              )}
-            </Button>
+            <div className="save-action">
+              <Button
+                priority="primary"
+                title={
+                  currentPage === PAGE_TYPE.END
+                    ? t('collectPage.continueTitleEnd')
+                    : t('collectPage.continueTitleDefault')
+                }
+                id="continue-button"
+                onClick={
+                  currentPage === PAGE_TYPE.END
+                    ? handleDepositProofClick
+                    : handleNextClick
+                }
+              >
+                {t(
+                  currentPage === PAGE_TYPE.END
+                    ? 'collectPage.continueEnd'
+                    : currentPage === PAGE_TYPE.WELCOME
+                      ? 'collectPage.continueWelcome'
+                      : 'collectPage.continueLunatic',
+                )}
+              </Button>
+              <SaveStatusBadge saveStatus={saveStatus} />
+            </div>
             {bottomContent}
             {(mode === MODE_TYPE.VISUALIZE || isDownloadEnabled) && (
               <div style={{ justifyContent: 'flex-end', textAlign: 'right' }}>

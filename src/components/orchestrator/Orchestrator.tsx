@@ -14,6 +14,7 @@ import { assert } from 'tsafe/assert'
 
 import { MODE_TYPE } from '@/constants/mode'
 import { PAGE_TYPE } from '@/constants/page'
+import { SAVE_STATUS } from '@/constants/saveStatus'
 import { useTelemetry } from '@/contexts/TelemetryContext'
 import { useAddPreLogoutAction } from '@/hooks/prelogout'
 import { useBeforeUnload } from '@/hooks/useBeforeUnload'
@@ -104,7 +105,6 @@ export namespace OrchestratorProps {
       data: LunaticData['COLLECTED']
       onSuccess?: () => void
       isLogout: boolean
-      shouldShowToast?: boolean
     }) => Promise<void>
     /** Allows user to download a deposit proof PDF */
     getDepositProof: (params?: GenerateDepositProofParams) => Promise<void>
@@ -130,6 +130,9 @@ export function Orchestrator(props: OrchestratorProps) {
   // Display a modal to warn the user their change might not be sent
   const [isDirtyState, setIsDirtyState] = useState<boolean>(false)
   useBeforeUnload(isDirtyState)
+
+  // Track the state of data saving state to display the save badge
+  const [saveStatus, setSaveStatus] = useState<SAVE_STATUS>(SAVE_STATUS.IDLE)
 
   // Store pending changes when data could not be sent (if the user goes offline for example)
 
@@ -222,6 +225,7 @@ export function Orchestrator(props: OrchestratorProps) {
     autoSuggesterLoading: true,
     onChange: (e) => {
       setIsDirtyState(true)
+      setSaveStatus(SAVE_STATUS.SAVING)
       obsoleteControls()
       if (isTelemetryInitialized) handleLunaticChange(e)
     },
@@ -340,17 +344,16 @@ export function Orchestrator(props: OrchestratorProps) {
 
   const [blockingApiError, setBlockingApiError] = useState<Error | null>(null)
 
-  const triggerDataAndStateUpdate = async (
-    isLogout: boolean = false,
-    shouldShowToast: boolean = true,
-  ) => {
+  const triggerDataAndStateUpdate = async (isLogout: boolean = false) => {
     if (mode === MODE_TYPE.COLLECT && !hasBeenSent(initialState)) {
       isSavingRef.current = true
+      setSaveStatus(SAVE_STATUS.SAVING)
       const changedData = getChangedData(false) as InterrogationData
       const interrogation = updateInterrogation(changedData, currentPage)
 
       if (!interrogation.stateData) {
         setIsDirtyState(false)
+        setSaveStatus(SAVE_STATUS.IDLE)
         isSavingRef.current = false
         return
       }
@@ -369,6 +372,7 @@ export function Orchestrator(props: OrchestratorProps) {
           onSuccess: () => {
             resetChangedData()
             setIsDirtyState(false)
+            setSaveStatus(SAVE_STATUS.SAVED)
             setLastUpdateDate(interrogation.stateData?.date)
             // Clear pending data from local storage on successful send
             removeValue()
@@ -381,7 +385,6 @@ export function Orchestrator(props: OrchestratorProps) {
             isSavingRef.current = false
           },
           isLogout: isLogout,
-          shouldShowToast: shouldShowToast,
         })
       } catch (error) {
         // if: error is an isBlockingApiError, display ErrorComponent (can't be handle by react-error-boundary because error is throw during async callback)
@@ -395,6 +398,7 @@ export function Orchestrator(props: OrchestratorProps) {
             data: dataToSend,
             stateData: interrogation.stateData,
           })
+          setSaveStatus(SAVE_STATUS.ERROR)
           isSavingRef.current = false
         }
       }
@@ -512,7 +516,7 @@ export function Orchestrator(props: OrchestratorProps) {
         currentPageType !== PAGE_TYPE.END &&
         !isSavingRef.current
       ) {
-        triggerDataAndStateUpdate(false, false)
+        triggerDataAndStateUpdate()
       }
     }, intervalMs)
 
@@ -559,6 +563,7 @@ export function Orchestrator(props: OrchestratorProps) {
           hasArticulation={hasArticulation}
           isDownloadEnabled={isDownloadEnabled}
           isDirtyState={isDirtyState}
+          saveStatus={saveStatus}
           isSequencePage={isSequencePage(components)}
           bottomContent={
             bottomComponents.length > 0 && (

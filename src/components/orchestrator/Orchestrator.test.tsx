@@ -359,6 +359,102 @@ describe('Orchestrator', () => {
     expect(document.title).not.toContain('*')
   })
 
+  it('always displays the help text and no badge on initial connexion', async () => {
+    const user = userEvent.setup()
+
+    const { getByText, queryByText, queryByRole } = renderWithRouter(
+      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
+    )
+
+    expect(
+      getByText(
+        'Your responses are automatically saved each time a page loads',
+      ),
+    ).toBeInTheDocument()
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    expect(queryByText('Responses saved')).toBeNull()
+    expect(queryByRole('status')).toBeNull()
+  })
+
+  it('shows a grey badge while the questionnaire is being saved', async () => {
+    const user = userEvent.setup()
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper mode={MODE_TYPE.COLLECT} />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('f')
+
+    const badge = getByText('Responses not saved').closest('.fr-badge')
+    expect(badge).not.toBeNull()
+    expect(badge).not.toHaveClass('fr-badge--success')
+    expect(badge).not.toHaveClass('fr-badge--error')
+  })
+
+  it('shows a green badge after a successful save', async () => {
+    const user = userEvent.setup()
+    const updateDataAndStateData = vi.fn().mockImplementation((params) => {
+      params.onSuccess?.()
+      return Promise.resolve()
+    })
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(() => {
+      expect(getByText('Responses saved')).toHaveClass('fr-badge--success')
+    })
+  })
+
+  it('shows a red badge when the saving of data fails', async () => {
+    const user = userEvent.setup()
+    const updateDataAndStateData = vi
+      .fn()
+      .mockRejectedValue(new Error('Network error'))
+
+    const { getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        source={sourceMultipleQuestion}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+    await user.click(getByText('Continue'))
+
+    await user.click(getByText('my-question'))
+    await user.keyboard('Maelle ending >>')
+
+    await user.click(getByText('Continue'))
+
+    await waitFor(() => {
+      expect(getByText('Unable to save responses')).toHaveClass(
+        'fr-badge--error',
+      )
+    })
+  })
+
   it('shows download button when enabled', async () => {
     const user = userEvent.setup()
     const { getByText } = renderWithRouter(
@@ -872,7 +968,7 @@ describe('Orchestrator', () => {
     )
   })
 
-  it('auto-saves without showing a toast', async () => {
+  it('auto-saves with collect parameters, without showing a toast', async () => {
     const updateDataAndStateData = vi.fn().mockImplementation((params) => {
       params.onSuccess?.()
       return Promise.resolve()
@@ -894,7 +990,7 @@ describe('Orchestrator', () => {
     await waitFor(
       () => {
         expect(updateDataAndStateData).toHaveBeenCalledWith(
-          expect.objectContaining({ isLogout: false, shouldShowToast: false }),
+          expect.objectContaining({ isLogout: false }),
         )
       },
       { timeout: 4000 },

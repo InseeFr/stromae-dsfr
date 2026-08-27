@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs'
 import { dirname, extname, join, resolve as resolvePath } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const extensions = ['.js', '.mjs', '.cjs']
 
@@ -24,7 +25,7 @@ export async function resolve(specifier, context, nextResolve) {
   }
 
   if (parentURL) {
-    const parentPath = new URL(parentURL).pathname
+    const parentPath = fileURLToPath(parentURL)
     const parentDir = dirname(parentPath)
     const resolved = resolvePath(parentDir, specifier)
 
@@ -41,7 +42,7 @@ export async function resolve(specifier, context, nextResolve) {
     const indexPath = join(resolved, 'index.js')
     if (existsSync(indexPath)) {
       try {
-        return await nextResolve(specifier + '/index.js', context)
+        return await nextResolve(pathToFileURL(indexPath).href, context)
       } catch {
         // fall through
       }

@@ -6,6 +6,10 @@ import { renderWithi18n } from '@/utils/tests'
 import { SiteMapPage } from './SiteMapPage'
 import { siteMapRoute } from './route'
 
+vi.mock('@inseefr/lunatic', () => ({
+  useLunatic: vi.fn(),
+}))
+
 vi.mock('@/api/03-questionnaires.ts', () => ({
   useGetQuestionnaireData: vi.fn(),
 }))
@@ -49,6 +53,8 @@ const mockUseGetQuestionnaireData = vi.mocked(
   await import('@/api/03-questionnaires.ts'),
 ).useGetQuestionnaireData
 
+const mockUseLunatic = vi.mocked(await import('@inseefr/lunatic')).useLunatic
+
 const mockUseLoaderData = vi.mocked(siteMapRoute.useLoaderData)
 
 describe('SiteMapPage', () => {
@@ -61,6 +67,9 @@ describe('SiteMapPage', () => {
     mockUseGetQuestionnaireData.mockReturnValue({
       data: undefined,
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 
@@ -77,6 +86,9 @@ describe('SiteMapPage', () => {
     mockUseGetQuestionnaireData.mockReturnValue({
       data: undefined,
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 
@@ -84,20 +96,38 @@ describe('SiteMapPage', () => {
     expect(screen.queryByText('My Questionnaire')).not.toBeInTheDocument()
   })
 
+  it('does not build an overview without a source (e.g. from visualize mode)', () => {
+    mockUseLoaderData.mockReturnValue({ questionnaireId: undefined })
+    mockUseGetQuestionnaireData.mockReturnValue({
+      data: undefined,
+    } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
+
+    renderWithi18n(<SiteMapPage />)
+
+    expect(
+      screen.queryByText('Questionnaire structure'),
+    ).not.toBeInTheDocument()
+  })
+
   it('renders questionnaire section when data is present', () => {
-    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1' })
+    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1', source: {} })
     mockUseGetQuestionnaireData.mockReturnValue({
       data: {
         label: { value: 'My Questionnaire' },
-        components: [
-          {
-            id: 'seq1',
-            componentType: 'Sequence',
-            label: { value: 'Introduction' },
-          },
-        ],
       },
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [
+        {
+          id: 'seq1',
+          label: 'Introduction',
+          children: [],
+        },
+      ],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 
@@ -106,25 +136,28 @@ describe('SiteMapPage', () => {
     expect(screen.getByText('Introduction')).toBeInTheDocument()
   })
 
-  it('renders subsequences under their parent sequence', () => {
-    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1' })
+  it('renders subsequences located in overview children', () => {
+    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1', source: {} })
     mockUseGetQuestionnaireData.mockReturnValue({
       data: {
         label: { value: 'My Questionnaire' },
-        components: [
-          {
-            id: 'seq1',
-            componentType: 'Sequence',
-            label: { value: 'Main Sequence' },
-          },
-          {
-            id: 'sub1',
-            componentType: 'Subsequence',
-            label: { value: 'Sub Sequence' },
-          },
-        ],
       },
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [
+        {
+          id: 'seq1',
+          label: 'Main Sequence',
+          children: [
+            {
+              id: 'sub1',
+              label: 'Sub Sequence',
+              children: [],
+            },
+          ],
+        },
+      ],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 
@@ -132,13 +165,16 @@ describe('SiteMapPage', () => {
     expect(screen.getByText('Sub Sequence')).toBeInTheDocument()
   })
 
-  it('renders questionnaire header but no sequences when data has no components', () => {
-    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1' })
+  it('renders questionnaire header but no sequences when overview is empty', () => {
+    mockUseLoaderData.mockReturnValue({ questionnaireId: 'q1', source: {} })
     mockUseGetQuestionnaireData.mockReturnValue({
       data: {
         label: { value: 'My Questionnaire' },
       },
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 
@@ -151,6 +187,9 @@ describe('SiteMapPage', () => {
     mockUseGetQuestionnaireData.mockReturnValue({
       data: undefined,
     } as ReturnType<typeof mockUseGetQuestionnaireData>)
+    mockUseLunatic.mockReturnValue({
+      overview: [],
+    } as unknown as ReturnType<typeof mockUseLunatic>)
 
     renderWithi18n(<SiteMapPage />)
 

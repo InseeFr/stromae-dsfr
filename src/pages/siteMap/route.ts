@@ -1,6 +1,8 @@
+import type { LunaticSource } from '@inseefr/lunatic'
 import { createRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
+import { getGetQuestionnaireDataQueryOptions } from '@/api/03-questionnaires'
 import { getGetInterrogationByIdQueryOptions } from '@/api/06-interrogations'
 import { rootRoute } from '@/router/router'
 
@@ -37,6 +39,18 @@ export const siteMapRoute = createRoute({
       questionnaireId = interrogation.questionnaireId
     }
 
-    return { questionnaireId }
+    if (!questionnaireId) {
+      return { questionnaireId: undefined, source: undefined }
+    }
+
+    const source = await queryClient
+      .ensureQueryData(
+        getGetQuestionnaireDataQueryOptions(questionnaireId, {
+          request: { signal: abortController.signal },
+        }),
+      )
+      .then((e) => e as unknown as LunaticSource)
+
+    return { questionnaireId, source }
   },
 })

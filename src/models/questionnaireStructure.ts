@@ -1,19 +1,12 @@
-export type QuestionnaireComponent = {
-  id?: string
-  componentType?: string
-  label?: {
-    value?: string
-  }
-  components?: QuestionnaireComponent[]
-}
+import type { ReactNode } from 'react'
 
 export type SubSequenceItem = {
   id: string
-  label: string
+  label: ReactNode
 }
 
 export type SequenceItem = {
   id: string
-  label: string
+  label: ReactNode
   subSequences: SubSequenceItem[]
 }

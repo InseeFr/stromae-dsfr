@@ -1,54 +1,22 @@
-import type {
-  QuestionnaireComponent,
-  SequenceItem,
-} from '@/models/questionnaireStructure'
+import type { ReactNode } from 'react'
 
-export function isQuestionnaireWithComponents(
-  data: unknown,
-): data is { components?: QuestionnaireComponent[] } {
-  return typeof data === 'object' && data !== null && !Array.isArray(data)
+import type { SequenceItem } from '@/models/questionnaireStructure'
+
+export type OverviewItem = {
+  id: string
+  label: ReactNode
+  children: OverviewItem[]
 }
 
-function cleanLabel(label: string): string {
-  return label
-    .replace(/"/g, '')
-    .replace(/\s*\|\|\s*/g, ' ')
-    .trim()
-}
-
-export function extractSequences(
-  components: QuestionnaireComponent[],
-  parentSequence?: SequenceItem,
+export function extractSequencesFromOverview(
+  overview: OverviewItem[],
 ): SequenceItem[] {
-  const sequences: SequenceItem[] = []
-  let currentSequence: SequenceItem | undefined = parentSequence
-
-  for (const component of components) {
-    if (component.componentType === 'Sequence' && component.label?.value) {
-      const cleanedLabel = cleanLabel(component.label.value)
-      currentSequence = {
-        id: component.id ?? cleanedLabel,
-        label: cleanedLabel,
-        subSequences: [],
-      }
-      sequences.push(currentSequence)
-    } else if (
-      component.componentType === 'Subsequence' &&
-      component.label?.value &&
-      currentSequence
-    ) {
-      const cleanedLabel = cleanLabel(component.label.value)
-      currentSequence.subSequences.push({
-        id: component.id ?? cleanedLabel,
-        label: cleanedLabel,
-      })
-    }
-
-    if (component.components) {
-      const nested = extractSequences(component.components, currentSequence)
-      sequences.push(...nested)
-    }
-  }
-
-  return sequences
+  return overview.map((item) => ({
+    id: item.id,
+    label: item.label,
+    subSequences: item.children.map((child) => ({
+      id: child.id,
+      label: child.label,
+    })),
+  }))
 }

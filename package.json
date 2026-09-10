@@ -75,7 +75,7 @@
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
-    "@vitest/coverage-v8": "^4.0.0",
+    "@vitest/coverage-v8": "^5.0.0",
     "cross-env": "^10.1.0",
     "dotenv-flow": "^4.1.0",
     "eslint": "^10.0.0",
@@ -95,7 +95,7 @@
     "vite": "^8.0.0",
     "vite-envs": "^4.6.1",
     "vite-tsconfig-paths": "^6.0.5",
-    "vitest": "^4.0.0"
+    "vitest": "^5.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

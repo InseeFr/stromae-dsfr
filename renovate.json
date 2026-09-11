@@ -1,68 +1,116 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "prConcurrentLimit": 15,
+  "extends": [
+    "config:recommended"
+  ],
   "packageRules": [
     {
-      "matchPaths": ["package.json"],
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPaths": [
+        "package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "groupName": "dependencies minor and patch updates",
       "groupSlug": "minor-patch",
-      "labels": ["dependencies"]
+      "labels": [
+        "dependencies"
+      ]
     },
     {
-      "matchPaths": ["package.json"],
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPaths": [
+        "package.json"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "groupName": "devDependencies minor and patch updates",
       "groupSlug": "dev-minor-patch",
-      "labels": ["devDependencies"]
+      "labels": [
+        "devDependencies"
+      ]
     },
     {
-      "matchPaths": ["package.json"],
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPaths": [
+        "package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "groupName": "lunatic",
       "groupSlug": "lunatic",
-      "matchPackagePatterns": ["@inseefr/lunatic.*"],
-      "labels": ["dependencies", "lunatic"],
-      "bumpVersion": "minor",
-      "dependencyDashboardApproval": true
+      "matchPackagePatterns": [
+        "@inseefr/lunatic.*"
+      ],
+      "labels": [
+        "dependencies",
+        "lunatic"
+      ],
+      "bumpVersion": "minor"
     },
     {
-      "matchPaths": ["package.json"],
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPaths": [
+        "package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "groupName": "dsfr",
       "groupSlug": "dsfr",
-      "matchPackagePatterns": ["@codegouvfr/react-dsfr.*"],
-      "labels": ["dependencies", "dsfr"],
-      "bumpVersion": "minor",
-      "dependencyDashboardApproval": true
+      "matchPackagePatterns": [
+        "@codegouvfr/react-dsfr.*"
+      ],
+      "labels": [
+        "dependencies",
+        "dsfr"
+      ],
+      "bumpVersion": "minor"
     },
     {
-      "matchPaths": ["package.json"],
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPaths": [
+        "package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "groupName": "oidc",
       "groupSlug": "oidc",
-      "matchPackagePatterns": ["oidc-spa.*"],
-      "labels": ["dependencies", "oidc"],
-      "bumpVersion": "minor",
-      "dependencyDashboardApproval": true
+      "matchPackagePatterns": [
+        "oidc-spa.*"
+      ],
+      "labels": [
+        "dependencies",
+        "oidc"
+      ],
+      "bumpVersion": "minor"
     },
     {
-      "matchPaths": ["website/**"],
-      "matchDepTypes": ["dependencies", "devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "website minor and patch updates",
-      "groupSlug": "website-minor-patch",
-      "labels": ["dependencies", "website"]
-    },
-    {
-      "matchPaths": [".github/workflows/**", "ci/**"],
-      "labels": ["CI"]
+      "matchPaths": [
+        ".gitlab-ci.yml"
+      ],
+      "labels": [
+        "CI"
+      ]
     }
   ]
 }

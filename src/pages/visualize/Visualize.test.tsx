@@ -93,7 +93,7 @@ describe('VisualizePage', () => {
       getReferentiel: (name: string) => Promise<any>
     }
 
-    expect(
+    await expect(
       orchestratorProps.getReferentiel('nomenclatureName'),
     ).rejects.toThrow()
   })

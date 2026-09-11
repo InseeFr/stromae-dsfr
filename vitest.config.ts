@@ -1,4 +1,3 @@
-import path from 'node:path'
 import { defineConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
@@ -14,11 +13,12 @@ export default defineConfig((configEnv) => {
       include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       setupFiles: 'tests/setup.ts',
       coverage: {
+        provider: 'v8',
         reporter: ['text', 'lcov'],
       },
       execArgv: [
         '--import',
-        path.resolve(import.meta.dirname, 'tests/register-loader.mjs'),
+        new URL('./tests/register-loader.mjs', import.meta.url).href,
       ],
     },
   }

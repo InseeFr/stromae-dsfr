@@ -86,7 +86,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
             )}
           >
             <label className={fr.cx('fr-label')} htmlFor={params.id}>
-              {label}
+              <span>{label}</span>
               {description !== undefined && (
                 <span className="fr-hint-text">{description}</span>
               )}

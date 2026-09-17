@@ -46,7 +46,7 @@ export function SequenceHeader(props: SequenceHeaderProps) {
       className={fr.cx('fr-stepper', 'fr-mb-2v', 'sequence-header' as FrCxArg)}
     >
       <h2 className={fr.cx('fr-stepper__title', 'fr-mb-0')}>
-        {currentSequence.label}
+        <span>{currentSequence.label}</span>
         <span className={fr.cx('fr-stepper__state')}>
           {t('collectPage.stepperState', { currentStep, stepCount })}
         </span>

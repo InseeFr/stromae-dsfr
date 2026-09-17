@@ -73,7 +73,7 @@ export const Datepicker: LunaticSlotComponents['Datepicker'] = (props) => {
     >
       {hasLabel && (
         <label className={fr.cx('fr-label')} htmlFor={id} id={`label-${id}`}>
-          {label}
+          <span>{label}</span>
           {description && (
             <span className={fr.cx('fr-hint-text')}>{description}</span>
           )}

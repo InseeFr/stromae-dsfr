@@ -86,7 +86,7 @@ export const Duration: LunaticSlotComponents['Duration'] = (props) => {
     >
       {hasLegend && (
         <legend className={fr.cx('fr-fieldset__legend')}>
-          {label}
+          <span>{label}</span>
           {description && (
             <span className={fr.cx('fr-hint-text')}>{description}</span>
           )}

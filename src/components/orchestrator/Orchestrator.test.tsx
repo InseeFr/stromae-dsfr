@@ -819,12 +819,10 @@ describe('Orchestrator', () => {
     await user.click(getByText('Start'))
     const collapseButton = getByRole('button', { name: 'Collapse view' })
     expect(collapseButton).toBeInTheDocument()
-    expect(collapseButton).toHaveAttribute('aria-pressed', 'true')
 
     await user.click(collapseButton)
     const expandButton = getByRole('button', { name: 'Expand view' })
     expect(expandButton).toBeInTheDocument()
-    expect(expandButton).toHaveAttribute('aria-pressed', 'false')
   })
 
   it('does not auto-save when there is no dirty state', async () => {
@@ -843,6 +841,39 @@ describe('Orchestrator', () => {
     await new Promise((r) => setTimeout(r, 300))
 
     expect(updateDataAndStateData).not.toHaveBeenCalled()
+  })
+
+  it('saves the current page instead of the welcome page when leaving the questionnaire', async () => {
+    const updateDataAndStateData = vi.fn().mockResolvedValue(undefined)
+    const user = userEvent.setup()
+
+    const interrogationWithLunaticPage = {
+      ...defaultInterrogation,
+      stateData: {
+        state: 'INIT' as QuestionnaireState,
+        date: 0,
+        currentPage: '1' as PageType,
+      },
+    }
+
+    const { unmount, getByText } = renderWithRouter(
+      <OrchestratorTestWrapper
+        mode={MODE_TYPE.COLLECT}
+        initialInterrogation={interrogationWithLunaticPage}
+        updateDataAndStateData={updateDataAndStateData}
+      />,
+    )
+
+    await user.click(getByText('Start'))
+
+    unmount()
+
+    const lastStateData =
+      updateDataAndStateData.mock.calls[
+        updateDataAndStateData.mock.calls.length - 1
+      ][0].stateData
+
+    expect(lastStateData.currentPage).toBe('1')
   })
 
   it('auto-saves when dirty state and interval elapses', async () => {

@@ -113,7 +113,6 @@ export function SurveyContainer(
                       ? t('collectPage.collapse')
                       : t('collectPage.expand')
                   }
-                  aria-pressed={isLayoutExpanded}
                 />
               </div>
             )}

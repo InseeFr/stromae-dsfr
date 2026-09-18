@@ -1,8 +1,10 @@
 import { memo, useEffect } from 'react'
 
+import { SkipLinks } from '@codegouvfr/react-dsfr/SkipLinks'
 import type { QueryClient } from '@tanstack/react-query'
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { Toaster } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
 import { ErrorComponent } from '@/components/error/ErrorComponent'
 import { NotFoundError } from '@/components/error/notFoundError'
@@ -25,6 +27,7 @@ import { visualizeRoute } from '@/pages/visualize/route'
 const RootComponent = memo(() => {
   const { decodedIdToken } = useOidc()
   const { isTelemetryEnabled, setDefaultValues } = useTelemetry()
+  const { t } = useTranslation()
 
   // Retrieve the OIDC's session id (different for each session of the user
   // agent used by the end-user which allows to identify distinct sessions)
@@ -38,6 +41,18 @@ const RootComponent = memo(() => {
     <div
       style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
     >
+      <SkipLinks
+        links={[
+          {
+            anchor: '#main',
+            label: t('header.skipLinks.content'),
+          },
+          {
+            anchor: '#footer',
+            label: t('header.skipLinks.footer'),
+          },
+        ]}
+      />
       <Header />
       <main id="main" role="main">
         <Toaster />

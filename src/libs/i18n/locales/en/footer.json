@@ -12,6 +12,8 @@
     "contentSuffix": "has been subject to an approval decision issued by the approval authority on behalf of the qualified authority for information system security."
   },
   "siteMap": {
-    "title": "Site Map"
+    "title": "Site Map",
+    "questionnaire": "Back to the questionnaire",
+    "portal": "Portal"
   }
 }

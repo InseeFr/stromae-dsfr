@@ -4,5 +4,9 @@
   "quickAccessLogout": "Log out",
   "quickAccessPortal": "Back to the portal",
   "stillThere": "Are you still there?",
-  "loggedOutIn": "You will be logged out in {{secondsLeft}}"
+  "loggedOutIn": "You will be logged out in {{secondsLeft}}",
+  "skipLinks": {
+    "content": "Content",
+    "footer": "Footer"
+  }
 }

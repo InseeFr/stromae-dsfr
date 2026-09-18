@@ -4,6 +4,8 @@ import Input from '@codegouvfr/react-dsfr/Input'
 import { RadioButtons } from '@codegouvfr/react-dsfr/RadioButtons'
 import type { LunaticSlotComponents } from '@inseefr/lunatic'
 
+import { useRowLabelId } from '@/hooks/useRowLabelId.ts'
+
 import { useQuestionId } from './Question'
 import { getErrorStates } from './utils/errorStates'
 
@@ -21,6 +23,7 @@ export const RadioGroup: LunaticSlotComponents['RadioGroup'] = (props) => {
 
   const id = useId()
   const questionId = useQuestionId()
+  const rowLabelId = useRowLabelId()
 
   /**
    * Note that the error message ID follows the format `${id}-messages` because this is the convention used by the underlying library react-dsfr
@@ -70,7 +73,7 @@ export const RadioGroup: LunaticSlotComponents['RadioGroup'] = (props) => {
       })}
       state={state}
       stateRelatedMessage={stateRelatedMessage}
-      aria-labelledby={label ? undefined : questionId}
+      {...(label ? {} : { 'aria-labelledby': rowLabelId ?? questionId })}
     />
   )
 }

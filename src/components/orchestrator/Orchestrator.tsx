@@ -413,6 +413,14 @@ export function Orchestrator(props: OrchestratorProps) {
   }
   const isSavingRef = useRef(false)
 
+  // Keep the latest references so the unmount cleanup never persists stale state
+  const unmountRef = useRefSync({
+    isTelemetryInitialized,
+    triggerInactivityTimeoutEvent,
+    triggerBatchTelemetryCallback,
+    triggerDataAndStateUpdate,
+  })
+
   // Telemetry initialization
   useEffect(() => {
     if (isTelemetryEnabled && mode === MODE_TYPE.COLLECT) {
@@ -483,8 +491,15 @@ export function Orchestrator(props: OrchestratorProps) {
   }, [currentPageType, pageTag])
 
   // Persist data when component unmount (ie when navigate etc...)
+  /* eslint-disable react-hooks/exhaustive-deps -- read at cleanup time intentionally, value is synced on every render */
   useEffect(() => {
     return () => {
+      const {
+        isTelemetryInitialized,
+        triggerInactivityTimeoutEvent,
+        triggerBatchTelemetryCallback,
+        triggerDataAndStateUpdate,
+      } = unmountRef.current
       if (isTelemetryInitialized) {
         triggerInactivityTimeoutEvent()
         if (triggerBatchTelemetryCallback) {
@@ -495,7 +510,6 @@ export function Orchestrator(props: OrchestratorProps) {
       }
       triggerDataAndStateUpdate()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Persist data at a set interval when in collect mode and there is unsaved data

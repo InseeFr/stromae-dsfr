@@ -12,6 +12,8 @@
     "contentSuffix": "a fait l'objet d'une décision d'homologation prononcée par l'autorité d'homologation pour le compte de l'autorité qualifiée de la sécurité du système d'information."
   },
   "siteMap": {
-    "title": "Plan du site"
+    "title": "Plan du site",
+    "questionnaire": "Retour au questionnaire",
+    "portal": "Portail de réponses aux enquêtes de la statistique publique"
   }
 }

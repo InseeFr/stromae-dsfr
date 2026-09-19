@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.10.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.1) - 2026-09-18
+
 ## Added
 
 - Add link back to questionnaire and link to portal in site map page.

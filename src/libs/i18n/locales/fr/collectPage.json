@@ -30,7 +30,7 @@
     "addRow": "Ajouter une ligne",
     "removeRow": "Supprimer la dernière ligne",
     "removeRowModal": {
-      "title": "Warning",
+      "title": "Avertissement",
       "buttonCancel": "Annuler",
       "buttonValidate": "Valider",
       "content": "La dernière ligne va être supprimée, les données associées seront définitivement supprimées."

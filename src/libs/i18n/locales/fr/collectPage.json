@@ -12,6 +12,15 @@
   "previousTitle": "Revenir à l'étape précédente",
   "previousLabel": "Précédent",
   "stepperState": "Étape {{currentStep}} sur {{stepCount}}",
+  "saveStatus": {
+    "helpText": "Vos réponses sont enregistrées automatiquement à intervalle régulier et à chaque changement de page",
+    "savingLabel": "Réponses non enregistrées",
+    "savingAriaLabel": "Vos réponses sont en cours d'enregistrement",
+    "savedLabel": "Réponses enregistrées",
+    "savedAriaLabel": "Vos réponses ont bien été enregistrées",
+    "errorLabel": "Impossible d'enregistrer les réponses",
+    "errorAriaLabel": "Impossible d'enregistrer les réponses, vos réponses seront transmises lors de la prochaine tentative"
+  },
   "exitModal": {
     "title": "Voulez-vous quitter le questionnaire ?",
     "buttonCancel": "Annuler",

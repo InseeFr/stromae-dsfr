@@ -12,6 +12,15 @@
   "previousTitle": "Return to the previous step",
   "previousLabel": "Previous",
   "stepperState": "Step {{currentStep}} of {{stepCount}}",
+  "saveStatus": {
+    "helpText": "Your responses are automatically saved each time a page loads",
+    "savingLabel": "Responses not saved",
+    "savingAriaLabel": "Your responses are being saved",
+    "savedLabel": "Responses saved",
+    "savedAriaLabel": "Your responses have been saved successfully",
+    "errorLabel": "Unable to save responses",
+    "errorAriaLabel": "Unable to save responses, they will be sent on the next attempt"
+  },
   "exitModal": {
     "title": "Do you want to leave the questionnaire?",
     "buttonCancel": "Cancel",

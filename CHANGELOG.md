@@ -7,15 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.11.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.1) - 2026-09-28
+
+### Changed
+
+- Improve CI/CD, bump to latest meta-component
+
+## [2.11.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.0) - 2026-09-25
+
+### Changed
+
+- Replace the toast with a badge to indicate whether the form has been saved.
+
+### Fixed
+
+- fix french label for warning
+
 ## [2.10.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.1) - 2026-09-18
 
-## Added
+### Added
 
 - Add link back to questionnaire and link to portal in site map page.
 - Confirmation modal when the user remove a row in a loop.
 - Add skip link component at the top of the page
 
-## Fixed
+### Fixed
 
 - Use rowId instead of questionId for aria-labelledby in RadioGroup and Table component.
 
@@ -24,7 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update accessibility page following latest accessibility audit.
-- Replace the toast with a badge to indicate whether the form has been saved.
 
 ## [2.10.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.10.0) - 2026-06-26
 

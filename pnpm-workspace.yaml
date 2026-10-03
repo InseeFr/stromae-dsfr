@@ -11,3 +11,6 @@ patchedDependencies:
   '@storybook/addon-interactions@8.6.14': patches/@storybook__addon-interactions@8.6.14.patch
   '@storybook/addon-toolbars@8.6.14': patches/@storybook__addon-toolbars@8.6.14.patch
   '@storybook/blocks@8.6.14': patches/@storybook__blocks@8.6.14.patch
+
+overrides:
+  js-yaml@>=4.0.0 <4.3.2: ^4.3.2

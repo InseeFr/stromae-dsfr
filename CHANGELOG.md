@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- controls in roundabout or Loop are now handled correctly, fix by [@inseefr/lunatic@3.15.5](https://github.com/InseeFr/Lunatic/releases/tag/3.13.5)
+
 ## [2.11.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.1) - 2026-09-28
 
 ### Changed

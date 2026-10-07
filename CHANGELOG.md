@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.11.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.3) - 2026-10-06
+
+### Fixed
+
+- prevent crash on duration component when value is undefined (default case), fix of [Lunatic](https://github.com/InseeFr/Lunatic/pull/1335)
+
+## [2.11.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.2) - 2026-10-02
+
 ### Fixed
 
 - controls in roundabout or Loop are now handled correctly, fix by [@inseefr/lunatic@3.15.5](https://github.com/InseeFr/Lunatic/releases/tag/3.13.5)

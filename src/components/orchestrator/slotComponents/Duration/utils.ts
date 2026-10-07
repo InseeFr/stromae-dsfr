@@ -1,5 +1,8 @@
 import type { DurationValues, DurationValuesFormat } from './type'
 
+const isNullOrUndefined = (value: any): value is null | undefined =>
+  value === null || value === undefined
+
 /**
  * Extracts duration values from a string based on a specified format.
  * @param value The string containing the duration value.
@@ -7,11 +10,11 @@ import type { DurationValues, DurationValuesFormat } from './type'
  * @returns An object containing the extracted duration values (years and months or hours and minutes and format).
  */
 export function extractDurationFromValue(
-  value: string | null,
+  value: string | null | undefined,
   format: DurationValuesFormat,
 ): DurationValues {
   // If the value is null, return default values based on the format
-  if (value === null) {
+  if (isNullOrUndefined(value)) {
     switch (format) {
       case 'PnYnM':
         return { years: '', months: '', format } // Default values for years and months

@@ -13,6 +13,15 @@ describe('extractDurationFromValue', () => {
     const result = extractDurationFromValue(null, 'PTnHnM')
     expect(result).toEqual({ hours: '', minutes: '', format: 'PTnHnM' })
   })
+  it('should return default values for PnYnM format if value is undefined', () => {
+    const result = extractDurationFromValue(undefined, 'PnYnM')
+    expect(result).toEqual({ years: '', months: '', format: 'PnYnM' })
+  })
+
+  it('should return default values for PTnHnM format if value is undefined', () => {
+    const result = extractDurationFromValue(undefined, 'PTnHnM')
+    expect(result).toEqual({ hours: '', minutes: '', format: 'PTnHnM' })
+  })
 
   it('should extract values for PnYnM format', () => {
     const result = extractDurationFromValue('P3Y5M', 'PnYnM')

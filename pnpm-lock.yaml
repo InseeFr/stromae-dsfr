@@ -21,7 +21,7 @@ importers:
     dependencies:
       '@codegouvfr/react-dsfr':
         specifier: ^1.35.0
-        version: 1.35.0
+        version: 1.36.0
       '@emotion/react':
         specifier: ^11.13.3
         version: 11.14.0(@types/react@19.3.0)(react@19.2.8)(supports-color@7.2.0)
@@ -336,8 +336,8 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@codegouvfr/react-dsfr@1.35.0':
-    resolution: {integrity: sha512-m6sWK/0MVi1JR63ZxHqHyc50rlESSv3XQLaAWs5XONj3fmIohgxzoPTZDbMPgnK4sm3ioW+iOmsltIO7SfbCoQ==}
+  '@codegouvfr/react-dsfr@1.36.0':
+    resolution: {integrity: sha512-+rhqdCynxyzWTeNmUbBTzsnikiTsx5IRvahlMRohObrJEReiZowAs2x8qW/OeewaNLCwyTWzRGg7fbY3Sw1qnw==}
     hasBin: true
     peerDependencies:
       '@gouvfr/dsfr-chart': ^1.0.0
@@ -4369,7 +4369,7 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@codegouvfr/react-dsfr@1.35.0':
+  '@codegouvfr/react-dsfr@1.36.0':
     dependencies:
       tsafe: 1.8.12
       yargs-parser: 21.1.1

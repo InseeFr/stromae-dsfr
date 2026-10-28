@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.11.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.5) - 2026-10-26
+
+### Fixed
+
+- Fixed CVEs on dependencies
+
+### Changed
+
+- Base DockerFile `nginxinc/nginx-unprivileged` to `nginx/nginx-unprivileged` & upgrade version to `1.31.8-alpine`
+
+## [2.11.4](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.4) - 2026-10-22
+
+### Fixed
+
+- Fixed CVEs on devDependencies
+- Updated docker base image
+
 ## [2.11.3](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.3) - 2026-10-06
 
 ### Fixed

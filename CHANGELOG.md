@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.12.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.12.1) - 2026-11-04
+
+### Fixed
+
+- Fixed CVEs on dependencies
+
+## [2.12.0](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.12.0) - 2026-11-04
+
+### Changed
+
+- Data are now cleaned only when changing page when a filter is triggered, avoiding losing data when changing a value that triggers unvoluntarely the filter. Before it was not the case for questionnaire with sequence pagination. Added by Lunatic 3.14.0
+- upgrade dependencies : Lunatic 4.0.0
+
 ## [2.11.5](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.11.5) - 2026-10-26
 
 ### Fixed

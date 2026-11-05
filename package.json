@@ -1,7 +1,7 @@
 {
   "name": "stromae-dsfr",
   "private": true,
-  "version": "2.11.5",
+  "version": "2.12.1",
   "type": "module",
   "packageManager": "pnpm@11.23.0",
   "scripts": {
@@ -29,7 +29,7 @@
     "@codegouvfr/react-dsfr": "^1.35.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.14.1",
-    "@inseefr/lunatic": "^3.13.5",
+    "@inseefr/lunatic": "^4.0.0",
     "@mui/material": "^9.0.0",
     "@mui/x-date-pickers": "^9.0.0",
     "@tanstack/react-query": "^5.90.6",

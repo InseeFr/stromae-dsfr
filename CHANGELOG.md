@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.12.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.12.2) - 2026-11-10
+
+### Changed
+
+- upgrade dependencies : Lunatic 4.0.2
+
 ## [2.12.1](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.12.1) - 2026-11-04
 
 ### Fixed

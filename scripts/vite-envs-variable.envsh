@@ -1,0 +1,36 @@
+#!/bin/sh
+
+/usr/share/nginx/html/vite-envs.sh
+
+export VITE_API_URL="${VITE_API_URL:-}"
+export VITE_OIDC_ISSUER="${VITE_OIDC_ISSUER:-}"
+VITE_TRUST_URI_DOMAINS="${VITE_TRUST_URI_DOMAINS:-}"
+
+# Separates each domains
+VITE_TRUST_URI_DOMAINS=$(
+  printf '%s\n' "$VITE_TRUST_URI_DOMAINS" |
+    awk -F ',' '
+      {
+        for (i = 1; i <= NF; i++) {
+          domain = $i
+          gsub(/^[[:space:]]+|[[:space:]]+$/, "", domain)
+
+          if (domain == "") {
+            continue
+          }
+
+          if (domain !~ /^[[:alnum:].-]+$/) {
+            exit 1
+          }
+
+          printf "%s%s *.%s", separator, domain, domain
+          separator = " "
+        }
+      }
+    '
+) || {
+  printf 'Invalid host list in VITE_TRUST_URI_DOMAINS\n' >&2
+  exit 1
+}
+
+export VITE_TRUST_URI_DOMAINS

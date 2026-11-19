@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added missing HTTP headers to improve security (CSP, X-Frame-Options, Cross-Origin-Resource-Policy, X-Content-Type-Options, Referrer-Policy, Strict-Transport-Security)
 - Added gzip compression to improve performance
+- Required prop for suggester component
 
 ## [2.12.2](https://github.com/InseeFr/stromae-dsfr/releases/tag/2.12.2) - 2026-11-10
 

@@ -67,6 +67,13 @@ describe('Suggester', () => {
     expect(input).toBeDisabled()
   })
 
+  it('marks input as required when required prop is true', () => {
+    const { container } = render(<Suggester {...baseProps} required />)
+
+    const input = container.querySelector('textarea')
+    expect(input).toBeRequired()
+  })
+
   it('should only display the value when readOnly', () => {
     const { getByText, container } = render(
       <Suggester {...baseProps} readOnly />,

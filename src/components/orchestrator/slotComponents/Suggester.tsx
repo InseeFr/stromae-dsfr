@@ -22,6 +22,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
     description,
     onClear,
     disabled,
+    required,
     readOnly,
   } = props
 
@@ -117,6 +118,7 @@ export const Suggester: LunaticSlotComponents['Suggester'] = (props) => {
                 aria-labelledby={questionId}
                 aria-describedby={errorMessageId}
                 disabled={disabled}
+                required={required}
                 readOnly={readOnly}
                 style={{
                   minHeight: 0, //Override dsfr minHeight
